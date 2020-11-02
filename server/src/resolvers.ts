@@ -1,0 +1,24 @@
+import { SEASONS, GAMES, GAME, NBA_STAT, MLB_STAT } from './const'
+import { fetchData } from './datasources'
+
+export default {
+  Stat: {
+    __resolveType(obj) {
+      if (obj.pts >= 0) {
+        return NBA_STAT
+      }
+      if (obj.pitching || obj.batting) {
+        return MLB_STAT
+      }
+      return null
+    },
+  },
+  Query: {
+    seasons: (_source, args, { dataSources }) =>
+      fetchData(SEASONS, { args, dataSources }),
+    games: (_source, args, { dataSources }) =>
+      fetchData(GAMES, { args, dataSources }),
+    game: (_source, args, { dataSources }) =>
+      fetchData(GAME, { args, dataSources }),
+  },
+}

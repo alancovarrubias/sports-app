@@ -1,0 +1,35 @@
+version: "3"
+services:
+  nginx:
+    build: nginx
+    ports:
+      - 80:80
+    depends_on:
+      - client
+      - server
+  client:
+    build: client
+    depends_on:
+      - server
+  server:
+    build: server
+    depends_on:
+      - nba
+      - mlb
+  nba:
+    build: nba
+    depends_on:
+      - db
+  mlb:
+    build: mlb
+    depends_on:
+      - db
+  db:
+    image: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+
+volumes:
+  postgres:

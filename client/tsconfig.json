@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "jsx": "react",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@test-utils/*": ["./test-utils/*"],
+      "@mocks/*": ["./mocks/*"],
+      "@app/*": ["./src/*"]
+    }
+  },
+  "exclude": ["./node_modules"]
+}
