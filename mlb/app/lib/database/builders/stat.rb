@@ -6,7 +6,7 @@ module Database
       end
 
       def build
-        @season.games[0...10].each do |game|
+        @season.games.each do |game|
           @game = game
           next unless needs_data?
 

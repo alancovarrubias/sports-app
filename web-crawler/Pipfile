@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+flask-api = "*"
+flask = "*"
+flask-restful = "*"
+pymongo = "*"
+selenium = "*"
+webdriver-manager = "*"
+bson = "*"
+
+[requires]
+python_version = "3.8"
+
+[dev-packages]
+pylint = "*"
+autopep8 = "*"
+rope = "*"

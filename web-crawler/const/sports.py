@@ -1,0 +1,3 @@
+NBA = 'NBA'
+MLB = 'MLB'
+SPORTS = [NBA, MLB]
