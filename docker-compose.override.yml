@@ -27,7 +27,7 @@ services:
       - 3001:3001
   mlb:
     volumes:
-      - ./nba:/project
+      - ./mlb:/project
     ports:
       - 3002:3002
   db:
