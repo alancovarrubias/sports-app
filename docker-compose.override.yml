@@ -30,6 +30,11 @@ services:
       - ./mlb:/project
     ports:
       - 3002:3002
+  crawler:
+    volumes:
+      - ./crawler:/project
+    ports:
+      - 5000:5000
   db:
     ports:
       - 5432:5432

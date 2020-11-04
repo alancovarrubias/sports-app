@@ -24,6 +24,8 @@ services:
     build: mlb
     depends_on:
       - db
+  crawler:
+    build: crawler
   db:
     image: postgres
     volumes:
