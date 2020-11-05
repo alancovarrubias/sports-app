@@ -38,7 +38,7 @@ module Database
           game: @game,
           model: model
         }
-        stat_object = Stat.find_or_create_by(stat_query)
+        stat_object = ::Stat.find_or_create_by(stat_query)
         stat_object.update(stat)
       end
     end

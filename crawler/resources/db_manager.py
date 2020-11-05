@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from bson.json_util import dumps, loads
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://mongo:27017/')
 
 
 class DbManager:
