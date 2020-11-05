@@ -1,8 +1,9 @@
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { Sport, Resource } from '../../const'
 import useDataTable, { DataModel } from '../../hooks/useDataTable'
-import { GET_GAME_QUERY, IGameProps } from './index'
+import { IGameProps } from './index'
+import { GET_GAME_QUERY } from '../../apollo/queries'
 
 interface Stat extends DataModel {
   pts: string

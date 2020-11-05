@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
 import { useParams, useHistory, Link, useLocation } from 'react-router-dom'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import SportContext from '../contexts/SportContext'
 import useDataTable, { DataModel } from '../hooks/useDataTable'
 import { Resource, Sport } from '../const'
 import { getRoute, Page } from '../Routes'
+import { GET_GAMES_QUERY } from '../apollo/queries'
 
 interface Stat extends DataModel {
   pts: string
@@ -38,7 +39,7 @@ const Games = () => {
   const { error, loading, data, fetchMore } = useQuery<IGamesData, IGamesVars>(
     GET_GAMES_QUERY,
     {
-      variables: { sport, season_id, offset: 0, limit: 10 },
+      variables: { sport, season_id, offset: 0, limit: 5 },
     }
   )
   if (loading) return <p>Loading...</p>
@@ -88,37 +89,3 @@ const Games = () => {
 }
 
 export default Games
-
-export const GET_GAMES_QUERY = gql`
-  fragment GamesTeamStat on Team {
-    name
-    stat {
-      ... on NbaStat {
-        pts
-      }
-      ... on MlbStat {
-        batting {
-          r
-        }
-      }
-    }
-  }
-  query GetGames($sport: String!, $season_id: ID!, $offset: Int, $limit: Int) {
-    games(
-      sport: $sport
-      season_id: $season_id
-      offset: $offset
-      limit: $limit
-    ) {
-      id
-      date
-      away_team {
-        ...GamesTeamStat
-      }
-      home_team {
-        ...GamesTeamStat
-      }
-      sport
-    }
-  }
-`

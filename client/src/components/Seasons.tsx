@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useHistory, useLocation } from 'react-router-dom'
+import { GET_SEASONS_QUERY } from '../apollo/queries'
 import SportContext from '../contexts/SportContext'
 import useDataTable, { DataModel } from '../hooks/useDataTable'
 import { Resource, Sport } from '../const'
@@ -48,13 +49,3 @@ const Seasons = () => {
 }
 
 export default Seasons
-
-export const GET_SEASONS_QUERY = gql`
-  query GetSeasons($sport: String!) {
-    seasons(sport: $sport) {
-      id
-      sport
-      year
-    }
-  }
-`
