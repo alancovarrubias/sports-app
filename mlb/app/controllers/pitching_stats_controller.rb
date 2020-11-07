@@ -6,12 +6,12 @@ class PitchingStatsController < ApplicationController
   def index
     @stats = @game.pitching_stats
 
-    render json: PitchingStatSerializer.new(@stats).serialized_json
+    render json: PitchingStatSerializer.new(@stats).serializable_hash
   end
 
   # GET /pitching_stats/:id
   def show
-    render json: PitchingStatSerializer.new(@stat).serialized_json
+    render json: PitchingStatSerializer.new(@stat).serializable_hash
   end
 
   private

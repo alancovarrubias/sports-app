@@ -1,5 +1,5 @@
 class TeamSerializer
-  include FastJsonapi::ObjectSerializer
+  include JSONAPI::Serializer
   attributes :id, :name, :abbr, :city
   belongs_to :season, lazy_load_data: true, links: {
     related: lambda { |object|

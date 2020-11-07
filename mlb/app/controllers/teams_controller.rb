@@ -6,12 +6,12 @@ class TeamsController < ApplicationController
   def index
     @teams = @season.teams
 
-    render json: TeamSerializer.new(@teams).serialized_json
+    render json: TeamSerializer.new(@teams).serializable_hash
   end
 
   # GET /teams/1
   def show
-    render json: TeamSerializer.new(@team).serialized_json
+    render json: TeamSerializer.new(@team).serializable_hash
   end
 
   private

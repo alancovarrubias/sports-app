@@ -4,12 +4,12 @@ class GamesController < ApplicationController
 
   # GET /seasons/1/games
   def index
-    render json: GameSerializer.new(@games).serialized_json
+    render json: GameSerializer.new(@games).serializable_hash
   end
 
   # GET /games/1
   def show
-    render json: GameSerializer.new(@game).serialized_json
+    render json: GameSerializer.new(@game).serializable_hash
   end
 
   %i[away home].each do |side|
@@ -40,7 +40,7 @@ class GamesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_games
     season = Season.find(params[:season_id])
-    @games = season.games.limit(params[:limit]).offset(params[:offset])
+    @games = season.games.includes(:team_stats, :away_team, :home_team).limit(params[:limit]).offset(params[:offset])
   end
 
   def set_game

@@ -21,17 +21,7 @@ class NbaAPI extends RESTDataSource {
       limit,
     })
     const data = games_res.data
-    const games = await Promise.all(
-      data.map(async game => {
-        const away_team = await getRelationship.call(this, game, 'away_team')
-        const home_team = await getRelationship.call(this, game, 'home_team')
-        return {
-          ...game.attributes,
-          away_team: buildNbaModel(away_team),
-          home_team: buildNbaModel(home_team),
-        }
-      })
-    )
+    const games = data.map(game => game.attributes)
     return addCacheMetadata(games, { sport: NBA })
   }
 

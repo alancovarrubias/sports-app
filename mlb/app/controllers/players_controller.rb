@@ -6,12 +6,12 @@ class PlayersController < ApplicationController
   def index
     @players = @team.players
 
-    render json: PlayerSerializer.new(@players).serialized_json
+    render json: PlayerSerializer.new(@players).serializable_hash
   end
 
   # GET /teams/1/players/1
   def show
-    render json: PlayerSerializer.new(@player).serialized_json
+    render json: PlayerSerializer.new(@player).serializable_hash
   end
 
   private

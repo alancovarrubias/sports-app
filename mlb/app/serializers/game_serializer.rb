@@ -1,5 +1,5 @@
 class GameSerializer
-  include FastJsonapi::ObjectSerializer
+  include JSONAPI::Serializer
   attributes :id, :date, :away_team_id, :home_team_id
 
   belongs_to :season, lazy_load_data: true, links: {

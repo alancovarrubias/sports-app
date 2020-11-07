@@ -1,5 +1,5 @@
 class SeasonSerializer
-  include FastJsonapi::ObjectSerializer
+  include JSONAPI::Serializer
   attributes :id, :year
   has_many :games, lazy_load_data: true, links: {
     related: lambda { |object|

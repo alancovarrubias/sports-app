@@ -1,30 +1,18 @@
 class GameSerializer
-  include FastJsonapi::ObjectSerializer
+  include JSONAPI::Serializer
   attributes :id, :date
-
-  belongs_to :season, lazy_load_data: true, links: {
-    related: lambda { |object|
-      "/seasons/#{object.season_id}"
+  attribute :away_team do |obj|
+    away_team_stat = obj.team_stats.select { |stat| stat.model_id == obj.away_team_id }.first
+    {
+      name: obj.away_team.name,
+      stat: away_team_stat ? away_team_stat.attributes : {}
     }
-  }
-  belongs_to :away_team, lazy_load_data: true, links: {
-    related: lambda { |object|
-      "/games/#{object.id}/away_team"
+  end
+  attribute :home_team do |obj|
+    home_team_stat = obj.team_stats.select { |stat| stat.model_id == obj.home_team_id }.first
+    {
+      name: obj.home_team.name,
+      stat: home_team_stat ? home_team_stat.attributes : {}
     }
-  }
-  belongs_to :home_team, lazy_load_data: true, links: {
-    related: lambda { |object|
-      "/games/#{object.id}/home_team"
-    }
-  }
-  has_many :away_players, lazy_load_data: true, links: {
-    related: lambda { |object|
-      "/games/#{object.id}/away_players"
-    }
-  }
-  has_many :home_players, lazy_load_data: true, links: {
-    related: lambda { |object|
-      "/games/#{object.id}/home_players"
-    }
-  }
+  end
 end

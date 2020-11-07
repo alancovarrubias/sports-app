@@ -5,12 +5,12 @@ class SeasonsController < ApplicationController
   def index
     @seasons = Season.all
 
-    render json: SeasonSerializer.new(@seasons).serialized_json
+    render json: SeasonSerializer.new(@seasons).serializable_hash
   end
 
   # GET /seasons/1
   def show
-    render json: SeasonSerializer.new(@season).serialized_json
+    render json: SeasonSerializer.new(@season).serializable_hash
   end
 
   private

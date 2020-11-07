@@ -71,8 +71,6 @@ GEM
     factory_bot_rails (5.1.1)
       factory_bot (~> 5.1.0)
       railties (>= 4.2.0)
-    fast_jsonapi (1.5)
-      activesupport (>= 4.2)
     ffi (1.13.1)
     formatador (0.2.5)
     globalid (0.4.2)
@@ -93,6 +91,8 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
+    jsonapi-serializer (2.1.0)
+      activesupport (>= 4.2)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -227,8 +227,8 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   factory_bot_rails (~> 5.1.0)
-  fast_jsonapi
   guard-rspec
+  jsonapi-serializer
   listen (~> 3.2)
   oj
   pg (>= 0.18, < 2.0)
