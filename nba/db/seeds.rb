@@ -1,2 +1,1 @@
-builder = Database::Builder.new(2019)
-builder.run
+Database::Builder.run(2019)

@@ -1,12 +1,22 @@
 module Database
-  module Builders
-    class Game < Base
+  module Builder
+    class Games < Base
+      def needs_data?
+        @season.games.empty?
+      end
+
       def build
         return unless needs_data?
 
-        games_res = query_server(:games, season: @season.year)
+        puts "Building Games for Season #{@season.id}"
+
+        teams = @season.teams.map(&:abbr).join(',')
+        games_res = query_server(:games, season: @season.year, teams: teams)
         games_res['games'].each do |game_data|
           build_game(game_data)
+        end
+        games_res['team_links'].each do |abbr, link|
+          ::Team.find_by_abbr(abbr).update(link: link)
         end
       end
 
@@ -21,11 +31,7 @@ module Database
       end
 
       def build_date(date)
-        Date.new(date[0...4].to_i, date[4...6].to_i, date[6...8].to_i)
-      end
-
-      def needs_data?
-        @season.games.empty?
+        Date.new(date[0...4].to_i, date[5...7].to_i, date[8...10].to_i)
       end
     end
   end

@@ -1,6 +1,6 @@
 module Database
-  module Builders
-    class Stat < Base
+  module Builder
+    class Stats < Base
       def needs_data?
         @game.pitching_stats.empty? && @game.batting_stats.empty?
       end
@@ -9,6 +9,8 @@ module Database
         @season.games.each do |game|
           @game = game
           next unless needs_data?
+
+          puts "Building Stats for Game #{game.id}"
 
           server_options = {
             game_url: @game.url, home_team: @game.home_team.full_name, away_team: @game.away_team.full_name

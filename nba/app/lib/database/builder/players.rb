@@ -1,13 +1,11 @@
 module Database
-  module Builders
-    class Player < Base
-      def needs_data?(team)
-        team.players.empty?
-      end
-
+  module Builder
+    class Players < Base
       def build
         @season.teams.each do |team|
           next unless needs_data?(team)
+
+          puts "Building Players for Team #{team.id}"
 
           server_options = { season: @season.year, team: team.abbr }
           players_res = query_server(:players, server_options)
@@ -20,6 +18,10 @@ module Database
       def build_player(player_data, team)
         player_attributes = player_data.merge(season: @season, team: team)
         ::Player.create(player_attributes)
+      end
+
+      def needs_data?(team)
+        team.players.empty?
       end
     end
   end

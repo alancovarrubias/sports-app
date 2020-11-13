@@ -1,8 +1,10 @@
 module Database
-  module Builders
-    class Team < Base
+  module Builder
+    class Teams < Base
       def build
         return unless needs_data?
+
+        puts "Building Teams for Season #{@season.id}"
 
         teams_res = query_server(:teams, season: @season.year)
         teams_res['teams'].each do |team_data|

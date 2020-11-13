@@ -1,12 +1,12 @@
 module Database
-  module Builders
+  module Builder
     class Base
       def initialize(season)
         @season = season
       end
 
       def query_server(model, options)
-        query_params = options.merge(sport: 'MLB')
+        query_params = options.merge(sport: 'NBA')
         query_params_string = query_params.map { |k, v| "#{k}=#{v}" }.join('&')
         url = URI.parse("http://crawler:5000/#{model}?#{query_params_string}")
         req = Net::HTTP::Get.new(url.to_s)

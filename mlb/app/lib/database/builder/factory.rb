@@ -1,16 +1,16 @@
 module Database
-  module Builders
+  module Builder
     module Factory
       def self.create_builder(model, season)
         case model
         when :Team
-          Builders::Team.new(season)
+          Builder::Teams.new(season)
         when :Game
-          Builders::Game.new(season)
+          Builder::Games.new(season)
         when :Player
-          Builders::Player.new(season)
+          Builder::Players.new(season)
         when :Stat
-          Builders::Stat.new(season)
+          Builder::Stats.new(season)
         end
       end
     end
