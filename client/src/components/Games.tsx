@@ -39,7 +39,7 @@ const Games = () => {
   const { error, loading, data, fetchMore } = useQuery<IGamesData, IGamesVars>(
     GET_GAMES_QUERY,
     {
-      variables: { sport, season_id, offset: 0, limit: 5 },
+      variables: { sport, season_id, offset: 0, limit: 100 },
     }
   )
   if (loading) return <p>Loading...</p>

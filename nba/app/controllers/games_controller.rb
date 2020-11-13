@@ -4,12 +4,12 @@ class GamesController < ApplicationController
 
   # GET /seasons/1/games
   def index
-    render json: GameSerializer.new(@games).serializable_hash
+    render json: GameSerializer.new(@games, { params: { team: true } }).serializable_hash
   end
 
   # GET /games/1
   def show
-    render json: GameSerializer.new(@game).serializable_hash
+    render json: GameSerializer.new(@game, {params: {team: true, player: true}}).serializable_hash
   end
 
   %i[away home].each do |side|

@@ -1,6 +1,7 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
-import { buildNbaModel, getRelationship, addCacheMetadata } from './helpers'
+import { addNbaCacheMetadata } from './helpers'
 import { NBA } from '../const'
+import { getArgumentValues } from 'graphql/execution/values'
 
 class NbaAPI extends RESTDataSource {
   constructor() {
@@ -12,7 +13,7 @@ class NbaAPI extends RESTDataSource {
     const seasons_res = await this.get('seasons')
     const data = seasons_res.data
     const seasons = data.map(season => season.attributes)
-    return addCacheMetadata(seasons, { sport: NBA })
+    return seasons.map(addNbaCacheMetadata)
   }
 
   async getGames({ season_id, offset = 0, limit = 100 }) {
@@ -20,26 +21,21 @@ class NbaAPI extends RESTDataSource {
       offset,
       limit,
     })
-    const data = games_res.data
-    const games = data.map(game => game.attributes)
-    return addCacheMetadata(games, { sport: NBA })
+    const games = games_res.data.map(game => game.attributes)
+    return games.map(addNbaCacheMetadata)
   }
 
   async getGame({ game_id }) {
     const game_res = await this.get(`games/${game_id}`)
-    const data = game_res.data
-    const away_team = await getRelationship.call(this, data, 'away_team')
-    const away_players = await getRelationship.call(this, data, 'away_players')
-    const home_team = await getRelationship.call(this, data, 'home_team')
-    const home_players = await getRelationship.call(this, data, 'home_players')
-    const game = {
-      ...data.attributes,
-      away_team: buildNbaModel(away_team),
-      home_team: buildNbaModel(home_team),
-      away_players: away_players.map(buildNbaModel),
-      home_players: home_players.map(buildNbaModel),
+    const game = game_res.data.attributes
+    const cachedGame = {
+      ...game,
+      away_team: addNbaCacheMetadata(game.away_team),
+      home_team: addNbaCacheMetadata(game.home_team),
+      away_players: game.away_players.map(addNbaCacheMetadata),
+      home_players: game.home_players.map(addNbaCacheMetadata),
     }
-    return addCacheMetadata(game, { sport: NBA })
+    return addNbaCacheMetadata(cachedGame)
   }
 }
 
