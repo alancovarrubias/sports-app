@@ -1,7 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
 import { addNbaCacheMetadata } from './helpers'
-import { NBA } from '../const'
-import { getArgumentValues } from 'graphql/execution/values'
 
 class NbaAPI extends RESTDataSource {
   constructor() {

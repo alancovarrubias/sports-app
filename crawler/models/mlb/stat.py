@@ -5,7 +5,7 @@ from models.abstract import AbstractModel
 
 
 def convert_numeric(text):
-    if len(text) == 0:
+    if len(text) == 0 or text == "inf":
         return 0
     elif "." in text:
         return float(text)

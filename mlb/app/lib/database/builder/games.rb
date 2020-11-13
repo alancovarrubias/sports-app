@@ -25,7 +25,8 @@ module Database
           season: @season,
           date: build_date(game_data['date']),
           away_team: @season.teams.find_by_abbr(game_data['away_team']),
-          home_team: @season.teams.find_by_abbr(game_data['home_team'])
+          home_team: @season.teams.find_by_abbr(game_data['home_team']),
+          num: game_data['num']
         }
         ::Game.create(game_attributes)
       end

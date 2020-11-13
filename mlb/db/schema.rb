@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2020_09_28_035153) do
     t.bigint "away_team_id"
     t.bigint "home_team_id"
     t.date "date"
+    t.integer "num"
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
     t.index ["season_id"], name: "index_games_on_season_id"

@@ -4,6 +4,7 @@ from crawlers.helpers import get_table_rows
 from models.mlb.game import MlbGame
 
 
+TEAM_LINK_REGEX = r"[A-Z]{3}"
 class MlbGamesScraper(AbstractScraper):
     def get_resource(self):
 
@@ -22,8 +23,7 @@ class MlbGamesScraper(AbstractScraper):
                 map(lambda row: MlbGame(row).toJson(), home_rows))
             game_link = home_rows[0][1].find_element_by_tag_name(
                 'a').get_attribute('href')
-            team_links[team] = re.search(r"[A-Z]{3}", game_link).group()
-            print(team_links)
+            team_links[team] = re.search(TEAM_LINK_REGEX, game_link).group()
 
             games += home_games
 

@@ -4,13 +4,14 @@ from const.models import TEAM, PLAYER
 from crawlers.abstract import AbstractScraper
 from crawlers.helpers import get_table_rows
 from models.mlb.stat import MlbStat
+import re
 
-
+WORD_REGEX = r'[^\w]'
 class MlbStatsScraper(AbstractScraper):
     def get_resource(self):
         game_url = self.key_store.args['game_url']
-        away_team = self.key_store.args['away_team'].replace(' ', '')
-        home_team = self.key_store.args['home_team'].replace(' ', '')
+        away_team = re.sub(WORD_REGEX, '', self.key_store.args['away_team'])
+        home_team = re.sub(WORD_REGEX, '', self.key_store.args['home_team'])
         endpoint = f'boxes/{game_url[0:3]}/{game_url}.shtml'
         css_selectors = (
             f'#{away_team}batting',

@@ -20,12 +20,16 @@ services:
     build: nba
     depends_on:
       - db
+      - crawler
   mlb:
     build: mlb
     depends_on:
       - db
+      - crawler
   crawler:
     build: crawler
+    depends_on:
+      - mongo
   db:
     image: postgres
     volumes:
