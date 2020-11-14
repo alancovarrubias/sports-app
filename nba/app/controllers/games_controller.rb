@@ -9,30 +9,7 @@ class GamesController < ApplicationController
 
   # GET /games/1
   def show
-    render json: GameSerializer.new(@game, {params: {team: true, player: true}}).serializable_hash
-  end
-
-  %i[away home].each do |side|
-    define_method("#{side}_team") do
-      team = @game.send("#{side}_team")
-      render json: {
-        data: {
-          model: TeamSerializer.new(team),
-          stat: StatSerializer.new(@game.send("#{side}_team_stats").first)
-        }
-      }
-    end
-    define_method("#{side}_players") do
-      render json: {
-        data: @game.send("#{side}_players").map do |player|
-          stat = Stat.find_by(model: player, model_type: :Player, game: @game)
-          {
-            model: PlayerSerializer.new(player),
-            stat: StatSerializer.new(stat)
-          }
-        end
-      }
-    end
+    render json: GameSerializer.new(@game, { params: { team: true, player: true } }).serializable_hash
   end
 
   private

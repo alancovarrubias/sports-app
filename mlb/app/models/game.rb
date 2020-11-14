@@ -36,7 +36,7 @@ class Game < ApplicationRecord
   end
 
   def url
-    format_options = { year: date.year, month: date.month, day: date.day, home_team: home_team.link }
-    format('%<home_team>s%<year>d%<month>02d%<day>02d0', format_options)
+    format_options = { year: date.year, month: date.month, day: date.day, home_team: home_team.link, num: num }
+    format('%<home_team>s%<year>d%<month>02d%<day>02d%<num>d', format_options)
   end
 end

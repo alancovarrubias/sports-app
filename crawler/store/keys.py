@@ -6,13 +6,13 @@ KEYS = {
         TEAM: ['sport', 'season'],
         PLAYER: ['sport', 'season', 'team'],
         GAME: ['sport', 'season'],
-        STAT: ['sport', 'game_url', 'home_team', 'away_team']
+        STAT: ['sport', 'game_url']
     },
     MLB: {
         TEAM: ['sport', 'season'],
         PLAYER: ['sport', 'season', 'team'],
-        GAME: ['sport', 'season', 'teams'],
-        STAT: ['sport', 'game_url', 'home_team', 'away_team']
+        GAME: ['sport', 'season'],
+        STAT: ['sport', 'game_url']
     }
 }
 
@@ -40,5 +40,4 @@ class KeyStore:
         return keys, values
 
     def build_db_key(self):
-        db_values = [self.resource_type] + self.values[1:]
-        return ''.join(db_values)
+        return ''.join(self.values[1:])

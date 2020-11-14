@@ -1,30 +1,62 @@
 class GameSerializer
   include JSONAPI::Serializer
-  attributes :id, :date, :away_team_id, :home_team_id
-
-  belongs_to :season, lazy_load_data: true, links: {
-    related: lambda { |object|
-      "/seasons/#{object.season_id}"
+  attributes :id, :date
+  attribute :away_team, if: proc { |_record, params| params[:team] } do |obj|
+    team = obj.away_team
+    batting_stat = obj.team_batting_stats.select { |stat| stat.model_id == team.id }.first
+    pitching_stat = obj.team_pitching_stats.select { |stat| stat.model_id == team.id }.first
+    {
+      id: team.id,
+      name: team.name,
+      stat: {
+        batting: batting_stat ? batting_stat.attributes : BattingStat.new.attributes,
+        pitching: pitching_stat ? pitching_stat.attributes : PitchingStat.new.attributes
+      }
     }
-  }
-  belongs_to :away_team, lazy_load_data: true, links: {
-    related: lambda { |object|
-      "/games/#{object.id}/away_team"
+  end
+  attribute :home_team, if: proc { |_record, params| params[:team] } do |obj|
+    team = obj.home_team
+    batting_stat = obj.team_batting_stats.select { |stat| stat.model_id == team.id }.first
+    pitching_stat = obj.team_pitching_stats.select { |stat| stat.model_id == team.id }.first
+    {
+      id: team.id,
+      name: team.name,
+      stat: {
+        batting: batting_stat ? batting_stat.attributes : BattingStat.new.attributes,
+        pitching: pitching_stat ? pitching_stat.attributes : PitchingStat.new.attributes
+      }
     }
-  }
-  belongs_to :home_team, lazy_load_data: true, links: {
-    related: lambda { |object|
-      "/games/#{object.id}/home_team"
-    }
-  }
-  has_many :away_players, lazy_load_data: true, links: {
-    related: lambda { |object|
-      "/games/#{object.id}/away_players"
-    }
-  }
-  has_many :home_players, lazy_load_data: true, links: {
-    related: lambda { |object|
-      "/games/#{object.id}/home_players"
-    }
-  }
+  end
+  attribute :away_players, if: proc { |_record, params| params[:player] } do |obj|
+    batting_stats = obj.player_batting_stats
+    pitching_stats = obj.player_pitching_stats
+    obj.players.select { |player| player.team_id == obj.away_team_id }.map do |team_player|
+      batting_stat = batting_stats.find { |stat| stat.model_id == team_player.id }
+      pitching_stat = pitching_stats.find { |stat| stat.model_id == team_player.id }
+      {
+        id: team_player.id,
+        name: team_player.name,
+        stat: {
+          batting: batting_stat ? batting_stat.attributes : BattingStat.new.attributes,
+          pitching: pitching_stat ? pitching_stat.attributes : PitchingStat.new.attributes
+        }
+      }
+    end
+  end
+  attribute :home_players, if: proc { |_record, params| params[:player] } do |obj|
+    batting_stats = obj.player_batting_stats
+    pitching_stats = obj.player_pitching_stats
+    obj.players.select { |player| player.team_id == obj.home_team_id }.map do |team_player|
+      batting_stat = batting_stats.find { |stat| stat.model_id == team_player.id }
+      pitching_stat = pitching_stats.find { |stat| stat.model_id == team_player.id }
+      {
+        id: team_player.id,
+        name: team_player.name,
+        stat: {
+          batting: batting_stat ? batting_stat.attributes : BattingStat.new.attributes,
+          pitching: pitching_stat ? pitching_stat.attributes : PitchingStat.new.attributes
+        }
+      }
+    end
+  end
 end

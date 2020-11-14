@@ -19,7 +19,7 @@ def abort_if_invalid(key_store):
         abort(404, message=key_store.error_message)
 
 
-def get_resource(resource_type):
+def fetch_resource(resource_type):
     args = parser.parse_args()
     key_store = KeyStore(resource_type, args)
     abort_if_invalid(key_store)
@@ -29,22 +29,22 @@ def get_resource(resource_type):
 
 class TeamResources(Resource):
     def get(self):
-        return get_resource(TEAM)
+        return fetch_resource(TEAM)
 
 
 class PlayerResources(Resource):
     def get(self):
-        return get_resource(PLAYER)
+        return fetch_resource(PLAYER)
 
 
 class GameResources(Resource):
     def get(self):
-        return get_resource(GAME)
+        return fetch_resource(GAME)
 
 
 class StatResources(Resource):
     def get(self):
-        return get_resource(STAT)
+        return fetch_resource(STAT)
 
 
 api.add_resource(TeamResources, '/teams')

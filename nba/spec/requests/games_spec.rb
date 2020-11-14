@@ -39,7 +39,6 @@ RSpec.describe 'Games', type: :request do
         it "retrieves #{side}_team from a season" do
           get "/games/#{@game.id}/#{side}_team"
           expect(response).to have_http_status(200)
-          puts data
           expect(data['id'].to_i).to eq(@game.send("#{side}_team_id"))
         end
       end

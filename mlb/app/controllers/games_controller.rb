@@ -4,38 +4,12 @@ class GamesController < ApplicationController
 
   # GET /seasons/:season_id/games
   def index
-    render json: GameSerializer.new(@games, include: [:away_team], is_collection: true).serializable_hash
+    render json: GameSerializer.new(@games, { params: { team: true } }).serializable_hash
   end
 
   # GET /games/:id
   def show
-    render json: GameSerializer.new(@game).serializable_hash
-  end
-
-  %i[away home].each do |side|
-    define_method("#{side}_team") do
-      team = @game.send("#{side}_team")
-      render json: {
-        data: {
-          model: TeamSerializer.new(team),
-          pitching: PitchingStatSerializer.new(@game.send("#{side}_team_pitching_stats").first),
-          batting: BattingStatSerializer.new(@game.send("#{side}_team_batting_stats").first)
-        }
-      }
-    end
-    define_method("#{side}_players") do
-      render json: {
-        data: @game.send("#{side}_players").map do |player|
-          batting = BattingStat.find_by(model: player, model_type: :Player, game: @game)
-          pitching = PitchingStat.find_by(model: player, model_type: :Player, game: @game)
-          {
-            model: PlayerSerializer.new(player),
-            batting: BattingStatSerializer.new(batting),
-            pitching: PitchingStatSerializer.new(pitching)
-          }
-        end
-      }
-    end
+    render json: GameSerializer.new(@game, {params: {team: true, player: true}}).serializable_hash
   end
 
   private
