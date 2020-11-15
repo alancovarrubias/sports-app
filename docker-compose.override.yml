@@ -21,11 +21,15 @@ services:
       - ./server:/home/node/code
       - /home/node/code/node_modules
   nba:
+    build:
+      dockerfile: Dockerfile.dev
     volumes:
       - ./nba:/project
     ports:
       - 3001:3001
   mlb:
+    build:
+      dockerfile: Dockerfile.dev
     volumes:
       - ./mlb:/project
     ports:

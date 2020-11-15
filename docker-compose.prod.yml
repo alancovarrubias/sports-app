@@ -8,6 +8,21 @@ services:
       dockerfile: Dockerfile.prod
       args:
         HOST: ${HOST}
+  server:
+    build:
+      dockerfile: Dockerfile.prod
+      args:
+        HOST: ${HOST}
+  nba:
+    build:
+      dockerfile: Dockerfile.prod
+      args:
+        SECRET_KEY: ${SECRET_KEY}
+  mlb:
+    build:
+      dockerfile: Dockerfile.prod
+      args:
+        SECRET_KEY: ${SECRET_KEY}
 
 volumes:
   postgres:

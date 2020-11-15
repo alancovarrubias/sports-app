@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.$NODE_ENV.js",
-    "start": "nodemon dist/server",
-    "dev": "NODE_ENV=development concurrently -k \"npm run build\" \"npm run start\"",
-    "prod": "NODE_ENV=production npm run build && npm start",
+    "start:dev": "nodemon dist/server",
+    "start:prod": "node dist/server",
+    "dev": "NODE_ENV=development concurrently -k \"npm run build\" \"npm run start:dev\"",
+    "prod": "NODE_ENV=production npm run build && npm run start:prod",
     "generate": "graphql-codegen"
   },
   "keywords": [],

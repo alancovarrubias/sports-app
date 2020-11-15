@@ -33,5 +33,6 @@ module NbaApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.secret_key_base = ENV['SECRET_KEY']
   end
 end
