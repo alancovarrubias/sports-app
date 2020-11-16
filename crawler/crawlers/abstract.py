@@ -20,7 +20,8 @@ class AbstractScraper(ABC):
 
     def get_tables(self, resource_endpoint, css_selectors):
         resource_url = path.join(self.base_url, resource_endpoint)
-        return self.web_driver.get_table_elements(resource_url, css_selectors)
+        elements = self.web_driver.get_table_elements(resource_url, css_selectors)
+        return elements
 
     @abstractmethod
     def get_resource(self):

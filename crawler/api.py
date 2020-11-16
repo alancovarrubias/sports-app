@@ -8,18 +8,16 @@ app = Flask(__name__)
 api = Api(app)
 
 
-parser = reqparse.RequestParser()
-for string_parameter in ['sport', 'team', 'teams', 'game_url', 'away_team', 'home_team']:
-    parser.add_argument(string_parameter, type=str, location='args')
-parser.add_argument('season', type=int, location='args')
-
-
 def abort_if_invalid(key_store):
     if not key_store.valid:
         abort(404, message=key_store.error_message)
 
 
 def fetch_resource(resource_type):
+    parser = reqparse.RequestParser()
+    for string_parameter in ['sport', 'team', 'teams', 'game_url', 'away_team', 'home_team']:
+        parser.add_argument(string_parameter, type=str, location='args')
+    parser.add_argument('season', type=int, location='args')
     args = parser.parse_args()
     key_store = KeyStore(resource_type, args)
     abort_if_invalid(key_store)
