@@ -15,6 +15,8 @@ services:
       - ./client:/home/node/code
       - /home/node/code/node_modules
   server:
+    build:
+      dockerfile: Dockerfile.dev
     ports:
       - 4000:4000
     volumes:
