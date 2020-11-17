@@ -14,26 +14,6 @@ class StatsController < ApplicationController
     render json: StatSerializer.new(@stat).serializable_hash
   end
 
-  # GET /games/1/away_team_stat
-  def away_team_stat
-    render json: StatSerializer.new(@game.away_team_stat).serializable_hash
-  end
-
-  # GET /games/1/home_team_stat
-  def home_team_stat
-    render json: StatSerializer.new(@game.home_team_stat).serializable_hash
-  end
-
-  # GET /games/1/home_player_stats
-  def away_player_stats
-    render json: StatSerializer.new(@game.away_player_stats).serializable_hash
-  end
-
-  # GET /games/1/home_player_stats
-  def home_player_stats
-    render json: StatSerializer.new(@game.home_player_stats).serializable_hash
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.

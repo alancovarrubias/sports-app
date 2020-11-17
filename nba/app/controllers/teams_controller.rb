@@ -14,16 +14,6 @@ class TeamsController < ApplicationController
     render json: TeamSerializer.new(@team).serializable_hash
   end
 
-  # GET /games/1/away_team
-  def away_team
-    render json: TeamSerializer.new(@team).serializable_hash
-  end
-
-  # GET /games/1/home_team
-  def home_team
-    render json: TeamSerializer.new(@team).serializable_hash
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.
