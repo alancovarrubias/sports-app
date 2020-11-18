@@ -1,12 +1,5 @@
 version: "3"
 services:
-  nginx:
-    build: nginx
-    ports:
-      - 80:80
-    depends_on:
-      - client
-      - server
   client:
     image: client:prod
     build:
@@ -31,6 +24,19 @@ services:
       dockerfile: Dockerfile.prod
       args:
         SECRET_KEY: ${SECRET_KEY}
+  crawler:
+    image: crawler:test
+    build:
+      dockerfile: Dockerfile.prod
+  nginx:
+    build:
+      context: nginx
+      dockerfile: Dockerfile.prod
+    ports:
+      - 80:80
+    depends_on:
+      - client
+      - server
 
 volumes:
   postgres:

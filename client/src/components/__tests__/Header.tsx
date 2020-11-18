@@ -1,11 +1,11 @@
 import React from 'react'
-import { renderWithSportContext } from '@test-utils/SportContext'
+import { renderWithApp } from '@test-utils/App'
 import user from '@testing-library/user-event'
 import Header from '../Header'
 import { Sport } from '@app/const'
 
 test('renders a header with the specified sport context', () => {
-  const { getByTestId } = renderWithSportContext(<Header />, {
+  const { getByTestId } = renderWithApp(<Header />, {
     sport: Sport.NBA,
   })
   const header = getByTestId('header')
@@ -13,7 +13,7 @@ test('renders a header with the specified sport context', () => {
 })
 
 test('toggles sport context when clicked', () => {
-  const { getByTestId } = renderWithSportContext(<Header />)
+  const { getByTestId } = renderWithApp(<Header />)
   const header = getByTestId('header')
   user.click(header)
   expect(header).toHaveTextContent(/mlb/i)

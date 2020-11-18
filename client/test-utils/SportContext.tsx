@@ -1,6 +1,7 @@
 import React, { useState, ReactElement, FunctionComponent } from 'react'
 import { render, RenderResult, RenderOptions } from '@testing-library/react'
-import SportContext, { Sport } from '../src/contexts/SportContext'
+import SportContext from '../src/contexts/SportContext'
+import { Sport } from '@app/const'
 
 export interface IRenderWithSportContextOptions extends RenderOptions {
   sport: Sport

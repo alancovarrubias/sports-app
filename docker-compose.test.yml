@@ -16,6 +16,10 @@ services:
     image: mlb:test
     build:
       dockerfile: Dockerfile.test
+  crawler:
+    image: crawler:test
+    build:
+      dockerfile: Dockerfile.test
 
 volumes:
   postgres:

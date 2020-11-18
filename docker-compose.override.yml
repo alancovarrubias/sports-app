@@ -38,6 +38,9 @@ services:
     ports:
       - 3002:3002
   crawler:
+    image: crawler:test
+    build:
+      dockerfile: Dockerfile.dev
     volumes:
       - ./crawler:/project
     ports:
@@ -48,6 +51,15 @@ services:
   mongo:
     ports:
       - 27017:27017
+  nginx:
+    build:
+      context: nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - 80:80
+    depends_on:
+      - client
+      - server
 
 volumes:
   postgres:

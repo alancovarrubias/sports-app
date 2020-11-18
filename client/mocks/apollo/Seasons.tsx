@@ -12,7 +12,13 @@ const SeasonsMock: MockedResponse[] = [
     },
     result: {
       data: {
-        seasons: [{ id: '1', year: 2020 }],
+        seasons: [
+          {
+            id: '1',
+            year: 2020,
+            sport: Sport.NBA,
+          },
+        ],
       },
     },
   },

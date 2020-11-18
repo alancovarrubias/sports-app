@@ -1,5 +1,5 @@
 import React, { useState, ReactElement, FunctionComponent } from 'react'
-import { render, RenderResult } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { MockedProvider } from '@apollo/client/testing'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
