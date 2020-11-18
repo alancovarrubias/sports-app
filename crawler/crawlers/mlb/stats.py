@@ -34,7 +34,7 @@ class MlbStatsScraper(AbstractScraper):
 
         def get_player_stats(tables):
             batting_table, pitching_table = tables
-            css_config = {'cells': 'th, td'}
+            css_config = {'rows': 'tr:not(.spacer)','cells': 'th, td'}
             batting_rows = get_table_rows(batting_table, css_config)
             pitching_rows = get_table_rows(pitching_table, css_config)
             pitching_stats = []
