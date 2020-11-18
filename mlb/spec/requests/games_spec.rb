@@ -33,23 +33,5 @@ RSpec.describe 'Games', type: :request do
         expect(data['id'].to_i).to eq(@game.id)
       end
     end
-
-    %i[away home].each do |side|
-      describe "GET /games/:game_id/#{side}_team" do
-        it "retrieves #{side}_team from a season" do
-          get "/games/#{@game.id}/#{side}_team"
-          expect(response).to have_http_status(200)
-          expect(data['id'].to_i).to eq(@game.send("#{side}_team_id"))
-        end
-      end
-
-      describe 'GET /games/:game_id/away_players' do
-        it 'retrieves specific game from a season' do
-          get "/games/#{@game.id}/#{side}_players"
-          expect(response).to have_http_status(200)
-          expect(data.length).to eq(@game.send("#{side}_players").length)
-        end
-      end
-    end
   end
 end

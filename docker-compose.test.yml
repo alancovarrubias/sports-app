@@ -1,0 +1,21 @@
+version: "3"
+services:
+  client:
+    image: client:test
+    build:
+      dockerfile: Dockerfile.test
+  server:
+    image: server:test
+    build:
+      dockerfile: Dockerfile.test
+  nba:
+    image: nba:test
+    build:
+      dockerfile: Dockerfile.test
+  mlb:
+    image: mlb:test
+    build:
+      dockerfile: Dockerfile.test
+
+volumes:
+  postgres:

@@ -1,9 +1,7 @@
 version: "3"
 services:
-  nginx:
-    build:
-      dockerfile: Dockerfile.dev
   client:
+    image: client:dev
     build:
       dockerfile: Dockerfile.dev
       args:
@@ -15,6 +13,7 @@ services:
       - ./client:/home/node/code
       - /home/node/code/node_modules
   server:
+    image: server:dev
     build:
       dockerfile: Dockerfile.dev
     ports:
@@ -23,6 +22,7 @@ services:
       - ./server:/home/node/code
       - /home/node/code/node_modules
   nba:
+    image: nba:dev
     build:
       dockerfile: Dockerfile.dev
     volumes:
@@ -30,6 +30,7 @@ services:
     ports:
       - 3001:3001
   mlb:
+    image: mlb:dev
     build:
       dockerfile: Dockerfile.dev
     volumes:

@@ -1,0 +1,9 @@
+# build stage
+FROM node:12-stretch
+ARG HOST
+ENV HOST=${HOST}
+WORKDIR /build
+COPY --chown=node:node package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+COPY . .
+CMD ["yarn", "test:watch"]

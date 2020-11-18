@@ -1,10 +1,10 @@
 import React from 'react'
-import { renderWithApollo, waitFor } from '@test-utils/Apollo'
+import { renderWithApp, waitFor } from '@test-utils/App'
 import SeasonsMock from '@mocks/apollo/Seasons'
 import Seasons from '../Seasons'
 
 const renderSeasons = () => {
-  return renderWithApollo(<Seasons />, { mocks: SeasonsMock })
+  return renderWithApp(<Seasons />, { mocks: SeasonsMock })
 }
 test('renders loading state initially', async () => {
   const { getByTestId } = renderSeasons()

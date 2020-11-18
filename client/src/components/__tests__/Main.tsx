@@ -1,13 +1,10 @@
 import React from 'react'
 import { renderWithRouter } from '@test-utils/Router'
 import Main from '../Main'
-import SeasonsMock from '@mocks/apollo/Seasons'
-import GamesMock from '@mocks/apollo/Games'
-import GameMock from '@mocks/apollo/Game'
 
 jest.mock('../Seasons')
 jest.mock('../Games')
-jest.mock('../Game')
+jest.mock('../Game/index')
 test('redirects from root to /seasons', () => {
   const { history } = renderWithRouter(<Main />, {
     route: '/',

@@ -9,6 +9,7 @@
     "start:prod": "node dist/server",
     "dev": "NODE_ENV=development concurrently -k \"npm run build\" \"npm run start:dev\"",
     "prod": "NODE_ENV=production npm run build && npm run start:prod",
+    "test": "echo \"test\"",
     "generate": "graphql-codegen"
   },
   "keywords": [],

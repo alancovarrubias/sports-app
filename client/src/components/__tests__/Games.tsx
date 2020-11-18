@@ -1,10 +1,10 @@
 import React from 'react'
-import { renderWithApollo, waitFor } from '@test-utils/Apollo'
+import { renderWithApp, waitFor } from '@test-utils/App'
 import Games from '../Games'
 import GamesMock from '@mocks/apollo/Games'
 
 const renderGames = () => {
-  return renderWithApollo(<Games />, { mocks: GamesMock })
+  return renderWithApp(<Games />, { mocks: GamesMock })
 }
 test('renders a header with the specified sport context', async () => {
   const { getByTestId } = renderGames()
