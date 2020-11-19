@@ -19,9 +19,7 @@ class NbaAPI extends RESTDataSource {
       offset,
       limit,
     })
-    console.log(games_res)
     const games = games_res.data.map(game => game.attributes)
-    console.log(games)
     return games.map(addNbaCacheMetadata)
   }
 

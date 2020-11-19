@@ -10,7 +10,6 @@ const GameMock: MockedResponse[] = [
       query: GET_GAME_QUERY,
       variables: {
         sport: Sport.NBA,
-        season_id: Season.id,
         game_id: Game.id,
       },
     },
@@ -19,15 +18,18 @@ const GameMock: MockedResponse[] = [
         game: {
           id: '1',
           date: '2020',
+          sport: Sport.NBA,
           away_team: {
             id: '1',
             name: 'Clippers',
+            sport: Sport.NBA,
             __typename: 'Team',
             stat: { pts: 84 },
           },
           home_team: {
             id: '2',
             name: 'Lakers',
+            sport: Sport.NBA,
             __typename: 'Team',
             stat: { pts: 94 },
           },
@@ -35,6 +37,7 @@ const GameMock: MockedResponse[] = [
             {
               id: '1',
               name: 'Kawhi Leonard',
+              sport: Sport.NBA,
               __typename: 'Player',
               stat: {
                 sp: 360,
@@ -52,6 +55,7 @@ const GameMock: MockedResponse[] = [
             {
               id: '2',
               name: 'Anthony Davis',
+              sport: Sport.NBA,
               __typename: 'Player',
               stat: {
                 sp: 360,
