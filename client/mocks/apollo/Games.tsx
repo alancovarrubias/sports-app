@@ -10,6 +10,8 @@ const GamesMock: MockedResponse[] = [
       variables: {
         sport: Sport.NBA,
         season_id: Season.id,
+        limit: 100,
+        offset: 0,
       },
     },
     result: {
@@ -18,6 +20,8 @@ const GamesMock: MockedResponse[] = [
           {
             id: '1',
             date: '2020',
+            sport: Sport.NBA,
+            __typename: 'Game',
             away_team: {
               __typename: 'Team',
               name: 'Clippers',
