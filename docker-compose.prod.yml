@@ -25,10 +25,11 @@ services:
       args:
         SECRET_KEY: ${SECRET_KEY}
   crawler:
-    image: crawler:test
+    image: crawler:prod
     build:
       dockerfile: Dockerfile.prod
   nginx:
+    image: nginx:prod
     build:
       context: nginx
       dockerfile: Dockerfile.prod

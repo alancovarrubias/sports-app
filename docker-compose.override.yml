@@ -38,7 +38,7 @@ services:
     ports:
       - 3002:3002
   crawler:
-    image: crawler:test
+    image: crawler:dev
     build:
       dockerfile: Dockerfile.dev
     volumes:
@@ -52,6 +52,7 @@ services:
     ports:
       - 27017:27017
   nginx:
+    image: nginx:dev
     build:
       context: nginx
       dockerfile: Dockerfile.dev
