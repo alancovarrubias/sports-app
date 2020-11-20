@@ -15,10 +15,14 @@ services:
     image: nba:test
     build:
       dockerfile: Dockerfile.test
+    volumes:
+      - ./nba:/project
   mlb:
     image: mlb:test
     build:
       dockerfile: Dockerfile.test
+    volumes:
+      - ./mlb:/project
   crawler:
     image: crawler:test
     build:
