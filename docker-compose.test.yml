@@ -4,6 +4,9 @@ services:
     image: client:test
     build:
       dockerfile: Dockerfile.test
+    volumes:
+      - ./client:/home/node/code
+      - /home/node/code/node_modules
   server:
     image: server:test
     build:
