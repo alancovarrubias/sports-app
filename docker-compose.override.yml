@@ -51,6 +51,14 @@ services:
   mongo:
     ports:
       - 27017:27017
+  analyzer:
+    build:
+      context: analyzer
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./analyzer:/project
+    depends_on:
+      - server
   nginx:
     image: nginx:dev
     build:
