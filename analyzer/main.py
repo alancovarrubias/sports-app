@@ -9,11 +9,6 @@ for string_parameter in ['sport', 'team', 'teams', 'game_url', 'away_team', 'hom
     parser.add_argument(string_parameter, type=str, location='args')
 parser.add_argument('season', type=int, location='args')
 
-def abort_if_invalid(key_store):
-    if not key_store.valid:
-        abort(404, message=key_store.error_message)
-
-
 def fetch_resource():
     return 'hey'
 

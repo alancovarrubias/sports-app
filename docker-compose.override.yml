@@ -52,6 +52,7 @@ services:
     ports:
       - 27017:27017
   analyzer:
+    image: analyzer:dev
     build:
       context: analyzer
       dockerfile: Dockerfile.dev
