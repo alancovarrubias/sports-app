@@ -14,8 +14,8 @@ def convert_numeric(text):
 
 
 def get_abbr(cell):
-    anchor = cell.find_element_by_tag_name('a')
-    abbr = re.search(r"[a-z]*\d{2}", anchor.get_attribute('href')).group()
+    anchor = cell.find_element_by_tag_name("a")
+    abbr = re.search(r"[a-z]*\d{2}", anchor.get_attribute("href")).group()
     return abbr
 
 

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import json
 
+
 class AbstractModel(ABC):
     def __init__(self, row):
         self.build(row)

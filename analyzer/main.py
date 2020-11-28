@@ -5,12 +5,20 @@ app = Flask(__name__)
 api = Api(app)
 
 parser = reqparse.RequestParser()
-for string_parameter in ['sport', 'team', 'teams', 'game_url', 'away_team', 'home_team']:
-    parser.add_argument(string_parameter, type=str, location='args')
-parser.add_argument('season', type=int, location='args')
+for string_parameter in [
+    "sport",
+    "team",
+    "teams",
+    "game_url",
+    "away_team",
+    "home_team",
+]:
+    parser.add_argument(string_parameter, type=str, location="args")
+parser.add_argument("season", type=int, location="args")
+
 
 def fetch_resource():
-    return 'hey'
+    return "hey"
 
 
 class TeamResources(Resource):
@@ -18,7 +26,7 @@ class TeamResources(Resource):
         return fetch_resource()
 
 
-api.add_resource(TeamResources, '/teams')
+api.add_resource(TeamResources, "/teams")
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")

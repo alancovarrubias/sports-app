@@ -3,8 +3,8 @@ from const.models import PLAYER
 
 
 def get_sp(data):
-    mp = data.split(':')
-    return int(mp[0])*60 if (len(mp) == 1) else int(mp[0])*60 + int(mp[1])
+    mp = data.split(":")
+    return int(mp[0]) * 60 if (len(mp) == 1) else int(mp[0]) * 60 + int(mp[1])
 
 
 def type_rtg(rtg, model_type):
@@ -20,7 +20,7 @@ class NbaStat(AbstractModel):
 
     def build(self, row):
         if self.model_type == PLAYER:
-            self.abbr = row[0].get_attribute('data-append-csv')
+            self.abbr = row[0].get_attribute("data-append-csv")
         row_text = [cell.text for cell in row]
         self.sp = get_sp(row_text[1])
         self.fg = int(row_text[2])

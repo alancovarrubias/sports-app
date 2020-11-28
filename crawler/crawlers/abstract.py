@@ -5,6 +5,7 @@ from const.nba import BASKETBALL_REFERENCE
 from abc import ABC, abstractmethod
 from crawlers.web_driver import WebDriver
 
+
 def get_base_url(sport):
     if sport == NBA:
         return BASKETBALL_REFERENCE

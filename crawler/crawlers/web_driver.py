@@ -2,6 +2,7 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 
+
 class WebDriver:
     def __init__(self):
         chrome_options = Options()
@@ -21,4 +22,3 @@ class WebDriver:
 
     def close(self):
         self.driver.close()
-    
