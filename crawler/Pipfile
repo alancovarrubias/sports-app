@@ -17,5 +17,8 @@ python_version = "3.8"
 
 [dev-packages]
 pylint = "*"
-autopep8 = "*"
+black = "*"
 rope = "*"
+
+[pipenv]
+allow_prereleases = true

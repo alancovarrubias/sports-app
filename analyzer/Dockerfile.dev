@@ -3,7 +3,7 @@ RUN pip install pipenv
 ENV PROJECT_DIR /project
 WORKDIR ${PROJECT_DIR}
 COPY Pipfile Pipfile.lock ${PROJECT_DIR}/
-RUN pipenv install --system --deploy
+RUN pipenv install --system --dev
 COPY . .
 
 CMD ["python", "main.py"]
