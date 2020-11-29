@@ -15,7 +15,6 @@ module Database
           server_options = {
             game_url: @game.url, home_team: @game.home_team.full_name, away_team: @game.away_team.full_name
           }
-          puts @game.url
           stats_res = query_server(:stats, server_options)
           build_stats(stats_res)
         end

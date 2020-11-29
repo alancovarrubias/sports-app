@@ -12,11 +12,12 @@ module Database
 
         teams = @season.teams.map(&:abbr).join(',')
         games_res = query_server(:games, season: @season.year, teams: teams)
+        games_res['team_links'].each do |abbr, link|
+          team = @season.teams.find_by_abbr(abbr)
+          team.update(link: link)
+        end
         games_res['games'].each do |game_data|
           build_game(game_data)
-        end
-        games_res['team_links'].each do |abbr, link|
-          ::Team.find_by_abbr(abbr).update(link: link)
         end
       end
 
