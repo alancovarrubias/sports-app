@@ -9,20 +9,19 @@ def read_json(file):
     return data
 
 
-def test_team_ortg():
-    data = read_json("data.json")
-    away_team = data["away_team"]
-    home_team = data["home_team"]
-    away_team_stat = NbaTeamStat(away_team, home_team)
-    assert round(away_team_stat.ortg) == away_team["stat"]["ortg"]
+data = read_json("data.json")
+away_team = data["away_team"]
+home_team = data["home_team"]
+away_players = data["away_players"]
+home_players = data["home_players"]
 
 
-def test_player_ortg():
-    data = read_json("data.json")
-    away_team = data["away_team"]
-    home_team = data["home_team"]
-    away_players = data["away_players"]
-    player = away_players[0]
-    print(player)
-    player_stat = NbaPlayerStat(player, away_team, home_team)
-    assert round(player_stat.ortg) == player["stat"]["ortg"]
+class TestOrtg:
+    def test_team_ortg(self):
+        away_team_stat = NbaTeamStat(away_team, home_team)
+        assert round(away_team_stat.ortg) == away_team["stat"]["ortg"]
+
+    def test_player_ortg(self):
+        for player in home_players:
+            player_stat = NbaPlayerStat(player, home_team, away_team)
+            assert round(player_stat.ortg) == player["stat"]["ortg"]
