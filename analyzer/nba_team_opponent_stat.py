@@ -2,9 +2,9 @@ from nba_stat import NbaStat
 
 
 class NbaTeamOpponentStat:
-    def __init__(self, team_json, opponent_json):
-        self.team = NbaStat(team_json)
-        opponent = NbaStat(opponent_json)
+    def __init__(self, team_stat, opponent_stat):
+        self.team = NbaStat(team_stat)
+        opponent = NbaStat(opponent_stat)
         self.orb_percent = self.orb / (self.orb + opponent.drb)
         self.sc_poss = self.fg + (1 - (1 - self.ft_percent) ** 2) * self.fta * 0.4
         self.plays = self.fga + self.fta * 0.4 + self.tov

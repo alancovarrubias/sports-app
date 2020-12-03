@@ -8,7 +8,6 @@ flask-api = "*"
 flask = "*"
 flask-restful = "*"
 requests = "*"
-numpy = "*"
 
 [requires]
 python_version = "3.8"

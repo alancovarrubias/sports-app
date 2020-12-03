@@ -2,9 +2,9 @@ from nba_team_opponent_stat import NbaTeamOpponentStat
 
 
 class NbaTeamStat:
-    def __init__(self, team_json, opponent_json):
-        self.team = NbaTeamOpponentStat(team_json, opponent_json)
-        opponent = NbaTeamOpponentStat(opponent_json, team_json)
+    def __init__(self, team_stat, opponent_stat):
+        self.team = NbaTeamOpponentStat(team_stat, opponent_stat)
+        opponent = NbaTeamOpponentStat(opponent_stat, team_stat)
         self.tot_poss = 0.5 * (
             (
                 self.fga

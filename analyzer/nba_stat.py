@@ -2,8 +2,22 @@ from helpers import safe_div
 
 
 class NbaStat:
-    def __init__(self, team_json):
-        stat = team_json["stat"]
+    attributes = [
+        "sp",
+        "ft",
+        "fta",
+        "fg",
+        "fga",
+        "fg3",
+        "fg3a",
+        "ast",
+        "orb",
+        "drb",
+        "tov",
+        "pts",
+    ]
+
+    def __init__(self, stat):
         self.mp = stat["sp"] / 60
         self.ft = stat["ft"]
         self.fta = stat["fta"]

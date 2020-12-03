@@ -4,9 +4,9 @@ from helpers import safe_div
 
 
 class NbaPlayerStat:
-    def __init__(self, player_json, team_json, opponent_json):
-        self.player = NbaStat(player_json)
-        team = NbaTeamStat(team_json, opponent_json)
+    def __init__(self, player_stat, team_stat, opponent_stat):
+        self.player = NbaStat(player_stat)
+        team = NbaTeamStat(team_stat, opponent_stat)
         self.q_5 = 1.14 * ((team.ast - self.ast) / team.fg)
         self.q_12 = ((team.ast / team.mp) * self.mp * 5.0 - self.ast) / (
             (team.fg / team.mp) * self.mp * 5.0 - self.fg
