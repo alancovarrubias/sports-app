@@ -20,7 +20,7 @@ class GameSerializer
     }
   end
   attribute :away_players, if: proc { |_record, params| params[:player] } do |obj|
-    obj.player_stats.select { |stat| stat.model.team_id == obj.away_team_id }.map do |player_stat|
+    obj.player_stats.includes(:model).select { |stat| stat.model.team_id == obj.away_team_id }.map do |player_stat|
       player = player_stat.model
       {
         id: player.id,
@@ -30,7 +30,7 @@ class GameSerializer
     end
   end
   attribute :home_players, if: proc { |_record, params| params[:player] } do |obj|
-    obj.player_stats.select { |stat| stat.model.team_id == obj.home_team_id }.map do |player_stat|
+    obj.player_stats.includes(:model).select { |stat| stat.model.team_id == obj.home_team_id }.map do |player_stat|
       player = player_stat.model
       {
         id: player.id,
