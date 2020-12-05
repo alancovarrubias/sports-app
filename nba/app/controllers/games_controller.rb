@@ -1,15 +1,16 @@
 class GamesController < ApplicationController
   before_action :set_games, only: [:index]
   before_action :set_game, except: [:index]
+  before_action :set_serializer_params
 
   # GET /seasons/1/games
   def index
-    render json: GameSerializer.new(@games, { params: { team: true } }).serializable_hash
+    render json: GameSerializer.new(@games, { params: @serializer_params }).serializable_hash
   end
 
   # GET /games/1
   def show
-    render json: GameSerializer.new(@game, { params: { team: true, player: true } }).serializable_hash
+    render json: GameSerializer.new(@game, { params: @serializer_params }).serializable_hash
   end
 
   private
@@ -27,5 +28,9 @@ class GamesController < ApplicationController
   # Only allow a trusted parameter "white list" through.
   def game_params
     params.permit(:season_id)
+  end
+
+  def set_serializer_params
+    @serializer_params = { team: params[:team] == "1", player: params[:team] == "1" }
   end
 end
