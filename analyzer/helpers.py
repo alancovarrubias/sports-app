@@ -21,6 +21,13 @@ def sum_stats(stats, attributes):
     return summed_stat
 
 
+def combine_stats(stat1, stat2, attributes):
+    combined_stat = {}
+    for attr in attributes:
+        combined_stat[attr] = stat1[attr] + stat2[attr]
+    return combined_stat
+
+
 def sum_stats_attr(players, attr):
     attrs = [player[attr] for player in players]
     return sum(attrs)

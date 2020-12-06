@@ -1,10 +1,10 @@
-from nba_player import NbaPlayer
-from nba_team import NbaTeam
-from nba_stat import NbaStat
+from nba.player import NbaPlayer
+from nba.team import NbaTeam
+from nba.stat import NbaStat
 from helpers import sum_stats, read_json
 
 
-data = read_json("data.json")
+data = read_json("game.json")
 away_team_data = data["away_team"]
 home_team_data = data["home_team"]
 away_players_data = data["away_players"]
