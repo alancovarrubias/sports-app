@@ -22,6 +22,3 @@ for game in games:
     for player in home_players:
         store.add_model(player)
     season_data = store.get_data(away_team)
-    season_stat = season_data["season_model"]["stat"]
-    count = season_data["count"]
-    print(season_stat["sp"])

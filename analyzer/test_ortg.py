@@ -4,7 +4,7 @@ from nba.stat import NbaStat
 from helpers import sum_stats, read_json
 
 
-data = read_json("game.json")
+data = read_json("game.json")["data"]["attributes"]
 away_team_data = data["away_team"]
 home_team_data = data["home_team"]
 away_players_data = data["away_players"]
