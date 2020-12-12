@@ -1,41 +1,26 @@
-from nba.stat import NbaStat
-from helpers import combine_stats
-
-
-def get_data_from_map(map, model):
-    id = model["id"]
-    if id not in map:
-        return None
-    return map[id]
-
-
-def add_model_to_map(map, model):
-    id = model["id"]
-    if id not in map:
-        map[id] = {"season_model": model, "count": 1}
-    else:
-        map[id]["count"] += 1
-        season_model = map[id]["season_model"]
-        season_model["stat"] = combine_stats(
-            season_model["stat"], model["stat"], NbaStat.attributes
-        )
+from data_stat import DataStat
 
 
 class DataStore:
-    def __init__(self):
+    def __init__(self, previous_size=1):
         self.teams = {}
         self.players = {}
+        self.previous_size = previous_size
 
-    def add_model(self, model):
-        model_type = model["stat"]["model_type"]
-        if model_type == "Team":
-            add_model_to_map(self.teams, model)
-        elif model_type == "Player":
-            add_model_to_map(self.players, model)
+    def add_data(self, model):
+        model_stat = DataStat(model, self.previous_size)
+        model_map = self.get_data_map(model_stat)
+        if model_stat.id not in model_map:
+            model_map[model_stat.id] = model_stat
+        else:
+            model_map[model_stat.id].add_model(model)
 
     def get_data(self, model):
-        model_type = model["stat"]["model_type"]
-        if model_type == "Team":
-            return get_data_from_map(self.teams, model)
-        elif model_type == "Player":
-            return get_data_from_map(self.players, model)
+        model_stat = DataStat(model, self.previous_size)
+        model_map = self.get_data_map(model_stat)
+        if model_stat.id not in model_map:
+            return None
+        return model_map[model_stat.id]
+
+    def get_data_map(self, model_stat):
+        return self.teams if model_stat.model_type == "Team" else self.players
