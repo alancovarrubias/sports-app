@@ -34,4 +34,4 @@ COPY Pipfile Pipfile.lock ${PROJECT_DIR}/
 RUN pipenv install --system --deploy
 COPY . .
 
-CMD ["python", "api.py"]
+CMD ["python", "src/api.py"]

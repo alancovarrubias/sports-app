@@ -26,6 +26,8 @@ RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 
 # Set display port as an environment variable
 ENV DISPLAY=:99
+ENV FLASK_ENV=development
+ENV PYTHONUNBUFFERED=1
 
 RUN pip install pipenv
 ENV PROJECT_DIR /project
@@ -34,4 +36,4 @@ COPY Pipfile Pipfile.lock ${PROJECT_DIR}/
 RUN pipenv install --system --dev
 COPY . .
 
-CMD ["python", "api.py"]
+CMD ["python", "src/api.py"]

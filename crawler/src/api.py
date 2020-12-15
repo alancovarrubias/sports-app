@@ -2,21 +2,19 @@ from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 from const.models import TEAM, PLAYER, GAME, STAT, LINE
 from resources import Resources
-from keys import Keys
-from request_parser import parsers
+from args import Args
 
 app = Flask(__name__)
 api = Api(app)
 
 
 def fetch_resource(resource_type):
-    args = parsers[resource_type].parse_args()
-    key_store = Keys(resource_type, args)
-    valid, error_message = key_store.validate_args()
+    args = Args(resource_type)
+    valid, error_message = args.validate()
     if not valid:
         abort(404, message=error_message)
-    resources = Resources(key_store)
-    return resources.fetch()
+    resources = Resources(args)
+    return resources.fetch(args)
 
 
 class TeamResources(Resource):
