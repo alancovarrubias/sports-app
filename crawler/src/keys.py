@@ -17,14 +17,14 @@ KEYS = {
 }
 
 
-class KeyStore:
+class Keys:
     def __init__(self, resource_type, args):
         self.args = {k: v for k, v in args.items() if v is not None}
         self.sport = self.args["sport"]
         self.resource_type = resource_type
-        self.keys, self.values = self.key_values()
-        self.valid, self.error_message = self.validate_args()
-        self.db_key = self.build_db_key()
+        self.keys = KEYS[self.sport][self.resource_type]
+        self.values = [str(self.args[key]) for key in keys]
+        self.db_key = "".join(self.values[1:])
 
     def validate_args(self):
         if self.sport is None or self.sport not in SPORTS:
@@ -33,11 +33,3 @@ class KeyStore:
             if key not in self.args.keys():
                 return False, f"Required arguments {self.keys}"
         return True, None
-
-    def key_values(self):
-        keys = KEYS[self.sport][self.resource_type]
-        values = list(map(lambda key: str(self.args[key]), keys))
-        return keys, values
-
-    def build_db_key(self):
-        return "".join(self.values[1:])

@@ -1,34 +1,20 @@
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
-from const.models import TEAM, PLAYER, GAME, STAT
+from const.models import TEAM, PLAYER, GAME, STAT, LINE
 from resources import Resources
-from store.keys import KeyStore
+from keys import Keys
+from request_parser import parsers
 
 app = Flask(__name__)
 api = Api(app)
 
-parser = reqparse.RequestParser()
-for string_parameter in [
-    "sport",
-    "team",
-    "teams",
-    "game_url",
-    "away_team",
-    "home_team",
-]:
-    parser.add_argument(string_parameter, type=str, location="args")
-parser.add_argument("season", type=int, location="args")
-
-
-def abort_if_invalid(key_store):
-    if not key_store.valid:
-        abort(404, message=key_store.error_message)
-
 
 def fetch_resource(resource_type):
-    args = parser.parse_args()
-    key_store = KeyStore(resource_type, args)
-    abort_if_invalid(key_store)
+    args = parsers[resource_type].parse_args()
+    key_store = Keys(resource_type, args)
+    valid, error_message = key_store.validate_args()
+    if not valid:
+        abort(404, message=error_message)
     resources = Resources(key_store)
     return resources.fetch()
 
@@ -53,10 +39,16 @@ class StatResources(Resource):
         return fetch_resource(STAT)
 
 
+class LineResources(Resource):
+    def get(self):
+        return fetch_resource(LINE)
+
+
 api.add_resource(TeamResources, "/teams")
 api.add_resource(PlayerResources, "/players")
 api.add_resource(GameResources, "/games")
 api.add_resource(StatResources, "/stats")
+api.add_resource(LineResources, "/lines")
 
 
 if __name__ == "__main__":
