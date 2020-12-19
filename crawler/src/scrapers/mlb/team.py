@@ -2,7 +2,7 @@ from scrapers.mlb.base import MlbBaseScraper
 from models.mlb.team import MlbTeam
 
 
-class MlbTeamsScraper(MlbBaseScraper):
+class MlbTeamScraper(MlbBaseScraper):
     def get_resource(self, args):
         season = args["season"]
         endpoint = f"leagues/MLB/{season}.shtml"

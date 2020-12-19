@@ -19,12 +19,12 @@ class AbstractScraper(ABC):
         url = path.join(self.base_url, endpoint)
         self.driver.get(url)
 
-    def get_element(self, selector):
+    def find_element(self, selector):
         return self.driver.find_element_by_css_selector(selector)
 
     def get_tables(self, endpoint, css_selectors):
         self.get(endpoint)
-        elements = [self.get_element(selector) for selector in css_selectors]
+        elements = [self.find_element(selector) for selector in css_selectors]
         return elements
 
     def get_table_rows(self, table, selectors=None):

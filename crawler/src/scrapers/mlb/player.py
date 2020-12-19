@@ -2,7 +2,7 @@ from scrapers.mlb.base import MlbBaseScraper
 from models.mlb.player import MlbPlayer
 
 
-class MlbPlayersScraper(MlbBaseScraper):
+class MlbPlayerScraper(MlbBaseScraper):
     def get_resource(self, args):
         season = args["season"]
         team = args["team"]

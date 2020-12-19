@@ -8,7 +8,7 @@ import re
 WORD_REGEX = r"[^\w]"
 
 
-class MlbStatsScraper(MlbBaseScraper):
+class MlbStatScraper(MlbBaseScraper):
     def get_resource(self, args):
         game_url = args["game_url"]
         away_team = re.sub(WORD_REGEX, "", args["away_team"])

@@ -6,7 +6,7 @@ from models.mlb.game import MlbGame
 TEAM_LINK_REGEX = r"[A-Z]{3}"
 
 
-class MlbGamesScraper(MlbBaseScraper):
+class MlbGameScraper(MlbBaseScraper):
     def get_resource(self, args):
 
         season = args["season"]

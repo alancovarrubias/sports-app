@@ -8,7 +8,7 @@ KEYS = {
         PLAYER: ["sport", "season", "team"],
         GAME: ["sport", "season"],
         STAT: ["sport", "game_url"],
-        LINE: ["sport", "season"],
+        LINE: ["sport", "season", "date"],
     },
     MLB: {
         TEAM: ["sport", "season"],

@@ -22,4 +22,5 @@ stat_parser.add_argument("home_team", type=str, location="args", required=True)
 parsers[STAT] = stat_parser
 
 line_parser = parser.copy()
+line_parser.add_argument("date", type=str, location="args", required=True)
 parsers[LINE] = line_parser
