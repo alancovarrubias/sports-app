@@ -4,17 +4,17 @@ from request_parser import parsers
 
 KEYS = {
     NBA: {
-        TEAM: ["sport", "season"],
-        PLAYER: ["sport", "season", "team"],
-        GAME: ["sport", "season"],
-        STAT: ["sport", "game_url"],
-        LINE: ["sport", "season", "date"],
+        TEAM: ["season"],
+        PLAYER: ["season", "team"],
+        GAME: ["season"],
+        STAT: ["game_url"],
+        LINE: ["season", "date"],
     },
     MLB: {
-        TEAM: ["sport", "season"],
-        PLAYER: ["sport", "season", "team"],
-        GAME: ["sport", "season"],
-        STAT: ["sport", "game_url"],
+        TEAM: ["season"],
+        PLAYER: ["season", "team"],
+        GAME: ["season"],
+        STAT: ["game_url"],
     },
 }
 
@@ -22,11 +22,11 @@ KEYS = {
 class Args:
     def __init__(self, resource_type):
         self.resource_type = resource_type
-        self.query_params = parsers[self.resource_type].parse_args()
+        self.query_params = parsers[resource_type].parse_args()
         self.sport = self.query_params["sport"]
-        self.keys = KEYS[self.sport][self.resource_type]
+        self.keys = KEYS[self.sport][resource_type]
         self.values = [str(self.query_params[key]) for key in self.keys]
-        self.db_key = "".join(self.values[1:])
+        self.db_key = self.sport + "".join(self.values)
 
     def validate(self):
         if self.sport is None or self.sport not in SPORTS:
