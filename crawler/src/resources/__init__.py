@@ -8,8 +8,6 @@ class Resources:
         self.scraper_factory = ScraperFactory(args)
 
     def fetch(self, args):
-        scraper = self.scraper_factory.get_scraper()
-        resource_data = scraper.get_resource(args.query_params)
         if not self.db_manager.resource_exists(args.db_key):
             scraper = self.scraper_factory.get_scraper()
             resource_data = scraper.get_resource(args.query_params)
