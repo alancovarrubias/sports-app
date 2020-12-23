@@ -4,14 +4,17 @@ from const.models import TEAM, PLAYER, GAME, STAT, LINE
 parsers = {}
 parser = reqparse.RequestParser()
 parser.add_argument("sport", type=str, location="args", required=True)
-parser.add_argument("season", type=int, location="args", required=True)
+team_parser = parser.copy()
+team_parser.add_argument("season", type=int, location="args", required=True)
 parsers[TEAM] = parser.copy()
 
 player_parser = parser.copy()
+player_parser.add_argument("season", type=int, location="args", required=True)
 player_parser.add_argument("team", type=str, location="args", required=True)
 parsers[PLAYER] = player_parser
 
 game_parser = parser.copy()
+game_parser.add_argument("season", type=int, location="args", required=True)
 game_parser.add_argument("teams", type=str, location="args")
 parsers[GAME] = game_parser
 

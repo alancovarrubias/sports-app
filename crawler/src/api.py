@@ -10,9 +10,6 @@ api = Api(app)
 
 def fetch_resource(resource_type):
     args = Args(resource_type)
-    valid, error_message = args.validate()
-    if not valid:
-        abort(404, message=error_message)
     resources = Resources(args)
     return resources.fetch(args)
 
