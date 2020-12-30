@@ -11,6 +11,8 @@ module Database
           Builder::Players.new(season)
         when :Stat
           Builder::Stats.new(season)
+        when :Line
+          Builder::Lines.new(season)
         end
       end
     end

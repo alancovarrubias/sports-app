@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_041556) do
+ActiveRecord::Schema.define(version: 2020_12_25_224858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 2020_08_18_041556) do
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
     t.index ["season_id"], name: "index_games_on_season_id"
+  end
+
+  create_table "lines", force: :cascade do |t|
+    t.bigint "game_id"
+    t.string "bookie"
+    t.float "total"
+    t.float "spread"
+    t.index ["game_id"], name: "index_lines_on_game_id"
   end
 
   create_table "players", force: :cascade do |t|

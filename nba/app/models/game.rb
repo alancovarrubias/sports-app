@@ -8,6 +8,7 @@ class Game < ApplicationRecord
   has_many :player_stats, -> { player_stats }, class_name: 'Stat'
   has_many :teams, through: :team_stats, source: :model, source_type: 'Team'
   has_many :players, through: :player_stats, source: :model, source_type: 'Player'
+  has_many :lines
   scope :with_team_stats, -> { includes(:away_team, :home_team, :team_stats) }
   scope :with_player_stats, -> { includes(player_stats: [:model]) }
 

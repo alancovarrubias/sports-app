@@ -26,4 +26,4 @@ class Args:
         self.sport = self.query_params["sport"]
         keys = DB_KEYS[self.sport][resource_type]
         values = [str(self.query_params[key]) for key in keys]
-        self.db_key = self.sport + "".join(values)
+        self.db_key = "".join(values)

@@ -14,6 +14,7 @@ RSpec.describe Game, type: :model do
     it { should have_many(:player_stats).conditions(model_type: 'Player') }
     it { should have_many(:teams).through(:team_stats).source(:model) }
     it { should have_many(:players).through(:player_stats).source(:model) }
+    it { should have_many(:lines) }
   end
 
   describe 'methods' do

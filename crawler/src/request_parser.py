@@ -6,7 +6,7 @@ parser = reqparse.RequestParser()
 parser.add_argument("sport", type=str, location="args", required=True)
 team_parser = parser.copy()
 team_parser.add_argument("season", type=int, location="args", required=True)
-parsers[TEAM] = parser.copy()
+parsers[TEAM] = team_parser
 
 player_parser = parser.copy()
 player_parser.add_argument("season", type=int, location="args", required=True)
