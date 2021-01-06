@@ -1,10 +1,6 @@
 module Database
   module Builder
     class Stats < Base
-      def needs_data?
-        @game.stats.empty?
-      end
-
       def build
         @season.games.each do |game|
           @game = game
@@ -19,6 +15,8 @@ module Database
           build_stats(stats_res)
         end
       end
+
+      private
 
       def build_stats(stats_res)
         %i[away home].each do |side|
@@ -42,6 +40,10 @@ module Database
         }
         stat_object = ::Stat.find_or_create_by(stat_query)
         stat_object.update(stat)
+      end
+
+      def needs_data?
+        @game.stats.empty?
       end
     end
   end

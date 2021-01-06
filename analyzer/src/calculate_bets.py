@@ -2,7 +2,7 @@ from nba.stat import NbaStat
 from nba.player_stat import NbaPlayerStat
 from nba.team_stat import NbaTeamStat
 from helpers import read_json
-from data_store import DataStore
+from data.store import DataStore
 
 
 def predict_ortg(team_data, opponent_data):

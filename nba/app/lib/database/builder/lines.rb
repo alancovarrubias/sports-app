@@ -2,18 +2,21 @@ module Database
   module Builder
     class Lines < Base
       def build
-        dates = @season.games.map(&:date).uniq.map(&:to_s)
+        dates = @season.games.map(&:date).uniq
         dates.each do |date|
-          @date = date.tr('-', '')
+          @games = @season.games.where(date: date)
+          next unless needs_data?
 
           puts "Building Lines for Games in date #{date}"
           server_options = {
-            date: @date
+            date: date.to_s.tr('-', '')
           }
           lines_res = query_server(:lines, server_options)
           build_lines(lines_res)
         end
       end
+
+      private
 
       def build_lines(lines_res)
         teams = lines_res['teams']
@@ -33,7 +36,7 @@ module Database
         home_team = find_team(attributes[:home_team])
         total = convert_data(attributes[:total])
         spread = convert_data(attributes[:spread])
-        game = @season.games.find_by(away_team: away_team, home_team: home_team, date: @date)
+        game = @games.find_by(away_team: away_team, home_team: home_team)
         line_query = {
           bookie: 'opener',
           game: game
@@ -41,8 +44,6 @@ module Database
         line = ::Line.find_or_create_by(line_query)
         line.update(total: total, spread: spread)
       end
-
-      private
 
       def find_team(team_data)
         if team_data.include? 'L.A.'
@@ -54,6 +55,10 @@ module Database
 
       def convert_data(str)
         str[-1].ord == 50 ? str[0...-1].to_i + 0.5 : str.to_i
+      end
+
+      def needs_data?
+        Line.where(game: @games).empty?
       end
     end
   end
