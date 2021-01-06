@@ -6,4 +6,4 @@ COPY Pipfile Pipfile.lock ${PROJECT_DIR}/
 RUN pipenv install --system --dev
 COPY . .
 
-CMD ["python", "main.py"]
+CMD ["python", "src/main.py"]
