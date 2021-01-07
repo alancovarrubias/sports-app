@@ -54,7 +54,7 @@ module Database
       end
 
       def convert_data(str)
-        str[-1].ord == 50 ? str[0...-1].to_i + 0.5 : str.to_i
+        str[-1].ord == 189 ? str[0...-1].to_i + 0.5 : str.to_i
       end
 
       def needs_data?
