@@ -1,6 +1,6 @@
 from .team_stat import NbaTeamStat
 from .stat import NbaStat
-from .helpers import safe_div
+from helpers import safe_div
 
 
 class NbaPlayerStat:

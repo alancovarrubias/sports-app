@@ -1,4 +1,4 @@
-from .helpers import safe_div
+from helpers import safe_div
 
 
 class NbaStat:
