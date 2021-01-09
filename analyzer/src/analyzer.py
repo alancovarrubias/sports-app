@@ -45,10 +45,8 @@ class Analyzer:
             enough_away_stats = len(away_team.previous_stats) == self.previous_length
             enough_home_stats = len(home_team.previous_stats) == self.previous_length
             enough_previous_stats = enough_away_stats and enough_home_stats
-            if not enough_previous_stats:
+            if not enough_previous_stats or len(game.lines) == 0:
                 self.add_game_data(game)
-                continue
-            if len(game.lines) == 0:
                 continue
             away_pts = game.away_team["stat"]["pts"]
             home_pts = game.home_team["stat"]["pts"]

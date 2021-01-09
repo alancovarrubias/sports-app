@@ -39,6 +39,7 @@ module Database
         game = @games.find_by(away_team: away_team, home_team: home_team)
         line_query = {
           bookie: 'opener',
+          season: @season,
           game: game
         }
         line = ::Line.find_or_create_by(line_query)

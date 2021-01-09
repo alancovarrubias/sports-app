@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Line, type: :model do
+RSpec.describe Pred, type: :model do
   it 'FactoryBot is valid' do
-    expect(FactoryBot.build(:line)).to be_valid
+    expect(FactoryBot.build(:pred)).to be_valid
   end
 
   describe 'associations' do

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :line do
+  factory :pred do
     association :season
     association :game
   end

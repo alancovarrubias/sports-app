@@ -9,6 +9,8 @@ RSpec.describe Season, type: :model do
     it { should have_many(:teams) }
     it { should have_many(:players) }
     it { should have_many(:stats) }
+    it { should have_many(:lines) }
+    it { should have_many(:preds) }
   end
 
   describe 'validations' do
