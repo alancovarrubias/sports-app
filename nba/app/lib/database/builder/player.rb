@@ -1,6 +1,6 @@
 module Database
   module Builder
-    class Players < Base
+    class Player < Base
       def build
         @season.teams.each do |team|
           next unless needs_data?(team)

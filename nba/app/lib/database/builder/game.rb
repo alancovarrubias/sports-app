@@ -1,6 +1,6 @@
 module Database
   module Builder
-    class Games < Base
+    class Game < Base
       def build
         return unless needs_data?
 

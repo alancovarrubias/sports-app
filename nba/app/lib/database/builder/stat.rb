@@ -1,6 +1,6 @@
 module Database
   module Builder
-    class Stats < Base
+    class Stat < Base
       def build
         @season.games.each do |game|
           @game = game

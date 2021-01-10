@@ -1,6 +1,6 @@
 module Database
   module Builder
-    class Lines < Base
+    class Line < Base
       def build
         dates = @season.games.map(&:date).uniq
         dates.each do |date|

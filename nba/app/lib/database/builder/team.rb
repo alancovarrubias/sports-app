@@ -1,6 +1,6 @@
 module Database
   module Builder
-    class Teams < Base
+    class Team < Base
       def build
         return unless needs_data?
 
