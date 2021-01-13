@@ -19,7 +19,8 @@ class NbaAPI extends RESTDataSource {
       offset,
       limit,
       team: '1',
-      player: '1',
+      line: '1',
+      pred: '1',
     })
     const games = games_res.data.map(game => game.attributes)
     return games.map(addNbaCacheMetadata)
@@ -28,6 +29,7 @@ class NbaAPI extends RESTDataSource {
   async getGame({ game_id }) {
     const game_res = await this.get(`games/${game_id}`, {
       team: '1',
+      player: '1',
     })
     const game = game_res.data.attributes
     const cachedGame = {

@@ -28,6 +28,8 @@ export default gql`
     home_team: Team!
     away_players: [Player]!
     home_players: [Player]!
+    lines: [Line]!
+    preds: [Pred]!
     sport: String!
   }
   type NbaStat {
@@ -75,6 +77,16 @@ export default gql`
     obp: Float
     slg: Float
     ops: Float
+  }
+  type Line {
+    bookie: String
+    total: Float
+    spread: Float
+  }
+  type Pred {
+    desc: String
+    away_score: Float
+    home_score: Float
   }
   union Stat = NbaStat | MlbStat
   type Query {

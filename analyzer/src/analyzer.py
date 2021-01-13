@@ -49,24 +49,7 @@ class Analyzer:
             away_pred = predict_score(away_team, home_team)
             home_pred = predict_score(home_team, away_team)
             games_dict[game.id] = (away_pred, home_pred)
-            # line = game.lines[0]
-            # total = line["total"]
-            # total_actual = home_pts + away_pts
-            # total_pred = home_pred + away_pred
-            # self.count(total, total_actual, total_pred, total_counter)
-            # spread = line["spread"]
-            # spread_actual = home_pts - away_pts
-            # spread_pred = home_pred - away_pred
-            # self.count(spread, spread_actual, spread_pred, spread_counter)
-            # self.add_game_data(game)
         return games_dict
-
-    # def count(self, total, actual, prediction, counter):
-    #     if abs(total - prediction) > self.diff:
-    #         win = actual < total if prediction < total else actual > total
-    #         counter.win() if win else counter.lose()
-    #     else:
-    #         counter.skip()
 
     def add_game_data(self, game):
         self.data_store.add_data(game.away_team)

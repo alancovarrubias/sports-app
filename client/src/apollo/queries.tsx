@@ -39,6 +39,16 @@ export const GET_GAMES_QUERY = gql`
       home_team {
         ...GamesTeamStat
       }
+      lines {
+        bookie
+        total
+        spread
+      }
+      preds {
+        desc
+        away_score
+        home_score
+      }
       sport
     }
   }

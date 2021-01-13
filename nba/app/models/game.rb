@@ -16,9 +16,9 @@ class Game < ApplicationRecord
   scope :with_preds, -> { includes(:preds) }
 
   %i[away home].each do |side|
-    define_method("#{side}_players") { players.select { |player| player.team_id === send("#{side}_team_id") } }
-    define_method("#{side}_team_stats") { team_stats.select { |stat| stat.model_id === send("#{side}_team_id") } }
-    define_method("#{side}_player_stats") { player_stats.select { |stat| stat.model.team_id === send("#{side}_team_id") } }
+    define_method("#{side}_players") { players.select { |player| player.team_id == send("#{side}_team_id") } }
+    define_method("#{side}_team_stats") { team_stats.select { |stat| stat.model_id == send("#{side}_team_id") } }
+    define_method("#{side}_player_stats") { player_stats.select { |stat| stat.model.team_id == send("#{side}_team_id") } }
   end
 
   def url

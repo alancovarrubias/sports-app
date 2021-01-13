@@ -1,15 +1,6 @@
 class GameSerializer
   include JSONAPI::Serializer
   attributes :id, :date
-  attribute :lines, if: proc { |_record, params| params[:line] } do |game|
-    game.lines.map do |line|
-      {
-        total: line.total,
-        spread: line.spread,
-        bookie: line.bookie
-      }
-    end
-  end
   attribute :away_team, if: proc { |_record, params| params[:team] } do |game|
     stat = game.away_team_stats.first
     team = game.away_team
@@ -45,6 +36,24 @@ class GameSerializer
         id: player.id,
         name: player.name,
         stat: stat.attributes
+      }
+    end
+  end
+  attribute :lines, if: proc { |_record, params| params[:line] } do |game|
+    game.lines.map do |line|
+      {
+        bookie: line.bookie,
+        total: line.total,
+        spread: line.spread
+      }
+    end
+  end
+  attribute :preds, if: proc { |_record, params| params[:pred] } do |game|
+    game.preds.map do |line|
+      {
+        desc: line.desc,
+        away_score: line.away_score,
+        home_score: line.home_score
       }
     end
   end

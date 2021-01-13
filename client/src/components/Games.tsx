@@ -6,18 +6,29 @@ import useDataTable, { DataModel } from '../hooks/useDataTable'
 import { Resource, Sport } from '../const'
 import { getRoute, Page } from '../Routes'
 import { GET_GAMES_QUERY } from '../apollo/queries'
+import useCalculator from '../hooks/useCalculator'
 
+interface Pred {
+  away_score: number
+  home_score: number
+}
+export interface Line {
+  spread: number
+  total: number
+}
 interface Stat extends DataModel {
-  pts: string
+  pts: number
 }
 interface Team extends DataModel {
   name: string
   stat: Stat
 }
-interface Game extends DataModel {
+export interface Game extends DataModel {
   date: string
   away_team: Team
   home_team: Team
+  lines: [Line]
+  preds: [Pred]
 }
 interface IGamesData {
   games: Game[]
@@ -58,6 +69,7 @@ const Games = () => {
       history.push(gameRoute)
     },
   })
+  const [Calculator] = useCalculator({ games: data.games })
   const seasonsRoute = getRoute(Page.Seasons, {
     season_id,
     search,
@@ -66,6 +78,7 @@ const Games = () => {
     <>
       <h2 data-testid="subheader">Games</h2>
       <Link to={seasonsRoute}>Seasons</Link>
+      <Calculator />
       <GamesTable />
       <button
         onClick={() =>
@@ -75,9 +88,10 @@ const Games = () => {
             },
             updateQuery: (prev, { fetchMoreResult }) => {
               if (!fetchMoreResult) return prev
-              return Object.assign({}, prev, {
-                games: [...prev.games, ...fetchMoreResult.games],
-              })
+              return {
+                ...prev,
+                games: [...prev.games, ...fetchMoreResult.games]
+              }
             },
           })
         }

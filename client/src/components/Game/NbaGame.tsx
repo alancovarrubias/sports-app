@@ -16,7 +16,7 @@ interface Player extends DataModel {
   name: string
   stat: Stat
 }
-interface Game extends DataModel {
+export interface Game extends DataModel {
   date: string
   away_team: Team
   home_team: Team

@@ -17,7 +17,12 @@ class GamesController < ApplicationController
   private
 
   def set_query_params
-    @query_params = { team: params[:team] == '1', player: params[:player] == '1', line: params[:line] == '1' }
+    @query_params = {
+      team: params[:team] == '1',
+      player: params[:player] == '1',
+      line: params[:line] == '1',
+      pred: params[:pred] == '1'
+    }
   end
 
   def set_model_includes
@@ -25,6 +30,7 @@ class GamesController < ApplicationController
     @model = @model.with_team_stats if @query_params[:team]
     @model = @model.with_player_stats if @query_params[:player]
     @model = @model.with_lines if @query_params[:line]
+    @model = @model.with_preds if @query_params[:pred]
   end
 
   def set_games
