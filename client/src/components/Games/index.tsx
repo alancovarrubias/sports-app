@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { useParams, useHistory, Link, useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
-import SportContext from '../contexts/SportContext'
-import useDataTable, { DataModel } from '../hooks/useDataTable'
-import { Resource, Sport } from '../const'
-import { getRoute, Page } from '../Routes'
-import { GET_GAMES_QUERY } from '../apollo/queries'
-import useCalculator from '../hooks/useCalculator'
+import SportContext from '../../contexts/SportContext'
+import useDataTable, { DataModel } from '../../hooks/useDataTable'
+import { Resource, Sport } from '../../const'
+import { getRoute, Page } from '../../Routes'
+import { GET_GAMES_QUERY } from '../../apollo/queries'
+import Calculator from './Calculator'
 
 interface Pred {
   away_score: number
@@ -69,7 +69,6 @@ const Games = () => {
       history.push(gameRoute)
     },
   })
-  const [Calculator] = useCalculator({ games: data.games })
   const seasonsRoute = getRoute(Page.Seasons, {
     season_id,
     search,
@@ -78,7 +77,7 @@ const Games = () => {
     <>
       <h2 data-testid="subheader">Games</h2>
       <Link to={seasonsRoute}>Seasons</Link>
-      <Calculator />
+      <Calculator games={data.games} diff={3} />
       <GamesTable />
       <button
         onClick={() =>
