@@ -9,6 +9,10 @@ services:
     depends_on:
       - nba
       - mlb
+  auth:
+    build: auth
+    depends_on:
+      - db
   nba:
     build: nba
     depends_on:

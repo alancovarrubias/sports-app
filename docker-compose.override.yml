@@ -21,6 +21,14 @@ services:
     volumes:
       - ./server:/home/node/code
       - /home/node/code/node_modules
+  auth:
+    image: auth:dev
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./auth:/project
+    ports:
+      - 3000:3000
   nba:
     image: nba:dev
     build:
