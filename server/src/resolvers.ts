@@ -1,5 +1,5 @@
-import { SEASONS, GAMES, GAME, NBA_STAT, MLB_STAT } from './const'
-import { fetchData } from './datasources'
+import { USER, SEASONS, GAMES, GAME, NBA_STAT, MLB_STAT } from './const'
+import { fetchUser, fetchData } from './datasources'
 
 export default {
   Stat: {
@@ -14,11 +14,12 @@ export default {
     },
   },
   Query: {
-    seasons: (_source, args, { dataSources }) =>
-      fetchData(SEASONS, { args, dataSources }),
-    games: (_source, args, { dataSources }) =>
-      fetchData(GAMES, { args, dataSources }),
-    game: (_source, args, { dataSources }) =>
-      fetchData(GAME, { args, dataSources }),
+    users: (_source, args, { dataSources }) => fetchData(USER, { args, dataSources }),
+    seasons: (_source, args, { dataSources }) => fetchData(SEASONS, { args, dataSources }),
+    games: (_source, args, { dataSources }) => fetchData(GAMES, { args, dataSources }),
+    game: (_source, args, { dataSources }) => fetchData(GAME, { args, dataSources }),
   },
+  Mutation: {
+    login: (_source, args, { dataSources }) => fetchUser({ args, dataSources }),
+  }
 }

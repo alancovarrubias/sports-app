@@ -14,6 +14,7 @@ services:
     build: auth
     depends_on:
       - db
+      - crawler
   nba:
     build: nba
     depends_on:

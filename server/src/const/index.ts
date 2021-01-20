@@ -1,3 +1,4 @@
+export const USER = "user";
 export const SEASONS = "seasons";
 export const GAMES = "games";
 export const GAME = "game";

@@ -185,6 +185,10 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.4.0)
       parser (>= 2.7.1.5)
+    rubocop-rails (2.9.1)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 0.90.0, < 2.0)
     ruby-debug-ide (0.7.2)
       rake (>= 0.8.1)
     ruby-progressbar (1.11.0)
@@ -224,10 +228,10 @@ DEPENDENCIES
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)
   rubocop
+  rubocop-rails
   ruby-debug-ide
   spring
   spring-watcher-listen (~> 2.0.0)
-  tzinfo-data
 
 RUBY VERSION
    ruby 2.7.2p137

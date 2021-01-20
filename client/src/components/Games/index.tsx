@@ -5,7 +5,7 @@ import SportContext from '../../contexts/SportContext'
 import useDataTable, { DataModel } from '../../hooks/useDataTable'
 import { Resource, Sport } from '../../const'
 import { getRoute, Page } from '../../Routes'
-import { GET_GAMES_QUERY } from '../../apollo/queries'
+import { GET_GAMES } from '../../apollo/queries'
 import Calculator from './Calculator'
 
 interface Pred {
@@ -48,7 +48,7 @@ const Games = () => {
   const search = useLocation().search
   const history = useHistory()
   const { error, loading, data, fetchMore } = useQuery<IGamesData, IGamesVars>(
-    GET_GAMES_QUERY,
+    GET_GAMES,
     {
       variables: { sport, season_id, offset: 0, limit: 100 },
     }

@@ -1,5 +1,23 @@
 import { gql } from 'apollo-server'
 export default gql`
+  type Query {
+    users: [User]!
+    seasons(sport: String!): [Season]!
+    games(sport: String!, season_id: ID!, offset: Int, limit: Int): [Game]!
+    game(sport: String!, game_id: ID!): Game!
+  }
+  type Mutation {
+    login(username: String!, password: String!): AuthPayload
+  }
+  type AuthPayload {
+    token: String
+    user: User
+  }
+  type User {
+    id: ID!
+    username: String!
+    password: String!
+  }
   type Season {
     id: ID!
     year: Int!
@@ -89,9 +107,4 @@ export default gql`
     home_score: Float
   }
   union Stat = NbaStat | MlbStat
-  type Query {
-    seasons(sport: String!): [Season]!
-    games(sport: String!, season_id: ID!, offset: Int, limit: Int): [Game]!
-    game(sport: String!, game_id: ID!): Game!
-  }
 `

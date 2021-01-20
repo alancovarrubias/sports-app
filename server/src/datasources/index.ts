@@ -1,16 +1,18 @@
 import NbaAPI from './nbaAPI'
 import MlbAPI from './mlbAPI'
-import { SEASONS, GAMES, GAME } from '../const'
+import AuthAPI from './authAPI'
+import { SEASONS, GAMES, GAME, USER } from '../const'
 
 export default () => {
   return {
     NBA: new NbaAPI(),
     MLB: new MlbAPI(),
+    AUTH: new AuthAPI()
   }
 }
 
 export const fetchData = async (resource, { args, dataSources }) => {
-  const { sport } = args
+  const { sport = 'AUTH' } = args
   const dataSource = dataSources[sport]
   const data = await fetchResource(resource, { dataSource, args })
   return data
@@ -24,5 +26,13 @@ const fetchResource = (resource, { dataSource, args }) => {
       return dataSource.getGames(args)
     case GAME:
       return dataSource.getGame(args)
+    case USER:
+      return dataSource.getUsers(args)
   }
+}
+
+
+export const fetchUser = async ({ args, dataSources }) => {
+  const auth = dataSources['AUTH']
+  return auth.login(args)
 }

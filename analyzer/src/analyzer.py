@@ -3,7 +3,6 @@ from nba.player_stat import NbaPlayerStat
 from nba.team_stat import NbaTeamStat
 from helpers import read_json
 from data.store import DataStore
-from counter import Counter
 
 
 def predict_score(team, opponent):

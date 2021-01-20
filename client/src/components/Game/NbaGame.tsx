@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client'
 import { Sport, Resource } from '../../const'
 import useDataTable, { DataModel } from '../../hooks/useDataTable'
 import { IGameProps } from './index'
-import { GET_GAME_QUERY } from '../../apollo/queries'
+import { GET_GAME } from '../../apollo/queries'
 
 interface Stat extends DataModel {
   pts: string
@@ -33,7 +33,7 @@ interface IGameVars {
 
 const NbaGame: React.FC<IGameProps> = ({ sport, game_id }) => {
   const { error, loading, data } = useQuery<IGameData, IGameVars>(
-    GET_GAME_QUERY,
+    GET_GAME,
     {
       variables: { sport, game_id },
     }

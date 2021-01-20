@@ -1,5 +1,5 @@
 import { MockedResponse } from '@apollo/client/testing'
-import { GET_GAME_QUERY } from '@app/apollo/queries'
+import { GET_GAME } from '@app/apollo/queries'
 import { Sport } from '@app/const'
 import Season from '@mocks/models/Season'
 import Game from '@mocks/models/Game'
@@ -7,7 +7,7 @@ import Game from '@mocks/models/Game'
 const GameMock: MockedResponse[] = [
   {
     request: {
-      query: GET_GAME_QUERY,
+      query: GET_GAME,
       variables: {
         sport: Sport.NBA,
         game_id: Game.id,

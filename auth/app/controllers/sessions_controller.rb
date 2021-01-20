@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  protect_from_forgery except: :create
   def create
     if @user = User.authenticate(session_params[:username], session_params[:password])
       session[:user_id] = @user.id

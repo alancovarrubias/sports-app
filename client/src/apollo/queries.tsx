@@ -1,6 +1,21 @@
 import { gql } from '@apollo/client'
 
-export const GET_SEASONS_QUERY = gql`
+export const LOGIN_USER = gql`
+  mutation LoginUser($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      token
+    }
+  }
+`
+export const GET_USERS = gql`
+  query GetUsers {
+    users {
+      username
+      email
+    }
+  }
+`
+export const GET_SEASONS = gql`
   query GetSeasons($sport: String!) {
     seasons(sport: $sport) {
       id
@@ -10,7 +25,7 @@ export const GET_SEASONS_QUERY = gql`
   }
 `
 
-export const GET_GAMES_QUERY = gql`
+export const GET_GAMES = gql`
   fragment GamesTeamStat on Team {
     name
     stat {
@@ -54,7 +69,7 @@ export const GET_GAMES_QUERY = gql`
   }
 `
 
-export const GET_GAME_QUERY = gql`
+export const GET_GAME = gql`
   fragment GameTeamStat on Team {
     id
     name
