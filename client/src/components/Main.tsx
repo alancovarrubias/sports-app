@@ -6,6 +6,7 @@ import Header from './Header'
 import Seasons from './Seasons'
 import Games from './Games'
 import Game from './Game'
+import Login from './Login'
 import NoMatch from './NoMatch'
 
 const Main = () => {
@@ -19,6 +20,7 @@ const Main = () => {
       <Header />
       <Switch>
         <Redirect exact from="/" to="/seasons" />
+        <Route path="/login" component={Login} exact />
         <Route path="/seasons" component={Seasons} exact />
         <Route path="/seasons/:season_id/games" component={Games} exact />
         <Route
