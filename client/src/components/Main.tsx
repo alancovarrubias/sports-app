@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Switch, Redirect, Route, useHistory } from 'react-router-dom'
 import SportContext from '../contexts/SportContext'
 import { Sport } from '../const'
+import PrivateRoute from '../PrivateRoute'
 import Header from './Header'
 import Seasons from './Seasons'
 import Games from './Games'
@@ -21,14 +22,14 @@ const Main = () => {
       <Switch>
         <Redirect exact from="/" to="/seasons" />
         <Route path="/login" component={Login} exact />
-        <Route path="/seasons" component={Seasons} exact />
-        <Route path="/seasons/:season_id/games" component={Games} exact />
-        <Route
+        <PrivateRoute path="/seasons" component={Seasons} exact />
+        <PrivateRoute path="/seasons/:season_id/games" component={Games} exact />
+        <PrivateRoute
           path="/seasons/:season_id/games/:game_id"
           component={Game}
           exact
         />
-        <Route component={NoMatch} />
+        <PrivateRoute component={NoMatch} />
       </Switch>
     </SportContext.Provider>
   )

@@ -1,22 +1,23 @@
 import React, { useState } from 'react'
-import { useMutation, useQuery } from '@apollo/client'
-import { LOGIN_USER, GET_USERS } from '../apollo/queries'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
+import { useMutation } from '@apollo/client'
+import { LOGIN_USER } from '../apollo/queries'
+import { AUTH_TOKEN } from '../const'
 
 const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const history = useHistory()
     const [login] = useMutation(LOGIN_USER, {
         variables: {
             username,
             password,
         },
         onCompleted: ({ login }) => {
-            localStorage.setItem('auth-token', login.token)
+            localStorage.setItem(AUTH_TOKEN, login.token)
+            history.push('/seasons')
         }
     })
-    const { data } = useQuery(GET_USERS)
-    console.log(data)
     return (
         <>
             <h2>Login</h2>

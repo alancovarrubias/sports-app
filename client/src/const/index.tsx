@@ -10,3 +10,5 @@ export enum Resource {
   Pitcher,
   Batter,
 }
+
+export const AUTH_TOKEN = 'auth-token'
