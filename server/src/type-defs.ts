@@ -16,7 +16,6 @@ export default gql`
   type User {
     id: ID!
     username: String!
-    password: String!
   }
   type Season {
     id: ID!

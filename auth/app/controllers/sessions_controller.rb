@@ -1,8 +1,7 @@
 class SessionsController < ApplicationController
   def create
-    if @user = User.authenticate(session_params[:username], session_params[:password])
-      session[:user_id] = @user.id
-      render status: :created
+    if user = AuthenticateUser.call(session_params[:username], session_params[:password])
+      render json: { user: user }, status: :created
     else
       render json: { error: 'Invalid credentials' }, status: :unauthorized
     end

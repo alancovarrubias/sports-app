@@ -4,7 +4,6 @@ import { LOGIN_USER, GET_USERS } from '../apollo/queries'
 import { useHistory } from 'react-router'
 
 const Login = () => {
-    const history = useHistory()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [login] = useMutation(LOGIN_USER, {
@@ -13,7 +12,6 @@ const Login = () => {
             password,
         },
         onCompleted: ({ login }) => {
-            console.log(login)
             localStorage.setItem('auth-token', login.token)
         }
     })

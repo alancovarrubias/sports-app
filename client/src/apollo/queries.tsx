@@ -10,8 +10,8 @@ export const LOGIN_USER = gql`
 export const GET_USERS = gql`
   query GetUsers {
     users {
+      id
       username
-      email
     }
   }
 `
