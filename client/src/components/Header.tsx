@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import SportContext from '../contexts/SportContext'
 import { Sport } from '../const'
 import { getRoute, Page } from '../Routes'
+import { AUTH_TOKEN } from '../const'
 
 const Header = () => {
   const history = useHistory()
@@ -14,16 +15,30 @@ const Header = () => {
   const nextSport = sport == Sport.NBA ? Sport.MLB : Sport.NBA
   const search = `?sport=${nextSport}`
   const seasonRoute = getRoute(Page.Seasons, { search })
+  const authToken = localStorage.getItem(AUTH_TOKEN)
+  const loggedIn = authToken && authToken !== 'null'
+  const logout = () => {
+    localStorage.clear()
+    history.push('/login')
+  }
+  const logoutButton = (
+    <button onClick={() => {
+      logout()
+    }}>Logout</button>
+  )
   return (
-    <h1
-      data-testid="header"
-      onClick={() => {
-        setSport(nextSport)
-        history.push(seasonRoute)
-      }}
-    >
-      {headers[sport]}
-    </h1>
+    <nav>
+      <h1
+        data-testid="header"
+        onClick={() => {
+          setSport(nextSport)
+          history.push(seasonRoute)
+        }}
+      >
+        {headers[sport]}
+      </h1>
+      {loggedIn && logoutButton}
+    </nav>
   )
 }
 

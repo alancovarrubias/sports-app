@@ -5,12 +5,13 @@ import { AUTH_TOKEN } from './const'
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
     const authToken = localStorage.getItem(AUTH_TOKEN)
+    const loggedIn = authToken && authToken !== 'null'
 
     return (
         <Route
             {...rest}
             render={props =>
-                authToken ? (
+                loggedIn ? (
                     <Component {...props} />
                 ) : (
                         <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
