@@ -1,0 +1,143 @@
+/*MENU VIEW*/
+/*SMOOTH*/
+.smooth,
+.smooth div[class*="popover-content"] > ul[class*="menu"] {
+  box-shadow: var(--shadow2dp);
+  color: var(--color100);
+  background: var(--color0);
+}
+.smooth div[class*="popover"] > div[class*="popover-content"] {
+  box-shadow: none;
+}
+.smooth svg {
+  color: var(--color70);
+}
+.smooth > li:not([class*="menu-divider"]) a {
+  background-color: unset;
+}
+.smooth > li:not([class*="menu-divider"]) a:hover:not([class*="disabled"]) {
+  background-color: var(--white);
+}
+.smooth a[class*="disabled"] > div,
+.smooth a > span[class*="label"],
+.smooth a[class*="disabled"] > span[class*="item-label"],
+.smooth a[class*="disabled"] svg,
+.smooth a > span[class*="label"] > span > svg {
+  color: var(--color40) !important;
+}
+.smooth
+  > li[class*="submenu"]
+  span[class*="popover-wrapper"]
+  > span[class*="popover-open"]
+  > a:not(:hover) {
+  background-color: var(--color5);
+}
+
+/*OUTLINED*/
+.outlined,
+.outlined div[class*="popover-content"] > ul[class*="menu"] {
+  box-shadow: none;
+  color: var(--color100);
+  background: var(--white);
+  border: 0.125rem solid var(--color30);
+}
+.outlined div[class*="popover"] > div[class*="popover-content"] {
+  box-shadow: none;
+}
+.outlined svg {
+  color: var(--color70);
+}
+.outlined > li:not([class*="menu-divider"]) a {
+  background-color: unset;
+}
+.outlined > li:not([class*="menu-divider"]) a:hover:not([class*="disabled"]) {
+  background-color: var(--color5);
+}
+.outlined a[class*="disabled"] > div,
+.outlined a > span[class*="label"],
+.outlined a[class*="disabled"] > span[class*="item-label"],
+.outlined a[class*="disabled"] svg,
+.outlined a > span[class*="label"] > span > svg {
+  color: var(--color40) !important;
+}
+.outlined
+  > li[class*="submenu"]
+  span[class*="popover-wrapper"]
+  > span[class*="popover-open"]
+  > a:not(:hover) {
+  background-color: var(--color5);
+}
+/*-----*/
+/*RAISED*/
+.raised,
+.raised div[class*="popover-content"] > ul[class*="menu"] {
+  box-shadow: var(--shadow8dp);
+  color: var(--color100);
+  background: var(--white);
+}
+.raised div[class*="popover"] > div[class*="popover-content"] {
+  box-shadow: none;
+}
+.raised svg {
+  color: var(--color70);
+}
+.raised > li:not([class*="menu-divider"]) a {
+  background-color: unset;
+}
+.raised > li[class*="menu-divider"] {
+  border-top-color: var(--color10);
+}
+.raised > li:not([class*="menu-divider"]) a:hover:not([class*="disabled"]) {
+  background-color: var(--color5);
+}
+.raised a[class*="disabled"] > div,
+.raised a > span[class*="label"],
+.raised a[class*="disabled"] > span[class*="item-label"],
+.raised a[class*="disabled"] svg,
+.raised a > span[class*="label"] > span > svg {
+  color: var(--color40) !important;
+}
+.raised
+  > li[class*="submenu"]
+  span[class*="popover-wrapper"]
+  > span[class*="popover-open"]
+  > a:not(:hover) {
+  background-color: var(--color5);
+}
+/*-----*/
+/*FILLED*/
+.filled,
+.filled div[class*="popover-content"] > ul[class*="menu"] {
+  box-shadow: var(--shadow8dp);
+  color: var(--color0);
+  background: var(--color70);
+}
+.filled div[class*="popover"] > div[class*="popover-content"] {
+  box-shadow: none;
+}
+.filled svg {
+  color: var(--color40);
+}
+.filled > li:not([class*="menu-divider"]) a {
+  background-color: transparent;
+}
+.filled > li[class*="menu-divider"] {
+  border-top-color: var(--color80);
+}
+.filled > li:not([class*="menu-divider"]) a:hover:not([class*="disabled"]) {
+  background-color: var(--color90);
+}
+.filled a[class*="disabled"] > div,
+.filled a > span[class*="label"],
+.filled a[class*="disabled"] > span[class*="item-label"],
+.filled a[class*="disabled"] svg,
+.filled a > span[class*="label"] > span > svg {
+  color: var(--color40) !important;
+}
+.filled
+  > li[class*="submenu"]
+  span[class*="popover-wrapper"]
+  > span[class*="popover-open"]
+  > a:not(:hover) {
+  background-color: var(--color90);
+}

@@ -1,0 +1,39 @@
+.section {
+  border-bottom: 1px solid var(--grey10);
+  margin-bottom: 1.5rem;
+}
+.margin {
+  margin-bottom: 1.5rem;
+}
+.marginTag {
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .section {
+    border-bottom: 1px solid var(--grey10);
+    margin-bottom: 2rem;
+  }
+  .margin {
+    margin-bottom: 2rem;
+  }
+  .marginTag {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .section {
+    border-bottom: 1px solid var(--grey10);
+    margin-bottom: 3rem;
+    display: flex;
+  }
+  .marginTag {
+    margin-bottom: 3rem;
+    width: 20%;
+  }
+  .margin {
+    margin-left: 5rem;
+    width: 80%;
+  }
+}

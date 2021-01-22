@@ -1,0 +1,72 @@
+/*CARD*/
+/*filled*/
+.filled {
+  background-color: var(--color50);
+  border: none;
+  box-shadow: var(--shadow2dp);
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.filled[class*="interactive"]:hover {
+  box-shadow: var(--shadow8dp);
+  background-color: var(--color70);
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.filled[class*="interactive"]:active {
+  box-shadow: var(--shadow2dp);
+  background-color: var(--color50);
+  opacity: 1;
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+
+/*smooth*/
+.smooth {
+  background-color: var(--color0);
+  border: none;
+  box-shadow: none;
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.smooth[class*="interactive"]:hover {
+  background-color: var(--color10);
+  box-shadow: none;
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.smooth[class*="interactive"]:active {
+  box-shadow: none;
+  background-color: var(--color0);
+  opacity: 1;
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+
+/*outlined*/
+.outlined {
+  background-color: var(--white);
+  border: 1px solid var(--color20);
+  box-shadow: none;
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.outlined[class*="interactive"]:hover {
+  border: 1px solid var(--color30);
+  box-shadow: 0 0 0 1px var(--color30);
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.outlined[class*="interactive"]:active {
+  box-shadow: none;
+  opacity: 1;
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+/*raised*/
+.raised {
+  background-color: var(--white);
+  box-shadow: var(--shadow2dp);
+  border: none;
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.raised[class*="interactive"]:hover {
+  box-shadow: var(--shadow8dp);
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.raised[class*="interactive"]:active {
+  box-shadow: var(--shadow2dp);
+  opacity: 1;
+  transition: all 0.2s cubic-bezier(0.4, 1, 0.75, 0.9);
+}

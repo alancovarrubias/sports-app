@@ -1,0 +1,60 @@
+/**NAVBAR*/
+div[class*="align-left"] {
+  margin-right: auto;
+}
+div[class*="navbar-heading"] {
+  margin-right: auto;
+}
+.desktop {
+  display: flex;
+  height: 4.5rem;
+  border-radius: 0 0 0.25rem 0.25rem;
+  padding: 0 1rem;
+}
+.desktop div[class*="navbar-group"] {
+  height: 4.5rem;
+}
+
+.tablet {
+  display: flex;
+  height: 3.5rem;
+  border-radius: 0 0 0.25rem 0.25rem;
+  padding: 0 1rem;
+}
+.tablet div[class*="navbar-group"] {
+  height: 3.5rem;
+}
+
+.mobile {
+  height: 6rem;
+  border-radius: 0 0 0.25rem 0.25rem;
+  padding: 0.625rem 0.5rem;
+}
+
+/*GROUP ALIGN CENTER*/
+.center {
+  align-content: space-between;
+  /* display: flex; */
+  margin-left: auto;
+  margin-right: auto;
+}
+.center a:not(:first-of-type) {
+  text-decoration: none;
+  padding-left: 0.75rem;
+}
+.mobile div[class*="navbar-group"] {
+  height: initial;
+}
+.mobile div[class*="center"] {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-right: 0;
+  transform: translate(0%, -100%);
+  /*overflow-x: auto;*/
+  width: 100%;
+  overflow-y: hidden;
+  padding: 0 0.5rem 0.625rem 0.5rem;
+}
+
+/**/

@@ -1,0 +1,199 @@
+/* CHIPS STYLES*/
+
+.def[class*="tag"] {
+  min-width: 0px;
+  height: 2rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.5rem;
+  font-size: var(--font_size_body);
+  letter-spacing: var(--letter_spacing_body);
+  text-transform: none;
+  padding: 0.25rem 0.625rem;
+  justify-content: left;
+  width: fit-content;
+}
+.def[class*="tag"]:focus,
+.dense[class*="tag"]:focus {
+  outline: none !important;
+}
+
+.def[class*="tag"] span[icon]:first-of-type {
+  margin-left: 0;
+  margin-right: 0.375rem;
+}
+.def[class*="tag"] span[icon]:last-of-type {
+  margin-right: 0;
+  margin-left: 0.375rem;
+}
+.def[class*="tag"] span[icon]:first-of-type > svg {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+.def[class*="tag"] span[class*="icon-tick"]:first-of-type {
+  width: 0;
+  height: 0;
+  margin-right: 0;
+  transform: scale(0);
+  transition: all 200ms ease-in;
+}
+.def.active[class*="tag"] span[class*="icon-tick"]:first-of-type {
+  height: 1.25rem;
+  width: 1.25rem;
+  margin-right: 0.375rem;
+  transform: scaleX(1);
+  transition: all 200ms ease-in;
+}
+.def[class*="tag"] button[class*="tag-remove"] > span[class*="small-cross"] {
+  margin-right: 0;
+  margin-left: 0.375rem;
+}
+.def[class*="tag"] button[class*="tag-remove"] {
+  padding: 0;
+  padding-right: 0;
+  margin-right: 0 !important;
+}
+.def[class*="tag"] span[class*="text"] {
+  margin-right: 0;
+}
+/*dense*/
+.dense[class*="tag"] {
+  min-width: 0px;
+  height: 1.25rem;
+  min-height: 1.25rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1rem;
+  font-size: var(--font_size_caption);
+  letter-spacing: var(--letter_spacing_caption);
+  text-transform: none;
+  padding: 0.125rem 0.375rem;
+  justify-content: left;
+  width: fit-content;
+}
+.dense[class*="tag"] span[icon]:first-of-type {
+  margin-left: 0;
+  margin-right: 0.25rem;
+}
+.dense[class*="tag"] span[icon]:last-of-type {
+  margin-right: 0;
+  margin-left: 0.25rem;
+}
+.dense[class*="tag"] span[icon]:first-of-type > svg {
+  height: 1rem;
+  width: 1rem;
+}
+.dense[class*="tag"] span[class*="icon-tick"]:first-of-type {
+  width: 0;
+  height: 0;
+  margin-right: 0;
+  transform: scale(0);
+  transition: all 200ms ease-in;
+}
+.dense.active[class*="tag"] span[class*="icon-tick"]:first-of-type {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.25rem;
+  transform: scaleX(1);
+  transition: all 200ms ease-in;
+}
+.dense[class*="tag"] button[class*="tag-remove"] > span[class*="small-cross"] {
+  margin-right: 0;
+  margin-left: 0.125rem;
+}
+.dense[class*="tag"] button[class*="tag-remove"] {
+  padding: 0;
+  padding-right: 0;
+  margin-right: 0 !important;
+}
+.dense[class*="tag"] span[class*="text"] {
+  margin-right: 0;
+}
+/*END dense*/
+/*ROUNDED*/
+.round[class*="tag"] {
+  border-radius: 99px;
+}
+/*-----------------------*/
+
+/*WITH NUMBER */
+.def[class*="tag"].number,
+.dense[class*="tag"].number {
+  line-height: 1.25rem;
+}
+.def[class*="tag"].number span > div {
+  min-width: 1.25rem;
+  height: 1.25rem;
+  display: inline-block;
+  border-radius: 0.25rem;
+  text-align: center;
+  margin-right: 0.375rem;
+  font-size: var(--font_size_body_small);
+  letter-spacing: var(--letter_spacing_body_small);
+  font-weight: var(--font_weight_body_medium);
+  padding: 0 0.4375rem;
+}
+.def[class*="tag"].number.round span > div {
+  border-radius: 99px;
+}
+
+.dense[class*="tag"].number span > div {
+  min-width: 0;
+  height: 1.25rem;
+  display: inline-block;
+  text-align: center;
+  margin-right: 0.25rem;
+  font-size: var(--font_size_body_small);
+  letter-spacing: var(--letter_spacing_body_small);
+  font-weight: var(--font_weight_body_medium);
+  padding: 0 0;
+  line-height: 1.25rem;
+}
+
+/*-----------*/
+
+/*WITH AVATAR*/
+.def[class*="tag"].avatar,
+.dense[class*="tag"].avatar {
+  border-radius: 99px;
+}
+.dense[class*="tag"].avatar {
+  padding-left: 0;
+}
+.def[class*="tag"].avatar span[class*="text"],
+.dense[class*="tag"].avatar span[class*="text"] {
+  line-height: 0;
+}
+.def[class*="tag"].avatar span > div:first-of-type,
+.dense[class*="tag"].avatar span > div:first-of-type {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-block;
+  text-align: center;
+  margin-right: 0.375rem;
+  vertical-align: middle;
+}
+.dense[class*="tag"].avatar span > div:first-of-type {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.25rem;
+}
+.def[class*="tag"].avatar span > div:first-of-type > img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.dense[class*="tag"].avatar span > div:first-of-type > img {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.dense[class*="tag"].avatar.outlined span > div:first-of-type > img {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.0625rem;
+}
+.def[class*="tag"].avatar span > div:last-of-type,
+.dense[class*="tag"].avatar span > div:last-of-type {
+  display: inline-block;
+  vertical-align: middle;
+}
+/**END AVATAR*/

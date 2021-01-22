@@ -1,0 +1,33 @@
+.flat {
+  box-shadow: none !important;
+  background: var(--white) !important;
+}
+
+.raised {
+  box-shadow: var(
+    --raised-shadow-active,
+    var(--raised-prim-shadow-active)
+  ) !important;
+  background: var(--white) !important;
+}
+
+.smooth {
+  /* background: var(--smooth-bg-active, var(--smooth-prim-bg-active)) !important;
+  opacity: 0.48 !important;*/
+  box-shadow: none !important;
+  background-color: var(--white) !important;
+}
+
+.filled {
+  /* background: var(--filled-bg-active, var(--filled-prim-bg-active)) !important;*/
+  /* opacity: 0.72 !important;*/
+  box-shadow: none !important;
+  background-color: var(--white) !important;
+  /*border-radius: 4px !important;*/
+}
+
+.ghost {
+  box-shadow: none !important;
+  background: var(--white) !important;
+  border: 1px solid var(--ghost-border, var(--ghost-prim-border)) !important;
+}

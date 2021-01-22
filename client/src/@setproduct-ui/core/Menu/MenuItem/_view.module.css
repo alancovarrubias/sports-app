@@ -1,0 +1,9 @@
+/*MENU ITEM*/
+.smooth.note,
+.outlined.note,
+.raised.note {
+  color: var(--color80);
+}
+.filled.note {
+  color: var(--color10);
+}

@@ -1,0 +1,127 @@
+/*RADIO SHAPE CSS MODULE*/
+/*CONTAINER*/
+.container {
+  align-items: center;
+  box-shadow: none;
+  border-radius: 99px;
+}
+
+/*---------------------------------------*/
+
+.def,
+.dense {
+  width: fit-content;
+  padding: 0;
+  display: flex;
+}
+.inline.def,
+.inline.dense {
+  display: inline-flex;
+}
+.def.fill,
+.dense.fill {
+  width: 100%;
+}
+.def {
+  height: 2.5rem;
+  line-height: 2.5rem;
+  font-size: var(--font_size_body);
+  letter-spacing: var(--letter_spacing_body);
+}
+.def[class*="container"] > label[class*="control"],
+.dense[class*="container"] > label[class*="control"] {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  margin-right: 1rem;
+}
+.def[class*="container"] > label[class*="control"] > span[class*="indicator"] {
+  margin: auto 1.125rem auto 0.625rem;
+}
+.def input:checked ~ span[class*="indicator"]::before,
+.def input:not(:checked) ~ span[class*="indicator"]::before {
+  height: 0.5rem;
+  width: 0.5rem;
+  margin: auto;
+  margin-top: 0.25rem;
+  border-radius: 99px;
+}
+.def input:checked ~ div {
+  letter-spacing: var(--letter_spacing_body_bold);
+  font-weight: var(--font_weight_body_medium);
+}
+/*Dense*/
+.dense {
+  height: 1.75rem;
+  line-height: 1.75rem;
+  font-size: var(--font_size_body_small);
+  letter-spacing: var(--letter_spacing_body_small);
+}
+
+.dense[class*="container"]
+  > label[class*="control"]
+  > span[class*="indicator"] {
+  margin: auto 0.75rem auto 0.375rem;
+}
+.dense input:checked ~ span[class*="indicator"]::before,
+.dense input:not(:checked) ~ span[class*="indicator"]::before {
+  height: 0.375rem;
+  width: 0.375rem;
+  margin: auto;
+  margin-top: 0.1875rem;
+  border-radius: 99px;
+}
+.dense input:checked ~ div {
+  letter-spacing: var(--letter_spacing_body_small);
+  font-weight: var(--font_weight_body_medium);
+}
+
+.def.with_helper {
+  height: 2.75rem;
+  line-height: 2.75rem;
+}
+
+.dense.with_helper {
+  height: 2.5rem;
+  line-height: 2.5rem;
+}
+
+/*HELPER TEXT*/
+.helperBox {
+  line-height: initial;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.helperBox > .helperText {
+  font-size: var(--font_size_body_small);
+  letter-spacing: var(--letter_spacing_body_small);
+  font-weight: normal;
+}
+
+/*-----------------------------------------*/
+
+/*LEFT*/
+.leftPosition[class*="container"] > label[class*="control"] {
+  flex-direction: row-reverse;
+  margin-left: 1rem;
+  margin-right: 0;
+}
+.def.leftPosition[class*="container"]
+  > label[class*="control"]
+  > span[class*="indicator"] {
+  margin: auto 0.625rem auto 1.125rem;
+}
+.dense.leftPosition[class*="container"]
+  > label[class*="control"]
+  > span[class*="indicator"] {
+  margin: auto 0.375rem auto 0.75rem;
+}
+
+/*------------------------*/
+
+/*RTL*/
+.rtl > div {
+  text-align: right;
+}
+
+/*----------------------------------*/

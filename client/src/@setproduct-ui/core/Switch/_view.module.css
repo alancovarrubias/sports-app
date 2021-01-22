@@ -1,0 +1,222 @@
+/*SWITCH*/
+/*FLAT*/
+.flat > label {
+  color: var(--color100);
+}
+.flat.checked > label {
+  color: var(--color100);
+}
+.flat > label[class*="control"] > span[class*="indicator"],
+.flat
+  > label[class*="control"]
+  > input:not(:disabled):active
+  ~ span[class*="indicator"],
+.flat > label[class*="control"]:hover > span[class*="indicator"] {
+  background: var(--color10);
+  transition: all ease 250ms;
+}
+.flat.checked {
+  background: var(--color5);
+  transition: all ease 250ms;
+}
+.flat.checked > label[class*="control"] > span[class*="indicator"],
+.flat.checked > label[class*="control"]:hover > span[class*="indicator"] {
+  background: var(--color30);
+  transition: all ease 250ms;
+}
+.flat.checked
+  > label[class*="control"]
+  > input:checked:not(:disabled):active
+  ~ span[class*="indicator"],
+.flat.checked
+  > label[class*="control"]
+  > input:checked:not(:disabled)
+  ~ span[class*="indicator"] {
+  background: var(--color30);
+  transition: all ease 250ms;
+}
+.flat > label[class*="control"] > input:not(:checked) ~ span::before {
+  background: var(--color30);
+  box-shadow: none;
+  transition: all ease 250ms;
+}
+.flat > label[class*="control"]:hover > input:not(:checked) ~ span::before {
+  background: var(--color50);
+  box-shadow: none;
+  transition: all ease 250ms;
+}
+.flat.checked > label[class*="control"] > input:checked ~ span::before {
+  background: var(--color70);
+  box-shadow: none;
+  transition: all ease 250ms;
+}
+.flat.checked > label[class*="control"]:hover > input:checked ~ span::before {
+  background: var(--color80);
+}
+.flat.disabled {
+  background: none;
+}
+/*END FLAT*/
+
+/*SMOOTH*/
+.smooth {
+  background: var(--color0);
+}
+.smooth:hover {
+  background: var(--color5);
+  transition: all ease 250ms;
+}
+.smooth > label {
+  color: var(--color100);
+}
+.smooth.checked > label {
+  color: var(--color100);
+}
+.smooth > label[class*="control"] > span[class*="indicator"],
+.smooth
+  > label[class*="control"]
+  > input:not(:disabled):active
+  ~ span[class*="indicator"],
+.smooth > label[class*="control"]:hover > span[class*="indicator"] {
+  background: var(--color10);
+  transition: all ease 250ms;
+}
+.smooth.checked {
+  background: var(--color10);
+  transition: all ease 250ms;
+}
+.smooth.checked > label[class*="control"] > span[class*="indicator"],
+.smooth.checked > label[class*="control"]:hover > span[class*="indicator"] {
+  background: var(--color30);
+  transition: all ease 250ms;
+}
+.smooth.checked
+  > label[class*="control"]
+  > input:checked:not(:disabled):active
+  ~ span[class*="indicator"],
+.smooth.checked
+  > label[class*="control"]
+  > input:checked:not(:disabled)
+  ~ span[class*="indicator"] {
+  background: var(--color30);
+  transition: all ease 250ms;
+}
+.smooth > label[class*="control"] > input:not(:checked) ~ span::before {
+  background: var(--color30);
+  box-shadow: none;
+  transition: all ease 250ms;
+}
+.smooth > label[class*="control"]:hover > input:not(:checked) ~ span::before {
+  background: var(--color50);
+  box-shadow: none;
+  transition: all ease 250ms;
+}
+.smooth.checked > label[class*="control"] > input:checked ~ span::before {
+  background: var(--color70);
+  box-shadow: none;
+  transition: all ease 250ms;
+}
+.smooth.checked > label[class*="control"]:hover > input:checked ~ span::before {
+  background: var(--color80);
+}
+.smooth.disabled {
+  background: var(--color0);
+}
+/*END SMOOTH*/
+
+/*OUTLINED*/
+.outlined {
+  box-shadow: 0 0 0 1px var(--color20);
+}
+.outlined:hover {
+  box-shadow: 0 0 0 1px var(--color40);
+  transition: all ease 250ms;
+}
+.outlined > label {
+  color: var(--color100);
+}
+.outlined.checked > label {
+  color: var(--color100);
+}
+.outlined > label[class*="control"] > span[class*="indicator"],
+.outlined
+  > label[class*="control"]
+  > input:not(:disabled):active
+  ~ span[class*="indicator"],
+.outlined > label[class*="control"]:hover > span[class*="indicator"] {
+  background: var(--color10);
+  transition: all ease 250ms;
+}
+.outlined.checked {
+  box-shadow: 0 0 0 2px var(--color40);
+  transition: all ease 250ms;
+}
+.outlined.checked > label[class*="control"] > span[class*="indicator"],
+.outlined.checked > label[class*="control"]:hover > span[class*="indicator"] {
+  background: var(--color30);
+  transition: all ease 250ms;
+}
+.outlined.checked
+  > label[class*="control"]
+  > input:checked:not(:disabled):active
+  ~ span[class*="indicator"],
+.outlined.checked
+  > label[class*="control"]
+  > input:checked:not(:disabled)
+  ~ span[class*="indicator"] {
+  background: var(--color30);
+  transition: all ease 250ms;
+}
+.outlined > label[class*="control"] > input:not(:checked) ~ span::before {
+  background: var(--color0);
+  box-shadow: none;
+  border: 0.125rem solid var(--color30);
+  transition: all ease 250ms;
+}
+.outlined > label[class*="control"]:hover > input:not(:checked) ~ span::before {
+  background: var(--color0);
+  box-shadow: none;
+  border: 0.125rem solid var(--color50);
+  transition: all ease 250ms;
+}
+.outlined.checked > label[class*="control"] > input:checked ~ span::before {
+  background: var(--color0);
+  box-shadow: none;
+  border: 0.25rem solid var(--color70);
+  transition: all ease 250ms;
+}
+.outlined.checked
+  > label[class*="control"]:hover
+  > input:checked
+  ~ span::before {
+  border: 0.25rem solid var(--color80);
+}
+.outlined.disabled {
+  box-shadow: 0 0 0 1px var(--color10);
+}
+/*END OUTLINED*/
+
+/*DISABLED*/
+div[class*="container"] > label[class*="disabled"] {
+  color: var(--color40);
+}
+.disabled
+  > label[class*="disabled"]
+  > input:not(:checked):disabled
+  ~ span[class*="ontrol-indicator"],
+.disabled
+  > label[class*="disabled"]
+  > input:checked:disabled
+  ~ span[class*="ontrol-indicator"] {
+  background: var(--color5);
+}
+.disabled
+  > label[class*="disabled"]
+  > input:not(:checked):disabled
+  ~ span[class*="control-indicator"]::before,
+.disabled
+  > label[class*="disabled"]
+  input:checked:disabled
+  ~ span[class*="control-indicator"]::before {
+  background: var(--color10);
+}

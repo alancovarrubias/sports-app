@@ -1,0 +1,55 @@
+/*TOOLTIP*/
+
+/*FILLED*/
+.filled div[class*="popover-content"] {
+  background: var(--color70);
+  color: var(--white);
+}
+.filled div[class*="popover-arrow"] > svg > path:last-of-type {
+  fill: var(--color70);
+}
+.filled div[class*="popover-arrow"] > svg > path:first-of-type {
+  fill-opacity: 0;
+  fill: none;
+}
+.filled > div[class*="popover-arrow"]::before {
+  box-shadow: none;
+}
+.filled {
+  box-shadow: var(--shadow8dp);
+}
+
+/*SMOOTH*/
+.smooth div[class*="popover-content"] {
+  background: var(--color10);
+  color: var(--color100);
+}
+.smooth div[class*="popover-arrow"] > svg > path:last-of-type {
+  fill: var(--color10);
+}
+.smooth div[class*="popover-arrow"] > svg > path:first-of-type {
+  fill-opacity: 0;
+  fill: none;
+}
+.smooth > div[class*="popover-arrow"]::before {
+  box-shadow: none;
+}
+.smooth {
+  box-shadow: none;
+}
+/*RAISED*/
+.raised div[class*="popover-content"] {
+  background: var(--color0);
+  color: var(--color100);
+}
+.raised div[class*="popover-arrow"] > svg > path:last-of-type {
+  fill: var(--color0);
+}
+.raised div[class*="popover-arrow"] > svg > path:first-of-type {
+  fill-opacity: 0;
+  fill: none;
+}
+.raised > div[class*="popover-arrow"]::before,
+.raised {
+  box-shadow: var(--shadow4dp);
+}

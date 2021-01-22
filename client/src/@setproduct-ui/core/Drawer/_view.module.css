@@ -1,0 +1,10 @@
+/*SMOOTH STYLE*/
+.smooth {
+  background: var(--white);
+  box-shadow: var(--greyShadow8dp);
+}
+
+.smooth span[class*="icon"] {
+  color: var(--color70);
+}
+/* END STYLE */

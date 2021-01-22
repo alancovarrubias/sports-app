@@ -1,0 +1,9 @@
+/* TOOLTIP*/
+.def > div[class*="popover-arrow"] {
+  width: 21px;
+  height: 21px;
+}
+.def > div[class*="popover-arrow"]::before {
+  margin: 3px;
+  border-radius: 0;
+}

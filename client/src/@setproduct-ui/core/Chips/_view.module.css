@@ -1,0 +1,163 @@
+/* CHIPS VIEW STYLES*/
+
+/*SMOOTH STYLE*/
+.smooth[class*="tag"],
+.smooth[class*="tag"]:visited {
+  color: var(--color70);
+  background-color: var(--color5);
+  transition: all 180ms ease-in;
+}
+.smooth[class*="tag"]:hover {
+  box-shadow: var(--shadow2dp);
+  background-color: var(--color5);
+  transition: all 200ms ease-in;
+}
+.smooth[class*="tag"] svg {
+  color: var(--color40);
+}
+.smooth[class*="tag"] button[class*="tag-remove"] {
+  opacity: 1;
+}
+.smooth[class*="tag"]
+  button[class*="tag-remove"]
+  > span[class*="small-cross"]
+  > svg {
+  color: var(--color50);
+}
+.smooth[class*="tag"]
+  button[class*="tag-remove"]:hover
+  > span[class*="small-cross"]
+  > svg {
+  color: var(--color70);
+  opacity: 1;
+  transition: all 180ms ease-in;
+}
+.smooth[class*="tag"].active {
+  color: var(--color0);
+  background-color: var(--color40);
+  transition: all 180ms ease-in;
+}
+.smooth[class*="tag"].active svg,
+.smooth[class*="tag"].active svg:hover {
+  background-color: transparent;
+  color: var(--color0);
+}
+
+.smooth[class*="tag"].disabled,
+.smooth[class*="tag"].disabled svg,
+.smooth[class*="tag"].disabled.active,
+.smooth[class*="tag"].disabled.active svg,
+.smooth[class*="tag"].disabled:hover,
+.smooth[class*="tag"].disabled
+  button[class*="tag-remove"]:hover
+  > span[class*="small-cross"]
+  > svg,
+.smooth[class*="tag"].disabled
+  button[class*="tag-remove"]
+  > span[class*="small-cross"]
+  > svg,
+.smooth[class*="tag"].disabled
+  button[class*="tag-remove"]:hover
+  > span[class*="small-cross"]
+  > svg,
+.smooth[class*="tag"].disabled button[class*="tag-remove"],
+.smooth[class*="tag"].disabled button[class*="tag-remove"]:hover {
+  background-color: var(--color5);
+  color: var(--color30);
+  box-shadow: none;
+  cursor: no-drop;
+}
+
+/* END STYLE */
+
+/*OUTLINED STYLE*/
+.outlined[class*="tag"],
+.outlined[class*="tag"]:visited {
+  color: var(--color70);
+  background-color: var(--white);
+  border: 0.0625rem solid var(--color30);
+  transition: all 100ms ease-in;
+}
+.outlined[class*="tag"]:hover {
+  box-shadow: 0 0 0 1px var(--color30);
+  background-color: var(--white);
+  border: 0.0625rem solid var(--color30);
+  transition: all 200ms ease-in;
+}
+.outlined[class*="tag"].active {
+  background-color: var(--color5);
+  border: 0.0625rem solid var(--color50);
+  box-shadow: 0 0 0 1px var(--color50);
+  color: var(--color70);
+  transition: all 150ms ease-in;
+}
+.outlined[class*="tag"].active svg,
+.outlined[class*="tag"].active svg:hover {
+  color: var(--color70);
+  transition: all 150ms ease-in;
+}
+
+.outlined[class*="tag"] button[class*="tag-remove"] {
+  background: transparent;
+  opacity: 1;
+  transition: all 150ms ease-in;
+}
+.outlined[class*="tag"] svg {
+  color: var(--color30);
+  transition: all 150ms ease-in;
+}
+.outlined[class*="tag"] button[class*="tag-remove"] > span > svg {
+  color: var(--color50);
+}
+
+.outlined[class*="tag"] button[class*="tag-remove"]:hover > span > svg {
+  color: var(--color70);
+  transition: all 180ms ease-in;
+}
+
+.outlined[class*="tag"].disabled,
+.outlined[class*="tag"].disabled svg,
+.outlined[class*="tag"].disabled.active,
+.outlined[class*="tag"].disabled.active svg,
+.outlined[class*="tag"].disabled:hover,
+.outlined[class*="tag"].disabled svg:hover,
+.outlined[class*="tag"].disabled button[class*="tag-remove"] > span > svg,
+.outlined[class*="tag"].disabled
+  button[class*="tag-remove"]:hover
+  > span
+  > svg {
+  background-color: transparent;
+  color: var(--color30);
+  border: 0.0625rem solid var(--color10);
+  box-shadow: none;
+  cursor: no-drop;
+  opacity: 1;
+}
+.outlined[class*="tag"].disabled button[class*="tag-remove"] > span > svg,
+.outlined[class*="tag"].disabled button[class*="tag-remove"]:hover > span > svg,
+.outlined[class*="tag"].disabled svg:hover,
+.outlined[class*="tag"].disabled svg,
+.outlined[class*="tag"].disabled.active svg {
+  border: none;
+}
+/* END STYLE */
+/*WITH NUMBER*/
+.smooth[class*="tag"].number span > div,
+.outlined[class*="tag"].number span > div {
+  background: var(--color70);
+  color: var(--color0);
+}
+.smooth[class*="tag"].number.dense span > div,
+.outlined[class*="tag"].number.dense span > div {
+  background: none;
+  color: var(--color100);
+}
+.smooth[class*="tag"].number.disabled span > div,
+.outlined[class*="tag"].number.disabled span > div {
+  background: var(--color50);
+}
+.smooth[class*="tag"].number.disabled.dense span > div,
+.outlined[class*="tag"].number.disabled.dense span > div {
+  color: var(--color70);
+  background: none;
+}

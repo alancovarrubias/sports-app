@@ -1,0 +1,16 @@
+@import "palette.css";
+@import "common.css";
+@import "fonts.css";
+@import "grid.css";
+
+:root {
+  /*Fonts*/
+  --font-primary: var(--inter);
+  --font_primary: var(--inter);
+
+  --font-secondary: var(--inter); /** Used for captions */
+  --font_secondary: var(--inter);
+
+  --font-family-button: var(--inter);
+  --font_family_button: var(--inter);
+}

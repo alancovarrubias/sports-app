@@ -1,0 +1,85 @@
+/*TREE*/
+
+.flat {
+  color: var(--color100);
+}
+.flat span > svg {
+  color: var(--color50);
+}
+.flat li > div:first-of-type:hover {
+  box-shadow: var(--shadow2dp);
+  transition: all 150ms ease-in;
+}
+.flat li > div:hover {
+  background-color: unset;
+}
+.flat li[class*="selected"] > div:first-of-type {
+  background-color: var(--color5);
+  color: var(--color100);
+  box-shadow: none;
+  transition: all 150ms ease-in;
+}
+.flat li[class*="selected"] svg {
+  color: var(--color70);
+  transition: all 150ms ease-in;
+}
+
+.flat li > div:first-of-type:hover > span:first-of-type {
+  background: var(--color10);
+  transition: all 150ms ease-in;
+}
+.flat[class*="dense"] li > div:first-of-type:hover > span:first-of-type {
+  background: none;
+  transition: all 150ms ease-in;
+}
+.flat
+  li:not([class*="disabled"])
+  > div:first-of-type:hover
+  > span[class*="node-caret"]:first-of-type
+  > svg {
+  color: var(--color100);
+  transition: all 150ms ease-in;
+}
+.flat li:hover > div:first-of-type > span[class*="none"] {
+  background: none;
+  transition: all 150ms ease-in;
+}
+.flat li:hover {
+  cursor: pointer;
+}
+.flat span[class*="node-caret-closed"] > svg {
+  color: var(--color40);
+  transition: all 150ms ease-in;
+}
+.flat span[class*="node-caret-open"] > svg {
+  color: var(--color70);
+  transition: all 150ms ease-in;
+}
+.flat div[with-secondary-label] > div {
+  color: var(--color60);
+}
+
+/*DISABLED*/
+.flat li[class*="disabled"],
+.flat li[class*="disabled"] > div:first-of-type,
+.flat li[class*="disabled"] > div:first-of-type:hover > span,
+.flat li[class*="disabled"] > div:first-of-type:hover > span > svg,
+.flat li[class*="disabled"] > div:first-of-type > span > svg {
+  color: var(--color20);
+  box-shadow: none;
+  background: unset;
+}
+/*Custom*/
+.flat li[class*="disabled"] > div > span > div[with-secondary-label] > div {
+  color: var(--yellow70);
+}
+.flat
+  li[class*="disabled"]
+  > div
+  > span
+  > div[with-secondary-label]
+  > div
+  > span
+  > svg {
+  color: var(--yellow70);
+}

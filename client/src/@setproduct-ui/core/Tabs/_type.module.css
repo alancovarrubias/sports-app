@@ -1,0 +1,92 @@
+/* TABS TYPES*/
+.def div[class*="tab-list"] {
+  height: 2.5rem;
+  align-items: center;
+}
+.dense div[class*="tab-list"] {
+  height: 1.75rem;
+  align-items: center;
+}
+
+.def div[class*="tab"],
+.dense div[class*="tab"] {
+  margin-right: 0;
+}
+
+.def div[class*="tab"][id*="tab-title"] {
+  /*text-transform: uppercase;*/
+  font-size: var(--font_size_body);
+  letter-spacing: var(--letter_spacing_body);
+}
+.dense div[class*="tab"][id*="tab-title"] {
+  /* text-transform: initial;*/
+  font-size: var(--font_size_body_small);
+  letter-spacing: var(--letter_spacing_body_small);
+}
+
+/*
+.def div[class*="tab"][aria-selected="true"],
+.dense div[class*="tab"][aria-selected="true"] {
+  font-weight: var(--font_weight_body_medium);
+  letter-spacing: 0.0152em;
+}*/
+
+/*---*/
+.def[class*="outlined"] div[class*="tab"][id*="tab-title"] {
+  line-height: calc(2.5rem);
+}
+.dense[class*="outlined"] div[class*="tab"][id*="tab-title"] {
+  line-height: calc(1.75rem + 0.0625rem);
+}
+
+.def[class*="flat"] div[class*="tab"][id*="tab-title"],
+.def[class*="filled"] div[class*="tab"][id*="tab-title"],
+.def[class*="smooth"] div[class*="tab"][id*="tab-title"],
+.def[class*="raised"] div[class*="tab"][id*="tab-title"] {
+  line-height: 2.5rem;
+}
+.dense[class*="flat"] div[class*="tab"][id*="tab-title"],
+.dense[class*="filled"] div[class*="tab"][id*="tab-title"],
+.dense[class*="smooth"] div[class*="tab"][id*="tab-title"],
+.dense[class*="raised"] div[class*="tab"][id*="tab-title"] {
+  line-height: 1.75rem;
+}
+
+/*---*/
+
+.def div[class*="tab"][id*="tab-title"] > span[class*="icon"],
+.dense div[class*="tab"][id*="tab-title"] > span[class*="icon"] {
+  margin-right: 0.5rem;
+}
+.def div[class*="tab"][id*="tab-title"] > span[class*="icon"] > svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+/*SEGMENTED*/
+.segmented div[class*="tab-list"] {
+  height: 1.75rem;
+  align-items: center;
+}
+.segmented div[class*="tab"] {
+  margin-right: 0;
+}
+.segmented div[class*="tab"][id*="tab-title"] > span[class*="icon"] {
+  margin-right: 0.5rem;
+}
+.segmented div[class*="tab"][id*="tab-title"] {
+  text-transform: initial;
+  font-size: var(--font_size_caption);
+  letter-spacing: var(--letter_spacing_caption);
+}
+.segmented div[class*="tab"][id*="tab-title"] {
+  line-height: 1.75rem;
+}
+/**Fill container*/
+.def,
+.dense,
+.segmented {
+  width: min-content;
+}
+.fill {
+  width: unset;
+}

@@ -1,0 +1,69 @@
+/**INPUT*/
+.def.fill,
+.dense.fill {
+  width: 100%;
+}
+.def,
+.dense {
+  width: fit-content;
+}
+.def[class*="input-group"] > input[class*="input"] {
+  height: 2.5rem;
+  border-radius: 0.25rem;
+  padding: 0 2.5rem !important;
+  font-size: var(--font_size_body);
+  letter-spacing: var(--letter_spacing_body);
+  font-weight: var(--font_weight_body);
+}
+.dense[class*="input-group"] > input[class*="input"] {
+  height: 1.75rem;
+  border-radius: 0.25rem;
+  padding: 0 1.75rem !important;
+  font-size: var(--font_size_body_small);
+  letter-spacing: var(--letter_spacing_body_small);
+  font-weight: var(--font_weight_body_small);
+}
+
+.def[class*="input-group"] > button[class*="button"],
+.dense[class*="input-group"] > button[class*="button"],
+.def[class*="input-group"]
+  span[class*="input-action"]
+  > button[class*="button"],
+.dense[class*="input-group"]
+  span[class*="input-action"]
+  > button[class*="button"] {
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  width: 1.25rem;
+  height: 100%;
+  min-width: 1.25rem;
+  min-height: 0;
+  margin-left: 0.75rem;
+}
+
+.def[class*="input-group"] span[class*="input-action"],
+.dense[class*="input-group"] span[class*="input-action"] {
+  height: 100%;
+}
+.def[class*="input-group"]
+  span[class*="input-action"]
+  > button[class*="button"] {
+  margin-right: 0.625rem;
+}
+.dense[class*="input-group"] > button[class*="button"] {
+  width: 1rem;
+  min-width: 1rem;
+  margin-left: 0.5rem;
+}
+.dense[class*="input-group"]
+  span[class*="input-action"]
+  > button[class*="button"] {
+  margin-right: 0.375rem;
+}
+
+.def[class*="active"] > input[class*="input"],
+.dense[class*="active"] > input[class*="input"] {
+  font-weight: var(--font_weight_body_medium);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}

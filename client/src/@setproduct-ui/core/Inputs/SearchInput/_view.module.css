@@ -1,0 +1,203 @@
+/*INPUT*/
+/*SMOOTH*/
+.smooth[class*="input-group"] input[class*="input"] {
+  box-shadow: none;
+  background: var(--color5);
+  color: var(--color100);
+  border: none;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.smooth[class*="input-group"] input[class*="input"]:hover {
+  box-shadow: none;
+  background: var(--color10);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.smooth[class*="input-group"].active input[class*="input"] {
+  box-shadow: none;
+  background: var(--color10);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.smooth[class*="input-group"] input[class*="input"]::placeholder {
+  color: var(--color40);
+}
+.smooth[class*="input-group"]:hover input[class*="input"]::placeholder {
+  color: var(--color60);
+}
+/**END SMOOTH*/
+
+/*FILLED*/
+.filled[class*="input-group"] input[class*="input"] {
+  box-shadow: none;
+  background: var(--color30);
+  color: var(--color0);
+  border: none;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.filled[class*="input-group"] input[class*="input"]:hover {
+  box-shadow: none;
+  background: var(--color40);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.filled[class*="input-group"].active input[class*="input"] {
+  box-shadow: none;
+  background: var(--color70);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.filled[class*="input-group"] input[class*="input"]::placeholder {
+  color: var(--color0);
+}
+
+/**END FILLED*/
+
+/*OUTLINED*/
+.outlined[class*="input-group"] input[class*="input"] {
+  box-shadow: 0 0 0 0.0625rem var(--color30);
+  color: var(--color100);
+  border: none;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.outlined[class*="input-group"] input[class*="input"]:hover {
+  box-shadow: 0 0 0 0.0625rem var(--color80);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.outlined[class*="input-group"].active input[class*="input"] {
+  box-shadow: 0 0 0 0.125rem var(--color80);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.outlined[class*="input-group"] input[class*="input"]::placeholder {
+  color: var(--color40);
+}
+/**END OUTLINED*/
+
+/*RAISED*/
+.raised[class*="input-group"] input[class*="input"] {
+  box-shadow: var(--shadow2dp);
+  color: var(--color100);
+  border: none;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.raised[class*="input-group"] input[class*="input"]:hover {
+  box-shadow: var(--shadow4dp);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.raised[class*="input-group"].active input[class*="input"] {
+  box-shadow: var(--shadow8dp);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.raised[class*="input-group"] input[class*="input"]::placeholder {
+  color: var(--color40);
+}
+.raised[class*="input-group"]:hover input[class*="input"]::placeholder {
+  color: var(--color60);
+}
+/**END RAISED*/
+
+/*SEARCH BUTTON*/
+div[class*="input-group"] > .searchButton {
+  color: var(--color30);
+}
+div[class*="input-group"] > .searchButton:hover {
+  color: var(--color50);
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.smooth[class*="input-group"].active > .searchButton {
+  color: var(--color60);
+}
+.filled[class*="input-group"] > .searchButton,
+.filled[class*="input-group"].active > .searchButton:hover {
+  color: var(--color20);
+}
+.filled[class*="input-group"].active > .searchButton,
+.filled[class*="input-group"] > .searchButton:hover {
+  color: var(--color0);
+}
+
+/*-----*/
+/*CLEAR BUTTON*/
+
+div[class*="input-group"]
+  > input[class*="input"]
+  + span[class*="input-action"]
+  > button[class*="minimal"].clearButton:not(:hover):not(:focus)
+  > span[class*="icon"]
+  > svg {
+  fill: var(--color30) !important;
+}
+div[class*="input-group"] span[class*="input-action"] > button {
+  color: var(--color30) !important;
+}
+.smooth[class*="input-group"]
+  > input[class*="input"]
+  + span[class*="input-action"]
+  > button[class*="minimal"].clearButton:not(:hover):not(:focus)
+  > span[class*="icon"]
+  > svg,
+.raised[class*="input-group"]
+  > input[class*="input"]
+  + span[class*="input-action"]
+  > button[class*="minimal"].clearButton:not(:hover):not(:focus)
+  > span[class*="icon"]
+  > svg {
+  fill: var(--color40) !important;
+}
+.smooth[class*="input-group"] span[class*="input-action"] > button,
+.raised[class*="input-group"] span[class*="input-action"] > button {
+  color: var(--color40) !important;
+}
+.filled[class*="input-group"] span[class*="input-action"] > button {
+  color: var(--color50) !important;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.filled[class*="input-group"].active span[class*="input-action"] > button {
+  color: var(--color40) !important;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.filled[class*="input-group"]
+  > input[class*="input"]
+  + span[class*="input-action"]
+  > button[class*="minimal"].clearButton:not(:hover):not(:focus)
+  > span[class*="icon"]
+  > svg {
+  fill: var(--color40) !important;
+}
+
+div[class*="input-group"].isFilled
+  span[class*="input-action"]
+  > button.clearButton {
+  visibility: hidden;
+  opacity: 0;
+}
+.div[class*="input-group"].isFilled span[class*="input-action"] > button {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.div[class*="input-group"]
+  > input[class*="input"]
+  + span[class*="input-action"]
+  > button[class*="minimal"].clearButton:not(:hover):not(:focus)
+  > span[class*="icon"] {
+  opacity: 1;
+  visibility: visible;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+div[class*="input-group"] span[class*="input-action"] > button {
+  visibility: hidden;
+}
+div[class*="input-group"] span[class*="input-action"] > .clearButton {
+  visibility: visible;
+}
+div[class*="input-group"].isFilled span[class*="input-action"] > .clearButton {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+div[class*="input-group"].isFilled:hover
+  span[class*="input-action"]
+  > .clearButton {
+  visibility: visible;
+  opacity: 1;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+/*-----*/

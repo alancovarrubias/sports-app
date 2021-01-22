@@ -1,0 +1,179 @@
+/*TOAST*/
+
+/*flat*/
+
+/*filled*/
+
+.filled > div {
+  background-color: var(--color70);
+  color: var(--color10);
+  box-shadow: none;
+}
+.filled div[class*="button-group"] svg {
+  color: var(--color40);
+  transition: all 180ms ease-in;
+}
+.filled div[class*="button-group"] > button:hover svg,
+.filled div[class*="button-group"] > button[class*="button"]:hover,
+.filled div[class*="button-group"] a[class*="button"]:hover {
+  color: var(--color10);
+  background: none;
+  transition: all 180ms ease-in;
+}
+.filled div[class*="button-group"] a {
+  color: var(--color30);
+  transition: all 180ms ease-in;
+}
+
+.filled svg,
+.filled span[class*="icon"]:first-child {
+  color: var(--color10);
+}
+
+.filled div > span[class*="icon"]:first-child {
+  background: var(--color80);
+}
+
+/*smooth*/
+
+.smooth > div {
+  background-color: var(--color5);
+  color: var(--color80);
+  box-shadow: none;
+}
+.smooth div[class*="button-group"] svg {
+  color: var(--color40);
+  transition: all 180ms ease-in;
+}
+.smooth div[class*="button-group"] > button:hover svg,
+.smooth div[class*="button-group"] > button[class*="button"]:hover {
+  color: var(--color80);
+  background: none;
+  transition: all 180ms ease-in;
+}
+.smooth div[class*="button-group"] a[class*="button"] {
+  color: var(--color70);
+  background: var(--white);
+  padding: 0.75rem;
+  height: fit-content;
+  margin: auto;
+  margin-left: 0.5rem;
+  border-radius: 4px;
+  box-shadow: var(--shadow4dp);
+  transition: all 180ms ease-in;
+}
+.smooth div[class*="button-group"] a[class*="button"]:hover {
+  color: var(--color70);
+  background: var(--white);
+  box-shadow: var(--shadow8dp);
+}
+.smooth div[class*="button-group"] a[class*="button"]:active {
+  box-shadow: var(--shadow2dp);
+}
+
+.smooth svg,
+.smooth span[class*="icon"]:first-child {
+  color: var(--color80);
+}
+
+.smooth div > span[class*="icon"]:first-child {
+  background: var(--color20);
+}
+
+/*OUTLINED*/
+
+.outlined > div {
+  background-color: var(--white);
+  color: var(--color80);
+  border: 1px solid var(--color30);
+  box-shadow: none;
+}
+.outlined div[class*="button-group"] svg {
+  color: var(--color40);
+  transition: all 180ms ease-in;
+}
+.outlined div[class*="button-group"] > button:hover svg,
+.outlined div[class*="button-group"] > button[class*="button"]:hover {
+  color: var(--color80);
+  background: none;
+  transition: all 180ms ease-in;
+}
+/*close button*/
+.outlined div[class*="button-group"] a[class*="button"] {
+  color: var(--color70);
+  background: var(--color5);
+  padding: 0.75rem;
+  height: fit-content;
+  margin: auto;
+  margin-left: 0.5rem;
+  border-radius: 4px;
+  /*box-shadow: var(--shadow4dp);*/
+  transition: all 180ms ease-in;
+}
+.outlined div[class*="button-group"] a[class*="button"]:hover {
+  color: var(--color70);
+  background: var(--color5);
+  box-shadow: var(--shadow4dp);
+}
+.outlined div[class*="button-group"] a[class*="button"]:active {
+  box-shadow: none;
+  background: var(--color10);
+}
+/**/
+
+/*icon*/
+.outlined svg,
+.outlined span[class*="icon"]:first-child {
+  color: var(--color80);
+}
+
+.outlined div > span[class*="icon"]:first-child {
+  background: var(--color10);
+}
+
+/*RAISED*/
+
+.raised > div {
+  background-color: var(--white);
+  color: var(--color80);
+  box-shadow: var(--shadow4dp);
+}
+.raised div[class*="button-group"] svg {
+  color: var(--grey50);
+  transition: all 180ms ease-in;
+}
+.raised div[class*="button-group"] > button:hover svg,
+.raised div[class*="button-group"] > button[class*="button"]:hover {
+  color: var(--grey90);
+  background: none;
+  transition: all 180ms ease-in;
+}
+/*close button*/
+.raised div[class*="button-group"] a[class*="button"] {
+  color: var(--color70);
+  background: var(--color5);
+  padding: 0.75rem;
+  height: fit-content;
+  margin: auto;
+  margin-left: 0.5rem;
+  border-radius: 4px;
+  /*box-shadow: var(--shadow4dp);*/
+  transition: all 180ms ease-in;
+}
+.raised div[class*="button-group"] a[class*="button"]:hover {
+  color: var(--color70);
+  background: var(--color5);
+  box-shadow: var(--shadow4dp);
+}
+.raised div[class*="button-group"] a[class*="button"]:active {
+  box-shadow: none;
+  background: var(--color10);
+}
+/*icon*/
+.raised svg,
+.raised span[class*="icon"]:first-child {
+  color: var(--color80);
+}
+.raised div > span[class*="icon"]:first-child {
+  background: var(--color10);
+}

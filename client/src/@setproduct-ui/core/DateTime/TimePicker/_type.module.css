@@ -1,0 +1,60 @@
+/**TIME PICKER*/
+.default div[class*="timepicker-input-row"] {
+  height: auto;
+  border-radius: 0.25rem;
+  line-height: unset;
+  padding: 0;
+}
+
+.default input[class*="timepicker-input"] {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.25rem;
+  line-height: unset;
+  letter-spacing: 0.0275rem;
+}
+
+.default span[class*="timepicker-divider-text"] {
+  width: 0.5rem;
+}
+/*Arrow Button*/
+.default span[class*="timepicker-arrow-button"] {
+  width: 2.5rem;
+}
+.default span[class*="timepicker-arrow-button"][class*="minute"],
+.default span[class*="timepicker-arrow-button"][class*="second"],
+.default span[class*="timepicker-arrow-button"][class*="millisecond"] {
+  margin-left: 0.5rem;
+}
+.default div[class*="timepicker-arrow-row"] svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/**/
+
+/*AM/PM*/
+.default div[class*="ampm-select"] {
+  margin-left: 0.5rem;
+}
+.default div[class*="ampm-select"] > select {
+  height: 2.5rem;
+  line-height: unset;
+  border-radius: 0.25rem;
+  padding: 0 1rem;
+  letter-spacing: 0.0275rem;
+  font-size: inherit;
+  font-family: inherit;
+}
+.default div[class*="ampm-select"] > span[class*="icon"] {
+  position: relative;
+  top: 0.125rem;
+  right: unset;
+  left: -36px;
+  padding-right: 16px;
+}
+.default div[class*="ampm-select"] > span[class*="icon"] > svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+/**/

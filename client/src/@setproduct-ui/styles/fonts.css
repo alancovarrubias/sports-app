@@ -1,0 +1,152 @@
+@charset "UTF-8";
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap");
+
+:root {
+  --roboto: "Roboto", sans-serif;
+  --quicksand: "Quicksand", sans-serif;
+  --inter: "Inter", sans-serif;
+  --plex: "IBM Plex Sans", sans-serif;
+  --lato: "Lato", sans-serif;
+  --manrope: "Manrope", sans-serif;
+
+  /*Font sizes*/
+  --font_size_h1: 6rem;
+  --font_size_h2: 3.75rem;
+  --font_size_h3: 3rem;
+  --font_size_h4: 2.125rem;
+  --font_size_h5: 1.5rem;
+  --font_size_h6: 1.25rem;
+  --font_size_body: 1rem;
+  --font_size_body_large: 1.25rem;
+  --font_size_body_small: 0.875rem;
+  --font_size_button: 0.875rem;
+  --font_size_caption: 0.75rem;
+  --font_size_caption_small: 0.625rem;
+  --font_size_overline: 0.75rem;
+  --font_size_overline_small: 0.625rem;
+
+  /*Font weight*/
+  --font_weight_h1: 700;
+  --font_weight_h2: 700;
+  --font_weight_h3: 700;
+  --font_weight_h4: 700;
+  --font_weight_h5: 700;
+  --font_weight_h6: 700;
+  --font_weight_body: 400;
+  --font_weight_body_medium: 500;
+  --font_weight_button: 700;
+  --font_weight_caption: 400;
+  --font_weight_caption_small: 500;
+  --font_weight_overline: 600;
+
+  /*Letter spacing*/
+  --letter_spacing_h1: -0.026em;
+  --letter_spacing_h2: -0.025em;
+  --letter_spacing_h3: -0.01em;
+  --letter_spacing_h4: 0;
+  --letter_spacing_h5: 0;
+  --letter_spacing_h6: 0.0075em;
+  --letter_spacing_body: 0.0275em;
+  --letter_spacing_body_bold: 0.022em;
+  --letter_spacing_body_large: 0.0075em;
+  --letter_spacing_body_large_bold: 0.004em;
+  --letter_spacing_body_small: 0.018em;
+  --letter_spacing_button: 0.054em;
+  --letter_spacing_caption: 0.033em;
+  --letter_spacing_caption_small: 0.06em;
+  --letter_spacing_overline: 0.0168em;
+  --letter_spacing_overline_small: 0.15em;
+}
+
+.roboto {
+  font-family: var(--roboto);
+}
+.quicksand {
+  font-family: var(--quicksand);
+}
+.inter {
+  font-family: var(--inter);
+}
+.lato {
+  font-family: var(--lato);
+}
+.plex {
+  font-family: var(--plex);
+}
+.monrope {
+  font-family: var(--manrope);
+}
+
+.h1,
+.H1 {
+  font-weight: var(--font_weight_h1);
+  font-size: var(--font_size_h1);
+  letter-spacing: var(--letter_spacing_h1);
+}
+
+.h2,
+.H2 {
+  font-weight: var(--font_weight_h2);
+  font-size: var(--font_size_h2);
+  letter-spacing: var(--letter_spacing_h2);
+}
+
+.h3,
+.H3 {
+  font-weight: var(--font_weight_h3);
+  font-size: var(--font_size_h3);
+  letter-spacing: var(--letter_spacing_h3);
+}
+
+.h4,
+.H4 {
+  font-weight: var(--font_weight_h4);
+  font-size: var(--font_size_h4);
+  letter-spacing: var(--letter_spacing_h4);
+}
+
+.h5,
+.H5 {
+  font-weight: var(--font_weight_h5);
+  font-size: var(--font_size_h5);
+  letter-spacing: var(--letter_spacing_h5);
+}
+
+.h6,
+.H6 {
+  font-weight: var(--font_weight_h6);
+  font-size: var(--font_size_h6);
+  letter-spacing: var(--letter_spacing_h6);
+}
+
+.body,
+.BodyBig {
+  font-weight: var(--font_weight_body);
+  font-size: var(--font_size_body);
+  letter-spacing: var(--letter_spacing_body);
+}
+
+.button_text {
+  font-weight: var(--font_weight_button);
+  font-size: var(--font_size_button);
+  letter-spacing: var(--letter_spacing_button);
+}
+
+.caption {
+  font-weight: var(--font_weight_caption);
+  font-size: var(--font_size_caption);
+  letter-spacing: var(--letter_spacing_caption);
+}
+
+.overline {
+  font-weight: var(--font_weight_overline);
+  font-size: var(--font_size_overline);
+  letter-spacing: var(--letter_spacing_overline);
+  text-transform: uppercase;
+}

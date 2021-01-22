@@ -1,0 +1,18 @@
+/*.active,
+.active svg {
+  color: var(--base-color, var(--prim-color)) !important;
+}*/
+.default.checked svg {
+  color: var(--base-color, var(--prim-color)) !important;
+}
+.default.checked svg {
+  color: var(--base-color, var(--prim-color)) !important;
+}
+
+.default span,
+.default svg {
+  color: var(--grey40) !important;
+}
+.default span:hover svg {
+  color: var(--base-color, var(--prim-color)) !important;
+}

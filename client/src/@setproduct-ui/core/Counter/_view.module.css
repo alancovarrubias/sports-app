@@ -1,0 +1,143 @@
+/*FLAT STYLE*/
+.flat,
+.flat:not([class*="bp3-intent-"]),
+.flat:visited {
+  color: var(--color70);
+  background: none;
+  box-shadow: none;
+  /*transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;*/
+  transition: all 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+.flat:hover,
+.flat:not([class*="bp3-intent-"]):hover,
+.flat:hover {
+  box-shadow: var(--shadow2dp);
+  background: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.flat:active,
+.flat:not([class*="bp3-intent-"]):active,
+.flat:not([class*="bp3-intent-"])[class*="active"],
+.flat:not([class*="bp3-intent-"]).focused {
+  background: var(--color5);
+  box-shadow: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.flat:disabled,
+.flat:disabled > span > svg,
+.flat:disabled:hover,
+.flat:disabled:active {
+  color: var(--color30) !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+  background: var(--color0) !important;
+}
+/*END STYLE*/
+
+/* FILLED STYLE*/
+.filled,
+.filled:visited {
+  box-shadow: var(--shadow2dp) !important;
+  background: var(--color60) !important;
+  color: var(--color0) !important;
+  transition: all 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+.filled:hover {
+  background: var(--color70) !important;
+  box-shadow: var(--shadow8dp) !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.filled:active,
+.filled.focused {
+  background: var(--color80) !important;
+  box-shadow: none !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.filled:disabled {
+  color: var(--color40) !important;
+  background: var(--color5) !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+/* END STYLE */
+
+/*SMOOTH STYLE*/
+.smooth[class*="button"],
+.smooth[class*="button"]:visited {
+  color: var(--color70);
+  background: var(--color5);
+  box-shadow: none;
+  transition: all 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+.smooth[class*="button"]:hover {
+  color: var(--color100);
+  background: var(--color10);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.smooth[class*="button"]:active,
+.smooth:not([class*="bp3-intent-"]):active,
+.smooth:not([class*="bp3-intent-"])[class*="active"],
+.smooth[class*="button"].focused {
+  background: var(--color20);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.smooth:disabled,
+.smooth:disabled:hover {
+  color: var(--color30) !important;
+  background: var(--color0) !important;
+  opacity: 1 !important;
+}
+/* END STYLE */
+
+/* OUTLINED STYLE*/
+.outlined,
+.outlined:not([class*="bp3-intent-"]),
+.outlined:visited {
+  background: none;
+  box-shadow: 0 0 0 1px var(--color30); /*border: 1px solid var(--color30);*/
+  color: var(--color70);
+  transition: all 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+.outlined:not([class*="bp3-intent-"]):hover {
+  box-shadow: 0 0 0 2px var(--color30);
+  width: calc(- 2px);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.outlined:not([class*="bp3-intent-"]):active,
+.outlined.focused {
+  color: var(--color100);
+  box-shadow: 0 0 0 2px var(--color50);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.outlined:not([class*="bp3-intent-"]):disabled {
+  background: none;
+  color: var(--color30);
+  box-shadow: 0 0 0 1px var(--color10);
+}
+/* END STYLE */
+
+/* RAISED STYLE */
+.raised,
+.raised:not([class*="bp3-intent-"]),
+.raised:not([class*="bp3-intent-"]):visited {
+  background: var(--color0);
+  color: var(--color70);
+  box-shadow: var(--shadow4dp);
+  transition: all 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+.raised:not([class*="bp3-intent-"]):hover {
+  background: var(--white);
+  box-shadow: var(--shadow8dp);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.raised:not([class*="bp3-intent-"]):active,
+.raised:not([class*="bp3-intent-"]).focused {
+  box-shadow: var(--shadow2dp);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.raised:not([class*="bp3-intent-"]):disabled {
+  color: var(--color40);
+  background: var(--color5);
+  box-shadow: none;
+}
+/* END STYLE */

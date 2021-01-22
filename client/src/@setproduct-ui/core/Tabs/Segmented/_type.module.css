@@ -1,0 +1,62 @@
+/* TABS SEGMENTED TYPES*/
+.def div[class*="tab-list"] {
+  height: 2.5rem;
+  align-items: center;
+}
+.dense div[class*="tab-list"] {
+  height: 1.75rem;
+  align-items: center;
+}
+
+.def div[class*="tab"],
+.dense div[class*="tab"] {
+  margin-right: 0;
+}
+
+.def div[class*="tab"][id*="tab-title"] {
+  font-size: var(--font_size_body);
+  letter-spacing: var(--letter_spacing_body);
+}
+.dense div[class*="tab"][id*="tab-title"] {
+  font-size: var(--font_size_caption);
+  letter-spacing: var(--letter_spacing_caption);
+}
+
+.def div[class*="tab"][aria-selected="true"],
+.dense div[class*="tab"][aria-selected="true"] {
+  font-weight: var(--font_weight_body_medium);
+  letter-spacing: 0.0152em;
+}
+
+/*---*/
+
+.def div[class*="tab"][id*="tab-title"] {
+  line-height: 2.5rem;
+}
+.dense div[class*="tab"][id*="tab-title"] {
+  line-height: 1.75rem;
+}
+
+/*---*/
+
+.def div[class*="tab"][id*="tab-title"] {
+  padding: 0 1rem;
+  text-align: center;
+}
+.dense div[class*="tab"][id*="tab-title"] {
+  padding: 0 0.75rem;
+  text-align: center;
+}
+.def div[class*="tab"][id*="tab-title"] > span[class*="icon"] > svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+/**Right position*/
+.def div[role="tablist"][class*="tab-list"],
+.dense div[role="tablist"][class*="tab-list"] {
+  margin-left: 0;
+}
+.right div[role="tablist"][class*="tab-list"] {
+  margin-left: auto;
+  margin-right: 0 !important;
+}

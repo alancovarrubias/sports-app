@@ -1,0 +1,177 @@
+/*SWITCH CSS MODULE*/
+
+/*CONTAINER*/
+.container {
+  align-items: center;
+  box-shadow: none;
+  border-radius: 99px;
+}
+.container > label > div {
+  width: -webkit-fill-available;
+}
+
+/*---------------------------------------*/
+.def,
+.dense {
+  width: fit-content;
+  padding: 0;
+  display: flex;
+}
+.inline.def,
+.inline.dense {
+  display: inline-flex;
+}
+.fill,
+.fill > label[class*="control"] {
+  width: 100%;
+}
+.def {
+  height: 2.5rem;
+  line-height: 2.5rem;
+  font-size: var(--font_size_body);
+  letter-spacing: var(--letter_spacing_body);
+}
+.def[class*="container"] > label[class*="control"]:not(.bp3-align-right),
+.dense[class*="container"] > label[class*="control"]:not(.bp3-align-right) {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  margin-right: 1rem;
+}
+.def[class*="container"]
+  > label[class*="control"]:not(.bp3-align-right)
+  > span[class*="indicator"] {
+  margin: auto 1.125rem auto 0.625rem;
+  height: 0.875rem;
+  min-width: 2.25rem;
+}
+
+.def input:checked ~ span[class*="indicator"]::before,
+.def input:not(:checked) ~ span[class*="indicator"]::before {
+  height: 1.25rem;
+  width: 1.25rem;
+  margin: auto;
+  margin-top: -0.1875rem;
+  border-radius: 99px;
+}
+/*iOS like style*/
+.def.i-style[class*="container"]
+  > label[class*="control"]:not(.bp3-align-right)
+  > span[class*="indicator"] {
+  height: 1.5rem;
+  min-width: 2.5rem;
+}
+.def.i-style input:checked ~ span[class*="indicator"]::before,
+.def.i-style input:not(:checked) ~ span[class*="indicator"]::before {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin: auto;
+}
+.def.i-style input:checked ~ span[class*="indicator"]::before {
+  left: calc(100% - 1.5rem);
+}
+/**/
+.def input:checked ~ div {
+  letter-spacing: var(--letter_spacing_body_bold);
+  font-weight: var(--font_weight_body_medium);
+}
+/*Dense*/
+.dense {
+  height: 1.75rem;
+  line-height: 1.75rem;
+  font-size: var(--font_size_body_small);
+  letter-spacing: var(--letter_spacing_body_small);
+}
+.dense[class*="container"]
+  > label[class*="control"]:not(.bp3-align-right)
+  > span[class*="indicator"] {
+  margin: auto 1.125rem auto 0.625rem;
+  height: 0.75rem;
+}
+.dense input:checked ~ span[class*="indicator"]::before,
+.dense input:not(:checked) ~ span[class*="indicator"]::before {
+  height: 1rem;
+  width: 1rem;
+  margin: auto;
+  margin-top: -0.125rem;
+  border-radius: 99px;
+}
+/*iOS like style*/
+.dense.i-style[class*="container"]
+  > label[class*="control"]:not(.bp3-align-right)
+  > span[class*="indicator"] {
+  height: 1.125rem;
+  min-width: 2.125rem;
+}
+.dense.i-style input:checked ~ span[class*="indicator"]::before,
+.dense.i-style input:not(:checked) ~ span[class*="indicator"]::before {
+  height: 1.125rem;
+  width: 1.125rem;
+  margin: auto;
+}
+.dense.i-style input:checked ~ span[class*="indicator"]::before {
+  left: calc(100% - 1.125rem);
+}
+/**/
+.dense input:checked ~ div {
+  letter-spacing: var(--letter_spacing_body_small);
+  font-weight: var(--font_weight_body_medium);
+}
+
+/*-----------------------------------------*/
+.def.with_helper {
+  height: 2.75rem;
+  line-height: 2.75rem;
+}
+
+.dense.with_helper {
+  height: 2.5rem;
+  line-height: 2.5rem;
+}
+
+/*HELPER TEXT*/
+.helperBox {
+  line-height: initial;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.helperBox > .helperText {
+  font-size: var(--font_size_body_small);
+  letter-spacing: var(--letter_spacing_body_small);
+  font-weight: normal;
+}
+
+.helperBox > .helperText--dense {
+  font-size: var(--font_size_caption);
+  letter-spacing: var(--letter_spacing_caption);
+  font-weight: normal;
+}
+
+/*--------------------------------------------*/
+
+/*LEFT*/
+.leftPosition[class*="container"]
+  > label[class*="control"]:not(.bp3-align-right) {
+  flex-direction: row-reverse;
+  margin-left: 1rem;
+  margin-right: 0;
+}
+.def.leftPosition[class*="container"]
+  > label[class*="control"]
+  > span[class*="indicator"] {
+  margin: auto 0.625rem auto 1.125rem;
+}
+.dense.leftPosition[class*="container"]
+  > label[class*="control"]
+  > span[class*="indicator"] {
+  margin: auto 0.375rem auto 0.75rem;
+}
+
+/*------------------------*/
+
+/*RTL*/
+.rtl > div {
+  text-align: right;
+}
+
+/*----------------------------------*/

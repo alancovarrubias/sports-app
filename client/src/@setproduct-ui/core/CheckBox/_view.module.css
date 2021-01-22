@@ -1,0 +1,278 @@
+/*FLAT*/
+.flat {
+  color: var(--color100);
+}
+.flat .box_layout {
+  background: transparent;
+  transition: all 100ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.flat:hover .box_layout {
+  background: var(--color5);
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.flat[class*="control"] span[class*="control-indicator"] {
+  background-color: transparent !important;
+  background-image: none;
+  box-shadow: none !important;
+  border: 2px solid var(--color70);
+}
+.flat.checked {
+  background: var(--color5);
+}
+.flat.checked span[class*="control-indicator"] {
+  border: none;
+  box-shadow: none !important;
+  background-image: none;
+  background-color: var(--color70) !important;
+}
+.flat.checked input:checked ~ span::before,
+.flat.checked.indeterminate span[class*="control-indicator"]::before {
+  opacity: 1;
+  transition: opacity linear 180ms;
+}
+.flat:hover input:checked ~ span[class*="control-indicator"] {
+  background-color: var(--color70);
+  box-shadow: none;
+}
+.flat input:not(:checked) ~ span[class*="control-indicator"]::before {
+  opacity: 0;
+  transition: opacity linear 180ms;
+}
+/*disabled*/
+.flat.disabled {
+  color: var(--color40) !important;
+}
+.flat.checked.disabled span[class*="control-indicator"] {
+  background-color: var(--color40) !important;
+}
+.flat.disabled span[class*="control-indicator"] {
+  border-color: var(--color40) !important;
+}
+.flat.disabled.checked span {
+  border: none !important;
+  background-color: none !important;
+}
+.flat.disabled:hover input:checked ~ span {
+  background-color: none !important;
+}
+.flat.disabled:hover .box_layout,
+.flat.checked.disabled {
+  background: transparent;
+}
+/*helper*/
+.flat .helperText,
+.flat.disabled .helperText {
+  color: var(--color60);
+}
+/*--------------------------------*/
+/*SMOOTH*/
+.smooth {
+  color: var(--color100);
+  background: var(--color0);
+}
+.smooth .box_layout {
+  background: transparent;
+  transition: all 100ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.smooth:hover {
+  background: var(--color5);
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.smooth[class*="control"] span[class*="control-indicator"] {
+  background-color: transparent !important;
+  background-image: none;
+  box-shadow: none !important;
+  border: 2px solid var(--color70);
+}
+.smooth.checked {
+  background: var(--color10);
+}
+.smooth.checked span[class*="control-indicator"] {
+  border: none;
+  box-shadow: none !important;
+  background-image: none;
+  background-color: var(--color70) !important;
+}
+.smooth.checked input:checked ~ span::before,
+.smooth.checked.indeterminate span[class*="control-indicator"]::before {
+  opacity: 1;
+  transition: opacity linear 180ms;
+}
+.smooth:hover input:checked ~ span[class*="control-indicator"] {
+  background-color: var(--color70);
+  box-shadow: none;
+}
+.smooth input:not(:checked) ~ span[class*="control-indicator"]::before {
+  opacity: 0;
+  transition: opacity linear 180ms;
+}
+/*disabled*/
+.smooth.disabled,
+.smooth.checked.disabled {
+  color: var(--color40) !important;
+  background: var(--color0);
+}
+.smooth.checked.disabled span[class*="control-indicator"] {
+  background-color: var(--color40) !important;
+}
+.smooth.disabled span[class*="control-indicator"] {
+  border-color: var(--color40) !important;
+}
+.smooth.disabled.checked span {
+  border: none !important;
+  background-color: none !important;
+}
+.smooth.disabled:hover input:checked ~ span {
+  background-color: none !important;
+}
+.smooth.disabled:hover .box_layout {
+  background: transparent;
+}
+/*helper*/
+.smooth .helperText,
+.smooth.disabled .helperText {
+  color: var(--color60);
+}
+/*--------------------------------*/
+/*OUTLINED*/
+.outlined {
+  color: var(--color100);
+  box-shadow: 0 0 0 1px var(--color20);
+}
+.outlined .box_layout {
+  background: transparent;
+  transition: all 100ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.outlined:hover {
+  box-shadow: 0 0 0 1px var(--color40);
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.outlined[class*="control"] span[class*="control-indicator"] {
+  background-color: transparent !important;
+  background-image: none;
+  box-shadow: none !important;
+  border: 2px solid var(--color70);
+}
+.outlined.checked {
+  box-shadow: 0 0 0 2px var(--color40);
+}
+.outlined.checked span[class*="control-indicator"] {
+  border: none;
+  box-shadow: none !important;
+  background-image: none;
+  background-color: var(--color70) !important;
+}
+.outlined.checked input:checked ~ span::before,
+.outlined.checked.indeterminate span[class*="control-indicator"]::before {
+  opacity: 1;
+  transition: opacity linear 180ms;
+}
+.outlined:hover input:checked ~ span[class*="control-indicator"] {
+  background-color: var(--color70);
+  box-shadow: none;
+}
+.outlined input:not(:checked) ~ span[class*="control-indicator"]::before {
+  opacity: 0;
+  transition: opacity linear 180ms;
+}
+/*disabled*/
+.outlined.disabled,
+.outlined.checked.disabled {
+  color: var(--color40) !important;
+  box-shadow: 0 0 0 1px var(--color10);
+}
+.outlined.checked.disabled span[class*="control-indicator"] {
+  background-color: var(--color40) !important;
+}
+.outlined.disabled span[class*="control-indicator"] {
+  border-color: var(--color40) !important;
+}
+.outlined.disabled.checked span {
+  border: none !important;
+  background-color: none !important;
+}
+.outlined.disabled:hover input:checked ~ span {
+  background-color: none !important;
+}
+.outlined.disabled:hover .box_layout {
+  background: transparent;
+}
+/*helper*/
+.outlined .helperText,
+.outlined.disabled .helperText {
+  color: var(--color60);
+}
+/*--------------------------------*/
+/*RAISED*/
+.raised {
+  color: var(--color100);
+  background: var(--color0);
+  box-shadow: var(--shadow2dp);
+}
+.raised .box_layout {
+  background: transparent;
+  transition: all 100ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.raised:hover {
+  background: var(--white);
+  box-shadow: var(--shadow4dp);
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.raised[class*="control"] span[class*="control-indicator"] {
+  background-color: transparent !important;
+  background-image: none;
+  box-shadow: none !important;
+  border: 2px solid var(--color70);
+}
+.raised.checked {
+  background: var(--color5);
+  box-shadow: none;
+}
+.raised.checked span[class*="control-indicator"] {
+  border: none;
+  box-shadow: none !important;
+  background-image: none;
+  background-color: var(--color70) !important;
+}
+.raised.checked input:checked ~ span::before,
+.raised.checked.indeterminate span[class*="control-indicator"]::before {
+  opacity: 1;
+  transition: opacity linear 180ms;
+}
+.raised:hover input:checked ~ span[class*="control-indicator"] {
+  background-color: var(--color70);
+  box-shadow: none;
+}
+.raised input:not(:checked) ~ span[class*="control-indicator"]::before {
+  opacity: 0;
+  transition: opacity linear 180ms;
+}
+/*disabled*/
+.raised.disabled,
+.raised.checked.disabled {
+  color: var(--color40) !important;
+  background: var(--color0);
+  box-shadow: none;
+}
+.raised.checked.disabled span[class*="control-indicator"] {
+  background-color: var(--color40) !important;
+}
+.raised.disabled span[class*="control-indicator"] {
+  border-color: var(--color40) !important;
+}
+.raised.disabled.checked span {
+  border: none !important;
+  background-color: none !important;
+}
+.raised.disabled:hover input:checked ~ span {
+  background-color: none !important;
+}
+.raised.disabled:hover .box_layout {
+  background: transparent;
+}
+/*helper*/
+.raised .helperText,
+.raised.disabled .helperText {
+  color: var(--color60);
+}
+/*--------------------------------*/

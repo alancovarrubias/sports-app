@@ -1,0 +1,111 @@
+/*CSS for Demo app*/
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,500&display=swap");
+
+.demo-content-component {
+  height: auto;
+  display: block;
+  padding: 1rem 0.5rem;
+}
+
+.demo-name {
+  font-family: var(--inter);
+  margin-bottom: 0.5rem;
+}
+
+.demo-desc {
+  font-family: var(--inter);
+  margin-bottom: 0.5rem;
+}
+
+.demo-api {
+  margin-top: 1.5rem;
+  margin-bottom: 3rem;
+}
+@media screen and (min-width: 640px) {
+  .demo-api div[role="tablist"][class*="tab-list"] {
+    margin-left: 0;
+  }
+}
+.demo-props {
+  padding: 0 0.5rem 1rem 0rem;
+}
+.demo-type-group,
+.demo-view-group,
+.demo-color-group {
+  padding: 0 0.5rem 1rem 0;
+}
+
+.demo-type-group label[class*="label"],
+.demo-view-group label[class*="label"],
+.demo-color-group label[class*="label"] {
+  margin-left: 0;
+}
+
+.demo-slider {
+  margin: 1rem auto;
+  width: 80%;
+}
+
+code {
+  color: var(--grey60);
+  font-family: var(--inter);
+}
+
+pre {
+  background: var(--blue5);
+  white-space: initial;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  width: fit-content;
+  font-size: 1rem;
+  letter-spacing: var(--letter_spacing_body);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/*API TAB*/
+/*.api-container {
+}*/
+
+.api-prop-container {
+  margin-top: 1.5rem;
+}
+.api-prop-name {
+  border: 1px solid var(--grey30);
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.625rem;
+  color: var(--grey70);
+  font-size: 1rem;
+  letter-spacing: var(--letter_spacing_body);
+  font-family: "IBM Plex Mono", monospace;
+  line-height: 2rem;
+}
+.api-prop-type {
+  font-size: 1rem;
+  letter-spacing: var(--letter_spacing_body_bold);
+  font-family: "IBM Plex Mono", monospace;
+  line-height: 1rem;
+  font-weight: var(--font_weight_body_medium);
+  margin-top: 0.5rem;
+}
+.api-prop-desc {
+  margin-top: 0.5rem;
+  color: var(--grey60);
+  font-family: var(--inter);
+  letter-spacing: var(--letter_spacing_body);
+  font-size: var(--font_size_body);
+}
+
+/*CODE TAB*/
+.source-code-block {
+  background: var(--blue5);
+  border-radius: 0.25rem;
+  margin: 0;
+}
+.source-code-block pre {
+  white-space: pre-wrap;
+  font-weight: var(--font_weight_body_medium);
+  margin: 0;
+  padding: 0;
+  margin-top: -1.75rem;
+  position: relative;
+}

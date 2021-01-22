@@ -1,0 +1,91 @@
+:root {
+  /*VARIABLES*/
+  --hide: 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0ms;
+  --show: 250ms cubic-bezier(0.175, 0.885, 0.32, 1.275) 0ms;
+}
+
+.container {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.wrapper {
+  min-width: var(--min-width);
+  height: var(--height);
+  box-sizing: border-box;
+  padding: 0 0.375rem;
+  border-radius: 99px;
+  z-index: 1;
+  transition: all 250ms ease-in-out, transform var(--animation);
+}
+
+/*POSITION*/
+.position {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: absolute;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  transform-origin: var(--originX) var(--originY);
+  transform: scale(var(--scale)) translate(var(--translateX), var(--translateY));
+}
+.right {
+  --translateX: calc(var(--min-width) / 2);
+  --originX: 100%;
+  right: 0;
+}
+.top {
+  --translateY: -50%;
+  --originY: 0%;
+  top: 0;
+}
+.left {
+  --translateX: calc(var(--min-width) / -2);
+  --originX: 0%;
+  left: 0;
+}
+.bottom {
+  --translateY: 50%;
+  --originY: 100%;
+  bottom: 0;
+}
+/*position*/
+
+/*VISIBILITY*/
+.show {
+  --scale: 1;
+  --animation: var(--show);
+}
+.hide {
+  --scale: 0;
+  --animation: var(--hide);
+}
+/*visibility*/
+
+/*TYPES*/
+.default {
+  --min-width: 1.25rem;
+  --height: var(--min-width);
+  font-size: var(--font_size_body_small);
+  letter-spacing: var(--letter_spacing_body_small);
+  composes: wrapper;
+  composes: position;
+}
+.dense {
+  --min-width: 1rem;
+  --height: 0.875rem;
+  font-size: var(--font_size_caption_small);
+  letter-spacing: var(--letter_spacing_caption_small);
+  composes: wrapper;
+  composes: position;
+}
+.dot {
+  --min-width: 0.875rem;
+  --height: var(--min-width);
+  composes: wrapper;
+  composes: position;
+}
+/*types*/

@@ -1,0 +1,51 @@
+/*CALLOUT*/
+
+/*filled*/
+.filled[class*="callout"],
+.filled[class*="callout"] h4[class*="heading"] {
+  background-color: var(--color70);
+  color: var(--color0);
+}
+.filled[class*="callout"] span[class*="icon"]:first-child > svg,
+.filled[class*="callout"] span[class*="icon"]:first-child {
+  color: var(--color20);
+}
+
+/*smooth*/
+.smooth[class*="callout"],
+.smooth[class*="callout"] h4[class*="heading"] {
+  background-color: var(--color10);
+  color: var(--color100);
+}
+.smooth[class*="callout"] span[class*="icon"]:first-child > svg,
+.smooth[class*="callout"] span[class*="icon"]:first-child {
+  color: var(--color70);
+}
+
+/*outlined*/
+.outlined[class*="callout"] {
+  background-color: var(--white);
+  color: var(--color100);
+  border: 2px solid var(--color30);
+}
+.outlined[class*="callout"] h4[class*="heading"] {
+  color: var(--color100);
+}
+.outlined[class*="callout"] span[class*="icon"]:first-child > svg,
+.outlined[class*="callout"] span[class*="icon"]:first-child {
+  color: var(--color70);
+}
+
+/*raised*/
+.raised[class*="callout"] {
+  background-color: var(--color0);
+  color: var(--color100);
+  box-shadow: var(--shadow2dp);
+}
+.raised[class*="callout"] h4[class*="heading"] {
+  color: var(--color100);
+}
+.raised[class*="callout"] span[class*="icon"]:first-child > svg,
+.raised[class*="callout"] span[class*="icon"]:first-child {
+  color: var(--color70);
+}

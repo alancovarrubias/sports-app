@@ -1,0 +1,251 @@
+/*TABS SEGMENTED*/
+/*FLAT*/
+.flat div[class*="tab-indicator"] {
+  height: 0;
+}
+.flat div[class*="tab-list"] {
+  background: var(--white);
+  border-radius: 4px;
+}
+
+.flat div[class*="tab"][aria-selected="true"] {
+  color: var(--color90);
+  font-weight: 500;
+}
+.flat div[class*="tab"][aria-selected="false"] {
+  color: var(--color50);
+  border-bottom: none;
+  transition: box-shadow 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.flat div[class*="tab"][aria-selected="false"]:hover,
+.flat div[class*="tab"][aria-selected="false"]:active {
+  border-bottom: none;
+  color: var(--color90);
+  background-color: var(--color0) !important;
+  border-radius: 0.25rem;
+  box-shadow: none !important;
+  transition: all 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+
+.flat div[class*="tab"][aria-selected="false"] > span > svg {
+  fill: var(--color40);
+}
+.flat div[class*="tab"][aria-selected="false"]:hover > span > svg {
+  fill: var(--color90);
+}
+.flat div[class*="tab"][aria-selected="true"] > span > svg {
+  fill: var(--color100);
+}
+
+.flat div[class*="tab-indicator-wrapper"] {
+  border-radius: 4px;
+  background-color: var(--color5);
+}
+/*END-----*/
+
+/*FILLED*/
+.filled div[class*="tab-indicator"] {
+  height: 0;
+}
+.filled div[class*="tab-list"] {
+  background: var(--color10);
+  border-radius: 4px;
+}
+
+.filled div[class*="tab"][aria-selected="true"] {
+  color: var(--white);
+  font-weight: 500;
+}
+.filled div[class*="tab"][aria-selected="false"] {
+  color: var(--color70);
+  border-bottom: none;
+  transition: box-shadow 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.filled div[class*="tab"][aria-selected="false"]:hover,
+.filled div[class*="tab"][aria-selected="false"]:active {
+  border-bottom: none;
+  color: var(--color100);
+  background-color: var(--color20) !important;
+  border-radius: 0.25rem;
+  box-shadow: none !important;
+  transition: all 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+
+.filled div[class*="tab"][aria-selected="false"] > span > svg {
+  fill: var(--color50);
+}
+.filled div[class*="tab"][aria-selected="false"]:hover > span > svg {
+  fill: var(--color100);
+}
+.filled div[class*="tab"][aria-selected="true"] > span > svg {
+  fill: var(--white);
+}
+
+.filled div[class*="tab-indicator-wrapper"] {
+  border-radius: 4px;
+  background-color: var(--color50);
+}
+/*END-----*/
+
+/*SMOOTH*/
+.smooth div[class*="tab-indicator"] {
+  height: 0;
+}
+.smooth div[class*="tab-list"] {
+  background: var(--color5);
+  border-radius: 4px;
+}
+
+.smooth div[class*="tab"][aria-selected="true"] {
+  color: var(--color100);
+  font-weight: 500;
+}
+.smooth div[class*="tab"][aria-selected="false"] {
+  color: var(--color50);
+  border-bottom: none;
+  transition: box-shadow 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.smooth div[class*="tab"][aria-selected="false"]:hover,
+.smooth div[class*="tab"][aria-selected="false"]:active {
+  border-bottom: none;
+  color: var(--color100);
+  background-color: var(--color10) !important;
+  border-radius: 0.25rem;
+  box-shadow: none !important;
+  transition: all 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+
+.smooth div[class*="tab"][aria-selected="false"] > span > svg {
+  fill: var(--color40);
+}
+.smooth div[class*="tab"][aria-selected="false"]:hover > span > svg {
+  fill: var(--color90);
+}
+.smooth div[class*="tab"][aria-selected="true"] > span > svg {
+  fill: var(--color100);
+}
+
+.smooth div[class*="tab-indicator-wrapper"] {
+  border-radius: 4px;
+  background-color: var(--color20);
+}
+/*END-----*/
+
+/*OUTLINED*/
+.outlined div[class*="tab-indicator"] {
+  height: 0;
+}
+.outlined div[class*="tab-list"] {
+  background: var(--white);
+  box-shadow: 0 0 0 1px var(--color20);
+  border-radius: 4px;
+}
+
+.outlined div[class*="tab"][aria-selected="true"] {
+  color: var(--color90);
+  font-weight: 500;
+  z-index: 1;
+}
+.outlined div[class*="tab"][aria-selected="false"] {
+  color: var(--color50);
+  border-bottom: none;
+  transition: box-shadow 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.outlined div[class*="tab"][aria-selected="false"]:hover,
+.outlined div[class*="tab"][aria-selected="false"]:active {
+  border-bottom: none;
+  color: var(--color90);
+  background-color: var(--color0) !important;
+  border-radius: 0.25rem;
+  box-shadow: none !important;
+  transition: all 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+
+.outlined div[class*="tab"][aria-selected="false"] > span > svg {
+  fill: var(--color40);
+}
+.outlined div[class*="tab"][aria-selected="false"]:hover > span > svg {
+  fill: var(--color90);
+}
+.outlined div[class*="tab"][aria-selected="true"] > span > svg {
+  fill: var(--color90);
+}
+
+.outlined div[class*="tab-indicator-wrapper"] {
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0 2px var(--color30);
+  background-color: var(--white);
+  z-index: 1;
+}
+/*END-----*/
+
+/*RAISED*/
+.raised div[class*="tab-indicator"] {
+  height: 0;
+}
+.raised div[class*="tab-list"] {
+  background: var(--color0);
+  border-radius: 4px;
+}
+
+.raised div[class*="tab"][aria-selected="true"] {
+  color: var(--color90);
+  font-weight: 500;
+}
+.raised div[class*="tab"][aria-selected="false"] {
+  color: var(--color50);
+  border-bottom: none;
+  transition: box-shadow 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+.raised div[class*="tab"][aria-selected="false"]:hover,
+.raised div[class*="tab"][aria-selected="false"]:active {
+  border-bottom: none;
+  color: var(--color90);
+  background-color: var(--color5) !important;
+  border-radius: 0.25rem;
+  box-shadow: none !important;
+  transition: all 200ms cubic-bezier(0.4, 1, 0.75, 0.9);
+}
+
+.raised div[class*="tab"][aria-selected="false"] > span > svg {
+  fill: var(--color40);
+}
+.raised div[class*="tab"][aria-selected="false"]:hover > span > svg {
+  fill: var(--color90);
+}
+.raised div[class*="tab"][aria-selected="true"] > span > svg {
+  fill: var(--color90);
+}
+
+.raised div[class*="tab-indicator-wrapper"] {
+  border-radius: 4px;
+  background-color: var(--white);
+  box-shadow: var(--shadow2dp);
+}
+/*END-----*/
+
+.filled div[class*="tab-indicator"],
+.outlined div[class*="tab-indicator"],
+.smooth div[class*="tab-indicator"],
+.segmented.raised div[class*="tab-indicator"],
+.segmented.smooth div[class*="tab-indicator"] {
+  height: 0;
+}
+/*.flat div[class*="tab"][id*="tab-title"],
+.filled div[class*="tab"][id*="tab-title"],
+.smooth div[class*="tab"][id*="tab-title"],
+.raised div[class*="tab"][id*="tab-title"],
+.outlined div[class*="tab"][id*="tab-title"] {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+}*/
+
+@keyframes tab-flip {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}

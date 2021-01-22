@@ -1,0 +1,63 @@
+html,
+body {
+  font-size: 100%;
+  /*font-size: var(--font-size-Body1);*/
+  font-family: var(--font-primary);
+  font-style: normal;
+  line-height: initial;
+  letter-spacing: var(--letter-spacing-Body1);
+  font-weight: var(--font-weight-Body1);
+  color: var(--grey100);
+}
+button {
+  font-family: var(--font-primary);
+}
+
+/*Remove blue background on click*/
+input,
+textarea,
+button,
+select,
+label,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+/**/
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+*:focus {
+  outline: none;
+  outline-offset: 0;
+}
+
+.bp3-control input:focus ~ .bp3-control-indicator {
+  outline: none;
+  outline-offset: 0;
+}
+
+.bp3-button:not([class*="bp3-intent-"]) {
+  box-shadow: none;
+  background-color: unset;
+  background-image: none;
+  color: unset;
+}
+
+.bp3-button:not([class*="bp3-intent-"]):hover {
+  box-shadow: none;
+  background-clip: unset;
+  background-color: unset;
+}
+
+.bp3-button .bp3-icon {
+  color: unset;
+}
+
+label.bp3-label {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: initial;
+  margin-bottom: 0.625rem;
+  margin-right: 1rem;
+}

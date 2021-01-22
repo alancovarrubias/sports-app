@@ -1,0 +1,36 @@
+.dropdown,
+.dropdown--dense,
+.dropdown:after,
+.dropdown--dense::after {
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dropdown {
+  height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+}
+.dropdown--dense {
+  height: 1.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: var(--font_size_body_small);
+}
+
+.dropdown--dense::after,
+.dropdown::after {
+  display: inline-block;
+  margin-left: 1rem;
+  vertical-align: 0.1em;
+  content: "";
+  border-top: 0.4em solid;
+  border-right: 0.35em solid transparent;
+  border-bottom: 0;
+  border-left: 0.35em solid transparent;
+  border-radius: 0.125rem;
+}
+
+.dropdown:hover,
+.dropdown--dense:hover {
+  cursor: pointer;
+}

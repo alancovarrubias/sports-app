@@ -1,0 +1,86 @@
+/*DIALOG STYLE*/
+
+/*SMOOTH*/
+.smooth {
+  background: var(--color5);
+  box-shadow: none;
+}
+/*RAISED*/
+.raised {
+  background: var(--white);
+  box-shadow: var(--shadow24dp);
+}
+/*FILLED*/
+.filled {
+  background: var(--color50);
+  box-shadow: none;
+}
+.filled > div[class*="header"] > div,
+.filled > div[class*="body"] {
+  color: var(--color0);
+}
+/*ICON*/
+.filled > div[class*="header"] > span[class*="icon"] > svg,
+.raised > div[class*="header"] > span[class*="icon"] > svg,
+.smooth > div[class*="header"] > span[class*="icon"] > svg {
+  fill: var(--color30);
+}
+/*CLOSE_BUTTON*/
+.filled > div[class*="header"] div[class*="close-button"] svg,
+.raised > div[class*="header"] div[class*="close-button"] svg,
+.smooth > div[class*="header"] div[class*="close-button"] svg {
+  fill: var(--color30);
+  transition: all 150ms ease-in-out;
+}
+
+.raised > div[class*="header"] div[class*="close-button"]:hover svg,
+.smooth > div[class*="header"] div[class*="close-button"]:hover svg {
+  fill: var(--color60);
+  transition: all 150ms ease-in-out;
+}
+.filled > div[class*="header"] div[class*="close-button"]:hover svg {
+  fill: var(--color5);
+  transition: all 150ms ease-in-out;
+}
+.filled > div[class*="header"] div[class*="close-button"]:hover,
+.raised > div[class*="header"] div[class*="close-button"]:hover,
+.smooth > div[class*="header"] div[class*="close-button"]:hover {
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+}
+
+/*BACKDROP STYLE*/
+.backdrop-0 {
+  background-color: rgba(25, 25, 29, 0);
+}
+.backdrop-10 {
+  background-color: rgba(25, 25, 29, 0.1);
+}
+.backdrop-20 {
+  background-color: rgba(25, 25, 29, 0.2);
+}
+.backdrop-30 {
+  background-color: rgba(25, 25, 29, 0.3);
+}
+.backdrop-40 {
+  background-color: rgba(25, 25, 29, 0.4);
+}
+.backdrop-50 {
+  background-color: rgba(25, 25, 29, 0.5);
+}
+.backdrop-60 {
+  background-color: rgba(25, 25, 29, 0.6);
+}
+.backdrop-70 {
+  background-color: rgba(25, 25, 29, 0.7);
+}
+.backdrop-80 {
+  background-color: rgba(25, 25, 29, 0.8);
+}
+.backdrop-90 {
+  background-color: rgba(25, 25, 29, 0.9);
+}
+.backdrop-100 {
+  background-color: rgba(25, 25, 29, 1);
+}
+/* END STYLE */

@@ -1,0 +1,14 @@
+/*MENU DIVIDER VIEW*/
+
+.smooth > h6,
+.outlined > h6 {
+  color: var(--color80);
+}
+.filled > h6 {
+  color: var(--color30);
+}
+
+.smooth,
+.outlined {
+  border-top: 0.0625rem solid var(--color10);
+}

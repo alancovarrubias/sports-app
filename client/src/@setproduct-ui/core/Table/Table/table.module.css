@@ -1,0 +1,200 @@
+.def tr {
+  height: 40px !important;
+}
+.def th,
+.dense th {
+  padding: 4px 8px 4px 8px !important;
+  /*padding-top: 9px !important;*/
+  font-family: var(--font-primary) !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  line-height: 22px !important;
+  letter-spacing: 0.8px !important;
+  /*opacity: 0.64 !important;*/
+  border-bottom: 2px solid !important;
+}
+.def td,
+.dense td {
+  padding: 4px 8px 4px 8px !important;
+  font-family: var(--font-primary) !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  letter-spacing: 0.44px !important;
+}
+
+.dense tr {
+  height: 24px !important;
+}
+.dense th {
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+  line-height: 16px !important;
+  letter-spacing: 1.5px !important;
+  border-bottom: 1px solid !important;
+}
+.dense td {
+  height: 20px;
+  font-size: 12px !important;
+  line-height: 16px !important;
+  letter-spacing: 0.4px !important;
+  padding: 2px 8px 2px 8px !important;
+}
+.dense svg {
+  height: 20px;
+  width: 20px;
+}
+
+/*PAGINATION*/
+.def-pag div,
+.def-pag,
+.def-pag span {
+  height: 40px !important;
+  min-height: 0px !important;
+  font-family: var(--font-primary) !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 14px !important;
+  line-height: 40px !important;
+  letter-spacing: 0.25px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  /*top: 9px !important;*/
+  overflow: initial !important;
+}
+
+.def-pag button,
+.def-pag button span {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  width: 28px !important;
+  height: 28px !important;
+}
+.def-pag button {
+  margin-right: 8px !important;
+}
+.def-pag svg {
+  top: 7px !important;
+}
+.def-pag div > div > div {
+  padding-right: 24px !important;
+  min-width: 0px !important;
+}
+.def-pag div div:nth-of-type(3) {
+  margin-left: 16px !important;
+}
+.def-pag div > div {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
+.def-pag div:nth-child(1) {
+  float: right;
+}
+
+/*DENSE PAGINATION*/
+.dense-pag div,
+.dense-pag,
+.dense-pag span {
+  height: 24px !important;
+  min-height: 0px !important;
+  font-family: var(--font-primary) !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 12px !important;
+  letter-spacing: 0.4px !important;
+  overflow: initial !important;
+}
+.dense-pag p {
+  font-size: 12px !important;
+}
+.dense-pag div > span {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 24px;
+}
+.dense-pag button,
+.dense-pag button span {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  width: 24px !important;
+  height: 24px !important;
+}
+.dense-pag button {
+  margin-right: 8px !important;
+}
+.dense-pag svg {
+  top: 0px !important;
+}
+.dense-pag div > div > div {
+  padding-right: 24px !important;
+  padding-left: 8px !important;
+  min-width: 0px !important;
+}
+.dense-pag div div:nth-of-type(3) {
+  margin-left: 16px !important;
+}
+.dense-pag div > div {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+  padding: 0 0 0 0 !important;
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 24px;
+}
+.dense-pag div:nth-child(1) {
+  float: right;
+  width: auto;
+}
+
+/*TRASh BUTTON*/
+.def-trash {
+  font-family: var(--font-primary) !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 16px !important;
+  /*line-height: 24px !important;*/
+  letter-spacing: 0.44px !important;
+  display: flex;
+}
+.def-trash button + span {
+  padding-left: 8px;
+}
+.def-trash-btn {
+  padding: 8px !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.dense-trash {
+  font-family: var(--font-primary) !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-size: 12px !important;
+  /*line-height: 24px !important;*/
+  letter-spacing: 0.44px !important;
+  display: flex;
+}
+.dense-trash button + span {
+  padding-left: 8px;
+}
+.dense-trash-btn {
+  vertical-align: initial;
+  line-height: 22px;
+  margin-left: 2px;
+  min-height: 0;
+  padding: 0;
+}
+
+div[role="document"] {
+  margin-top: 0 !important;
+}
+ul[role="listbox"] {
+  padding: 0;
+}
+
+.info-text {
+  margin-bottom: auto;
+  margin-top: auto;
+}
