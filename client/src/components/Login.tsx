@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { LOGIN_USER } from '../apollo/queries'
 import { AUTH_TOKEN } from '../const'
+import { isLoggedInVar } from '../apollo/cache'
 
 const Login = () => {
     const [username, setUsername] = useState('')
@@ -15,6 +16,7 @@ const Login = () => {
         },
         onCompleted: ({ login }) => {
             localStorage.setItem(AUTH_TOKEN, login.token)
+            isLoggedInVar(true)
             history.push('/seasons')
         }
     })

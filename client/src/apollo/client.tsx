@@ -1,6 +1,7 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache, createHttpLink, gql } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context';
 import { AUTH_TOKEN } from '../const'
+import { cache } from './cache'
 
 const httpLink = createHttpLink({
   uri: `http://${process.env.HOST}/graphql`,
@@ -17,20 +18,16 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
+export const typeDefs = gql`
+  extend type Query {
+    isLoggedIn: Boolean!
+  }
+`;
+
+
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache({
-    typePolicies: {
-      Season: {
-        keyFields: ['id', 'sport'],
-      },
-      Game: {
-        keyFields: ['id', 'sport'],
-      },
-      Player: {
-        keyFields: ['id', 'sport'],
-      },
-    },
-  }),
+  cache,
+  typeDefs
 })
 export default client

@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
 import SportContext from '../contexts/SportContext'
 import { Sport } from '../const'
 import { getRoute, Page } from '../Routes'
-import { AUTH_TOKEN } from '../const'
+import { IS_LOGGED_IN } from '../apollo/queries'
 
 const Header = () => {
   const history = useHistory()
@@ -15,8 +16,7 @@ const Header = () => {
   const nextSport = sport == Sport.NBA ? Sport.MLB : Sport.NBA
   const search = `?sport=${nextSport}`
   const seasonRoute = getRoute(Page.Seasons, { search })
-  const authToken = localStorage.getItem(AUTH_TOKEN)
-  const loggedIn = authToken && authToken !== 'null'
+  const { data } = useQuery(IS_LOGGED_IN);
   const logout = () => {
     localStorage.clear()
     history.push('/login')
@@ -37,7 +37,7 @@ const Header = () => {
       >
         {headers[sport]}
       </h1>
-      {loggedIn && logoutButton}
+      {data.isLoggedIn && logoutButton}
     </nav>
   )
 }
