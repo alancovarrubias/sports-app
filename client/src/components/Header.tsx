@@ -5,6 +5,7 @@ import SportContext from '../contexts/SportContext'
 import { Sport } from '../const'
 import { getRoute, Page } from '../Routes'
 import { IS_LOGGED_IN } from '../apollo/queries'
+import { isLoggedInVar } from '../apollo/cache'
 
 const Header = () => {
   const history = useHistory()
@@ -20,6 +21,7 @@ const Header = () => {
   const logout = () => {
     localStorage.clear()
     history.push('/login')
+    isLoggedInVar(false)
   }
   const logoutButton = (
     <button onClick={() => {
