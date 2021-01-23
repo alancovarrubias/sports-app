@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useQuery } from '@apollo/client'
 import { useHistory, useLocation } from 'react-router-dom'
 import SportContext from '../contexts/SportContext'
-import useDataTable, { DataModel } from '../hooks/useDataTable'
+import DataTable, { DataModel } from './common/DataTable'
 import { Resource, Sport } from '../const'
 import { getRoute, Page } from '../Routes'
 import { gql } from '@apollo/client'
@@ -16,7 +16,8 @@ export const GET_SEASONS_QUERY = gql`
     }
   }
 `
-interface Season extends DataModel {
+export interface Season {
+  id: string
   year: number
 }
 interface ISeasonsData {
@@ -40,7 +41,7 @@ const Seasons = () => {
   if (error) return <p>Error!</p>
   if (!data) return <p>Missing Data</p>
 
-  const [SeasonsTable] = useDataTable({
+  const seasonsProps = {
     data: data.seasons,
     resource: Resource.Season,
     sport,
@@ -48,11 +49,11 @@ const Seasons = () => {
       const gamesRoute = getRoute(Page.Games, { search, season_id: season.id })
       history.push(gamesRoute)
     },
-  })
+  }
   return (
     <>
       <h2 data-testid="subheader">Seasons</h2>
-      <SeasonsTable />
+      <DataTable {...seasonsProps} />
     </>
   )
 }

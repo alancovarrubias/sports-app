@@ -8,7 +8,6 @@ import Type from "./_type.module.css";
 import View from "./_view.module.css";
 import Color from "../../styles/color.module.css";
 
-import { ThemeContext } from "../ThemeContext";
 
 /** 
   __Component 'Navbar'__
@@ -25,22 +24,18 @@ const Navbar = React.forwardRef(function Navbar(props, ref) {
   } = props;
 
   return (
-    <ThemeContext.Consumer>
-      {({ dark }) => (
         <NavbarSource
           {...restProps}
           ref={ref}
           className={cx(
             Type[type],
-            dark ? View[view + "-dark"] : View[view],
+            View[view],
             Color[color],
             className
           )}
         >
           {children}
         </NavbarSource>
-      )}
-    </ThemeContext.Consumer>
   );
 });
 

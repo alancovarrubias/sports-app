@@ -1,22 +1,20 @@
-import React, { FunctionComponent } from 'react'
+import React from 'react'
 import get from 'lodash.get'
-import { Sport, Resource } from '@app/const'
+import { Sport, Resource } from '../../const'
 import DataTableConfig from './config'
+import { Pred, Game } from '../Games'
+import { NbaPlayer } from '../Game/NbaGame'
+import { MlbPlayer } from '../Game/MlbGame'
+import { Season } from '../Seasons'
 
-export interface DataModel {
-  id: string | number
-  [key: string]: string | number | object | undefined
-}
-export interface UseDataTableProps {
+export type DataModel = Pred | Game | Season | NbaPlayer | MlbPlayer
+export interface IDataTableProps {
   resource: Resource
   sport: Sport
   data: DataModel[]
   rowClick?: (e: DataModel) => void
 }
-export interface IUseDataTable {
-  (options: UseDataTableProps): [FunctionComponent]
-}
-const useDataTable: IUseDataTable = ({ resource, sport, data, rowClick }) => {
+const DataTable: React.FC<IDataTableProps> = ({ resource, sport, data, rowClick }) => {
   const tableConfig = new DataTableConfig(sport, resource)
   const tableHeaders = tableConfig.headers.map((header, index) => (
     <th key={index}>{header}</th>
@@ -28,7 +26,7 @@ const useDataTable: IUseDataTable = ({ resource, sport, data, rowClick }) => {
       ))}
     </tr>
   ))
-  const Table = () => (
+  return (
     <table>
       <thead data-testid="thead">
         <tr>{tableHeaders}</tr>
@@ -36,7 +34,6 @@ const useDataTable: IUseDataTable = ({ resource, sport, data, rowClick }) => {
       <tbody data-testid="tbody">{tableRows}</tbody>
     </table>
   )
-  return [Table]
 }
 
-export default useDataTable
+export default DataTable

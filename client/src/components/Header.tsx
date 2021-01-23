@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, FunctionComponent } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import SportContext from '../contexts/SportContext'
@@ -6,6 +6,8 @@ import { Sport } from '../const'
 import { getRoute, Page } from '../Routes'
 import { IS_LOGGED_IN } from '../apollo/queries'
 import { isLoggedInVar } from '../apollo/cache'
+import Navbar from '../@setproduct-ui/core/Navbar'
+import Button from '../@setproduct-ui/core/Button'
 
 const Header = () => {
   const history = useHistory()
@@ -29,7 +31,7 @@ const Header = () => {
     }}>Logout</button>
   )
   return (
-    <nav>
+    <Navbar view="raised">
       <h1
         data-testid="header"
         onClick={() => {
@@ -39,8 +41,9 @@ const Header = () => {
       >
         {headers[sport]}
       </h1>
+      <Button text="HEY" />
       {data.isLoggedIn && logoutButton}
-    </nav>
+    </Navbar>
   )
 }
 

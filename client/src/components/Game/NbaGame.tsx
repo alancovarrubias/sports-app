@@ -1,27 +1,28 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import { Sport, Resource } from '../../const'
-import useDataTable, { DataModel } from '../../hooks/useDataTable'
+import DataTable, { DataModel } from '../common/DataTable'
 import { IGameProps } from './index'
 import { GET_GAME } from '../../apollo/queries'
 
-interface Stat extends DataModel {
+interface Stat {
   pts: string
 }
-interface Team extends DataModel {
+interface Team {
   name: string
   stat: Stat
 }
-interface Player extends DataModel {
+export interface NbaPlayer {
+  id: string
   name: string
   stat: Stat
 }
-export interface Game extends DataModel {
+export interface Game {
   date: string
   away_team: Team
   home_team: Team
-  away_players: Player[]
-  home_players: Player[]
+  away_players: NbaPlayer[]
+  home_players: NbaPlayer[]
 }
 interface IGameData {
   game: Game
@@ -41,21 +42,21 @@ const NbaGame: React.FC<IGameProps> = ({ sport, game_id }) => {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error!</p>
   if (!data) return <p>Missing Data</p>
-  const [AwayPlayersTable] = useDataTable({
+  const awayPlayersProps = {
     data: data.game.away_players,
     sport,
     resource: Resource.Player,
-  })
-  const [HomePlayersTable] = useDataTable({
+  }
+  const homePlayersProps = {
     data: data.game.home_players,
     sport,
     resource: Resource.Player,
-  })
+  }
   return (
     <React.Fragment>
       <h2 data-testid="subheader">Game</h2>
-      <AwayPlayersTable />
-      <HomePlayersTable />
+      <DataTable {...awayPlayersProps} />
+      <DataTable {...homePlayersProps}/>
     </React.Fragment>
   )
 }

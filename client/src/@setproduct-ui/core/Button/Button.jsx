@@ -8,8 +8,6 @@ import Type from "./_type.module.css";
 import View from "./_view.module.css";
 import Color from "../../styles/color.module.css";
 
-import { ThemeContext } from "../ThemeContext";
-
 /** 
   __Component 'Button'__
 **/
@@ -27,42 +25,38 @@ const Button = React.forwardRef(function Button(props, ref) {
   } = props;
 
   return (
-    <ThemeContext.Consumer>
-      {({ isDark }) => (
-        <ButtonSource
-          {...restProps}
-          ref={ref}
-          className={cx(
-            Type[type],
-            dense && Type["dense"],
-            isDark ? View[view + "-dark"] : View[view],
-            Color[color],
-            active && View["focused"],
-            className
-          )}
-          icon={
-            icon && (
-              <Icon
-                icon={icon}
-                iconSize={
-                  dense
-                    ? type === "action"
-                      ? 24
-                      : type === "circle"
-                      ? 20
-                      : 16
-                    : type === "action"
-                    ? 32
-                    : type === "circle"
+    <ButtonSource
+      {...restProps}
+      ref={ref}
+      className={cx(
+        Type[type],
+        dense && Type["dense"],
+        View[view],
+        Color[color],
+        active && View["focused"],
+        className
+      )}
+      icon={
+        icon && (
+          <Icon
+            icon={icon}
+            iconSize={
+              dense
+                ? type === "action"
+                  ? 24
+                  : type === "circle"
+                    ? 20
+                    : 16
+                : type === "action"
+                  ? 32
+                  : type === "circle"
                     ? 24
                     : 20
-                }
-              />
-            )
-          }
-        />
-      )}
-    </ThemeContext.Consumer>
+            }
+          />
+        )
+      }
+    />
   );
 });
 

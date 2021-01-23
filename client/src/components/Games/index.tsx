@@ -2,13 +2,14 @@ import React, { useContext } from 'react'
 import { useParams, useHistory, Link, useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import SportContext from '../../contexts/SportContext'
-import useDataTable, { DataModel } from '../../hooks/useDataTable'
+import DataTable, { DataModel } from '../common/DataTable'
 import { Resource, Sport } from '../../const'
 import { getRoute, Page } from '../../Routes'
 import { GET_GAMES } from '../../apollo/queries'
 import Calculator from './Calculator'
 
-interface Pred {
+export interface Pred {
+  id: string
   away_score: number
   home_score: number
 }
@@ -16,14 +17,15 @@ export interface Line {
   spread: number
   total: number
 }
-interface Stat extends DataModel {
+interface Stat {
   pts: number
 }
-interface Team extends DataModel {
+interface Team {
   name: string
   stat: Stat
 }
-export interface Game extends DataModel {
+export interface Game {
+  id: string
   date: string
   away_team: Team
   home_team: Team
@@ -56,7 +58,7 @@ const Games = () => {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error!</p>
   if (!data) return <p>Missing Data</p>
-  const [GamesTable] = useDataTable({
+  const gamesProps = {
     data: data.games,
     resource: Resource.Game,
     sport,
@@ -68,7 +70,7 @@ const Games = () => {
       })
       history.push(gameRoute)
     },
-  })
+  }
   const seasonsRoute = getRoute(Page.Seasons, {
     season_id,
     search,
@@ -78,7 +80,7 @@ const Games = () => {
       <h2 data-testid="subheader">Games</h2>
       <Link to={seasonsRoute}>Seasons</Link>
       <Calculator games={data.games} diff={3} />
-      <GamesTable />
+      <DataTable {...gamesProps}/>
       <button
         onClick={() =>
           fetchMore({
