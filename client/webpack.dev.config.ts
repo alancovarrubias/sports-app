@@ -61,7 +61,8 @@ const config = (env) => ({
     port: 1234,
     host: '0.0.0.0',
     open: true,
-    hot: true
+    hot: true,
+    disableHostCheck: true,
   },
 });
 
