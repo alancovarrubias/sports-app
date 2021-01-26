@@ -1,6 +1,0 @@
-/* POPOVER TYPES*/
-.menu,
-.menu > div[class*="popover-content"] {
-  border-radius: 0.75rem;
-  box-shadow: none;
-}

@@ -1,9 +1,0 @@
-/*PROGRESS BAR*/
-
-.filled {
-  background: var(--color5);
-}
-
-.filled > div[class*="progress-meter"] {
-  background-color: var(--color60);
-}
