@@ -67,13 +67,12 @@ const MlbGame: React.FC<IGameProps> = ({ sport, game_id }) => {
     resource: Resource.Pitcher,
   }
   return (
-    <React.Fragment>
-      <h2 data-testid="subheader">Game</h2>
-      <DataTable {...awayPitchingProps}/>
-      <DataTable {...homePitchingProps}/>
-      <DataTable {...awayBattingProps}/>
-      <DataTable {...homeBattingProps}/>
-    </React.Fragment>
+    <>
+      <DataTable {...awayPitchingProps} />
+      <DataTable {...homePitchingProps} />
+      <DataTable {...awayBattingProps} />
+      <DataTable {...homeBattingProps} />
+    </>
   )
 }
 

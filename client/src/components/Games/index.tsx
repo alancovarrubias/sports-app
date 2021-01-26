@@ -77,11 +77,17 @@ const Games = () => {
   })
   return (
     <>
+      <div style={{ marginBottom: '2rem' }}>
+        <h2 data-testid="subheader">Games</h2>
+        <Link to={seasonsRoute}>Seasons</Link>
+        <Calculator games={data.games} diff={3} />
+      </div>
       <h2 data-testid="subheader">Games</h2>
-      <Link to={seasonsRoute}>Seasons</Link>
-      <Calculator games={data.games} diff={3} />
-      <DataTable {...gamesProps}/>
-      <button
+      <div className="tableFixHead" style={{ marginBottom: '2rem' }}>
+        <DataTable {...gamesProps} />
+      </div>
+      <div
+        className="fetch-more"
         onClick={() =>
           fetchMore({
             variables: {
@@ -98,7 +104,7 @@ const Games = () => {
         }
       >
         Fetch More
-      </button>
+      </div>
     </>
   )
 }

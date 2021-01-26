@@ -53,11 +53,10 @@ const NbaGame: React.FC<IGameProps> = ({ sport, game_id }) => {
     resource: Resource.Player,
   }
   return (
-    <React.Fragment>
-      <h2 data-testid="subheader">Game</h2>
+    <>
       <DataTable {...awayPlayersProps} />
-      <DataTable {...homePlayersProps}/>
-    </React.Fragment>
+      <DataTable {...homePlayersProps} />
+    </>
   )
 }
 

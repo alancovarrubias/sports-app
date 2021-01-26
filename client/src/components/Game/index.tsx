@@ -26,6 +26,7 @@ const Game = () => {
   const gamesRoute = getRoute(Page.Games, { search, season_id })
   return (
     <>
+      <h2 data-testid="subheader">Game</h2>
       <Link to={gamesRoute}>Games</Link>
       <GameComponent {...props} />
     </>

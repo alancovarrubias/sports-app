@@ -51,10 +51,10 @@ const Seasons = () => {
     },
   }
   return (
-    <>
+    <div className="seasons">
       <h2 data-testid="subheader">Seasons</h2>
       <DataTable {...seasonsProps} />
-    </>
+    </div>
   )
 }
 

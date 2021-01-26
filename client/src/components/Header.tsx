@@ -1,15 +1,17 @@
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useQuery } from '@apollo/client'
-import SportContext from '../contexts/SportContext'
-import { Sport } from '../const'
-import { getRoute, Page } from '../Routes'
-import { IS_LOGGED_IN } from '../apollo/queries'
-import { isLoggedInVar } from '../apollo/cache'
 
-const Header = () => {
+import SportContext from '../contexts/SportContext'
+import { getRoute, Page } from '../Routes'
+import { Sport } from '../const'
+
+const Header = ({ isLoggedIn }) => {
   const history = useHistory()
   const [sport, setSport] = useContext(SportContext)
+
+  if (!isLoggedIn) {
+    return null
+  }
   const headers = {
     [Sport.NBA]: 'NBA Database',
     [Sport.MLB]: 'MLB Database',
@@ -17,19 +19,8 @@ const Header = () => {
   const nextSport = sport == Sport.NBA ? Sport.MLB : Sport.NBA
   const search = `?sport=${nextSport}`
   const seasonRoute = getRoute(Page.Seasons, { search })
-  const { data } = useQuery(IS_LOGGED_IN);
-  const logout = () => {
-    localStorage.clear()
-    history.push('/login')
-    isLoggedInVar(false)
-  }
-  const logoutButton = (
-    <button onClick={() => {
-      logout()
-    }}>Logout</button>
-  )
   return (
-    <nav>
+    <header>
       <h1
         data-testid="header"
         onClick={() => {
@@ -39,8 +30,7 @@ const Header = () => {
       >
         {headers[sport]}
       </h1>
-      {data.isLoggedIn && logoutButton}
-    </nav>
+    </header>
   )
 }
 
