@@ -20,7 +20,7 @@ const DataTable: React.FC<IDataTableProps> = ({ resource, sport, data, rowClick 
     <th key={index}>{header}</th>
   ))
   const tableRows = data.map(model => (
-    <tr key={model.id} onClick={() => (rowClick ? rowClick(model) : null)}>
+    <tr className={rowClick ? "clickable" : ""} key={model.id} onClick={() => (rowClick ? rowClick(model) : null)}>
       {tableConfig.keys.map((key, index) => (
         <td key={index}>{get(model, key)}</td>
       ))}

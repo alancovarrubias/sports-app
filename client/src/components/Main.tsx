@@ -6,7 +6,6 @@ import { Sport } from '../const'
 import PrivateRoute from '../PrivateRoute'
 import { IS_LOGGED_IN } from '../apollo/queries'
 import Header from './Header'
-import Navbar from './Navbar'
 import Seasons from './Seasons'
 import Games from './Games'
 import Game from './Game'
@@ -24,7 +23,6 @@ const Main = () => {
     <SportContext.Provider value={sportHook}>
       <div className="wrapper">
         <Header isLoggedIn={isLoggedIn} />
-        <Navbar isLoggedIn={isLoggedIn} />
         <div className="main">
           <Switch>
             <Redirect exact from="/" to="/seasons" />

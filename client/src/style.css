@@ -69,3 +69,10 @@ th {
   height: 3rem;
   line-height: 3rem;
 }
+
+.clickable {
+  cursor: pointer;
+}
+.clickable:hover {
+  background-color: gray;
+}
