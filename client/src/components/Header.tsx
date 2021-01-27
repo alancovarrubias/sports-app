@@ -6,14 +6,17 @@ import SportContext from '../contexts/SportContext'
 import { getRoute, Page } from '../Routes'
 import { Sport } from '../const'
 
-const Header = ({ isLoggedIn }) => {
-  if (!isLoggedIn) {
-    return null
-  }
+interface HeaderProps {
+  isLoggedIn: boolean
+}
+const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
 
   const history = useHistory()
   const [sport, setSport] = useContext(SportContext)
 
+  if (!isLoggedIn) {
+    return null
+  }
   const headers = {
     [Sport.NBA]: 'NBA Database',
     [Sport.MLB]: 'MLB Database',

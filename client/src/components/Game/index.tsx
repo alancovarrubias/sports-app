@@ -14,7 +14,7 @@ interface IParamTypes {
   game_id: string
   season_id: string
 }
-const Game = () => {
+const Game: React.FC = () => {
   const [sport] = useContext(SportContext)
   const { season_id, game_id } = useParams<IParamTypes>()
   const search = useLocation().search

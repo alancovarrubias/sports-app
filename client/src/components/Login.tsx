@@ -5,7 +5,7 @@ import { LOGIN_USER } from '../apollo/queries'
 import { AUTH_TOKEN } from '../const'
 import { isLoggedInVar } from '../apollo/cache'
 
-const Login = () => {
+const Login: React.FC = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const history = useHistory()

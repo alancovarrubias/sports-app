@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useParams, useHistory, Link, useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import SportContext from '../../contexts/SportContext'
-import DataTable, { DataModel } from '../common/DataTable'
+import DataTable from '../common/DataTable'
 import { Resource, Sport } from '../../const'
 import { getRoute, Page } from '../../Routes'
 import { GET_GAMES } from '../../apollo/queries'
@@ -44,7 +44,7 @@ interface IGamesVars {
 interface IParamTypes {
   season_id: string
 }
-const Games = () => {
+const Games: React.FC = () => {
   const [sport] = useContext(SportContext)
   const { season_id } = useParams<IParamTypes>()
   const search = useLocation().search

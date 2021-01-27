@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import { Sport, Resource } from '../../const'
-import DataTable, { DataModel } from '../common/DataTable'
+import DataTable from '../common/DataTable'
 import { IGameProps } from './index'
 import { GET_GAME } from '../../apollo/queries'
 

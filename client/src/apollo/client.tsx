@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, createHttpLink, gql } from '@apollo/client'
+import { ApolloClient, createHttpLink, gql } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context';
 import { AUTH_TOKEN } from '../const'
 import { cache } from './cache'
@@ -28,6 +28,7 @@ export const typeDefs = gql`
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache,
-  typeDefs
+  typeDefs,
+  connectToDevTools: true,
 })
 export default client

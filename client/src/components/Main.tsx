@@ -12,7 +12,7 @@ import Game from './Game'
 import Login from './Login'
 import NoMatch from './NoMatch'
 
-const Main = () => {
+const Main: React.FC = () => {
   const history = useHistory()
   const params = new URLSearchParams(history.location.search)
   const sportParam = params.get('sport') as Sport

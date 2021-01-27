@@ -7,7 +7,7 @@ import Main from './components/Main'
 
 
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <ApolloProvider client={client}>
       <Router>

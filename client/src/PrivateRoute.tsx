@@ -2,7 +2,12 @@ import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { AUTH_TOKEN } from './const'
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+type PrivateRouteProps = {
+    component: React.FC,
+    path: string,
+    exact: boolean
+}
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
 
     const authToken = localStorage.getItem(AUTH_TOKEN)
     const loggedIn = authToken && authToken !== 'null'

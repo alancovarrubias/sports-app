@@ -11,7 +11,7 @@ type IRouteOptions = {
 export const getRoute = (
   page: Page,
   { season_id, game_id, search }: IRouteOptions = {}
-) => {
+): string => {
   switch (page) {
     case Page.Seasons:
       return `/seasons${search}`

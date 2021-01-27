@@ -27,7 +27,7 @@ interface ISeasonsVars {
   sport: Sport
 }
 
-const Seasons = () => {
+const Seasons: React.FC = () => {
   const [sport] = useContext(SportContext)
   const history = useHistory()
   const search = useLocation().search
