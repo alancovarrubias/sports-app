@@ -79,11 +79,11 @@ const Games: React.FC = () => {
     <>
       <div style={{ marginBottom: '2rem' }}>
         <h2 data-testid="subheader">Games</h2>
-        <Link to={seasonsRoute}>Seasons</Link>
+        <Link to={seasonsRoute}>Back</Link>
         <Calculator games={data.games} diff={3} />
       </div>
       <h2 data-testid="subheader">Games</h2>
-      <div className="tableFixHead" style={{ marginBottom: '2rem' }}>
+      <div className="tableFixHead">
         <DataTable {...gamesProps} />
       </div>
     </>

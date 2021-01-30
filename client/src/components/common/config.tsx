@@ -11,8 +11,9 @@ const DataMap: IDataMap = {
       keys: ['year'],
     },
     [Resource.Game]: {
-      headers: ['Away Team', 'Home Team', 'Away Team Pts', 'Home Team Pts', 'Total', 'Spread', 'Away Pred', 'Home Pred'],
+      headers: ['Date', 'Away Team', 'Home Team', 'Away Team Pts', 'Home Team Pts', 'Total', 'Spread', 'Away Pred', 'Home Pred'],
       keys: [
+        'date',
         'away_team.name',
         'home_team.name',
         'away_team.stat.pts',

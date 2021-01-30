@@ -62,14 +62,6 @@ td {
 th {
   background: #eee;
 }
-.fetch-more {
-  background-color: black;
-  color: white;
-  cursor: pointer;
-  height: 3rem;
-  line-height: 3rem;
-}
-
 .clickable {
   cursor: pointer;
 }

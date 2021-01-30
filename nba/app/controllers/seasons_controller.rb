@@ -3,7 +3,7 @@ class SeasonsController < ApplicationController
 
   # GET /seasons
   def index
-    @seasons = Season.all
+    @seasons = Season.all.order(year: :desc)
 
     render json: SeasonSerializer.new(@seasons).serializable_hash
   end

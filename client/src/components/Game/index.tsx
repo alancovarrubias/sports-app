@@ -27,7 +27,7 @@ const Game: React.FC = () => {
   return (
     <>
       <h2 data-testid="subheader">Game</h2>
-      <Link to={gamesRoute}>Games</Link>
+      <Link to={gamesRoute}>Back</Link>
       <GameComponent {...props} />
     </>
   )
