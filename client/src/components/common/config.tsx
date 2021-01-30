@@ -11,12 +11,16 @@ const DataMap: IDataMap = {
       keys: ['year'],
     },
     [Resource.Game]: {
-      headers: ['Away Team', 'Home Team', 'Away Team Pts', 'Home Team Pts'],
+      headers: ['Away Team', 'Home Team', 'Away Team Pts', 'Home Team Pts', 'Total', 'Spread', 'Away Pred', 'Home Pred'],
       keys: [
         'away_team.name',
         'home_team.name',
         'away_team.stat.pts',
         'home_team.stat.pts',
+        'lines[0].total',
+        'lines[0].spread',
+        'preds[0].away_score',
+        'preds[0].home_score'
       ],
     },
     [Resource.Player]: {
