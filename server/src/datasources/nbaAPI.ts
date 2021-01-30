@@ -14,14 +14,13 @@ class NbaAPI extends RESTDataSource {
     return seasons.map(addNbaCacheMetadata)
   }
 
-  async getGames({ season_id, offset = 0, limit = 100 }) {
+  async getGames({ season_id }) {
     const games_res = await this.get(`seasons/${season_id}/games`, {
-      offset,
-      limit,
       team: '1',
       line: '1',
       pred: '1',
     })
+    console.log(games_res)
     const games = games_res.data.map(game => game.attributes)
     return games.map(addNbaCacheMetadata)
   }

@@ -38,8 +38,8 @@ interface IGamesData {
 interface IGamesVars {
   sport: Sport
   season_id: string
-  offset: number
-  limit: number
+  offset?: number
+  limit?: number
 }
 interface IParamTypes {
   season_id: string
@@ -49,12 +49,13 @@ const Games: React.FC = () => {
   const { season_id } = useParams<IParamTypes>()
   const search = useLocation().search
   const history = useHistory()
-  const { error, loading, data, fetchMore } = useQuery<IGamesData, IGamesVars>(
+  const { error, loading, data } = useQuery<IGamesData, IGamesVars>(
     GET_GAMES,
     {
-      variables: { sport, season_id, offset: 0, limit: 100 },
+      variables: { sport, season_id },
     }
   )
+  console.log(error)
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error!</p>
   if (!data) return <p>Missing Data</p>
@@ -85,25 +86,6 @@ const Games: React.FC = () => {
       <h2 data-testid="subheader">Games</h2>
       <div className="tableFixHead" style={{ marginBottom: '2rem' }}>
         <DataTable {...gamesProps} />
-      </div>
-      <div
-        className="fetch-more"
-        onClick={() =>
-          fetchMore({
-            variables: {
-              offset: data.games.length,
-            },
-            updateQuery: (prev, { fetchMoreResult }) => {
-              if (!fetchMoreResult) return prev
-              return {
-                ...prev,
-                games: [...prev.games, ...fetchMoreResult.games]
-              }
-            },
-          })
-        }
-      >
-        Fetch More
       </div>
     </>
   )

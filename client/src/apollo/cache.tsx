@@ -9,7 +9,13 @@ export const cache = new InMemoryCache({
     typePolicies: {
         Query: {
             fields: {
-                isLoggedIn: { read() { return isLoggedInVar() } }
+                isLoggedIn: { read() { return isLoggedInVar() } },
+                games: {
+                    keyArgs: false,
+                    merge(existing = [], incoming) {
+                        return [...existing, ...incoming]
+                    }
+                }
             }
         },
         Season: {
