@@ -68,8 +68,6 @@ services:
       - ./analyzer:/project
     ports:
       - 5001:5000
-    depends_on:
-      - server
   nginx:
     image: nginx:dev
     build:
