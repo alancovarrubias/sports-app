@@ -11,7 +11,7 @@ module Database
           server_options = {
             date: date.to_s.tr('-', '')
           }
-          lines_res = query_server(:lines, server_options)
+          lines_res = query_server(:Line, server_options)
           build_lines(lines_res)
         end
       end

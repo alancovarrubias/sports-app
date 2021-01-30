@@ -6,7 +6,7 @@ module Database
 
         puts "Building Teams for Season #{@season.id}"
 
-        teams_res = query_server(:teams, season: @season.year)
+        teams_res = query_server(:Team, season: @season.year)
         teams_res['teams'].each do |team_data|
           build_team(team_data)
         end

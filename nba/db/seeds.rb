@@ -1,1 +1,2 @@
-Database::Builder.run(2018, :Pred)
+Database::Builder.run(2019)
+Database::Builder.run(2018)

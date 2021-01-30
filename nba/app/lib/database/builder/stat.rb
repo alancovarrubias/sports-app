@@ -11,7 +11,7 @@ module Database
           server_options = {
             season: @season.year, game_url: @game.url, home_team: @game.home_team.abbr, away_team: @game.away_team.abbr
           }
-          stats_res = query_server(:stats, server_options)
+          stats_res = query_server(:Stat, server_options)
           build_stats(stats_res)
         end
       end
