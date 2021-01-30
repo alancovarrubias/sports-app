@@ -59,7 +59,7 @@ module Database
       end
 
       def needs_data?
-        Line.where(game: @games).empty?
+        ::Line.where(game: @games).empty?
       end
     end
   end
