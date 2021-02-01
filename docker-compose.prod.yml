@@ -1,43 +1,52 @@
 version: "3"
 services:
   client:
-    image: client:prod
+    container_name: client:prod
     build:
+      context: client
       dockerfile: Dockerfile.prod
-      args:
-        HOST: ${HOST}
+    ports:
+      - 80:80
+    environment:
+      NODE_ENV: production
   server:
     image: server:prod
     build:
+      context: server
       dockerfile: Dockerfile.prod
       args:
         HOST: ${HOST}
   nba:
     image: nba:prod
     build:
+      context: nba
       dockerfile: Dockerfile.prod
       args:
         SECRET_KEY: ${SECRET_KEY}
   mlb:
     image: mlb:prod
     build:
+      context: mlb
+      dockerfile: Dockerfile.prod
+      args:
+        SECRET_KEY: ${SECRET_KEY}
+  auth:
+    image: auth:prod
+    build:
+      context: auth
       dockerfile: Dockerfile.prod
       args:
         SECRET_KEY: ${SECRET_KEY}
   crawler:
     image: crawler:prod
     build:
+      context: crawler
       dockerfile: Dockerfile.prod
-  nginx:
-    image: nginx:prod
+  analyzer:
+    image: analyzer:prod
     build:
-      context: nginx
+      context: analyzer
       dockerfile: Dockerfile.prod
-    ports:
-      - 80:80
-    depends_on:
-      - client
-      - server
 
 volumes:
   postgres:

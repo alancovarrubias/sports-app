@@ -1,3 +1,0 @@
-FROM nginx:stable
-COPY nginx.conf.dev /etc/nginx/nginx.conf
-EXPOSE 80
