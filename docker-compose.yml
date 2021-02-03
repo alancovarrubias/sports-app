@@ -36,10 +36,14 @@ services:
       - postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5432:5432
   mongo:
     image: mongo
     volumes:
       - mongo:/data/db
+    ports:
+      - 27017:27017
 
 volumes:
   postgres:

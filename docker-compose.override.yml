@@ -55,12 +55,6 @@ services:
       - ./crawler:/project
     ports:
       - 5000:5000
-  db:
-    ports:
-      - 5432:5432
-  mongo:
-    ports:
-      - 27017:27017
   analyzer:
     image: analyzer:dev
     build:
