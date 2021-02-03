@@ -27,17 +27,15 @@ const Login: React.FC = () => {
     })
     return (
         <div className="login">
-            <h2>Login</h2>
+            <h1>Login</h1>
             <div>
-                <label htmlFor="username">Username</label>
                 <input id="username" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
             </div>
             <div>
-                <label htmlFor="password">Password</label>
                 <input id="password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
             <div>
-                <button onClick={() => login()}>Login</button>
+                <button onClick={() => login()}>Submit</button>
                 {invalid && <p>Invalid Credentials. Please try again.</p>}
             </div>
         </div>

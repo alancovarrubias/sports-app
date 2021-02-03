@@ -15,18 +15,40 @@ body {
   margin: 0px;
   padding: 0px;
   text-align: center;
-  height: 100%;
-  font-size: 24px;
+  height: 100vh;
+  font-size: 14px;
 }
 #root {
   height: 100%;
 }
-
 .wrapper {
   height: 100%;
   display: grid;
-  grid-template-rows: 100px 100px 80%;
-  padding: 3%;
+  grid-template-areas: 
+    "header"
+    "nav"
+    "main";
+  grid-template-rows: 60px 60px 1fr;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+  margin: 0;
+}
+
+header {
+  grid-area: header;
+}
+nav {
+  grid-area: nav;
+}
+main {
+  grid-area: main;
+}
+.games {
+  display: flex;
+  flex-direction: column;
+}
+.games-table {
+  flex: 1 0 50vh;
 }
 
 nav ul {
@@ -81,8 +103,25 @@ input {
 button {
   font-size: inherit;
   cursor: pointer;
+  height: 2rem;
   width: 10rem;
   color: white;
   background-color: black;
+}
+label {
+  display: block;
+  font-size: 24px;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+}
+
+.login div {
+  margin: 1rem 0;
+}
+nav ul {
+   border: 1px solid black;
 }
 

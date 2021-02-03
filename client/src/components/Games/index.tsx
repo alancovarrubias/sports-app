@@ -78,16 +78,16 @@ const Games: React.FC = () => {
     search,
   })
   return (
-    <>
-      <div style={{ marginBottom: '2rem' }}>
+    <div className="games">
+      <div>
         <Link to={seasonsRoute}>Back</Link>
         <Calculator games={data.games} />
       </div>
       <h3 data-testid="subheader">{year} Games</h3>
-      <div className="tableFixHead">
+      <div className="games-table tableFixHead">
         <DataTable {...gamesProps} />
       </div>
-    </>
+    </div>
   )
 }
 

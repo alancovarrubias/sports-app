@@ -23,7 +23,7 @@ const Main: React.FC = () => {
     <SportContext.Provider value={sportHook}>
       <div className="wrapper">
         <Header isLoggedIn={isLoggedIn} />
-        <div className="main">
+        <main>
           <Switch>
             <Redirect exact from="/" to="/seasons" />
             <Route path="/login" component={Login} exact />
@@ -36,7 +36,7 @@ const Main: React.FC = () => {
             />
             <Route component={NoMatch} />
           </Switch>
-        </div>
+        </main>
       </div>
     </SportContext.Provider>
   )
