@@ -84,7 +84,6 @@ const percentage = (wins, losses) => {
 
 interface CalculatorProps {
     games: Game[]
-    diff: number
 }
 const DEFAULT_DIFF = 3
 const Calculator: React.FC<CalculatorProps> = ({ games }) => {
@@ -101,8 +100,8 @@ const Calculator: React.FC<CalculatorProps> = ({ games }) => {
     ))
     return (
         <>
-            <h3>Bet Calculator</h3>
-            <input type="number" value={diff} min="0" step="0.1" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDiff(Number(e.target.value))} />
+            <h3>Bet Range</h3>
+            <input type="number" style={{ marginBottom: '2rem' }} value={diff} min="0" step="0.1" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDiff(Number(e.target.value))} />
             <table>
                 <thead data-testid="thead">
                     <tr>{tableHeaders}</tr>

@@ -10,6 +10,7 @@ class Game < ApplicationRecord
   has_many :players, through: :player_stats, source: :model, source_type: 'Player'
   has_many :lines
   has_many :preds
+  scope :with_season, -> { includes(:season) }
   scope :with_team_stats, -> { includes(:away_team, :home_team, :team_stats) }
   scope :with_player_stats, -> { includes(player_stats: [:model]) }
   scope :with_lines, -> { includes(:lines) }

@@ -42,23 +42,24 @@ const NbaGame: React.FC<IGameProps> = ({ sport, game_id }) => {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error!</p>
   if (!data) return <p>Missing Data</p>
+  const { game: { away_team, home_team, away_players, home_players } } = data
   const awayPlayersProps = {
-    data: data.game.away_players,
+    data: away_players,
     sport,
     resource: Resource.Player,
   }
   const homePlayersProps = {
-    data: data.game.home_players,
+    data: home_players,
     sport,
     resource: Resource.Player,
   }
   return (
     <>
-      <h2>Away Players</h2>
+      <h2>{away_team.name} Players</h2>
       <div className="tableFixHead" style={{ marginBottom: '2rem' }}>
         <DataTable {...awayPlayersProps} />
       </div>
-      <h2>Home Players</h2>
+      <h2>{home_team.name} Players</h2>
       <div className="tableFixHead">
         <DataTable {...homePlayersProps} />
       </div>

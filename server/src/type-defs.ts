@@ -40,6 +40,7 @@ export default gql`
   }
   type Game {
     id: ID!
+    year: String!
     date: String!
     away_team: Team!
     home_team: Team!

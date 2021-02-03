@@ -26,6 +26,7 @@ interface Team {
 }
 export interface Game {
   id: string
+  year: string
   date: string
   away_team: Team
   home_team: Team
@@ -58,6 +59,7 @@ const Games: React.FC = () => {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error!</p>
   if (!data) return <p>Missing Data</p>
+  const year = data.games[0].year
   const gamesProps = {
     data: data.games,
     resource: Resource.Game,
@@ -78,11 +80,10 @@ const Games: React.FC = () => {
   return (
     <>
       <div style={{ marginBottom: '2rem' }}>
-        <h2 data-testid="subheader">Games</h2>
         <Link to={seasonsRoute}>Back</Link>
-        <Calculator games={data.games} diff={3} />
+        <Calculator games={data.games} />
       </div>
-      <h2 data-testid="subheader">Games</h2>
+      <h3 data-testid="subheader">{year} Games</h3>
       <div className="tableFixHead">
         <DataTable {...gamesProps} />
       </div>

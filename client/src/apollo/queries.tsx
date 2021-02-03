@@ -54,6 +54,7 @@ export const GET_GAMES = gql`
       limit: $limit
     ) {
       id
+      year
       date
       away_team {
         ...GamesTeamStat
