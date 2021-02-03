@@ -5,7 +5,7 @@ import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 
-const config: webpack.Configuration = {
+const config = (env) => ({
   mode: "production",
   entry: "./src/index.tsx",
   output: {
@@ -42,6 +42,9 @@ const config: webpack.Configuration = {
     extensions: [".tsx", ".ts", ".js"],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.HOST': JSON.stringify(env.HOST || 'localhost')
+    }),
     new HtmlWebpackPlugin({
       template: "src/index.html",
     }),
@@ -53,6 +56,6 @@ const config: webpack.Configuration = {
     }),
     new CleanWebpackPlugin(),
   ],
-};
+});
 
 export default config;

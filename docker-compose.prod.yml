@@ -1,7 +1,7 @@
 version: "3"
 services:
   client:
-    container_name: client:prod
+    image: client:prod
     build:
       context: client
       dockerfile: Dockerfile.prod
