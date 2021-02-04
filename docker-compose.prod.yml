@@ -5,6 +5,8 @@ services:
     build:
       context: client
       dockerfile: Dockerfile.prod
+      args:
+        HOST: ${HOST}
     ports:
       - 80:80
     environment:
@@ -14,8 +16,6 @@ services:
     build:
       context: server
       dockerfile: Dockerfile.prod
-      args:
-        HOST: ${HOST}
   nba:
     image: nba:prod
     build:

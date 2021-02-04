@@ -1,5 +1,7 @@
 # build environment
 FROM node:12-stretch as build
+ARG HOST
+ENV HOST=${HOST}
 WORKDIR /app
 COPY . .
 RUN yarn

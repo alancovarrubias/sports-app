@@ -5,7 +5,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import ESLintPlugin from "eslint-webpack-plugin";
 
 
-const config = (env) => ({
+const config = {
   mode: "development",
   output: {
     publicPath: "/",
@@ -64,6 +64,6 @@ const config = (env) => ({
     hot: true,
     disableHostCheck: true,
   },
-});
+};
 
 export default config;
