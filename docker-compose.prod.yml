@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile.prod
       args:
         HOST: ${HOST}
+    volumes:
+      - ./client/nginx:/etc/nginx/conf.d
     ports:
       - 80:80
     environment:
