@@ -1,5 +1,18 @@
-version: "3"
+version: "3.4"
 services:
+  frontend:
+    restart: unless-stopped
+    image: staticfloat/nginx-certbot
+    ports:
+      - 80:80/tcp
+      - 443:443/tcp
+    environment:
+      CERTBOT_EMAIL: alan.cov@icloud.com
+    volumes:
+      - ./conf.d:/etc/nginx/user.conf.d:ro
+      - /etc/letsencrypt/:/etc/letsencrypt/
+    depends_on:
+      - client
   client:
     image: client:prod
     build:
@@ -50,3 +63,4 @@ services:
 
 volumes:
   postgres:
+  letsencrypt:
