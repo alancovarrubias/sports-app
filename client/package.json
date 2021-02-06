@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "webpack serve --config webpack.dev.config.ts",
-    "build": "webpack --config webpack.prod.config.ts"
+    "build": "webpack --config webpack.prod.config.ts",
+    "start": "yarn build && serve -s build -l 8080"
   },
   "dependencies": {
     "@apollo/client": "^3.3.7",
@@ -13,7 +14,8 @@
     "normalize.css": "^8.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "serve": "^11.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
