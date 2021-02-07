@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_28_035153) do
+ActiveRecord::Schema.define(version: 2021_02_07_234207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 2020_09_28_035153) do
     t.index ["season_id"], name: "index_games_on_season_id"
   end
 
+  create_table "lines", force: :cascade do |t|
+    t.bigint "season_id"
+    t.bigint "game_id"
+    t.string "bookie"
+    t.float "total"
+    t.index ["game_id"], name: "index_lines_on_game_id"
+    t.index ["season_id"], name: "index_lines_on_season_id"
+  end
+
   create_table "pitching_stats", force: :cascade do |t|
     t.bigint "season_id"
     t.bigint "game_id"
@@ -73,6 +82,16 @@ ActiveRecord::Schema.define(version: 2020_09_28_035153) do
     t.string "position"
     t.index ["season_id"], name: "index_players_on_season_id"
     t.index ["team_id"], name: "index_players_on_team_id"
+  end
+
+  create_table "preds", force: :cascade do |t|
+    t.bigint "season_id"
+    t.bigint "game_id"
+    t.string "desc"
+    t.float "away_score"
+    t.float "home_score"
+    t.index ["game_id"], name: "index_preds_on_game_id"
+    t.index ["season_id"], name: "index_preds_on_season_id"
   end
 
   create_table "seasons", force: :cascade do |t|

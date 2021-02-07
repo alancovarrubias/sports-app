@@ -16,15 +16,19 @@ class MlbAPI extends RESTDataSource {
 
   async getGames({ season_id, offset = 0, limit = 100 }) {
     const games_res = await this.get(`seasons/${season_id}/games`, {
-      offset,
-      limit,
+      team: '1',
+      line: '1',
+      pred: '1',
     })
     const games = games_res.data.map(game => game.attributes)
     return games.map(addMlbCacheMetadata)
   }
 
   async getGame({ game_id }) {
-    const game_res = await this.get(`games/${game_id}`)
+    const game_res = await this.get(`games/${game_id}`, {
+      team: '1',
+      player: '1',
+    })
     const game = game_res.data.attributes
     const cachedGame = {
       ...game,

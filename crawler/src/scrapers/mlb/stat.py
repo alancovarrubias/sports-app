@@ -35,7 +35,10 @@ class MlbStatScraper(MlbBaseScraper):
 
         def get_player_stats(tables):
             batting_table, pitching_table = tables
-            css_config = {"rows": "tr:not(.spacer)", "cells": "th, td"}
+            css_config = {
+                "rows": "tr:not(.spacer)",
+                "cells": "th, td",
+            }
             batting_rows = self.get_table_rows(batting_table, css_config)
             pitching_rows = self.get_table_rows(pitching_table, css_config)
             pitching_stats = []
@@ -44,6 +47,8 @@ class MlbStatScraper(MlbBaseScraper):
                 pitching_stats.append(pitching_stat.toJson())
             batting_stats = []
             for batting_row in batting_rows:
+                if batting_row[0].text == "Batting":
+                    continue
                 batting_stat = MlbStat(BATTING, PLAYER, batting_row)
                 batting_stats.append(batting_stat.toJson())
             return batting_stats + pitching_stats
