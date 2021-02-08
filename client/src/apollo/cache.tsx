@@ -11,7 +11,7 @@ export const cache = new InMemoryCache({
             fields: {
                 isLoggedIn: { read() { return isLoggedInVar() } },
                 games: {
-                    keyArgs: ['season_id'],
+                    keyArgs: ['season_id', 'sport'],
                     merge(existing = [], incoming) {
                         return [...existing, ...incoming]
                     }
