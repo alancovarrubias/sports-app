@@ -6,6 +6,7 @@ import { Sport } from '../const'
 import PrivateRoute from '../PrivateRoute'
 import { IS_LOGGED_IN } from '../apollo/queries'
 import Header from './Header'
+import Navbar from './Navbar'
 import Seasons from './Seasons'
 import Games from './Games'
 import Game from './Game'
@@ -21,8 +22,9 @@ const Main: React.FC = () => {
   const { data: { isLoggedIn } } = useQuery(IS_LOGGED_IN);
   return (
     <SportContext.Provider value={sportHook}>
-      <div className="wrapper">
+      <div className="grid-container">
         <Header isLoggedIn={isLoggedIn} />
+        <Navbar isLoggedIn={isLoggedIn} />
         <main>
           <Switch>
             <Redirect exact from="/" to="/seasons" />

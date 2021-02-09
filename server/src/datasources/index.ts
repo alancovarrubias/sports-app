@@ -1,7 +1,7 @@
 import NbaAPI from './nbaAPI'
 import MlbAPI from './mlbAPI'
 import AuthAPI from './authAPI'
-import { SEASONS, GAMES, GAME, USER } from '../const'
+import { SEASONS, SEASON, GAMES, GAME, USER } from '../const'
 
 export default () => {
   return {
@@ -22,6 +22,8 @@ const fetchResource = (resource, { dataSource, args }) => {
   switch (resource) {
     case SEASONS:
       return dataSource.getSeasons(args)
+    case SEASON:
+      return dataSource.getSeason(args)
     case GAMES:
       return dataSource.getGames(args)
     case GAME:

@@ -32,6 +32,16 @@ export const GET_SEASONS = gql`
   }
 `
 
+export const GET_SEASON = gql`
+  query GetSeason($sport: String!, $season_id: ID!) {
+    season(sport: $sport, season_id: $season_id) {
+      id
+      sport
+      year
+    }
+  }
+`
+
 export const GET_GAMES = gql`
   fragment GamesTeamStat on Team {
     name

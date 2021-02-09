@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import SportContext from '../contexts/SportContext'
 import DataTable from './common/DataTable'
 import { Resource, Sport } from '../const'
-import { getRoute, Page } from '../Routes'
+import { createRoute, Page } from '../Routes'
 import { gql } from '@apollo/client'
 
 export const GET_SEASONS_QUERY = gql`
@@ -46,7 +46,7 @@ const Seasons: React.FC = () => {
     resource: Resource.Season,
     sport,
     rowClick: season => {
-      const gamesRoute = getRoute(Page.Games, { search, season_id: season.id })
+      const gamesRoute = createRoute(Page.Games, { search, season_id: season.id })
       history.push(gamesRoute)
     },
   }

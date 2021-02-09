@@ -7,6 +7,12 @@ class MlbAPI extends RESTDataSource {
     this.baseURL = 'http://mlb:3002'
   }
 
+  async getSeason({season_id}) {
+    const season_res = await this.get(`seasons/${season_id}`)
+    const season = season_res.data.attributes
+    return addMlbCacheMetadata(season)
+  }
+
   async getSeasons(_args) {
     const seasons_res = await this.get('seasons')
     const data = seasons_res.data

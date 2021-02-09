@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useParams, Link, useLocation } from 'react-router-dom'
-import { getRoute, Page } from '../../Routes'
+import { createRoute, Page } from '../../Routes'
 import SportContext from '../../contexts/SportContext'
 import { Sport } from '../../const'
 import NbaGame from './NbaGame'
@@ -16,20 +16,13 @@ interface IParamTypes {
 }
 const Game: React.FC = () => {
   const [sport] = useContext(SportContext)
-  const { season_id, game_id } = useParams<IParamTypes>()
-  const search = useLocation().search
+  const { game_id } = useParams<IParamTypes>()
   const props = {
     sport,
     game_id,
   }
   const GameComponent = sport == Sport.NBA ? NbaGame : MlbGame
-  const gamesRoute = getRoute(Page.Games, { search, season_id })
-  return (
-    <>
-      <Link to={gamesRoute}>Back</Link>
-      <GameComponent {...props} />
-    </>
-  )
+  return <GameComponent {...props} />
 }
 
 export default Game

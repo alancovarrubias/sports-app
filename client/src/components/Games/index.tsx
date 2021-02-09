@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client'
 import SportContext from '../../contexts/SportContext'
 import DataTable from '../common/DataTable'
 import { Resource, Sport } from '../../const'
-import { getRoute, Page } from '../../Routes'
+import { createRoute, Page } from '../../Routes'
 import { GET_GAMES } from '../../apollo/queries'
 import Calculator from './Calculator'
 
@@ -65,7 +65,7 @@ const Games: React.FC = () => {
     resource: Resource.Game,
     sport,
     rowClick: game => {
-      const gameRoute = getRoute(Page.Game, {
+      const gameRoute = createRoute(Page.Game, {
         season_id,
         game_id: game.id,
         search,
@@ -73,14 +73,9 @@ const Games: React.FC = () => {
       history.push(gameRoute)
     },
   }
-  const seasonsRoute = getRoute(Page.Seasons, {
-    season_id,
-    search,
-  })
   return (
     <div className="games">
       <div>
-        <Link to={seasonsRoute}>Back</Link>
         <Calculator games={data.games} />
       </div>
       <h3 data-testid="subheader">{year} Games</h3>

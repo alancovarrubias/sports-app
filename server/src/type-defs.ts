@@ -3,6 +3,7 @@ export default gql`
   type Query {
     users: [User]!
     seasons(sport: String!): [Season]!
+    season(sport: String!, season_id: ID!): Season!
     games(sport: String!, season_id: ID!, offset: Int, limit: Int): [Game]!
     game(sport: String!, game_id: ID!): Game!
   }

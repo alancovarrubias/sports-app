@@ -8,7 +8,7 @@ type IRouteOptions = {
   game_id?: string | number
   search?: string
 }
-export const getRoute = (
+export const createRoute = (
   page: Page,
   { season_id, game_id, search }: IRouteOptions = {}
 ): string => {
@@ -19,5 +19,19 @@ export const getRoute = (
       return `/seasons/${season_id}/games${search}`
     case Page.Game:
       return `/seasons/${season_id}/games/${game_id}${search}`
+  }
+}
+
+export const getPage = (
+  pathname: string,
+): Page => {
+  if (/^\/seasons$/.test(pathname)) {
+    return Page.Seasons
+  }
+  if (/^\/seasons\/\d\/games$/.test(pathname)) {
+    return Page.Games
+  }
+  if (/^\/seasons\/\d\/games\/\d$/.test(pathname)) {
+    return Page.Game
   }
 }

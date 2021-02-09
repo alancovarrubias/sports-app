@@ -1,5 +1,6 @@
 export const USER = "user";
 export const SEASONS = "seasons";
+export const SEASON = "season";
 export const GAMES = "games";
 export const GAME = "game";
 export const RESOURCES = [SEASONS, GAMES, GAME];

@@ -7,6 +7,13 @@ class NbaAPI extends RESTDataSource {
     this.baseURL = 'http://nba:3001'
   }
 
+  async getSeason({season_id}) {
+    const season_res = await this.get(`seasons/${season_id}`)
+    console.log(season_res)
+    const season = season_res.data.attributes
+    return addNbaCacheMetadata(season)
+  }
+
   async getSeasons(_args) {
     const seasons_res = await this.get('seasons')
     const data = seasons_res.data
