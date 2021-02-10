@@ -16,10 +16,13 @@ interface ISeasonVars {
   sport: Sport
   season_id: string
 }
-interface HeaderProps {
+interface NavbarProps {
   isLoggedIn: boolean
 }
-const Navbar: React.FC<HeaderProps> = () => {
+const Navbar: React.FC<NavbarProps> = ({ isLoggedIn }) => {
+  if (!isLoggedIn) {
+    return null;
+  }
   const history = useHistory()
   const [sport, setSport] = useContext(SportContext)
   const logout = () => {
