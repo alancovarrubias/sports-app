@@ -46,6 +46,7 @@ const MlbGame: React.FC<IGameProps> = ({ sport, game_id }) => {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error!</p>
   if (!data) return <p>Missing Data</p>
+  const { game: { away_team, home_team, away_players, home_players } } = data
   const awayBattingProps = {
     data: data.game.away_players.filter(player => player.stat.batting),
     sport,
@@ -67,12 +68,32 @@ const MlbGame: React.FC<IGameProps> = ({ sport, game_id }) => {
     resource: Resource.Pitcher,
   }
   return (
-    <>
-      <DataTable {...awayPitchingProps} />
-      <DataTable {...homePitchingProps} />
-      <DataTable {...awayBattingProps} />
-      <DataTable {...homeBattingProps} />
-    </>
+    <div className="mlbGame">
+      <div className="mlbHeader">
+        <h2>{away_team.name} Pitchers</h2>
+      </div>
+      <div className="mlbTable tableFixHead">
+        <DataTable {...awayPitchingProps} />
+      </div>
+      <div className="mlbHeader">
+        <h2>{home_team.name} Pitchers</h2>
+      </div>
+      <div className="mlbHeader tableFixHead">
+        <DataTable {...homePitchingProps} />
+      </div>
+      <div className="mlbHeader">
+        <h2>{away_team.name} Batters</h2>
+      </div>
+      <div className="mlbTable tableFixHead">
+        <DataTable {...awayBattingProps} />
+      </div>
+      <div className="mlbHeader">
+        <h2>{home_team.name} Batters</h2>
+      </div>
+      <div className="mlbTable tableFixHead">
+        <DataTable {...homeBattingProps} />
+      </div>
+    </div>
   )
 }
 

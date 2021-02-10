@@ -54,16 +54,20 @@ const NbaGame: React.FC<IGameProps> = ({ sport, game_id }) => {
     resource: Resource.Player,
   }
   return (
-    <>
-      <h2>{away_team.name} Players</h2>
-      <div className="tableFixHead" style={{ marginBottom: '2rem' }}>
+    <div className="nbaGame">
+      <div className="nbaAwayHeader">
+        <h2>{away_team.name} Players</h2>
+      </div>
+      <div className="nbaAwayTable tableFixHead">
         <DataTable {...awayPlayersProps} />
       </div>
-      <h2>{home_team.name} Players</h2>
-      <div className="tableFixHead">
+      <div className="nbaHomeHeader">
+        <h2>{home_team.name} Players</h2>
+      </div>
+      <div className="nbaHomeTable tableFixHead">
         <DataTable {...homePlayersProps} />
       </div>
-    </>
+    </div>
   )
 }
 

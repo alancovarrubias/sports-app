@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useParams, useHistory, Link, useLocation } from 'react-router-dom'
+import { useParams, useHistory, useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import SportContext from '../../contexts/SportContext'
 import DataTable from '../common/DataTable'
@@ -75,10 +75,12 @@ const Games: React.FC = () => {
   }
   return (
     <div className="games">
-      <div>
+      <div className="calculator">
         <Calculator games={data.games} />
       </div>
-      <h3 data-testid="subheader">{year} Games</h3>
+      <div className="subheader">
+        <h3 data-testid="subheader">{year} Games</h3>
+      </div>
       <div className="games-table tableFixHead">
         <DataTable {...gamesProps} />
       </div>

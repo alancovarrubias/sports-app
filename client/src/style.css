@@ -38,6 +38,7 @@ header {
 main {
   grid-area: main;
   overflow: auto;
+  padding: 1rem;
 }
 nav {
   grid-area: nav;
@@ -65,23 +66,15 @@ nav {
 header {
   grid-area: header;
 }
-nav {
-  grid-area: nav;
-}
 main {
   grid-area: main;
 }
-.games {
-  display: flex;
-  flex-direction: column;
-}
-.games-table {
-  flex: 1 0 50vh;
+nav {
+  grid-area: nav;
 }
 
 .tableFixHead {
   overflow-y: auto;
-  height: 30%;
 }
 .tableFixHead thead th {
   position: sticky;
@@ -144,7 +137,53 @@ nav ul {
   display: flex;
   padding: 0;
   margin: 0;
+  display: flex;
+  justify-content: space-around;
 }
 nav li {
   padding: 0.5em;
+  flex: 1 0;
+}
+
+nav li:hover {
+  background-color: darkgray;
+}
+
+.seasons {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.games {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+    'calculator'
+    'subheader'
+    'datatable';
+}
+.games-table {
+  grid-area: datatable;
+}
+.seasons-table {
+  flex: 1 0;
+}
+.subheader {
+  grid-area: subheader;
+}
+.calculator {
+  grid-area: calculator;
+}
+
+.nbaGame {
+  display: grid;
+  height: 100%;
+}
+
+.mlbGame {
+  display: grid;
+  height: 100%;
 }
