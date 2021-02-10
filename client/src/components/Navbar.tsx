@@ -20,9 +20,6 @@ interface NavbarProps {
   isLoggedIn: boolean
 }
 const Navbar: React.FC<NavbarProps> = ({ isLoggedIn }) => {
-  if (!isLoggedIn) {
-    return null;
-  }
   const history = useHistory()
   const [sport, setSport] = useContext(SportContext)
   const logout = () => {
@@ -49,6 +46,9 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn }) => {
       variables: { sport, season_id },
     }
   )
+  if (!isLoggedIn) {
+    return null;
+  }
   const year = data ? data.season.year : null
   const seasonsLink = <li onClick={() => history.push(seasonsRoute)}>Seasons</li>
   const gamesLink = <li onClick={() => history.push(gamesRoute)}>{year} Games</li>
