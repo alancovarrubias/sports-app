@@ -64,6 +64,12 @@ services:
       - ./analyzer:/project
     ports:
       - 5001:5000
+  db:
+    ports:
+      - 5432:5432
+  mongo:
+    ports:
+      - 27017:27017
 
 volumes:
   postgres:

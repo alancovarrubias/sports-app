@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
-import { useParams, Link, useLocation } from 'react-router-dom'
-import { createRoute, Page } from '../../Routes'
+import { useParams, } from 'react-router-dom'
 import SportContext from '../../contexts/SportContext'
 import { Sport } from '../../const'
 import NbaGame from './NbaGame'

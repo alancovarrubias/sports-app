@@ -46,7 +46,7 @@ const MlbGame: React.FC<IGameProps> = ({ sport, game_id }) => {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error!</p>
   if (!data) return <p>Missing Data</p>
-  const { game: { away_team, home_team, away_players, home_players } } = data
+  const { game: { away_team, home_team } } = data
   const awayBattingProps = {
     data: data.game.away_players.filter(player => player.stat.batting),
     sport,
