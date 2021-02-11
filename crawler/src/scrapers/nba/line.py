@@ -10,15 +10,10 @@ class NbaLineScraper(SportsBookReviewScraper):
         self.driver.implicitly_wait(15)
         elements = self.driver.find_elements(By.CLASS_NAME, "participantBox-3ar9Y")
         teams = [el.text for el in elements]
-        elements = self.driver.find_elements(By.CLASS_NAME, "opener-1VWzR")
-        totals = [e.find_element(By.CLASS_NAME, "adjust-1uDgI").text for e in elements]
+        elements = self.driver.find_elements(By.CSS_SELECTOR, ".opener.adjust-1uDgI")
+        totals = [e.text for e in elements]
         self.driver.implicitly_wait(15)
         self.get(f"betting-odds/nba-basketball/pointspread?date={date}")
-        elements = self.driver.find_elements(By.CLASS_NAME, "opener-1VWzR")
-        spreads = [
-            e.find_element(By.CLASS_NAME, "margin-2SxKQ")
-            .find_element(By.CLASS_NAME, "adjust-1uDgI")
-            .text
-            for e in elements
-        ]
+        elements = self.driver.find_elements(By.CSS_SELECTOR, ".opener.adjust-1uDgI")
+        spreads = [e.text for e in elements]
         return {"teams": teams, "totals": totals, "spreads": spreads}
