@@ -15,7 +15,6 @@ class MlbGameScraper(MlbBaseScraper):
         games = []
         team_links = {}
         for team in teams:
-            puts(team)
             endpoint = f"teams/{team}/{season}-schedule-scores.shtml"
             css_selectors = ("#team_schedule",)
             games_table = self.get_tables(endpoint, css_selectors)[0]

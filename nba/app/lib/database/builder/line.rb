@@ -56,6 +56,7 @@ module Database
 
       def convert_data(str)
         return unless str
+
         str[-1].ord == 189 ? str[0...-1].to_i + 0.5 : str.to_i
       end
 

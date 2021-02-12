@@ -1,4 +1,5 @@
 require 'net/http'
-Database::Builder.run(2019)
-Database::Builder.run(2018)
-Database::Builder.run(2017)
+Database::Builder.run(2016)
+Database::Builder.run(2015)
+Database::Builder.run(2014)
+Database::Builder.run(2013)
