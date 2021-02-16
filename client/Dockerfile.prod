@@ -5,4 +5,8 @@ ENV HOST=${HOST}
 WORKDIR /app
 COPY . .
 RUN yarn
-CMD ["yarn", "start"]
+RUN yarn build
+
+FROM staticfloat/nginx-certbot
+ENV CERTBOT_EMAIL=alan.cov@icloud.com
+COPY --from=build /app/build /usr/share/nginx/html
