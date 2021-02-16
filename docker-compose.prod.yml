@@ -11,7 +11,7 @@ services:
       - 80:80/tcp
       - 443:443/tcp
     volumes:
-      - ./conf.d:/etc/nginx/user.conf.d:ro
+      - ./client/nginx:/etc/nginx/user.conf.d:ro
       - /etc/letsencrypt/:/etc/letsencrypt/
   server:
     image: server:prod
