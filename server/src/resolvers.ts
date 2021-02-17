@@ -1,5 +1,4 @@
-import { USER, SEASONS, SEASON, GAMES, GAME, NBA_STAT, MLB_STAT } from './const'
-import { fetchUser, fetchData } from './datasources'
+import { AUTH, NBA_STAT, MLB_STAT } from './const'
 
 export default {
   Stat: {
@@ -14,13 +13,13 @@ export default {
     },
   },
   Query: {
-    users: (_source, args, { dataSources }) => fetchData(USER, { args, dataSources }),
-    season: (_source, args, { dataSources }) => fetchData(SEASON, { args, dataSources }),
-    seasons: (_source, args, { dataSources }) => fetchData(SEASONS, { args, dataSources }),
-    games: (_source, args, { dataSources }) => fetchData(GAMES, { args, dataSources }),
-    game: (_source, args, { dataSources }) => fetchData(GAME, { args, dataSources }),
+    users: (_source, args, { dataSources }) => dataSources[AUTH].getUsers(args),
+    season: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getSeason(args),
+    seasons: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getSeasons(args),
+    game: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getGame(args),
+    games: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getGames(args),
   },
   Mutation: {
-    login: (_source, args, { dataSources }) => fetchUser({ args, dataSources }),
+    login: (_source, args, { dataSources }) => dataSources[AUTH].login(args)
   }
 }
