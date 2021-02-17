@@ -4,7 +4,7 @@ import { AUTH_TOKEN } from '../const'
 import { cache } from './cache'
 
 const httpLink = createHttpLink({
-  uri: `http://${process.env.HOST}/graphql`,
+  uri: `${process.env.PROTOCOL}://${process.env.HOST}/graphql`,
 })
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
