@@ -1,72 +1,66 @@
 import React, { useState } from 'react'
-import { Game } from '.'
+import { Game } from './index'
 
-interface CountWinProps {
-    line: number
+enum Outcome {
+    Win = 1,
+    Skip = 0,
+    Loss = -1,
+}
+enum LineType {
+    Total = 'total',
+    Spread = 'spread'
+}
+interface BetData {
+    lineValue: number,
+    actual: number,
     prediction: number
-    actual: number
-    diff: number
 }
-interface ICountWin {
-    (options: CountWinProps): number
-}
-const countWin: ICountWin = ({ line, prediction, actual, diff }) => {
-    if (Math.abs(line - prediction) > diff) {
-        const win = prediction < line ? actual < line : actual > line
-        return win ? 1 : -1
-    } else {
-        return 0
+
+const calculateOutcomesFactory = (diff: number) => {
+    return ({ lineValue, prediction, actual }: BetData): Outcome => {
+        if (Math.abs(lineValue - prediction) > diff) {
+            const win = prediction < lineValue ? actual < lineValue : actual > lineValue
+            return win ? Outcome.Win : Outcome.Loss
+        } else {
+            return Outcome.Skip
+        }
     }
 }
 
-const calculateWin = (diff: number, lineType: string) => {
-    const calculateTotalWin = (game: Game) => {
-        const { preds, lines, away_team, home_team } = game
+const calculateBetDataFactory = (lineType: LineType) => {
+    const calculateActualMap = {
+        total: (home, away) => home + away,
+        spread: (home, away) => home - away
+    }
+    return (game: Game): BetData | null => {
+        const { preds, lines } = game
         const pred = preds[0]
         const line = lines[0]
-        if (!pred || !line) {
-            return null
+        if (pred && line) {
+            const { away_team: { stat: { pts: awayTeamPts } }, home_team: { stat: { pts: homeTeamPts } } } = game
+            const { away_score: awayTeamPred, home_score: homeTeamPred } = pred
+            const calculateActual = calculateActualMap[lineType]
+            const lineValue = line[lineType]
+            const actual = calculateActual(homeTeamPts, awayTeamPts)
+            const prediction = calculateActual(homeTeamPred, awayTeamPred)
+            return { lineValue, actual, prediction }
         }
-        const { total, } = line
-        const { away_score: awayTeamPred, home_score: homeTeamPred } = pred
-        const { stat: { pts: awayTeamPts } } = away_team
-        const { stat: { pts: homeTeamPts } } = home_team
-        const totalActual = homeTeamPts + awayTeamPts
-        const totalPred = homeTeamPred + awayTeamPred
-        return countWin({ line: total, prediction: totalPred, actual: totalActual, diff })
     }
-
-    const calculateSpreadWin = (game: Game) => {
-        const { preds, lines, away_team, home_team } = game
-        const pred = preds[0]
-        const line = lines[0]
-        if (!pred || !line) {
-            return null
-        }
-        const { spread } = line
-        const { away_score: awayTeamPred, home_score: homeTeamPred } = pred
-        const { stat: { pts: awayTeamPts } } = away_team
-        const { stat: { pts: homeTeamPts } } = home_team
-        const spreadActual = homeTeamPts - awayTeamPts
-        const spreadPred = homeTeamPred - awayTeamPred
-        return countWin({ line: spread, prediction: spreadPred, actual: spreadActual, diff })
-    }
-    return lineType === 'spread' ? calculateSpreadWin : calculateTotalWin
 }
 
 
-const count = (stream: (number | null)[]) => {
+const countOutcomes = (stream: (Outcome | null)[]) => {
     let wins = 0
     let losses = 0
     let skipped = 0
     stream.forEach(elem => {
-        if (elem === 1) {
+        if (elem === Outcome.Win) {
             wins += 1
         }
-        if (elem === 0) {
+        if (elem === Outcome.Skip) {
             skipped += 1
         }
-        if (elem === -1) {
+        if (elem === Outcome.Loss) {
             losses += 1
         }
     })
@@ -75,11 +69,8 @@ const count = (stream: (number | null)[]) => {
 
 const percentage = (wins, losses) => {
     const total = wins + losses
-    if (total === 0) {
-        return '0%'
-    }
-    const percent = wins / total
-    return (100 * percent).toFixed(2) + '%'
+    const percent = total === 0 ? 0 : wins / total
+    return `${(100 * percent).toFixed(2)}%`
 }
 
 interface CalculatorProps {
@@ -88,12 +79,15 @@ interface CalculatorProps {
 const DEFAULT_DIFF = 3
 const Calculator: React.FC<CalculatorProps> = ({ games }) => {
     const [diff, setDiff] = useState(DEFAULT_DIFF)
-    const calculateTotalWin = calculateWin(diff, 'total')
-    const calculateSpreadWin = calculateWin(diff, 'spread')
-    const totals = games.map(calculateTotalWin)
-    const spreads = games.map(calculateSpreadWin)
-    const { wins: totalWins, losses: totalLosses, skipped: totalSkipped } = count(totals)
-    const { wins: spreadWins, losses: spreadLosses, skipped: spreadSkipped } = count(spreads)
+    const calculateTotalBetData = calculateBetDataFactory(LineType.Total)
+    const calculateSpreadBetData = calculateBetDataFactory(LineType.Spread)
+    const calculateOutcomes = calculateOutcomesFactory(diff)
+    const totalBetData = games.map(calculateTotalBetData).filter((val) => { return val !== undefined; })
+    const spreadBetData = games.map(calculateSpreadBetData).filter((val) => { return val !== undefined; })
+    const totalOutcomes = totalBetData.map(calculateOutcomes)
+    const spreadStream = spreadBetData.map(calculateOutcomes)
+    const { wins: totalWins, losses: totalLosses, skipped: totalSkipped } = countOutcomes(totalOutcomes)
+    const { wins: spreadWins, losses: spreadLosses, skipped: spreadSkipped } = countOutcomes(spreadStream)
     const headers = ['Type', 'Wins', 'Losses', 'Skipped', 'Win Percentage']
     const tableHeaders = headers.map((header, index) => (
         <th key={index}>{header}</th>

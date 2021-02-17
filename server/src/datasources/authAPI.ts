@@ -20,7 +20,7 @@ class AuthAPI extends RESTDataSource {
         }
     }
 
-    async getUsers({ username, password }) {
+    async getUsers(_args) {
         const res = await this.get('users')
         return res
     }
