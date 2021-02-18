@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Game } from './index'
+import { Game } from '../../models'
 
 enum Outcome {
     Win = 1,
@@ -10,14 +10,15 @@ enum LineType {
     Total = 'total',
     Spread = 'spread'
 }
-interface BetData {
+interface Bet {
     lineValue: number,
     actual: number,
     prediction: number
 }
 
 const calculateOutcomesFactory = (diff: number) => {
-    return ({ lineValue, prediction, actual }: BetData): Outcome => {
+    return (bet: Bet): Outcome => {
+        const { lineValue, prediction, actual } = bet
         if (Math.abs(lineValue - prediction) > diff) {
             const win = prediction < lineValue ? actual < lineValue : actual > lineValue
             return win ? Outcome.Win : Outcome.Loss
@@ -27,12 +28,12 @@ const calculateOutcomesFactory = (diff: number) => {
     }
 }
 
-const calculateBetDataFactory = (lineType: LineType) => {
+const calculateBetsFactory = (lineType: LineType) => {
     const calculateActualMap = {
-        total: (home, away) => home + away,
-        spread: (home, away) => home - away
+        [LineType.Total]: (home, away) => home + away,
+        [LineType.Spread]: (home, away) => home - away
     }
-    return (game: Game): BetData | null => {
+    return (game: Game): Bet | null => {
         const { preds, lines } = game
         const pred = preds[0]
         const line = lines[0]
@@ -49,7 +50,7 @@ const calculateBetDataFactory = (lineType: LineType) => {
 }
 
 
-const countOutcomes = (stream: (Outcome | null)[]) => {
+const countOutcomes = (stream: Outcome[]) => {
     let wins = 0
     let losses = 0
     let skipped = 0
@@ -79,8 +80,8 @@ interface CalculatorProps {
 const DEFAULT_DIFF = 3
 const Calculator: React.FC<CalculatorProps> = ({ games }) => {
     const [diff, setDiff] = useState(DEFAULT_DIFF)
-    const calculateTotalBetData = calculateBetDataFactory(LineType.Total)
-    const calculateSpreadBetData = calculateBetDataFactory(LineType.Spread)
+    const calculateTotalBetData = calculateBetsFactory(LineType.Total)
+    const calculateSpreadBetData = calculateBetsFactory(LineType.Spread)
     const calculateOutcomes = calculateOutcomesFactory(diff)
     const totalBetData = games.map(calculateTotalBetData).filter((val) => { return val !== undefined; })
     const spreadBetData = games.map(calculateSpreadBetData).filter((val) => { return val !== undefined; })

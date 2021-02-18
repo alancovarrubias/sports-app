@@ -5,21 +5,9 @@ import SportContext from '../contexts/SportContext'
 import DataTable from './common/DataTable'
 import { Resource, Sport } from '../const'
 import { createRoute, Page } from '../Routes'
-import { gql } from '@apollo/client'
+import { Season } from '../models'
+import { GET_SEASONS } from '../apollo/queries'
 
-export const GET_SEASONS_QUERY = gql`
-  query GetSeasons($sport: String!) {
-    seasons(sport: $sport) {
-      id
-      sport
-      year
-    }
-  }
-`
-export interface Season {
-  id: string
-  year: number
-}
 interface ISeasonsData {
   seasons: Season[]
 }
@@ -32,7 +20,7 @@ const Seasons: React.FC = () => {
   const history = useHistory()
   const search = useLocation().search
   const { error, loading, data } = useQuery<ISeasonsData, ISeasonsVars>(
-    GET_SEASONS_QUERY,
+    GET_SEASONS,
     {
       variables: { sport },
     }

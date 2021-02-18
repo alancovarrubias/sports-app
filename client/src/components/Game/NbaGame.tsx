@@ -4,28 +4,10 @@ import { Sport, Resource } from '../../const'
 import DataTable from '../common/DataTable'
 import { IGameProps } from './index'
 import { GET_GAME } from '../../apollo/queries'
+import { INbaGame } from '../../models'
 
-interface Stat {
-  pts: string
-}
-interface Team {
-  name: string
-  stat: Stat
-}
-export interface NbaPlayer {
-  id: string
-  name: string
-  stat: Stat
-}
-export interface Game {
-  date: string
-  away_team: Team
-  home_team: Team
-  away_players: NbaPlayer[]
-  home_players: NbaPlayer[]
-}
 interface IGameData {
-  game: Game
+  game: INbaGame
 }
 interface IGameVars {
   sport: Sport

@@ -7,32 +7,8 @@ import { Resource, Sport } from '../../const'
 import { createRoute, Page } from '../../Routes'
 import { GET_GAMES } from '../../apollo/queries'
 import Calculator from './Calculator'
+import { Game } from '../../models'
 
-export interface Pred {
-  id: string
-  away_score: number
-  home_score: number
-}
-export interface Line {
-  spread: number
-  total: number
-}
-interface Stat {
-  pts: number
-}
-interface Team {
-  name: string
-  stat: Stat
-}
-export interface Game {
-  id: string
-  year: string
-  date: string
-  away_team: Team
-  home_team: Team
-  lines: [Line]
-  preds: [Pred]
-}
 interface IGamesData {
   games: Game[]
 }

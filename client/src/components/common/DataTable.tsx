@@ -2,10 +2,7 @@ import React from 'react'
 import get from 'lodash.get'
 import { Sport, Resource } from '../../const'
 import DataTableConfig from './config'
-import { Pred, Game } from '../Games'
-import { NbaPlayer } from '../Game/NbaGame'
-import { MlbPlayer } from '../Game/MlbGame'
-import { Season } from '../Seasons'
+import { Pred, Game, NbaPlayer, MlbPlayer, Season } from '../../models'
 
 export type DataModel = Pred | Game | Season | NbaPlayer | MlbPlayer
 export interface IDataTableProps {

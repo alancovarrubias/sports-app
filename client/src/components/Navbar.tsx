@@ -7,7 +7,7 @@ import SportContext from '../contexts/SportContext'
 import { createRoute, Page } from '../Routes'
 import { Sport } from '../const'
 import { GET_SEASON } from '../apollo/queries'
-import { Season } from './Seasons'
+import { Season } from '../models'
 
 interface ISeasonData {
   season: Season
