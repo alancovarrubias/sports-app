@@ -34,7 +34,6 @@ const Seasons: React.FC = () => {
     resource: Resource.Season,
     sport,
     rowClick: season => {
-      console.log(season)
       const gamesRoute = createRoute(Page.Games, { search, season_id: season.id })
       history.push(gamesRoute)
     },

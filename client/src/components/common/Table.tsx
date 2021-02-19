@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { ReactText } from 'react'
 
-interface Row {
-  values: string[]
+export interface Row {
+  values: ReactText[]
   onClick?: () => void
 }
 export interface TableProps {
-  headers: string[]
+  headers: ReactText[]
   rows: Row[]
 }
 const Table: React.FC<TableProps> = ({ headers, rows }) => {

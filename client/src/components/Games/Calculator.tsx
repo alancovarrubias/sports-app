@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Game } from '../../models'
+import Table from '../common/Table'
 
 enum Outcome {
     Win = 1,
@@ -15,7 +16,6 @@ interface Bet {
     actual: number,
     prediction: number
 }
-
 const calculateOutcomesFactory = (diff: number) => {
     return (bet: Bet): Outcome => {
         const { lineValue, prediction, actual } = bet
@@ -27,7 +27,6 @@ const calculateOutcomesFactory = (diff: number) => {
         }
     }
 }
-
 const calculateBetsFactory = (lineType: LineType) => {
     const calculateActualMap = {
         [LineType.Total]: (home, away) => home + away,
@@ -48,26 +47,12 @@ const calculateBetsFactory = (lineType: LineType) => {
         }
     }
 }
-
-
 const countOutcomes = (stream: Outcome[]) => {
-    let wins = 0
-    let losses = 0
-    let skipped = 0
-    stream.forEach(elem => {
-        if (elem === Outcome.Win) {
-            wins += 1
-        }
-        if (elem === Outcome.Skip) {
-            skipped += 1
-        }
-        if (elem === Outcome.Loss) {
-            losses += 1
-        }
-    })
+    const wins = stream.filter(outcome => outcome === Outcome.Win).length
+    const losses = stream.filter(outcome => outcome === Outcome.Loss).length
+    const skipped = stream.filter(outcome => outcome === Outcome.Skip).length
     return { wins, losses, skipped }
 }
-
 const percentage = (wins, losses) => {
     const total = wins + losses
     const percent = total === 0 ? 0 : wins / total
@@ -80,38 +65,25 @@ interface CalculatorProps {
 const DEFAULT_DIFF = 3
 const Calculator: React.FC<CalculatorProps> = ({ games }) => {
     const [diff, setDiff] = useState(DEFAULT_DIFF)
-    const calculateTotalBetData = calculateBetsFactory(LineType.Total)
-    const calculateSpreadBetData = calculateBetsFactory(LineType.Spread)
+    const calculateTotalBets = calculateBetsFactory(LineType.Total)
+    const calculateSpreadBets = calculateBetsFactory(LineType.Spread)
     const calculateOutcomes = calculateOutcomesFactory(diff)
-    const totalBetData = games.map(calculateTotalBetData).filter((val) => { return val !== undefined; })
-    const spreadBetData = games.map(calculateSpreadBetData).filter((val) => { return val !== undefined; })
+    const totalBetData = games.map(calculateTotalBets).filter((val) => { return val !== undefined; })
+    const spreadBetData = games.map(calculateSpreadBets).filter((val) => { return val !== undefined; })
     const totalOutcomes = totalBetData.map(calculateOutcomes)
     const spreadStream = spreadBetData.map(calculateOutcomes)
     const { wins: totalWins, losses: totalLosses, skipped: totalSkipped } = countOutcomes(totalOutcomes)
     const { wins: spreadWins, losses: spreadLosses, skipped: spreadSkipped } = countOutcomes(spreadStream)
     const headers = ['Type', 'Wins', 'Losses', 'Skipped', 'Win Percentage']
-    const tableHeaders = headers.map((header, index) => (
-        <th key={index}>{header}</th>
-    ))
+    const totalValues = ['Total', totalWins, totalLosses, totalSkipped, percentage(totalWins, totalLosses)]
+    const spreadValues = ['Total', spreadWins, spreadLosses, spreadSkipped, percentage(spreadWins, spreadLosses)]
+    const rows = [{ values: totalValues }, { values: spreadValues }]
     return (
-        <>
+        <div className="bet-calculator">
             <h3>Bet Range</h3>
             <input type="number" style={{ marginBottom: '2rem' }} value={diff} min="0" step="0.1" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDiff(Number(e.target.value))} />
-            <table>
-                <thead data-testid="thead">
-                    <tr>{tableHeaders}</tr>
-                </thead>
-                <tbody data-testid="tbody">
-                    <tr>
-                        <td>Total</td><td>{totalWins}</td><td>{totalLosses}</td><td>{totalSkipped}</td><td>{percentage(totalWins, totalLosses)}</td>
-                    </tr>
-                    <tr>
-                        <td>Spread</td><td>{spreadWins}</td><td>{spreadLosses}</td><td>{spreadSkipped}</td><td>{percentage(spreadWins, spreadLosses)}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </>
+            <Table rows={rows} headers={headers} />
+        </div>
     )
 }
-
 export default Calculator
