@@ -3,6 +3,7 @@ import get from 'lodash.get'
 import { Sport, Resource } from '../../const'
 import DataTableConfig from './config'
 import { Pred, Game, NbaPlayer, MlbPlayer, Season } from '../../models'
+import Table from './Table'
 
 export type DataModel = Pred | Game | Season | NbaPlayer | MlbPlayer
 export interface IDataTableProps {
@@ -12,25 +13,12 @@ export interface IDataTableProps {
   rowClick?: (e: DataModel) => void
 }
 const DataTable: React.FC<IDataTableProps> = ({ resource, sport, data, rowClick }) => {
-  const tableConfig = new DataTableConfig(sport, resource)
-  const tableHeaders = tableConfig.headers.map((header, index) => (
-    <th key={index}>{header}</th>
-  ))
-  const tableRows = data.map(model => (
-    <tr className={rowClick ? "clickable" : ""} key={model.id} onClick={() => (rowClick ? rowClick(model) : null)}>
-      {tableConfig.keys.map((key, index) => (
-        <td key={index}>{get(model, key)}</td>
-      ))}
-    </tr>
-  ))
-  return (
-    <table>
-      <thead data-testid="thead">
-        <tr>{tableHeaders}</tr>
-      </thead>
-      <tbody data-testid="tbody">{tableRows}</tbody>
-    </table>
-  )
+  const { headers, keys } = new DataTableConfig(sport, resource)
+  const rows = data.map(datum => ({
+    onClick: () => (rowClick ? rowClick(datum) : null),
+    values: keys.map(key => get(datum, key))
+  }))
+  return <Table headers={headers} rows={rows} />
 }
 
 export default DataTable
