@@ -1,10 +1,11 @@
-import { Sport, Resource } from '../../const'
+import { Sport, Resource } from './index'
+
 type IDataMap = {
   [sport in Sport]: {
     [resource in Resource]?: { headers: string[]; keys: string[] }
   }
 }
-const DataMap: IDataMap = {
+const DataConfig: IDataMap = {
   [Sport.NBA]: {
     [Resource.Season]: {
       headers: ['Year'],
@@ -109,15 +110,4 @@ const DataMap: IDataMap = {
     },
   },
 }
-
-const DEFAULT_MAP = { headers: [], keys: [] }
-
-export default class DataTableConfig {
-  public headers: string[]
-  public keys: string[]
-  constructor(sport: Sport, resource: Resource) {
-    const { headers, keys } = DataMap[sport][resource] || DEFAULT_MAP
-    this.headers = headers
-    this.keys = keys
-  }
-}
+export default DataConfig

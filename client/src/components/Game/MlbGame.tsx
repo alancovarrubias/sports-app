@@ -23,24 +23,24 @@ const MlbGame: React.FC<IGameProps> = ({ sport, game_id }) => {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error!</p>
   if (!data) return <p>Missing Data</p>
-  const { game: { away_team, home_team } } = data
+  const { game: { away_team, home_team, away_players, home_players } } = data
   const awayBattingProps = {
-    data: data.game.away_players.filter(player => player.stat.batting),
+    data: away_players.filter(player => player.stat.batting),
     sport,
     resource: Resource.Batter,
   }
   const homeBattingProps = {
-    data: data.game.home_players.filter(player => player.stat.batting),
+    data: home_players.filter(player => player.stat.batting),
     sport,
     resource: Resource.Batter,
   }
   const awayPitchingProps = {
-    data: data.game.away_players.filter(player => player.stat.pitching),
+    data: away_players.filter(player => player.stat.pitching),
     sport,
     resource: Resource.Pitcher,
   }
   const homePitchingProps = {
-    data: data.game.home_players.filter(player => player.stat.pitching),
+    data: home_players.filter(player => player.stat.pitching),
     sport,
     resource: Resource.Pitcher,
   }
