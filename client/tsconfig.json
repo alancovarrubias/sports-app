@@ -15,7 +15,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "app/*": [
+        "src/*"
+      ]
+    }
   },
   "include": [
     "src"
@@ -23,5 +29,5 @@
   "exclude": [
     "**/__tests__/**",
     "src/@setproduct-ui/core/**"
-  ]
+  ],
 }

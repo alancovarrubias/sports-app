@@ -1,5 +1,5 @@
 import { InMemoryCache, makeVar } from '@apollo/client';
-import { AUTH_TOKEN } from '../const'
+import { AUTH_TOKEN } from 'app/const'
 
 // Initializes to true if localStorage includes a 'token' key,
 // false otherwise

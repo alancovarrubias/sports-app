@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
-import { LOGIN_USER } from '../apollo/queries'
-import { AUTH_TOKEN } from '../const'
-import { isLoggedInVar } from '../apollo/cache'
+import { LOGIN_USER } from 'app/apollo/queries'
+import { AUTH_TOKEN } from 'app/const'
+import { isLoggedInVar } from 'app/apollo/cache'
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('')

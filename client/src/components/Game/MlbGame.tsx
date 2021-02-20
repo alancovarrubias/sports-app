@@ -1,10 +1,10 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
-import { Sport, Resource } from '../../const'
-import DataTable from '../common/DataTable'
+import { Sport, Resource } from 'app/const'
+import DataTable from 'app/components/common/DataTable'
 import { IGameProps } from './index'
-import { GET_GAME } from '../../apollo/queries'
-import { IMlbGame } from '../../models'
+import { GET_GAME } from 'app/apollo/queries'
+import { IMlbGame } from 'app/models'
 
 interface IGameData {
   game: IMlbGame

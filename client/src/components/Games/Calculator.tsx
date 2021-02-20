@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Game } from '../../models'
-import Table from '../common/Table'
+import { Game } from 'app/models'
+import Table from 'app/components/common/Table'
 
 enum Outcome {
     Win = 1,

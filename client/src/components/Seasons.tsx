@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { useQuery } from '@apollo/client'
 import { useHistory, useLocation } from 'react-router-dom'
-import SportContext from '../contexts/SportContext'
-import DataTable from './common/DataTable'
-import { Resource, Sport } from '../const'
-import { createRoute, Page } from '../Routes'
-import { Season } from '../models'
-import { GET_SEASONS } from '../apollo/queries'
+import SportContext from 'app/contexts/SportContext'
+import { Resource, Sport } from 'app/const'
+import { Season } from 'app/models'
+import { GET_SEASONS } from 'app/apollo/queries'
+import { createRoute, Page } from 'app/Routes'
+import DataTable from 'app/components/common/DataTable'
 
 interface ISeasonsData {
   seasons: Season[]

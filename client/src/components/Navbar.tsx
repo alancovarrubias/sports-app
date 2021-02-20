@@ -1,13 +1,12 @@
 import React, { useContext } from 'react'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import { isLoggedInVar } from '../apollo/cache'
-
 import { useQuery } from '@apollo/client'
-import SportContext from '../contexts/SportContext'
-import { createRoute, Page } from '../Routes'
-import { Sport } from '../const'
-import { GET_SEASON } from '../apollo/queries'
-import { Season } from '../models'
+import { isLoggedInVar } from 'app/apollo/cache'
+import SportContext from 'app/contexts/SportContext'
+import { createRoute, Page } from 'app/Routes'
+import { Sport } from 'app/const'
+import { GET_SEASON } from 'app/apollo/queries'
+import { Season } from 'app/models'
 
 interface ISeasonData {
   season: Season

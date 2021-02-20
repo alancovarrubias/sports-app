@@ -1,8 +1,8 @@
 import React from 'react'
 import get from 'lodash.get'
-import { Sport, Resource } from '../../const'
-import DataConfig from '../../const/DataConfig'
-import { Pred, Game, NbaPlayer, MlbPlayer, Season } from '../../models'
+import { Sport, Resource } from 'app/const'
+import DataConfig from 'app/const/DataConfig'
+import { Pred, Game, NbaPlayer, MlbPlayer, Season } from 'app/models'
 import Table from './Table'
 
 export type DataModel = Pred | Game | Season | NbaPlayer | MlbPlayer

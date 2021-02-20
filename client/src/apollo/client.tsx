@@ -1,6 +1,6 @@
 import { ApolloClient, createHttpLink, gql } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context';
-import { AUTH_TOKEN } from '../const'
+import { AUTH_TOKEN } from 'app/const'
 import { cache } from './cache'
 
 const httpLink = createHttpLink({
