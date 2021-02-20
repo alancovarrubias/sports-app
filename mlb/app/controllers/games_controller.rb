@@ -26,7 +26,7 @@ class GamesController < ApplicationController
   end
 
   def set_model_includes
-    @model = Game.with_season
+    @model = Game
     @model = @model.with_team_stats if @query_params[:team]
     @model = @model.with_player_stats if @query_params[:player]
     @model = @model.with_lines if @query_params[:line]

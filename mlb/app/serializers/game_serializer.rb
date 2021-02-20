@@ -1,9 +1,6 @@
 class GameSerializer
   include JSONAPI::Serializer
   attributes :id, :date
-  attribute :year do |game|
-    game.season.year
-  end
   attribute :away_team, if: proc { |_record, params| params[:team] } do |obj|
     team = obj.away_team
     batting_stat = obj.team_batting_stats.select { |stat| stat.model_id == team.id }.first

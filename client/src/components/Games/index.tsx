@@ -7,9 +7,10 @@ import { Resource, Sport } from '../../const'
 import { createRoute, Page } from '../../Routes'
 import { GET_GAMES } from '../../apollo/queries'
 import Calculator from './Calculator'
-import { Game } from '../../models'
+import { Season, Game } from '../../models'
 
 interface IGamesData {
+  season: Season
   games: Game[]
 }
 interface IGamesVars {
@@ -35,9 +36,9 @@ const Games: React.FC = () => {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error!</p>
   if (!data) return <p>Missing Data</p>
-  const year = data.games[0].year
+  const { season: { year }, games } = data
   const gamesProps = {
-    data: data.games,
+    data: games,
     resource: Resource.Game,
     sport,
     rowClick: game => {

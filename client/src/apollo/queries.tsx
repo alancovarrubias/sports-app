@@ -57,6 +57,11 @@ export const GET_GAMES = gql`
     }
   }
   query GetGames($sport: String!, $season_id: ID!, $offset: Int, $limit: Int) {
+    season(sport: $sport, season_id: $season_id) {
+        id
+        sport
+        year
+    }
     games(
       sport: $sport
       season_id: $season_id
@@ -64,7 +69,6 @@ export const GET_GAMES = gql`
       limit: $limit
     ) {
       id
-      year
       date
       away_team {
         ...GamesTeamStat
