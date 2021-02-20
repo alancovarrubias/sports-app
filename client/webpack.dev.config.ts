@@ -14,10 +14,11 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.scss$/i,
         use: [
           'style-loader',
-          'css-loader'
+          'css-loader',
+          'sass-loader'
         ]
       },
       {
