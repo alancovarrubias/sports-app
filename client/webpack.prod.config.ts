@@ -40,6 +40,9 @@ const config = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      app: path.resolve(__dirname, 'src/'),
+    },
   },
   plugins: [
     new webpack.DefinePlugin({
