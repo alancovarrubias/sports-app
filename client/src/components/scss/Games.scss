@@ -1,0 +1,19 @@
+.mlbGame {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    'awayGame'
+    'subheader'
+    'datatable';
+}
+.games-table {
+  grid-area: datatable;
+}
+.subheader {
+  grid-area: subheader;
+}
+.calculator {
+  grid-area: calculator;
+}

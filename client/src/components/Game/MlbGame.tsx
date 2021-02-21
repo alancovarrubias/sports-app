@@ -46,28 +46,20 @@ const MlbGame: React.FC<IGameProps> = ({ sport, game_id }) => {
   }
   return (
     <div className="mlbGame">
-      <div className="mlbHeader">
+      <div className="awayPitchingTable tableFixHead">
         <h2>{away_team.name} Pitchers</h2>
-      </div>
-      <div className="mlbTable tableFixHead">
         <DataTable {...awayPitchingProps} />
       </div>
-      <div className="mlbHeader">
+      <div className="homePitchingTable tableFixHead">
         <h2>{home_team.name} Pitchers</h2>
-      </div>
-      <div className="mlbHeader tableFixHead">
         <DataTable {...homePitchingProps} />
       </div>
-      <div className="mlbHeader">
+      <div className="awayBattingTable tableFixHead">
         <h2>{away_team.name} Batters</h2>
-      </div>
-      <div className="mlbTable tableFixHead">
         <DataTable {...awayBattingProps} />
       </div>
-      <div className="mlbHeader">
+      <div className="homeBattingTable tableFixHead">
         <h2>{home_team.name} Batters</h2>
-      </div>
-      <div className="mlbTable tableFixHead">
         <DataTable {...homeBattingProps} />
       </div>
     </div>

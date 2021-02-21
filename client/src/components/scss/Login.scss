@@ -1,0 +1,12 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  button {
+    font-size: inherit;
+    cursor: pointer;
+    height: 2rem;
+    width: 10rem;
+    color: white;
+    background-color: black;
+  }
+}

@@ -1,4 +1,5 @@
 import React, { ReactText } from 'react'
+import 'app/components/scss/Table.scss'
 
 export interface Row {
   values: ReactText[]

@@ -8,6 +8,7 @@ import { createRoute, Page } from 'app/Routes'
 import { GET_GAMES } from 'app/apollo/queries'
 import Calculator from './Calculator'
 import { Season, Game } from 'app/models'
+import "app/components/scss/Games.scss"
 
 interface IGamesData {
   season: Season

@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/client'
 import { LOGIN_USER } from 'app/apollo/queries'
 import { AUTH_TOKEN } from 'app/const'
 import { isLoggedInVar } from 'app/apollo/cache'
+import 'app/components/scss/Login.scss'
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('')

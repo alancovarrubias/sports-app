@@ -7,6 +7,7 @@ import { createRoute, Page } from 'app/Routes'
 import { Sport } from 'app/const'
 import { GET_SEASON } from 'app/apollo/queries'
 import { Season } from 'app/models'
+import 'app/components/scss/Navbar.scss'
 
 interface ISeasonData {
   season: Season

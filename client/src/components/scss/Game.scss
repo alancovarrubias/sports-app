@@ -1,0 +1,28 @@
+.nbaGame {
+  display: grid;
+  height: 100%;
+}
+.mlbGame {
+  padding: 1rem;
+  display: grid;
+  height: 100%;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    'awaypitching homepitching'
+    'awaybatting homebatting';
+  height: 100%;
+  .awayPitchingTable {
+    grid-area: awaypitching;
+  }
+  .homePitchingTable {
+    grid-area: homepitching;
+  }
+  .awayBattingTable {
+    grid-area: awaybatting;
+  }
+  .homeBattingTable {
+    grid-area: homebatting;
+  }
+}

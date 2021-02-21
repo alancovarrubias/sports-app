@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import SportContext from 'app/contexts/SportContext'
 import { createRoute, Page } from 'app/Routes'
 import { Sport } from 'app/const'
+import 'app/components/scss/Header.scss'
 
 interface HeaderProps {
   isLoggedIn: boolean

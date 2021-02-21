@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { useParams, } from 'react-router-dom'
 import SportContext from 'app/contexts/SportContext'
 import { Sport } from 'app/const'
+import 'app/components/scss/Game.scss'
 import NbaGame from './NbaGame'
 import MlbGame from './MlbGame'
 
