@@ -8,7 +8,8 @@ class MlbPlayerScraper(MlbBaseScraper):
         team = args["team"]
         endpoint = f"teams/{team}/{season}.shtml"
         css_selectors = ("#team_batting",)
-        players_table = self.get_tables(endpoint, css_selectors)[0]
+        self.get(endpoint)
+        players_table = self.find_elements(css_selectors)[0]
         table_rows = self.get_table_rows(players_table)
         players = [MlbPlayer(row).toJson() for row in table_rows]
         return {"players": players}

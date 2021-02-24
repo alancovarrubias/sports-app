@@ -14,7 +14,8 @@ class NbaStatScraper(BasketballReferenceScraper):
             f"#box-{home_team}-game-basic",
             f"#box-{home_team}-game-advanced",
         )
-        stat_tables = self.get_tables(endpoint, css_selectors)
+        self.get(endpoint)
+        stat_tables = self.find_elements(css_selectors)
         away_tables = stat_tables[:2]
         home_tables = stat_tables[2:]
 

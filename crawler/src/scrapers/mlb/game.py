@@ -17,7 +17,8 @@ class MlbGameScraper(MlbBaseScraper):
         for team in teams:
             endpoint = f"teams/{team}/{season}-schedule-scores.shtml"
             css_selectors = ("#team_schedule",)
-            games_table = self.get_tables(endpoint, css_selectors)[0]
+            self.get(endpoint)
+            games_table = self.find_elements(css_selectors)[0]
             rows = self.get_table_rows(games_table, {"rows": "tr:not(.thead)"})
             home_rows = list(filter(lambda row: row[3].text != "@", rows))
             home_games = [MlbGame(row).toJson() for row in home_rows]

@@ -22,24 +22,25 @@ class AbstractScraper(ABC):
     def find_element(self, selector):
         return self.driver.find_element_by_css_selector(selector)
 
-    def get_tables(self, endpoint, css_selectors):
-        self.get(endpoint)
-        elements = [self.find_element(selector) for selector in css_selectors]
+    def find_elements(self, selectors):
+        elements = [self.find_element(selector) for selector in selectors]
         return elements
 
-    def get_table_rows(self, table, selectors=None):
-        if selectors is None:
-            selectors = {"rows": "tr", "cells": "td", "section": "tbody"}
-        if "rows" not in selectors:
-            selectors["rows"] = "tr"
-        if "cells" not in selectors:
-            selectors["cells"] = "td"
-        if "section" not in selectors:
-            selectors["section"] = "tbody"
-        teams_body = table.find_element_by_tag_name(selectors["section"])
-        rows = teams_body.find_elements_by_css_selector(selectors["rows"])
+    def get_table_rows(self, table, table_selectors=None):
+        if table_selectors is None:
+            table_selectors = {"rows": "tr", "cells": "td", "section": "tbody"}
+        if "rows" not in table_selectors:
+            table_selectors["rows"] = "tr"
+        if "cells" not in table_selectors:
+            table_selectors["cells"] = "td"
+        if "section" not in table_selectors:
+            table_selectors["section"] = "tbody"
+        teams_body = table.find_element_by_tag_name(table_selectors["section"])
+        rows = teams_body.find_elements_by_css_selector(table_selectors["rows"])
         table_rows = [
-            row.find_elements_by_css_selector(selectors["cells"]) for row in rows if row
+            row.find_elements_by_css_selector(table_selectors["cells"])
+            for row in rows
+            if row
         ]
         return [row for row in table_rows if row]
 
