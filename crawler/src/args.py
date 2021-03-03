@@ -24,6 +24,9 @@ class Args:
         self.resource_type = resource_type
         self.query_params = parsers[resource_type].parse_args()
         self.sport = self.query_params["sport"]
+        self.db_key = self.create_db_key(resource_type)
+
+    def create_db_key(self, resource_type):
         keys = DB_KEYS[self.sport][resource_type]
         values = [str(self.query_params[key]) for key in keys]
-        self.db_key = "".join(values)
+        return "".join(values)

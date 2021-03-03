@@ -11,6 +11,23 @@ WORD_REGEX = r"[^\w]"
 
 
 class MlbStatScraper(MlbBaseScraper):
+    def get_plays(self, args):
+        game_url = args["game_url"]
+        endpoint = f"boxes/{game_url[0:3]}/{game_url}.shtml"
+        self.get(endpoint)
+        play_table = self.find_element("#play_by_play")
+        play_config = {
+            "rows": "tr:not(.pbp_summary_top):not(.pbp_summary_bottom)",
+        }
+        plays = []
+        play_rows = self.get_table_rows(play_table, play_config)
+        for play_row in play_rows:
+            if len(play_row) != 11:
+                continue
+            play = MlbPlay(play_row)
+            plays.append(play.toJson())
+        return plays
+
     def get_resource(self, args):
         game_url = args["game_url"]
         away_team = re.sub(WORD_REGEX, "", args["away_team"])

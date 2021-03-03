@@ -13,4 +13,4 @@ class MlbPlay(AbstractModel):
         self.at_bat = row_text[5]
         self.batter = row_text[6]
         self.pitcher = row_text[7]
-        self.play = row_text[10]
+        self.text = row_text[10]

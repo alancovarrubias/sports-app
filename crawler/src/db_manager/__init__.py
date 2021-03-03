@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from const.models import STAT
 from bson.json_util import dumps, loads
 
 client = MongoClient("mongodb://mongo:27017/")
@@ -6,6 +7,7 @@ client = MongoClient("mongodb://mongo:27017/")
 
 class DbManager:
     def __init__(self, args):
+        self.resource_type = args.resource_type
         self.collection = client[args.sport][args.resource_type]
 
     def fetch_resource(self, key):
@@ -19,6 +21,16 @@ class DbManager:
         data["key"] = key
         self.collection.insert_one(data)
 
+    def update_resource_field(self, key, field, data):
+        self.collection.update_one({"key": key}, {"$set": {field: data}}, upsert=False)
+
+    def remove_resource_field(self, key, field):
+        self.collection.update_one({"key": key}, {"$unset": {field: 1}})
+
     def resource_exists(self, key):
         resource = self.collection.find_one({"key": key})
         return resource is not None
+
+    def missing_field(self, key, field):
+        resource = self.fetch_resource(key)
+        return field not in resource.keys()

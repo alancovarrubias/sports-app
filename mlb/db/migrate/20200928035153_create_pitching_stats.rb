@@ -12,6 +12,12 @@ class CreatePitchingStats < ActiveRecord::Migration[6.0]
       t.integer :so
       t.integer :hr
       t.float :era
+      t.integer :fb
+      t.integer :ld
+      t.integer :gb
+      t.integer :fb_p
+      t.integer :ld_p
+      t.integer :gb_p
     end
   end
 end

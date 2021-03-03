@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 from const.models import TEAM, PLAYER, GAME, STAT, LINE
-from resources import Resources
+from db_manager import DbManager
+from scrapers import get_scraper
 from args import Args
 
 app = Flask(__name__)
@@ -10,8 +11,20 @@ api = Api(app)
 
 def fetch_resource(resource_type):
     args = Args(resource_type)
-    resources = Resources(args)
-    return resources.fetch(args)
+    db_manager = DbManager(args)
+    scraper = get_scraper(args)
+    if not db_manager.resource_exists(args.db_key):
+        resource_data = scraper.get_resource(args.query_params)
+        scraper.driver.quit()
+        db_manager.save_resource(args.db_key, resource_data)
+    else:
+        if resource_type == STAT:
+            field = "plays"
+            if db_manager.missing_field(args.db_key, field):
+                resource_data = scraper.get_plays(args.query_params)
+                scraper.driver.quit()
+                db_manager.update_resource_field(args.db_key, field, resource_data)
+    return db_manager.fetch_resource(args.db_key)
 
 
 class TeamResources(Resource):

@@ -13,30 +13,23 @@ from scrapers.mlb.game import MlbGameScraper
 from scrapers.mlb.stat import MlbStatScraper
 from scrapers.mlb.line import MlbLineScraper
 
-NbaScrapers = {
-    TEAM: NbaTeamScraper,
-    PLAYER: NbaPlayerScraper,
-    GAME: NbaGameScraper,
-    STAT: NbaStatScraper,
-    LINE: NbaLineScraper,
-}
-
-MlbScrapers = {
-    TEAM: MlbTeamScraper,
-    PLAYER: MlbPlayerScraper,
-    GAME: MlbGameScraper,
-    STAT: MlbStatScraper,
-    LINE: MlbLineScraper,
-}
-
 SportScrapers = {
-    NBA: NbaScrapers,
-    MLB: MlbScrapers,
+    NBA: {
+        TEAM: NbaTeamScraper,
+        PLAYER: NbaPlayerScraper,
+        GAME: NbaGameScraper,
+        STAT: NbaStatScraper,
+        LINE: NbaLineScraper,
+    },
+    MLB: {
+        TEAM: MlbTeamScraper,
+        PLAYER: MlbPlayerScraper,
+        GAME: MlbGameScraper,
+        STAT: MlbStatScraper,
+        LINE: MlbLineScraper,
+    },
 }
 
-class ScraperFactory:
-    def __init__(self, args):
-        self.scraper = SportScrapers[args.sport][args.resource_type]
 
-    def get_scraper(self):
-        return self.scraper()
+def get_scraper(args):
+    return SportScrapers[args.sport][args.resource_type]()

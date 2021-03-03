@@ -15,6 +15,12 @@ class CreateBattingStats < ActiveRecord::Migration[6.0]
       t.float :obp
       t.float :slg
       t.float :ops
+      t.integer :fb
+      t.integer :ld
+      t.integer :gb
+      t.integer :fb_p
+      t.integer :ld_p
+      t.integer :gb_p
     end
   end
 end
