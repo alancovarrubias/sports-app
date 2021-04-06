@@ -1,13 +1,14 @@
 module Database
   module Builder
     class Stats < Base
+      TIME_REGEX = /\d{1,2}:\d{2}/.freeze
       INITIAL_HIT_TYPE = {
         fb: 0,
         gb: 0,
         ld: 0
       }.freeze
       def needs_data?
-        @game.pitching_stats.empty? && @game.batting_stats.empty?
+        @game.time.nil?
       end
 
       def build
@@ -25,11 +26,17 @@ module Database
           }
           stats_res = query_server(:stats, server_options)
           build_stats(stats_res)
+          save_time(stats_res)
         end
       end
 
+      def save_time(stats_res)
+        time = TIME_REGEX.match(stats_res['time']).to_s
+        @game.update(time: time)
+      end
+
       def build_stats(stats_res)
-        @store = PlayStore.new(@game, stats_res)
+        @store = PlayStore.new(stats_res, @game)
         %i[away home].each do |side|
           team = @game.send("#{side}_team")
           %i[team player].each do |model|
@@ -46,9 +53,9 @@ module Database
         stat_type = stat.delete('stat_type')
         model = model_type == 'Player' ? ::Player.find_by(abbr: abbr, team: team) : team
         model_class = stat_type == 'Pitching' ? ::PitchingStat : ::BattingStat
-        store_key = model_type == 'Player' ? model.name : model.abbr
-        hit_types = stat_type == 'Pitching' ? @store.get_pitcher_types(store_key) : @store.get_batter_types(store_key)
-        stat.merge!(hit_types)
+        model_key = model_type == 'Player' ? model.name : model.abbr
+        hit_types = @store.get_hit_types(stat_type, model_key)
+        stat.merge!(hit_types) if hit_types
         stat_query = {
           season: @season,
           game: @game,

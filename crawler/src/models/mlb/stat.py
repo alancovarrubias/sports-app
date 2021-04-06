@@ -13,9 +13,12 @@ def convert_numeric(text):
         return int(text)
 
 
+ABBR_REGEX = r"[a-z.]*\d{2}"
+
+
 def get_abbr(cell):
     anchor = cell.find_element_by_tag_name("a")
-    abbr = re.search(r"[a-z]*\d{2}", anchor.get_attribute("href")).group()
+    abbr = re.search(ABBR_REGEX, anchor.get_attribute("href")).group()
     return abbr
 
 
@@ -28,8 +31,10 @@ class MlbStat(AbstractModel):
     def build(self, row):
         if self.model_type == PLAYER:
             self.abbr = get_abbr(row[0])
+            print(self.abbr)
 
         row_text = [cell.text for cell in row]
+        print(row_text)
         if self.stat_type == PITCHING:
             self.add_pitching_stat(row_text)
         elif self.stat_type == BATTING:

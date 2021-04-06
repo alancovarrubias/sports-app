@@ -1,3 +1,2 @@
 require 'net/http'
-
-game = Game.find(486)
+Database::Builder.run(2019)

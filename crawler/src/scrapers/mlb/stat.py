@@ -11,7 +11,7 @@ WORD_REGEX = r"[^\w]"
 
 
 class MlbStatScraper(MlbBaseScraper):
-    def get_plays(self, args):
+    def get_missing(self, args):
         game_url = args["game_url"]
         endpoint = f"boxes/{game_url[0:3]}/{game_url}.shtml"
         self.get(endpoint)
@@ -26,40 +26,26 @@ class MlbStatScraper(MlbBaseScraper):
                 continue
             play = MlbPlay(play_row)
             plays.append(play.toJson())
-        return plays
+        time = (
+            self.find_element(".scorebox_meta")
+            .find_elements(By.CSS_SELECTOR, "div")[1]
+            .text
+        )
+        return {"plays": plays, "time": time}
 
     def get_resource(self, args):
-        game_url = args["game_url"]
+        missing = self.get_missing(args)
         away_team = re.sub(WORD_REGEX, "", args["away_team"])
         home_team = re.sub(WORD_REGEX, "", args["home_team"])
-        endpoint = f"boxes/{game_url[0:3]}/{game_url}.shtml"
         css_selectors = (
             f"#{away_team}batting",
             f"#{away_team}pitching",
             f"#{home_team}batting",
             f"#{home_team}pitching",
         )
-        self.get(endpoint)
         stats_tables = self.find_elements(css_selectors)
-        time = (
-            self.find_element(".scorebox_meta")
-            .find_elements(By.CSS_SELECTOR, "div")[1]
-            .text
-        )
         away_tables = stats_tables[:2]
         home_tables = stats_tables[2:]
-
-        play_table = self.find_element("#play_by_play")
-        play_config = {
-            "rows": "tr:not(.pbp_summary_top):not(.pbp_summary_bottom)",
-        }
-        plays = []
-        play_rows = self.get_table_rows(play_table, play_config)
-        for play_row in play_rows:
-            if len(play_row) != 11:
-                continue
-            play = MlbPlay(play_row)
-            plays.append(play.toJson())
 
         def get_team_stat(tables):
             batting_table, pitching_table = tables
@@ -95,10 +81,10 @@ class MlbStatScraper(MlbBaseScraper):
         away_team_stats = get_team_stat(away_tables)
         home_team_stats = get_team_stat(home_tables)
         return {
-            "time": time,
+            "time": missing["time"],
+            "plays": missing["plays"],
             "away_player_stats": away_player_stats,
             "home_player_stats": home_player_stats,
             "away_team_stats": away_team_stats,
             "home_team_stats": home_team_stats,
-            "plays": plays,
         }
