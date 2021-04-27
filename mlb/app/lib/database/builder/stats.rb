@@ -8,7 +8,7 @@ module Database
         ld: 0
       }.freeze
       def needs_data?
-        @game.time.nil?
+        @game.hour.nil?
       end
 
       def build
@@ -26,13 +26,16 @@ module Database
           }
           stats_res = query_server(:stats, server_options)
           build_stats(stats_res)
-          save_time(stats_res)
+          save_time(stats_res['time'])
         end
       end
 
-      def save_time(stats_res)
-        time = TIME_REGEX.match(stats_res['time']).to_s
-        @game.update(time: time)
+      def save_time(time)
+        clock_time = TIME_REGEX.match(time).to_s
+        hour = clock_time[0...clock_time.index(':')].to_i
+        hour += 12 if time.include?('p.m.')
+        minute = clock_time[-2..]
+        @game.update(hour: hour, minute: minute)
       end
 
       def build_stats(stats_res)
