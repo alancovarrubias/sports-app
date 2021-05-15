@@ -1,13 +1,12 @@
 from flask import Flask
-from flask_restful import reqparse, abort, Api, Resource
-from const.models import TEAM, PLAYER, GAME, STAT, LINE
+from flask_restful import Api, Resource
+from const.models import TEAM, PLAYER, GAME, STAT, LINE, MATCHUP, LINEUP
 from db_manager import DbManager
 from scrapers import get_scraper
 from args import Args
 
 app = Flask(__name__)
 api = Api(app)
-
 
 def fetch_resource(resource_type):
     args = Args(resource_type)
@@ -57,12 +56,21 @@ class LineResources(Resource):
     def get(self):
         return fetch_resource(LINE)
 
+class MatchupResources(Resource):
+    def get(self):
+        return fetch_resource(MATCHUP)
+
+class LineupResources(Resource):
+    def get(self):
+        return fetch_resource(LINEUP)
 
 api.add_resource(TeamResources, "/teams")
 api.add_resource(PlayerResources, "/players")
 api.add_resource(GameResources, "/games")
 api.add_resource(StatResources, "/stats")
 api.add_resource(LineResources, "/lines")
+api.add_resource(MatchupResources, "/matchups")
+api.add_resource(LineupResources, "/lineups")
 
 
 if __name__ == "__main__":

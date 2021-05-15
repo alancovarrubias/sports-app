@@ -8,19 +8,13 @@ class NbaStatScraper(BasketballReferenceScraper):
         home_team = args["home_team"]
         game_url = args["game_url"]
         endpoint = f"boxscores/{game_url}.html"
-        css_selectors = (
-            f"#box-{away_team}-game-basic",
-            f"#box-{away_team}-game-advanced",
-            f"#box-{home_team}-game-basic",
-            f"#box-{home_team}-game-advanced",
-        )
+        away_basic = self.find_element(f"#box-{away_team}-game-basic")
+        away_advanced = self.find_element(f"#box-{away_team}-game-advanced")
+        home_basic = self.find_element(f"#box-{home_team}-game-basic")
+        home_advanced = self.find_element(f"#box-{home_team}-game-advanced")
         self.get(endpoint)
-        stat_tables = self.find_elements(css_selectors)
-        away_tables = stat_tables[:2]
-        home_tables = stat_tables[2:]
 
-        def get_team_stats(tables):
-            basic_stats_table, advanced_stats_table = tables
+        def get_team_stats(basic_stats_table, advanced_stats_table):
             css_config = {"section": "tfoot", "cells": "th, td"}
             basic_row = self.get_table_rows(basic_stats_table, css_config)[0]
             advanced_row = self.get_table_rows(advanced_stats_table, css_config)[0]
@@ -28,8 +22,7 @@ class NbaStatScraper(BasketballReferenceScraper):
             team_stat = NbaStat("Team", row).toJson()
             return [team_stat]
 
-        def get_player_stats(tables):
-            basic_stats_table, advanced_stats_table = tables
+        def get_player_stats(basic_stats_table, advanced_stats_table):
             css_config = {"rows": "tr:not(.thead)", "cells": "th, td"}
             basic_rows = self.get_table_rows(basic_stats_table, css_config)
             advanced_rows = self.get_table_rows(advanced_stats_table, css_config)
@@ -42,10 +35,10 @@ class NbaStatScraper(BasketballReferenceScraper):
                 player_stats.append(player_stat)
             return player_stats
 
-        away_player_stats = get_player_stats(away_tables)
-        home_player_stats = get_player_stats(home_tables)
-        away_team_stats = get_team_stats(away_tables)
-        home_team_stats = get_team_stats(home_tables)
+        away_player_stats = get_player_stats(away_basic, away_advanced)
+        home_player_stats = get_player_stats(home_basic, home_advanced)
+        away_team_stats = get_team_stats(away_basic, away_advanced)
+        home_team_stats = get_team_stats(home_basic, home_advanced)
         return {
             "away_player_stats": away_player_stats,
             "home_player_stats": home_player_stats,

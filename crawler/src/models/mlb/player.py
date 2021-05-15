@@ -1,4 +1,3 @@
-import re
 from models.abstract import AbstractModel
 
 

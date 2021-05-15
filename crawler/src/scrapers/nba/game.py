@@ -21,9 +21,8 @@ class NbaGameScraper(BasketballReferenceScraper):
         for month in NBA_MONTHS:
             season = args["season"]
             endpoint = f"leagues/NBA_{season}_games-{month}.html"
-            css_selectors = ("#schedule",)
             self.get(endpoint)
-            games_table = self.find_elements(css_selectors)[0]
+            games_table = self.find_element("#schedule")
             css_config = {"rows": "tr:not(.thead)", "cells": "th, td"}
             table_rows = self.get_table_rows(games_table, css_config)
             games += [NbaGame(row).toJson() for row in table_rows]

@@ -1,8 +1,7 @@
-import re
+from scrapers.baseball_reference import BaseballReferenceScraper
 from const.mlb import PITCHING, BATTING
 from const.models import TEAM, PLAYER
 from selenium.webdriver.common.by import By
-from scrapers.mlb.base import MlbBaseScraper
 from models.mlb.stat import MlbStat
 from models.mlb.play import MlbPlay
 import re
@@ -10,7 +9,7 @@ import re
 WORD_REGEX = r"[^\w]"
 
 
-class MlbStatScraper(MlbBaseScraper):
+class MlbStatScraper(BaseballReferenceScraper):
     def get_missing(self, args):
         game_url = args["game_url"]
         endpoint = f"boxes/{game_url[0:3]}/{game_url}.shtml"
@@ -37,18 +36,12 @@ class MlbStatScraper(MlbBaseScraper):
         missing = self.get_missing(args)
         away_team = re.sub(WORD_REGEX, "", args["away_team"])
         home_team = re.sub(WORD_REGEX, "", args["home_team"])
-        css_selectors = (
-            f"#{away_team}batting",
-            f"#{away_team}pitching",
-            f"#{home_team}batting",
-            f"#{home_team}pitching",
-        )
-        stats_tables = self.find_elements(css_selectors)
-        away_tables = stats_tables[:2]
-        home_tables = stats_tables[2:]
+        away_team_batting = self.find_element(f"#{away_team}batting")
+        away_team_pitching = self.find_element(f"#{away_team}pitching")
+        home_team_batting = self.find_element(f"#{home_team}batting")
+        home_team_pitching = self.find_element(f"#{home_team}pitching")
 
-        def get_team_stat(tables):
-            batting_table, pitching_table = tables
+        def get_team_stat(batting_table, pitching_table):
             team_config = {"section": "tfoot", "cells": "th, td"}
             pitching_row = self.get_table_rows(pitching_table, team_config)[0]
             batting_row = self.get_table_rows(batting_table, team_config)[0]
@@ -56,8 +49,7 @@ class MlbStatScraper(MlbBaseScraper):
             team_batting_stat = MlbStat(BATTING, TEAM, batting_row)
             return [team_batting_stat.toJson(), team_pitching_stat.toJson()]
 
-        def get_player_stats(tables):
-            batting_table, pitching_table = tables
+        def get_player_stats(batting_table, pitching_table):
             player_config = {
                 "rows": "tr:not(.spacer)",
                 "cells": "th, td",
@@ -76,10 +68,10 @@ class MlbStatScraper(MlbBaseScraper):
                 batting_stats.append(batting_stat.toJson())
             return batting_stats + pitching_stats
 
-        away_player_stats = get_player_stats(away_tables)
-        home_player_stats = get_player_stats(home_tables)
-        away_team_stats = get_team_stat(away_tables)
-        home_team_stats = get_team_stat(home_tables)
+        away_player_stats = get_player_stats(away_team_batting, away_team_pitching)
+        home_player_stats = get_player_stats(home_team_batting, home_team_pitching)
+        away_team_stats = get_team_stat(away_team_batting, away_team_pitching)
+        home_team_stats = get_team_stat(home_team_batting, home_team_pitching)
         return {
             "time": missing["time"],
             "plays": missing["plays"],

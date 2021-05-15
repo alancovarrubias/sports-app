@@ -1,5 +1,5 @@
-from const.sports import NBA, MLB, SPORTS
-from const.models import TEAM, PLAYER, GAME, STAT, LINE
+from const.sports import NBA, MLB
+from const.models import TEAM, PLAYER, GAME, STAT, LINE, MATCHUP, LINEUP
 from request_parser import parsers
 
 DB_KEYS = {
@@ -15,6 +15,8 @@ DB_KEYS = {
         PLAYER: ["season", "team"],
         GAME: ["season"],
         STAT: ["game_url"],
+        MATCHUP: ["date"],
+        LINEUP: ["date"],
     },
 }
 

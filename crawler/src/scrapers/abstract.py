@@ -22,10 +22,6 @@ class AbstractScraper(ABC):
     def find_element(self, selector):
         return self.driver.find_element_by_css_selector(selector)
 
-    def find_elements(self, selectors):
-        elements = [self.find_element(selector) for selector in selectors]
-        return elements
-
     def get_table_rows(self, table, table_selectors=None):
         if table_selectors is None:
             table_selectors = {"rows": "tr", "cells": "td", "section": "tbody"}

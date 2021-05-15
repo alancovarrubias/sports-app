@@ -7,9 +7,8 @@ class NbaPlayerScraper(BasketballReferenceScraper):
         season = args["season"]
         team = args["team"]
         endpoint = f"teams/{team}/{season}.html"
-        css_selectors = ("#roster",)
         self.get(endpoint)
-        players_table = self.find_elements(css_selectors)[0]
+        players_table = self.find_element("#roster")
         table_rows = self.get_table_rows(players_table)
         players = [NbaPlayer(row).toJson() for row in table_rows]
         return {"players": players}

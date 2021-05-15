@@ -1,12 +1,12 @@
-import re
-from scrapers.mlb.base import MlbBaseScraper
+from scrapers.baseball_reference import BaseballReferenceScraper
 from models.mlb.game import MlbGame
+import re
 
 
 TEAM_LINK_REGEX = r"[A-Z]{3}"
 
 
-class MlbGameScraper(MlbBaseScraper):
+class MlbGameScraper(BaseballReferenceScraper):
     def get_resource(self, args):
 
         season = args["season"]
@@ -16,9 +16,8 @@ class MlbGameScraper(MlbBaseScraper):
         team_links = {}
         for team in teams:
             endpoint = f"teams/{team}/{season}-schedule-scores.shtml"
-            css_selectors = ("#team_schedule",)
             self.get(endpoint)
-            games_table = self.find_elements(css_selectors)[0]
+            games_table = self.find_element("#team_schedule")
             rows = self.get_table_rows(games_table, {"rows": "tr:not(.thead)"})
             home_rows = list(filter(lambda row: row[3].text != "@", rows))
             home_games = [MlbGame(row).toJson() for row in home_rows]
