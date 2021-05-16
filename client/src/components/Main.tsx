@@ -9,9 +9,11 @@ import './scss/Grid.scss'
 import './scss/style.scss'
 import Header from './Header'
 import Navbar from './Navbar'
+import Matchups from './Matchups'
 import Seasons from './Seasons'
 import Games from './Games'
 import Game from './Game'
+import Home from './Home'
 import Login from './Login'
 import NoMatch from './NoMatch'
 
@@ -19,7 +21,7 @@ const Main: React.FC = () => {
   const history = useHistory()
   const params = new URLSearchParams(history.location.search)
   const sportParam = params.get('sport') as Sport
-  const sport = sportParam ? sportParam : Sport.NBA
+  const sport = sportParam ? sportParam : Sport.MLB
   const sportHook = useState(sport)
   const { data: { isLoggedIn } } = useQuery(IS_LOGGED_IN);
   return (
@@ -29,8 +31,10 @@ const Main: React.FC = () => {
         <Navbar isLoggedIn={isLoggedIn} />
         <main>
           <Switch>
-            <Redirect exact from="/" to="/seasons" />
+            <Redirect exact from="/" to="/home" />
             <Route path="/login" component={Login} exact />
+            <PrivateRoute path="/home" component={Home} exact />
+            <PrivateRoute path="/matchups" component={Matchups} exact />
             <PrivateRoute path="/seasons" component={Seasons} exact />
             <PrivateRoute path="/seasons/:season_id/games" component={Games} exact />
             <PrivateRoute

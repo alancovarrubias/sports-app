@@ -1,4 +1,5 @@
 export enum Page {
+  Matchups,
   Seasons,
   Games,
   Game,
@@ -13,6 +14,8 @@ export const createRoute = (
   { season_id, game_id, search }: IRouteOptions = {}
 ): string => {
   switch (page) {
+    case Page.Matchups:
+      return `/matchups${search}`
     case Page.Seasons:
       return `/seasons${search}`
     case Page.Games:
@@ -25,6 +28,9 @@ export const createRoute = (
 export const getPage = (
   pathname: string,
 ): Page => {
+  if (/^\/matchups$/.test(pathname)) {
+    return Page.Matchups
+  }
   if (/^\/seasons$/.test(pathname)) {
     return Page.Seasons
   }
