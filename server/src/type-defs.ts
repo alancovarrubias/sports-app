@@ -2,6 +2,7 @@ import { gql } from 'apollo-server'
 export default gql`
   type Query {
     users: [User]!
+    matchups(sport: String!, date: String!): [Game]!
     seasons(sport: String!): [Season]!
     season(sport: String!, season_id: ID!): Season!
     games(sport: String!, season_id: ID!, offset: Int, limit: Int): [Game]!

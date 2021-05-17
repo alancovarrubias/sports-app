@@ -2,14 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Games', type: :request do
   context 'resource routes' do
-    before do
-      @season = FactoryBot.create(:season, :with_games)
-      @game = @season.games.first
-      # Build separate season to test isolation
-      FactoryBot.create(:season, :with_games)
-    end
-
     describe 'GET /seasons/:season_id/games' do
+      before do
+        @season = FactoryBot.create(:season, :with_games)
+        # Build separate season to test isolation
+        FactoryBot.create(:season, :with_games)
+      end
       it 'retrieves list of games from a season' do
         get season_games_path(@season)
         expect(response).to have_http_status(200)
@@ -27,10 +25,24 @@ RSpec.describe 'Games', type: :request do
     end
 
     describe 'GET /games/:id' do
+      before do
+        @game = FactoryBot.create(:game)
+      end
       it 'retrieves specific game from a season' do
         get game_path(@game)
         expect(response).to have_http_status(200)
         expect(data['id'].to_i).to eq(@game.id)
+      end
+    end
+
+    describe 'GET /games' do
+      before do
+        @game = FactoryBot.create(:game)
+      end
+      it "retrieves games from today's date" do
+        get games_path({ date: Date.today })
+        expect(response).to have_http_status(200)
+        expect(data.length).to eq(1)
       end
     end
   end

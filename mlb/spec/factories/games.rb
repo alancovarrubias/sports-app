@@ -3,6 +3,7 @@ FactoryBot.define do
     association :season
     association :away_team, factory: :team
     association :home_team, factory: :team
+    date { Date.today }
     trait :with_stats do
       after(:create) do |game|
         away_starting_pitcher = create(:player, team: game.away_team)

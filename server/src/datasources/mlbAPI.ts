@@ -7,7 +7,17 @@ class MlbAPI extends RESTDataSource {
     this.baseURL = 'http://mlb:3002'
   }
 
-  async getSeason({season_id}) {
+  async getMatchups({ date }) {
+    const matchups_res = await this.get('games', {
+      team: '1',
+      line: '1',
+      date
+    })
+    const games = matchups_res.data.map(game => game.attributes)
+    return games.map(addMlbCacheMetadata)
+  }
+
+  async getSeason({ season_id }) {
     const season_res = await this.get(`seasons/${season_id}`)
     const season = season_res.data.attributes
     return addMlbCacheMetadata(season)
@@ -20,7 +30,7 @@ class MlbAPI extends RESTDataSource {
     return seasons.map(addMlbCacheMetadata)
   }
 
-  async getGames({ season_id, offset = 0, limit = 100 }) {
+  async getGames({ season_id }) {
     const games_res = await this.get(`seasons/${season_id}/games`, {
       team: '1',
       line: '1',

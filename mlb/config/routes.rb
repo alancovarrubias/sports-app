@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :games, only: %i[index]
   resources :seasons, only: %i[index show] do
     resources :teams, only: %i[index]
     resources :games, only: %i[index]

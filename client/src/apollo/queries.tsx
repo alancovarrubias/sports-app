@@ -43,11 +43,16 @@ export const GET_SEASON = gql`
 `
 
 export const GET_MATCHUPS = gql`
-  query GetMatchus($sport: String!, $date: String!) {
+  query GetMatchups($sport: String!, $date: String!) {
     matchups(sport: $sport, date: $date) {
       id
       sport
-      year
+      away_team {
+        name
+      }
+      home_team {
+        name
+      }
     }
   }
 `
