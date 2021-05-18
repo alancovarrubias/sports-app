@@ -1,10 +1,12 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
+import { useLocation, useHistory } from 'react-router-dom'
 import { Sport, Resource } from 'app/const'
 import DataTable from 'app/components/common/DataTable'
 import { IGameProps } from './index'
 import { GET_GAME } from 'app/apollo/queries'
 import { IMlbGame } from 'app/models'
+import { createRoute, Page } from 'app/Routes'
 
 interface IGameData {
   game: IMlbGame
@@ -14,6 +16,10 @@ interface IGameVars {
   game_id: string
 }
 const MlbGame: React.FC<IGameProps> = ({ sport, game_id }) => {
+  const location = useLocation()
+  const history = useHistory()
+  const searchParams = new URLSearchParams(location.search)
+  const matchupsRoute = createRoute(Page.Matchups, { searchParams })
   const { error, loading, data } = useQuery<IGameData, IGameVars>(
     GET_GAME,
     {
@@ -45,24 +51,27 @@ const MlbGame: React.FC<IGameProps> = ({ sport, game_id }) => {
     resource: Resource.Pitcher,
   }
   return (
-    <div className="mlbGame">
-      <div className="awayPitchingTable tableFixHead">
-        <h2>{away_team.name} Pitchers</h2>
-        <DataTable {...awayPitchingProps} />
+    <>
+      <div onClick={() => history.push(matchupsRoute)}>Matchups</div>
+      <div className="mlbGame">
+        <div className="awayPitchingTable tableFixHead">
+          <h2>{away_team.name} Pitchers</h2>
+          <DataTable {...awayPitchingProps} />
+        </div>
+        <div className="homePitchingTable tableFixHead">
+          <h2>{home_team.name} Pitchers</h2>
+          <DataTable {...homePitchingProps} />
+        </div>
+        <div className="awayBattingTable tableFixHead">
+          <h2>{away_team.name} Batters</h2>
+          <DataTable {...awayBattingProps} />
+        </div>
+        <div className="homeBattingTable tableFixHead">
+          <h2>{home_team.name} Batters</h2>
+          <DataTable {...homeBattingProps} />
+        </div>
       </div>
-      <div className="homePitchingTable tableFixHead">
-        <h2>{home_team.name} Pitchers</h2>
-        <DataTable {...homePitchingProps} />
-      </div>
-      <div className="awayBattingTable tableFixHead">
-        <h2>{away_team.name} Batters</h2>
-        <DataTable {...awayBattingProps} />
-      </div>
-      <div className="homeBattingTable tableFixHead">
-        <h2>{home_team.name} Batters</h2>
-        <DataTable {...homeBattingProps} />
-      </div>
-    </div>
+    </>
   )
 }
 

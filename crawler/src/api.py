@@ -8,6 +8,7 @@ from args import Args
 app = Flask(__name__)
 api = Api(app)
 
+
 def fetch_resource(resource_type):
     args = Args(resource_type)
     db_manager = DbManager(args)
@@ -56,13 +57,16 @@ class LineResources(Resource):
     def get(self):
         return fetch_resource(LINE)
 
+
 class MatchupResources(Resource):
     def get(self):
         return fetch_resource(MATCHUP)
 
+
 class LineupResources(Resource):
     def get(self):
         return fetch_resource(LINEUP)
+
 
 api.add_resource(TeamResources, "/teams")
 api.add_resource(PlayerResources, "/players")

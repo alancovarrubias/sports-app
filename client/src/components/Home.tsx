@@ -6,8 +6,9 @@ import { convertToDateString } from 'app/helpers/date'
 
 const dateRow = (date, { history }) => {
   const dateString = convertToDateString(date)
-  const matchupSearch = `?date=${dateString}`
-  const matchupRoute = createRoute(Page.Matchups, { search: matchupSearch })
+  const searchParams = new URLSearchParams()
+  searchParams.append('date', dateString)
+  const matchupRoute = createRoute(Page.Matchups, { searchParams })
   return { values: [dateString], onClick: () => history.push(matchupRoute) }
 }
 

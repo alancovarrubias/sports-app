@@ -1,27 +1,33 @@
 export enum Page {
+  Login,
+  Home,
   Matchups,
   Seasons,
   Games,
   Game,
 }
 type IRouteOptions = {
-  season_id?: string | number
   game_id?: string | number
-  search?: string
+  searchParams?: URLSearchParams
 }
+
+const createPath = (route, search) => search ? `${route}?${search}` : route
 export const createRoute = (
   page: Page,
-  { season_id, game_id, search }: IRouteOptions = {}
+  { game_id, searchParams }: IRouteOptions = {}
 ): string => {
+  const search = searchParams ? searchParams.toString() : ''
   switch (page) {
+    case Page.Home:
+      return createPath('/home', search)
     case Page.Matchups:
-      return `/matchups${search}`
+      return createPath('/matchups', search)
     case Page.Seasons:
-      return `/seasons${search}`
+      return createPath('/seasons', search)
     case Page.Games:
-      return `/seasons/${season_id}/games${search}`
+      return createPath('/games', search)
     case Page.Game:
-      return `/seasons/${season_id}/games/${game_id}${search}`
+      return createPath(`/games/${game_id}`, search)
   }
 }
 
@@ -34,10 +40,20 @@ export const getPage = (
   if (/^\/seasons$/.test(pathname)) {
     return Page.Seasons
   }
-  if (/^\/seasons\/\d\/games$/.test(pathname)) {
+  if (/^\/games$/.test(pathname)) {
     return Page.Games
   }
-  if (/^\/seasons\/\d\/games\/\d$/.test(pathname)) {
+  if (/^\/games\/\d$/.test(pathname)) {
     return Page.Game
   }
+}
+
+
+export const Routes = {
+  [Page.Login]: '/login',
+  [Page.Home]: '/home',
+  [Page.Matchups]: '/matchups',
+  [Page.Seasons]: '/seasons',
+  [Page.Games]: '/games',
+  [Page.Game]: '/games/:game_id',
 }

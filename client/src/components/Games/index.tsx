@@ -26,7 +26,7 @@ interface IParamTypes {
 const Games: React.FC = () => {
   const [sport] = useContext(SportContext)
   const { season_id } = useParams<IParamTypes>()
-  const search = useLocation().search
+  const searchParams = new URLSearchParams(useLocation().search)
   const history = useHistory()
   const { error, loading, data } = useQuery<IGamesData, IGamesVars>(
     GET_GAMES,
@@ -44,9 +44,8 @@ const Games: React.FC = () => {
     sport,
     rowClick: game => {
       const gameRoute = createRoute(Page.Game, {
-        season_id,
         game_id: game.id,
-        search,
+        searchParams,
       })
       history.push(gameRoute)
     },

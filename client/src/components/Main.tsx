@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client'
 import SportContext from 'app/contexts/SportContext'
 import { Sport } from 'app/const'
 import PrivateRoute from 'app/PrivateRoute'
+import { Routes, Page } from 'app/Routes'
 import { IS_LOGGED_IN } from 'app/apollo/queries'
 import './scss/Grid.scss'
 import './scss/style.scss'
@@ -32,13 +33,13 @@ const Main: React.FC = () => {
         <main>
           <Switch>
             <Redirect exact from="/" to="/home" />
-            <Route path="/login" component={Login} exact />
-            <PrivateRoute path="/home" component={Home} exact />
-            <PrivateRoute path="/matchups" component={Matchups} exact />
-            <PrivateRoute path="/seasons" component={Seasons} exact />
-            <PrivateRoute path="/seasons/:season_id/games" component={Games} exact />
+            <Route path={Routes[Page.Login]} component={Login} exact />
+            <PrivateRoute path={Routes[Page.Home]} component={Home} exact />
+            <PrivateRoute path={Routes[Page.Matchups]} component={Matchups} exact />
+            <PrivateRoute path={Routes[Page.Seasons]} component={Seasons} exact />
+            <PrivateRoute path={Routes[Page.Games]} component={Games} exact />
             <PrivateRoute
-              path="/seasons/:season_id/games/:game_id"
+              path={Routes[Page.Game]}
               component={Game}
               exact
             />

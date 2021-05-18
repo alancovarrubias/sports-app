@@ -15,9 +15,11 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
   if (!isLoggedIn) {
     return null
   }
+  const searchParams = new URLSearchParams()
   const nextSport = sport == Sport.NBA ? Sport.MLB : Sport.NBA
-  const seasonSearch = `?sport=${nextSport}`
-  const seasonRoute = createRoute(Page.Seasons, { search: seasonSearch })
+  searchParams.append('sport', nextSport)
+
+  const seasonRoute = createRoute(Page.Seasons, { searchParams })
   const toggleSport = () => {
     setSport(nextSport)
     history.push(seasonRoute)

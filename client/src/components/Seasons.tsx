@@ -19,7 +19,7 @@ interface ISeasonsVars {
 const Seasons: React.FC = () => {
   const [sport] = useContext(SportContext)
   const history = useHistory()
-  const search = useLocation().search
+  const searchParams = new URLSearchParams(useLocation().search)
   const { error, loading, data } = useQuery<ISeasonsData, ISeasonsVars>(
     GET_SEASONS,
     {
@@ -35,7 +35,7 @@ const Seasons: React.FC = () => {
     resource: Resource.Season,
     sport,
     rowClick: season => {
-      const gamesRoute = createRoute(Page.Games, { search, season_id: season.id })
+      const gamesRoute = createRoute(Page.Games, { searchParams })
       history.push(gamesRoute)
     },
   }

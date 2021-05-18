@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useHistory, useRouteMatch, useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { isLoggedInVar } from 'app/apollo/cache'
 import SportContext from 'app/contexts/SportContext'
-import { createRoute, Page } from 'app/Routes'
+import { createRoute, Page, Routes } from 'app/Routes'
 import { Sport } from 'app/const'
 import { GET_SEASON } from 'app/apollo/queries'
 import { Season } from 'app/models'
@@ -27,36 +27,30 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn }) => {
     history.push('/login')
     isLoggedInVar(false)
   }
-  const search = `?sport=${sport}`
-  const gamesMatch = useRouteMatch("/seasons/:season_id/games")
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  searchParams.set('sport', sport)
+  const gamesMatch = useRouteMatch(Routes[Page.Games])
   const season_id = gamesMatch ? gamesMatch.params.season_id : null
-  const gameMatch = useRouteMatch("/seasons/:season_id/games/:game_id")
-  const seasonsRoute = createRoute(Page.Seasons, { search })
-  const gamesRoute = createRoute(Page.Games, { search, season_id })
+  const gameMatch = useRouteMatch(Routes[Page.Game])
+  const seasonsRoute = createRoute(Page.Seasons, { searchParams })
+  const gamesRoute = createRoute(Page.Games, { searchParams })
   const toggleSport = () => {
     const nextSport = sport == Sport.NBA ? Sport.MLB : Sport.NBA
-    const toggleSearch = `?sport=${nextSport}`
-    const toggleSportRoute = createRoute(Page.Seasons, { search: toggleSearch })
+    searchParams.set('sport', sport)
+    const toggleSportRoute = createRoute(Page.Seasons, { searchParams })
     setSport(nextSport)
     history.push(toggleSportRoute)
   }
-  const { data } = useQuery<ISeasonData, ISeasonVars>(
-    GET_SEASON,
-    {
-      variables: { sport, season_id },
-    }
-  )
   if (!isLoggedIn) {
     return null;
   }
-  const year = data ? data.season.year : null
   const seasonsLink = <li onClick={() => history.push(seasonsRoute)}>Seasons</li>
-  const gamesLink = <li onClick={() => history.push(gamesRoute)}>{year} Games</li>
+  const matchupsLink = <li onClick={() => history.push(gamesRoute)}>Matchups</li>
   return (
     <nav>
       <ul>
         {gamesMatch && seasonsLink}
-        {gameMatch && gamesLink}
         <li onClick={toggleSport}>Toggle Sport</li>
         <li onClick={logout}>Logout</li>
       </ul>

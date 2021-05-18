@@ -9,8 +9,8 @@ import SportContext from 'app/contexts/SportContext'
 import { createRoute, Page } from 'app/Routes'
 import { Game } from 'app/models'
 
-const matchupRow = (game, { history }) => {
-    const gameRoute = createRoute(Page.Game)
+const matchupRow = (game, { history, searchParams }) => {
+    const gameRoute = createRoute(Page.Game, { game_id: game.id, searchParams })
     return { values: [game.away_team.name, game.home_team.name], onClick: () => history.push(gameRoute) }
 }
 
@@ -25,8 +25,8 @@ const Matchups: React.FC = () => {
     const history = useHistory()
     const [sport] = useContext(SportContext)
     const location = useLocation()
-    const params = new URLSearchParams(location.search)
-    const date = params.get('date') ? params.get('date') : convertToDateString(new Date())
+    const searchParams = new URLSearchParams(location.search)
+    const date = searchParams.get('date') ? searchParams.get('date') : convertToDateString(new Date())
     const { error, loading, data } = useQuery<IMatchupsData, IMatchupsVars>(
         GET_MATCHUPS,
         {
@@ -38,7 +38,7 @@ const Matchups: React.FC = () => {
     if (!data) return <p>Missing Data</p>
     const { matchups } = data
     const headers = ['Away Team', 'Home Team']
-    const rows = matchups.map(date => matchupRow(date, { history }))
+    const rows = matchups.map(date => matchupRow(date, { history, searchParams }))
     return (
         <div className="home">
             <h2 data-testid="subheader">{date} Matchups</h2>
