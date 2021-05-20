@@ -21,6 +21,9 @@ class DbManager:
         data["key"] = key
         self.collection.insert_one(data)
 
+    def delete_resource(self, key):
+        self.collection.find_one_and_delete({"key": key})
+
     def update_resource_field(self, key, field, data):
         self.collection.update_one({"key": key}, {"$set": {field: data}}, upsert=False)
 

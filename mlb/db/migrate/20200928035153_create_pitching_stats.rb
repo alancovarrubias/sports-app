@@ -4,6 +4,7 @@ class CreatePitchingStats < ActiveRecord::Migration[6.0]
       t.references :season
       t.references :game
       t.references :model, polymorphic: true
+      t.boolean :starter
       t.float :ip
       t.integer :h
       t.integer :r

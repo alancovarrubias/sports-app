@@ -9,17 +9,25 @@ class MlbMatchupScraper(EspnScraper):
         self.get(endpoint)
         schedule_table = self.find_element(".schedule")
         schedule_rows = self.get_table_rows(schedule_table)
+        data = []
         matchups = [MlbMatchup(row).toJson() for row in schedule_rows]
         for matchup in matchups:
-            game_id = matchup['game_id']
+            game_id = matchup["game_id"]
             endpoint = f"mlb/game/_/gameId/{game_id}"
-            print(game_id)
             self.get(endpoint)
-            location = self.find_element(".icon-location-solid-before").text
-            capacity = self.find_element(".attendance").text
-            time = self.find_element(".game-time").text
             wrappers = self.driver.find_elements_by_css_selector(".caption-wrapper")
             if len(wrappers) == 0:
                 stadium = self.find_element(".game-location").text
             else:
                 stadium = wrappers[0].text
+            datum = {
+                "away_team": matchup["away_team"],
+                "home_team": matchup["home_team"],
+                "location": self.find_element(".icon-location-solid-before").text,
+                "capacity": self.find_element(".attendance").text,
+                "time": self.find_element(".game-time").text,
+                stadium: stadium,
+            }
+            data.append(datum)
+
+        return {"matchups": data}

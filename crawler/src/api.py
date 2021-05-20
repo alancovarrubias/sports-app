@@ -13,6 +13,8 @@ def fetch_resource(resource_type):
     args = Args(resource_type)
     db_manager = DbManager(args)
     scraper = get_scraper(args)
+    if args.refetch:
+        db_manager.delete_resource(args.db_key)
     if not db_manager.resource_exists(args.db_key):
         resource_data = scraper.get_resource(args.query_params)
         scraper.driver.quit()

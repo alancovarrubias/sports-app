@@ -4,6 +4,7 @@ from const.models import TEAM, PLAYER, GAME, STAT, LINE, MATCHUP, LINEUP
 parsers = {}
 parser = reqparse.RequestParser()
 parser.add_argument("sport", type=str, location="args", required=True)
+parser.add_argument("refetch", type=int, location="args")
 team_parser = parser.copy()
 team_parser.add_argument("season", type=int, location="args", required=True)
 parsers[TEAM] = team_parser

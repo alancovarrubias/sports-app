@@ -4,6 +4,7 @@ class CreateBattingStats < ActiveRecord::Migration[6.0]
       t.references :season
       t.references :game
       t.references :model, polymorphic: true
+      t.boolean :starter
       t.integer :ab
       t.integer :r
       t.integer :h

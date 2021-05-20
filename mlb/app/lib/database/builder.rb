@@ -1,6 +1,6 @@
 module Database
   module Builder
-    MODEL_TYPES = %i[Team Game Player Stat].freeze
+    MODEL_TYPES = %i[Teams Games Players Stats Matchups].freeze
 
     module_function
 
@@ -16,7 +16,7 @@ module Database
     def build_model(model)
       raise 'Type must be valid resource type' unless MODEL_TYPES.include?(model)
 
-      builder = Builder::Factory.create_builder(model, @season)
+      builder = Builder.const_get(model).new(@season)
       builder.build
     end
   end
