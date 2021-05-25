@@ -46,6 +46,7 @@ export const GET_MATCHUPS = gql`
   query GetMatchups($sport: String!, $date: String!) {
     matchups(sport: $sport, date: $date) {
       id
+      time
       sport
       away_team {
         name

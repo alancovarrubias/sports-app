@@ -6,6 +6,7 @@ class CreatePlayers < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :abbr
       t.string :position
+      t.integer :age
     end
   end
 end

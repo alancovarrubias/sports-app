@@ -1,6 +1,9 @@
 class GameSerializer
   include JSONAPI::Serializer
   attributes :id, :date
+  attribute :time do |obj|
+    obj.time.strftime("%H:%M")
+  end
   attribute :away_team, if: proc { |_record, params| params[:team] } do |obj|
     team = obj.away_team
     batting_stat = obj.team_batting_stats.select { |stat| stat.model_id == team.id }.first
@@ -37,8 +40,8 @@ class GameSerializer
         id: team_player.id,
         name: team_player.name,
         stat: {
-          batting: batting_stat ? batting_stat.attributes : BattingStat.new.attributes,
-          pitching: pitching_stat ? pitching_stat.attributes : PitchingStat.new.attributes
+          batting: batting_stat ? batting_stat.attributes : nil,
+          pitching: pitching_stat ? pitching_stat.attributes : nil
         }
       }
     end
@@ -53,8 +56,8 @@ class GameSerializer
         id: team_player.id,
         name: team_player.name,
         stat: {
-          batting: batting_stat ? batting_stat.attributes : BattingStat.new.attributes,
-          pitching: pitching_stat ? pitching_stat.attributes : PitchingStat.new.attributes
+          batting: batting_stat ? batting_stat.attributes : nil,
+          pitching: pitching_stat ? pitching_stat.attributes : nil
         }
       }
     end

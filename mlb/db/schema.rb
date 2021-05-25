@@ -49,8 +49,7 @@ ActiveRecord::Schema.define(version: 2021_02_07_234207) do
     t.bigint "home_team_id"
     t.date "date"
     t.integer "num"
-    t.integer "hour"
-    t.integer "minute"
+    t.time "time"
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
     t.index ["season_id"], name: "index_games_on_season_id"
@@ -96,6 +95,7 @@ ActiveRecord::Schema.define(version: 2021_02_07_234207) do
     t.string "name"
     t.string "abbr"
     t.string "position"
+    t.integer "age"
     t.index ["season_id"], name: "index_players_on_season_id"
     t.index ["team_id"], name: "index_players_on_team_id"
   end

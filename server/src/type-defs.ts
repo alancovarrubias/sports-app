@@ -43,6 +43,7 @@ export default gql`
   type Game {
     id: ID!
     date: String!
+    time: String!
     away_team: Team!
     home_team: Team!
     away_players: [Player]!

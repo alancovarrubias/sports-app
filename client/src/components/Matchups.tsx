@@ -11,7 +11,7 @@ import { Game } from 'app/models'
 
 const matchupRow = (game, { history, searchParams }) => {
     const gameRoute = createRoute(Page.Game, { game_id: game.id, searchParams })
-    return { values: [game.away_team.name, game.home_team.name], onClick: () => history.push(gameRoute) }
+    return { values: [game.away_team.name, game.home_team.name, game.time], onClick: () => history.push(gameRoute) }
 }
 
 interface IMatchupsData {
@@ -37,7 +37,7 @@ const Matchups: React.FC = () => {
     if (error) return <p>Error!</p>
     if (!data) return <p>Missing Data</p>
     const { matchups } = data
-    const headers = ['Away Team', 'Home Team']
+    const headers = ['Away Team', 'Home Team', 'Time']
     const rows = matchups.map(date => matchupRow(date, { history, searchParams }))
     return (
         <div className="home">

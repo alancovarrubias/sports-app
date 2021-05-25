@@ -6,8 +6,7 @@ class CreateGames < ActiveRecord::Migration[6.0]
       t.references :home_team, references: :team
       t.date :date
       t.integer :num
-      t.integer :hour
-      t.integer :minute
+      t.time :time
     end
   end
 end

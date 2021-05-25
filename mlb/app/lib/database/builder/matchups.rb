@@ -12,19 +12,13 @@ module Database
         matchups_res = query_server(:lineups, server_options)
         lineups = matchups_res['lineups']
         lineups.each do |lineup|
-          time = lineup['time'].split("\n")[-1]
           away_team = build_team(lineup['away_team'])
           home_team = build_team(lineup['home_team'])
           game = @season.games.find_by(date: date, away_team: away_team, home_team: home_team)
-          puts game.url
+          time = lineup['time'].split("\n")[-1]
+          game.update(time: time)
           away_pitcher = build_pitcher(lineup['away_pitcher'], away_team, game)
           home_pitcher = build_pitcher(lineup['home_pitcher'], home_team, game)
-          puts away_pitcher.id
-          puts away_pitcher.model.id
-          puts away_pitcher.model.name
-          puts home_pitcher.id
-          puts home_pitcher.model.errors.messages
-          puts home_pitcher.model.name
           away_players = lineup['away_players'].map do |player|
             build_batter(player, away_team, game)
           end
