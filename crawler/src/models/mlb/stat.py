@@ -31,10 +31,8 @@ class MlbStat(AbstractModel):
     def build(self, row):
         if self.model_type == PLAYER:
             self.abbr = get_abbr(row[0])
-            print(self.abbr)
 
         row_text = [cell.text for cell in row]
-        print(row_text)
         if self.stat_type == PITCHING:
             self.add_pitching_stat(row_text)
         elif self.stat_type == BATTING:

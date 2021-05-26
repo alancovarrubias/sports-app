@@ -2,12 +2,12 @@ class GameSerializer
   include JSONAPI::Serializer
   attributes :id, :date
   attribute :time do |obj|
-    obj.time.strftime("%H:%M")
+    obj.time ? obj.time.strftime('%H:%M') : ''
   end
   attribute :away_team, if: proc { |_record, params| params[:team] } do |obj|
     team = obj.away_team
-    batting_stat = obj.team_batting_stats.select { |stat| stat.model_id == team.id }.first
-    pitching_stat = obj.team_pitching_stats.select { |stat| stat.model_id == team.id }.first
+    batting_stat = obj.batting_stats.select { |stat| stat.model_id == team.id && stat.model_type == 'Team' }.first
+    pitching_stat = obj.pitching_stats.select { |stat| stat.model_id == team.id && stat.model_type == 'Team' }.first
     {
       id: team.id,
       name: team.name,
@@ -19,8 +19,8 @@ class GameSerializer
   end
   attribute :home_team, if: proc { |_record, params| params[:team] } do |obj|
     team = obj.home_team
-    batting_stat = obj.team_batting_stats.select { |stat| stat.model_id == team.id }.first
-    pitching_stat = obj.team_pitching_stats.select { |stat| stat.model_id == team.id }.first
+    batting_stat = obj.batting_stats.select { |stat| stat.model_id == team.id && stat.model_type == 'Team' }.first
+    pitching_stat = obj.pitching_stats.select { |stat| stat.model_id == team.id && stat.model_type == 'Team' }.first
     {
       id: team.id,
       name: team.name,
@@ -31,8 +31,8 @@ class GameSerializer
     }
   end
   attribute :away_players, if: proc { |_record, params| params[:player] } do |obj|
-    batting_stats = obj.player_batting_stats
-    pitching_stats = obj.player_pitching_stats
+    batting_stats = obj.batting_stats.select { |stat| stat.model_type == 'Player' }
+    pitching_stats = obj.pitching_stats.select { |stat| stat.model_type == 'Player' }
     obj.players.select { |player| player.team_id == obj.away_team_id }.map do |team_player|
       batting_stat = batting_stats.find { |stat| stat.model_id == team_player.id }
       pitching_stat = pitching_stats.find { |stat| stat.model_id == team_player.id }
@@ -47,8 +47,8 @@ class GameSerializer
     end
   end
   attribute :home_players, if: proc { |_record, params| params[:player] } do |obj|
-    batting_stats = obj.player_batting_stats
-    pitching_stats = obj.player_pitching_stats
+    batting_stats = obj.batting_stats.select { |stat| stat.model_type == 'Player' }
+    pitching_stats = obj.pitching_stats.select { |stat| stat.model_type == 'Player' }
     obj.players.select { |player| player.team_id == obj.home_team_id }.map do |team_player|
       batting_stat = batting_stats.find { |stat| stat.model_id == team_player.id }
       pitching_stat = pitching_stats.find { |stat| stat.model_id == team_player.id }

@@ -3,20 +3,16 @@ class Game < ApplicationRecord
   belongs_to :season
   belongs_to :away_team, class_name: 'Team'
   belongs_to :home_team, class_name: 'Team'
-  has_many :batting_stats
-  has_many :pitching_stats
-  has_many :team_pitching_stats, -> { team_stats }, class_name: 'PitchingStat'
-  has_many :player_pitching_stats, -> { player_stats }, class_name: 'PitchingStat'
-  has_many :team_batting_stats, -> { team_stats }, class_name: 'BattingStat'
-  has_many :player_batting_stats, -> { player_stats }, class_name: 'BattingStat'
+  has_many :batting_stats, as: :interval
+  has_many :pitching_stats, as: :interval
   has_many :teams, through: :team_pitching_stats, source: :model, source_type: 'Team'
-  has_many :pitchers, through: :player_pitching_stats, source: :model, source_type: 'Player'
-  has_many :batters, through: :player_batting_stats, source: :model, source_type: 'Player'
+  has_many :pitchers, through: :pitching_stats, source: :model, source_type: 'Player'
+  has_many :batters, through: :batting_stats, source: :model, source_type: 'Player'
   has_many :lines
   has_many :preds
   scope :with_season, -> { includes(:season) }
-  scope :with_team_stats, -> { includes(:away_team, :home_team, :team_batting_stats, :team_pitching_stats) }
-  scope :with_player_stats, -> { includes(player_batting_stats: [:model], player_pitching_stats: [:model]) }
+  scope :with_team_stats, -> { includes(:away_team, :home_team, :batting_stats, :pitching_stats) }
+  scope :with_player_stats, -> { includes(:batters, :pitchers, batting_stats: [:model], pitching_stats: [:model]) }
   scope :with_lines, -> { includes(:lines) }
   scope :with_preds, -> { includes(:preds) }
 
@@ -29,16 +25,24 @@ class Game < ApplicationRecord
     define_method("#{side}_pitchers") { pitchers.where(team: send("#{side}_team")) }
     define_method("#{side}_batters") { batters.where(team: send("#{side}_team")) }
     define_method("#{side}_team_pitching_stats") do
-      team_pitching_stats.where(model: send("#{side}_team"), model_type: :Team)
+      team_pitching_stats.select do |stat|
+        stat.model_id == send("#{side}_team_id")
+      end
     end
     define_method("#{side}_team_batting_stats") do
-      team_batting_stats.where(model: send("#{side}_team"), model_type: :Team)
+      team_batting_stats.select do |stat|
+        stat.model_id == send("#{side}_team_id")
+      end
     end
     define_method("#{side}_player_pitching_stats") do
-      player_pitching_stats.where(model: send("#{side}_players"), model_type: :Player)
+      player_pitching_stats.select do |stat|
+        stat.model.team_id == send("#{side}_team_id")
+      end
     end
     define_method("#{side}_player_batting_stats") do
-      player_batting_stats.where(model: send("#{side}_players"), model_type: :Player)
+      player_batting_stats.select do |stat|
+        stat.model.team_id == send("#{side}_team_id")
+      end
     end
   end
 

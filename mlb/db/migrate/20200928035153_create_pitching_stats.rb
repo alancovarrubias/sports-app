@@ -1,10 +1,9 @@
 class CreatePitchingStats < ActiveRecord::Migration[6.0]
   def change
     create_table :pitching_stats do |t|
-      t.references :season
-      t.references :game
+      t.references :interval, polymorphic: true
       t.references :model, polymorphic: true
-      t.boolean :starter
+      t.boolean :is_starter, default: false
       t.float :ip
       t.integer :h
       t.integer :r

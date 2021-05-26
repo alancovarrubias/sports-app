@@ -1,5 +1,4 @@
 class GamesController < ApplicationController
-  QUERY_KEYS = %w[season_id date]
   before_action :set_query_params
   before_action :set_model_includes
   before_action :set_games, only: [:index]
@@ -36,7 +35,6 @@ class GamesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_games
-    puts params
     if params[:season_id]
       @games = @model.where(season_id: params[:season_id]).limit(params[:limit]).offset(params[:offset])
     elsif params[:date]

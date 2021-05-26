@@ -35,13 +35,13 @@ module Database
       def build_pitcher(player_data, team, game)
         player_name = player_data.match(PITCHER_REGEX).to_s
         player = Player.find_or_create_by(name: player_name, team: team, season: @season)
-        PitchingStat.find_or_create_by(model: player, game: game, season: @season, starter: true)
+        PitchingStat.find_or_create_by(model: player, game: game, season: @season, is_starter: true)
       end
 
       def build_batter(player_data, team, game)
         player_name = player_data.match(BATTER_REGEX).to_s
         player = Player.find_or_create_by(name: player_name, team: team, season: @season)
-        BattingStat.find_or_create_by(model: player, game: game, season: @season, starter: true)
+        BattingStat.find_or_create_by(model: player, game: game, season: @season, is_starter: true)
       end
     end
   end

@@ -8,7 +8,7 @@ module Database
         ld: 0
       }.freeze
       def needs_data?
-        @game.hour.nil?
+        @game.date < Date.yesterday && @game.pitching_stats.empty?
       end
 
       def build
@@ -26,7 +26,7 @@ module Database
           }
           stats_res = query_server(:stats, server_options)
           build_stats(stats_res)
-          save_time(stats_res['time'])
+          # save_time(stats_res['time'])
         end
       end
 
@@ -60,8 +60,7 @@ module Database
         hit_types = @store.get_hit_types(stat_type, model_key)
         stat.merge!(hit_types) if hit_types
         stat_query = {
-          season: @season,
-          game: @game,
+          interval: @game,
           model: model
         }
         stat_object = model_class.find_or_create_by(stat_query)

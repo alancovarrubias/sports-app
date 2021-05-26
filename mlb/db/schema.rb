@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2021_02_07_234207) do
   enable_extension "plpgsql"
 
   create_table "batting_stats", force: :cascade do |t|
-    t.bigint "season_id"
-    t.bigint "game_id"
+    t.string "interval_type"
+    t.bigint "interval_id"
     t.string "model_type"
     t.bigint "model_id"
     t.boolean "starter"
@@ -38,9 +38,8 @@ ActiveRecord::Schema.define(version: 2021_02_07_234207) do
     t.integer "fb_p"
     t.integer "ld_p"
     t.integer "gb_p"
-    t.index ["game_id"], name: "index_batting_stats_on_game_id"
+    t.index ["interval_type", "interval_id"], name: "index_batting_stats_on_interval_type_and_interval_id"
     t.index ["model_type", "model_id"], name: "index_batting_stats_on_model_type_and_model_id"
-    t.index ["season_id"], name: "index_batting_stats_on_season_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -65,11 +64,11 @@ ActiveRecord::Schema.define(version: 2021_02_07_234207) do
   end
 
   create_table "pitching_stats", force: :cascade do |t|
-    t.bigint "season_id"
-    t.bigint "game_id"
+    t.string "interval_type"
+    t.bigint "interval_id"
     t.string "model_type"
     t.bigint "model_id"
-    t.boolean "starter"
+    t.boolean "is_starter", default: false
     t.float "ip"
     t.integer "h"
     t.integer "r"
@@ -84,9 +83,8 @@ ActiveRecord::Schema.define(version: 2021_02_07_234207) do
     t.integer "fb_p"
     t.integer "ld_p"
     t.integer "gb_p"
-    t.index ["game_id"], name: "index_pitching_stats_on_game_id"
+    t.index ["interval_type", "interval_id"], name: "index_pitching_stats_on_interval_type_and_interval_id"
     t.index ["model_type", "model_id"], name: "index_pitching_stats_on_model_type_and_model_id"
-    t.index ["season_id"], name: "index_pitching_stats_on_season_id"
   end
 
   create_table "players", force: :cascade do |t|
