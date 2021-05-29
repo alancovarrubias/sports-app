@@ -12,8 +12,8 @@ class GameSerializer
       id: team.id,
       name: team.name,
       stat: {
-        batting: batting_stat ? batting_stat.attributes : BattingStat.new.attributes,
-        pitching: pitching_stat ? pitching_stat.attributes : PitchingStat.new.attributes
+        batting: batting_stat ? batting_stat.attributes : nil,
+        pitching: pitching_stat ? pitching_stat.attributes : nil
       }
     }
   end
@@ -25,8 +25,8 @@ class GameSerializer
       id: team.id,
       name: team.name,
       stat: {
-        batting: batting_stat ? batting_stat.attributes : BattingStat.new.attributes,
-        pitching: pitching_stat ? pitching_stat.attributes : PitchingStat.new.attributes
+        batting: batting_stat ? batting_stat.attributes : nil,
+        pitching: pitching_stat ? pitching_stat.attributes : nil
       }
     }
   end

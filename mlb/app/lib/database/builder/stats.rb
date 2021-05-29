@@ -22,7 +22,8 @@ module Database
             season: @season.year,
             game_url: @game.url,
             home_team: @game.home_team.full_name,
-            away_team: @game.away_team.full_name
+            away_team: @game.away_team.full_name,
+            refetch: '1'
           }
           stats_res = query_server(:stats, server_options)
           build_stats(stats_res)
@@ -30,12 +31,14 @@ module Database
         end
       end
 
-      def save_time(time)
-        clock_time = TIME_REGEX.match(time).to_s
-        hour = clock_time[0...clock_time.index(':')].to_i
-        hour += 12 if time.include?('p.m.')
+      def save_time(time_text)
+        clock_time = TIME_REGEX.match(time_text).to_s
+        colon_index = clock_time.index(':')
+        hour = clock_time[0...colon_index].to_i
+        hour += 12 if time_text.include?('p.m.')
         minute = clock_time[-2..]
-        @game.update(hour: hour, minute: minute)
+        time = Time.parse("#{@game.date} #{time}:#{minute}")
+        @game.update(time: time)
       end
 
       def build_stats(stats_res)
@@ -52,9 +55,8 @@ module Database
 
       def build_stat(stat, team)
         model_type = stat.delete('model_type')
-        abbr = stat.delete('abbr')
         stat_type = stat.delete('stat_type')
-        model = model_type == 'Player' ? ::Player.find_by(abbr: abbr, team: team) : team
+        model = model_type == 'Player' ? find_player(stat, team) : team
         model_class = stat_type == 'Pitching' ? ::PitchingStat : ::BattingStat
         model_key = model_type == 'Player' ? model.name : model.abbr
         hit_types = @store.get_hit_types(stat_type, model_key)
@@ -65,6 +67,13 @@ module Database
         }
         stat_object = model_class.find_or_create_by(stat_query)
         stat_object.update(stat)
+      end
+
+      def find_player(stat, team)
+        name = stat.delete('name')
+        abbr = stat.delete('abbr')
+        position = stat.delete('position')
+        Player.find_or_create_by(team: team, name: name, abbr: abbr, position: position)
       end
     end
   end

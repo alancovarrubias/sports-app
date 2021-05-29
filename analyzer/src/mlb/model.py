@@ -4,6 +4,7 @@ from mlb.batting_stat import MlbBattingStat
 
 class MlbModel:
     def __init__(self, data):
+        print(data)
         stat = data["stat"]
         batting = stat["batting"]
         pitching = stat["pitching"]

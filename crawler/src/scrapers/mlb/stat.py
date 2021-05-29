@@ -10,7 +10,7 @@ WORD_REGEX = r"[^\w]"
 
 
 class MlbStatScraper(BaseballReferenceScraper):
-    def get_missing(self, args):
+    def get_resource(self, args):
         game_url = args["game_url"]
         endpoint = f"boxes/{game_url[0:3]}/{game_url}.shtml"
         self.get(endpoint)
@@ -30,10 +30,6 @@ class MlbStatScraper(BaseballReferenceScraper):
             .find_elements(By.CSS_SELECTOR, "div")[1]
             .text
         )
-        return {"plays": plays, "time": time}
-
-    def get_resource(self, args):
-        missing = self.get_missing(args)
         away_team = re.sub(WORD_REGEX, "", args["away_team"])
         home_team = re.sub(WORD_REGEX, "", args["home_team"])
         away_team_batting = self.find_element(f"#{away_team}batting")
@@ -73,8 +69,8 @@ class MlbStatScraper(BaseballReferenceScraper):
         away_team_stats = get_team_stat(away_team_batting, away_team_pitching)
         home_team_stats = get_team_stat(home_team_batting, home_team_pitching)
         return {
-            "time": missing["time"],
-            "plays": missing["plays"],
+            "time": time,
+            "plays": plays,
             "away_player_stats": away_player_stats,
             "home_player_stats": home_player_stats,
             "away_team_stats": away_team_stats,

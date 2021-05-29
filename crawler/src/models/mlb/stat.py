@@ -16,10 +16,19 @@ def convert_numeric(text):
 ABBR_REGEX = r"[a-z.]*\d{2}"
 
 
-def get_abbr(cell):
+def get_name(cell):
     anchor = cell.find_element_by_tag_name("a")
     abbr = re.search(ABBR_REGEX, anchor.get_attribute("href")).group()
     return abbr
+
+
+def get_abbr(cell):
+    anchor = cell.find_element_by_tag_name("a")
+    return anchor.text
+
+
+def get_position(cell):
+    return cell.text.split(" ")[-1]
 
 
 class MlbStat(AbstractModel):
@@ -30,7 +39,10 @@ class MlbStat(AbstractModel):
 
     def build(self, row):
         if self.model_type == PLAYER:
-            self.abbr = get_abbr(row[0])
+            cell = row[0]
+            self.name = get_name(cell)
+            self.abbr = get_abbr(cell)
+            self.position = get_position(cell)
 
         row_text = [cell.text for cell in row]
         if self.stat_type == PITCHING:

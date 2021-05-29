@@ -19,19 +19,6 @@ def fetch_resource(resource_type):
         resource_data = scraper.get_resource(args.query_params)
         scraper.driver.quit()
         db_manager.save_resource(args.db_key, resource_data)
-    else:
-        if resource_type == STAT:
-            field = "time"
-            if db_manager.missing_field(args.db_key, field):
-                resource_data = scraper.get_missing(args.query_params)
-                scraper.driver.quit()
-                db_manager.update_resource_field(
-                    args.db_key, field, resource_data[field]
-                )
-                field = "plays"
-                db_manager.update_resource_field(
-                    args.db_key, field, resource_data[field]
-                )
     return db_manager.fetch_resource(args.db_key)
 
 
