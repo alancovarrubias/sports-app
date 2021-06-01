@@ -53,7 +53,7 @@ class PredResources(Resource):
 
 
 api.add_resource(PredResources, "/preds")
-api.add_resource(SeasonStatResources, "/seasonstats")
+api.add_resource(SeasonStatResources, "/season_stats")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

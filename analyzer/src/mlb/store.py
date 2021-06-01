@@ -5,14 +5,17 @@ class MlbStore:
     def __init__(self):
         self.store = {}
 
-    def add_data(self, model):
-        model = MlbModel(model)
-        if model.key in self.store:
-            self.store[model.key].add_model(model)
-        else:
-            self.store[model.key] = model
+    def get_data(self):
+        json_data = {k: v.toJson() for k, v in self.store.items()}
+        return json_data
 
-    def get_data(self, model):
-        model = MlbModel(model)
-        if model.key in self.store:
-            return self.store[model.key]
+    def add_data(self, data):
+        key = self.build_key(data)
+        if key not in self.store:
+            self.store[key] = MlbModel()
+        self.store[key].add_data(data)
+
+    def build_key(self, data):
+        stat = data["stat"]
+        model = stat["batting"] if stat["batting"] else stat["pitching"]
+        return model["model_type"] + str(data["id"])

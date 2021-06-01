@@ -1,6 +1,6 @@
 module Database
   module Builder
-    MODEL_TYPES = %i[Teams Games Players Stats Matchups].freeze
+    MODEL_TYPES = %i[Teams Games Players Stats SeasonStats].freeze
 
     module_function
 

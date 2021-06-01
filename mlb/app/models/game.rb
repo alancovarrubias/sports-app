@@ -3,8 +3,8 @@ class Game < ApplicationRecord
   belongs_to :season
   belongs_to :away_team, class_name: 'Team'
   belongs_to :home_team, class_name: 'Team'
-  has_many :batting_stats, as: :interval
-  has_many :pitching_stats, as: :interval
+  has_many :batting_stats, as: :interval, dependent: :destroy
+  has_many :pitching_stats, as: :interval, dependent: :destroy
   has_many :teams, through: :team_pitching_stats, source: :model, source_type: 'Team'
   has_many :pitchers, through: :pitching_stats, source: :model, source_type: 'Player'
   has_many :batters, through: :batting_stats, source: :model, source_type: 'Player'

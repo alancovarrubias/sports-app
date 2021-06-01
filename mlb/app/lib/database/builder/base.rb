@@ -2,7 +2,7 @@ module Database
   module Builder
     class Base
       CRAWLER_TYPES = %i[teams games players stats].freeze
-      ANALYZER_TYPES = %i[SeasonStat].freeze
+      ANALYZER_TYPES = %i[season_stats].freeze
       def initialize(season)
         @season = season
       end

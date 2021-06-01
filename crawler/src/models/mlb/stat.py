@@ -15,17 +15,14 @@ def convert_numeric(text):
 
 ABBR_REGEX = r"[a-z.]*\d{2}"
 
-
 def get_name(cell):
-    anchor = cell.find_element_by_tag_name("a")
-    abbr = re.search(ABBR_REGEX, anchor.get_attribute("href")).group()
-    return abbr
-
-
-def get_abbr(cell):
     anchor = cell.find_element_by_tag_name("a")
     return anchor.text
 
+def get_abbr(cell):
+    anchor = cell.find_element_by_tag_name("a")
+    abbr = re.search(ABBR_REGEX, anchor.get_attribute("href")).group()
+    return abbr
 
 def get_position(cell):
     return cell.text.split(" ")[-1]

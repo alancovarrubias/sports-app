@@ -23,7 +23,6 @@ module Database
             game_url: @game.url,
             home_team: @game.home_team.full_name,
             away_team: @game.away_team.full_name,
-            refetch: '1'
           }
           stats_res = query_server(:stats, server_options)
           build_stats(stats_res)
@@ -72,8 +71,8 @@ module Database
       def find_player(stat, team)
         name = stat.delete('name')
         abbr = stat.delete('abbr')
-        position = stat.delete('position')
-        Player.find_or_create_by(team: team, name: name, abbr: abbr, position: position)
+        stat.delete('position')
+        ::Player.find_or_create_by(team: team, name: name, abbr: abbr)
       end
     end
   end

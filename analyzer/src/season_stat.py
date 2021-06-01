@@ -19,6 +19,7 @@ class SeasonStat:
     def run(self):
         for game in self.games:
             self.add_game_data(game)
+        return self.data_store.get_data()
 
     def add_game_data(self, game):
         self.data_store.add_data(game.away_team)
