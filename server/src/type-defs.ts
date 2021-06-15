@@ -40,7 +40,7 @@ export default gql`
     stat: Stat
     sport: String!
   }
-  type Game {
+  type NbaGame {
     id: ID!
     date: String!
     time: String!
@@ -52,6 +52,21 @@ export default gql`
     preds: [Pred]!
     sport: String!
   }
+  type MlbGame {
+    id: ID!
+    date: String!
+    time: String!
+    away_team: Team!
+    home_team: Team!
+    away_players: [Player]!
+    home_players: [Player]!
+    away_starter: Player!
+    home_starter: Player!
+    lines: [Line]!
+    preds: [Pred]!
+    sport: String!
+  }
+  union Game = NbaGame | MlbGame
   type NbaStat {
     sp: Int
     fg: Int

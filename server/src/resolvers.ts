@@ -1,6 +1,11 @@
-import { AUTH, NBA_STAT, MLB_STAT } from './const'
+import { AUTH, NBA_STAT, MLB_STAT, NBA_GAME, MLB_GAME } from './const'
 
 export default {
+  Game: {
+    __resolveType(obj) {
+      return MLB_GAME
+    },
+  },
   Stat: {
     __resolveType(obj) {
       if (obj.pts >= 0) {

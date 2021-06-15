@@ -84,25 +84,27 @@ export const GET_GAMES = gql`
       offset: $offset
       limit: $limit
     ) {
-      id
-      date
-      away_team {
-        ...GamesTeamStat
+      ... on MlbGame {
+        id
+      	date
+        away_starter {
+          id
+          name
+          sport
+        }
+      	home_starter {
+          id
+          name
+          sport
+        }
+        away_team {
+        	...GamesTeamStat
+        }
+        home_team {
+          ...GamesTeamStat
+        }
+        sport
       }
-      home_team {
-        ...GamesTeamStat
-      }
-      lines {
-        bookie
-        total
-        spread
-      }
-      preds {
-        desc
-        away_score
-        home_score
-      }
-      sport
     }
   }
 `

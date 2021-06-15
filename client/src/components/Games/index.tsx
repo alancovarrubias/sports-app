@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useParams, useHistory, useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import SportContext from 'app/contexts/SportContext'
 import DataTable from 'app/components/common/DataTable'
@@ -25,8 +25,8 @@ interface IParamTypes {
 }
 const Games: React.FC = () => {
   const [sport] = useContext(SportContext)
-  const { season_id } = useParams<IParamTypes>()
   const searchParams = new URLSearchParams(useLocation().search)
+  const season_id = searchParams.get('season_id')
   const history = useHistory()
   const { error, loading, data } = useQuery<IGamesData, IGamesVars>(
     GET_GAMES,
@@ -52,9 +52,6 @@ const Games: React.FC = () => {
   }
   return (
     <div className="games">
-      <div className="calculator">
-        <Calculator games={data.games} />
-      </div>
       <div className="subheader">
         <h3 data-testid="subheader">{year} Games</h3>
       </div>
