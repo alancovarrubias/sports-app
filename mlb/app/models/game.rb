@@ -6,10 +6,18 @@ class Game < ApplicationRecord
   has_one :self_ref, class_name: 'Game', foreign_key: :id
   has_many :batting_stats, as: :interval, dependent: :destroy
   has_many :team_batting_stats, -> { where(model_type: 'Team') }, through: :self_ref, source: :batting_stats
+  has_many :away_team_batting_stats, ->(game) { where(model_id: game.away_team_id) }, through: :self_ref, source: :team_batting_stats
+  has_many :home_team_batting_stats, ->(game) { where(model_id: game.home_team_id) }, through: :self_ref, source: :team_batting_stats
   has_many :player_batting_stats, -> { where(model_type: 'Player') }, through: :self_ref, source: :batting_stats
+  has_many :away_player_batting_stats, ->(game) { where(model: { team_id: game.away_team_id })}, through: :self_ref, source: :player_batting_stats
+  has_many :home_player_batting_stats, ->(game) { where(model: { team_id: game.home_team_id }) }, through: :self_ref, source: :player_batting_stats
   has_many :pitching_stats, as: :interval, dependent: :destroy
   has_many :team_pitching_stats, -> { where(model_type: 'Team') }, through: :self_ref, source: :pitching_stats
+  has_many :away_team_pitching_stats, ->(game) { where(model_id: game.away_team_id) }, through: :self_ref, source: :team_pitching_stats
+  has_many :home_team_pitching_stats, ->(game) { where(model_id: game.home_team_id) }, through: :self_ref, source: :team_pitching_stats
   has_many :player_pitching_stats, -> { where(model_type: 'Player') }, through: :self_ref, source: :pitching_stats
+  has_many :away_player_pitching_stats, ->(game) { where(model: { team_id: game.away_team_id })}, through: :self_ref, source: :player_pitching_stats
+  has_many :home_player_pitching_stats, ->(game) { where(model: { team_id: game.home_team_id }) }, through: :self_ref, source: :player_pitching_stats
   has_many :pitchers, through: :pitching_stats, source: :model, source_type: 'Player'
   has_many :batters, through: :batting_stats, source: :model, source_type: 'Player'
   has_many :lines
