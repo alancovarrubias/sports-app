@@ -38,7 +38,6 @@ class MlbAPI extends RESTDataSource {
     })
     const games = games_res.data.map(game => {
       const attributes = game.attributes
-      console.log(addMlbCacheMetadata(attributes.away_starter))
       return {
         ...attributes,
         away_starter: addMlbCacheMetadata(attributes.away_starter),

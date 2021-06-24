@@ -38,6 +38,7 @@ export default gql`
     abbr: String!
     position: String!
     stat: Stat
+    season_stats: [Stat]!
     sport: String!
   }
   type NbaGame {

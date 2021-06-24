@@ -8,4 +8,27 @@ class Player < ApplicationRecord
   # Validations
   validates :name, presence: true
   validates :abbr, uniqueness: { scope: %i[season_id team_id] }
+
+  def season_stats
+    sp_stats = season_pitching_stats
+    sb_stats = season_batting_stats
+    (0...sb_stats.size).map do |index|
+      {
+        pitching: sp_stats[index],
+        batting: sb_stats[index]
+      }
+    end
+  end
+
+  def season_pitching_stats
+    pitching_stats.select do |stat|
+      stat.interval_type == 'Season'
+    end
+  end
+
+  def season_batting_stats
+    batting_stats.select do |stat|
+      stat.interval_type == 'Season'
+    end
+  end
 end

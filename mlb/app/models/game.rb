@@ -5,7 +5,6 @@ class Game < ApplicationRecord
   belongs_to :home_team, class_name: 'Team'
   has_many :batting_stats, as: :interval, dependent: :destroy
   has_many :pitching_stats, as: :interval, dependent: :destroy
-  has_many :teams, through: :team_pitching_stats, source: :model, source_type: 'Team'
   has_many :pitchers, through: :pitching_stats, source: :model, source_type: 'Player'
   has_many :batters, through: :batting_stats, source: :model, source_type: 'Player'
   has_many :lines
@@ -21,6 +20,7 @@ class Game < ApplicationRecord
   end
 
   %i[away home].each do |side|
+    define_method("#{side}_starter") { pitchers.select { |player| player.team_id == send("#{side}_team_id") }.first }
     define_method("#{side}_players") { (send("#{side}_pitchers") + send("#{side}_batters")).uniq }
     define_method("#{side}_pitchers") { pitchers.where(team: send("#{side}_team")) }
     define_method("#{side}_batters") { batters.where(team: send("#{side}_team")) }

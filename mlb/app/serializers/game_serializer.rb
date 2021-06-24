@@ -31,19 +31,17 @@ class GameSerializer
     }
   end
   attribute :away_starter, if: proc { |_record, params| params[:team] } do |obj|
-    away_pitchers = obj.pitchers.select { |player| player.team_id == obj.away_team_id }
-    away_starter = away_pitchers.first
+    away_starter = obj.away_starter
     {
       id: away_starter.id,
-      name: away_starter.name,
+      name: away_starter.name
     }
   end
   attribute :home_starter, if: proc { |_record, params| params[:team] } do |obj|
-    home_pitchers = obj.pitchers.select { |player| player.team_id == obj.home_team_id }
-    home_starter = home_pitchers.first
+    home_starter = obj.home_starter
     {
       id: home_starter.id,
-      name: home_starter.name,
+      name: home_starter.name
     }
   end
   attribute :away_players, if: proc { |_record, params| params[:player] } do |obj|
