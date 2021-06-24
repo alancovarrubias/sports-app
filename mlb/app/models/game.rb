@@ -3,15 +3,20 @@ class Game < ApplicationRecord
   belongs_to :season
   belongs_to :away_team, class_name: 'Team'
   belongs_to :home_team, class_name: 'Team'
+  has_one :self_ref, class_name: 'Game', foreign_key: :id
   has_many :batting_stats, as: :interval, dependent: :destroy
+  has_many :team_batting_stats, -> { where(model_type: 'Team') }, through: :self_ref, source: :batting_stats
+  has_many :player_batting_stats, -> { where(model_type: 'Player') }, through: :self_ref, source: :batting_stats
   has_many :pitching_stats, as: :interval, dependent: :destroy
+  has_many :team_pitching_stats, -> { where(model_type: 'Team') }, through: :self_ref, source: :pitching_stats
+  has_many :player_pitching_stats, -> { where(model_type: 'Player') }, through: :self_ref, source: :pitching_stats
   has_many :pitchers, through: :pitching_stats, source: :model, source_type: 'Player'
   has_many :batters, through: :batting_stats, source: :model, source_type: 'Player'
   has_many :lines
   has_many :preds
   scope :with_season, -> { includes(:season) }
-  scope :with_team_stats, -> { includes(:away_team, :home_team, :batting_stats, :pitching_stats) }
-  scope :with_player_stats, -> { includes(:batters, :pitchers, batting_stats: [:model], pitching_stats: [:model]) }
+  scope :with_team_stats, -> { includes(:away_team, :home_team, :team_batting_stats, :team_pitching_stats) }
+  scope :with_player_stats, -> { includes(:batters, :pitchers, player_batting_stats: [:model], player_pitching_stats: [:model]) }
   scope :with_lines, -> { includes(:lines) }
   scope :with_preds, -> { includes(:preds) }
 
