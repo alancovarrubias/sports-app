@@ -13,9 +13,12 @@ class Player < ApplicationRecord
     sp_stats = season_pitching_stats
     sb_stats = season_batting_stats
     (0...sb_stats.size).map do |index|
+      sp_stat = sp_stats[index]
+      sb_stat = sb_stats[index]
       {
-        pitching: sp_stats[index],
-        batting: sb_stats[index]
+        year: sp_stat.interval.year,
+        pitching: sp_stat,
+        batting: sb_stat
       }
     end
   end

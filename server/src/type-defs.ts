@@ -38,7 +38,7 @@ export default gql`
     abbr: String!
     position: String!
     stat: Stat
-    season_stats: [Stat]!
+    season_stats: [MlbSeasonStat]!
     sport: String!
   }
   type NbaGame {
@@ -86,6 +86,11 @@ export default gql`
     pts: Int
     ortg: Int
     drtg: Int
+  }
+  type MlbSeasonStat {
+    year: Int
+    pitching: PitchingStat
+    batting: BattingStat
   }
   type MlbStat {
     pitching: PitchingStat

@@ -72,6 +72,17 @@ export const GET_GAMES = gql`
       }
     }
   }
+  fragment GamesPlayerStat on Player {
+      id
+      name
+      season_stats {
+        year
+        pitching {
+          ip
+        }
+      }
+      sport
+  }
   query GetGames($sport: String!, $season_id: ID!, $offset: Int, $limit: Int) {
     season(sport: $sport, season_id: $season_id) {
         id
@@ -88,14 +99,10 @@ export const GET_GAMES = gql`
         id
       	date
         away_starter {
-          id
-          name
-          sport
+          ...GamesPlayerStat
         }
       	home_starter {
-          id
-          name
-          sport
+          ...GamesPlayerStat
         }
         away_team {
         	...GamesTeamStat
@@ -172,21 +179,25 @@ export const GET_GAME = gql`
   }
   query GetGame($sport: String!, $game_id: ID!) {
     game(sport: $sport, game_id: $game_id) {
-      id
-      date
-      away_team {
-        ...GameTeamStat
+      ... on MlbGame {
+        id
+      	date
+        away_team {
+          ...GameTeamStat
+        }
+        home_team {
+          ...GameTeamStat
+        }
+        away_players {
+          ...GamePlayerStat
+        }
+        home_players {
+          ...GamePlayerStat
+        }
+
+      	sport
       }
-      home_team {
-        ...GameTeamStat
-      }
-      away_players {
-        ...GamePlayerStat
-      }
-      home_players {
-        ...GamePlayerStat
-      }
-      sport
+
     }
   }
 `

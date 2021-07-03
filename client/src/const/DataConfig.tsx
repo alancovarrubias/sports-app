@@ -56,7 +56,7 @@ const DataConfig: IDataMap = {
       keys: ['year'],
     },
     [Resource.Game]: {
-      headers: ['Away Team', 'Home Team', 'Away Team Runs', 'Home Team Runs', 'Away Starter', 'Home Starter'],
+      headers: ['Away Team', 'Home Team', 'Away Team Runs', 'Home Team Runs', 'Away Starter', 'Home Starter', 'Season', 'Away Starter Season IP', 'Home Starter Season IP'],
       keys: [
         'away_team.name',
         'home_team.name',
@@ -64,6 +64,9 @@ const DataConfig: IDataMap = {
         'home_team.stat.batting.r',
         'away_starter.name',
         'home_starter.name',
+        'away_starter.season_stats[0].year',
+        'away_starter.season_stats[0].pitching.ip',
+        'home_starter.season_stats[0].pitching.ip',
       ],
     },
     [Resource.Pitcher]: {
