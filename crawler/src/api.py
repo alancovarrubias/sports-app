@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Api, Resource
-from const.models import TEAM, PLAYER, GAME, STAT, LINE, MATCHUP, LINEUP
+from const.models import TEAM, PLAYER, GAME, STAT, LINE, MATCHUP, LINEUP, ADVANCED_STAT
 from db_manager import DbManager
 from scrapers import get_scraper
 from args import Args
@@ -42,6 +42,11 @@ class StatResources(Resource):
         return fetch_resource(STAT)
 
 
+class AdvancedStatResources(Resource):
+    def get(self):
+        return fetch_resource(ADVANCED_STAT)
+
+
 class LineResources(Resource):
     def get(self):
         return fetch_resource(LINE)
@@ -61,6 +66,7 @@ api.add_resource(TeamResources, "/teams")
 api.add_resource(PlayerResources, "/players")
 api.add_resource(GameResources, "/games")
 api.add_resource(StatResources, "/stats")
+api.add_resource(AdvancedStatResources, "/advanced_stats")
 api.add_resource(LineResources, "/lines")
 api.add_resource(MatchupResources, "/matchups")
 api.add_resource(LineupResources, "/lineups")

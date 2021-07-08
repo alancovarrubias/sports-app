@@ -1,5 +1,5 @@
 from const.sports import NBA, MLB
-from const.models import TEAM, PLAYER, GAME, STAT, LINE, MATCHUP, LINEUP
+from const.models import TEAM, PLAYER, GAME, STAT, ADVANCED_STAT, LINE, MATCHUP, LINEUP
 
 from scrapers.nba.team import NbaTeamScraper
 from scrapers.nba.player import NbaPlayerScraper
@@ -11,6 +11,7 @@ from scrapers.mlb.team import MlbTeamScraper
 from scrapers.mlb.player import MlbPlayerScraper
 from scrapers.mlb.game import MlbGameScraper
 from scrapers.mlb.stat import MlbStatScraper
+from scrapers.mlb.advanced_stat import MlbAdvancedStatScraper
 from scrapers.mlb.line import MlbLineScraper
 from scrapers.mlb.matchup import MlbMatchupScraper
 from scrapers.mlb.lineup import MlbLineupScraper
@@ -28,6 +29,7 @@ SportScrapers = {
         PLAYER: MlbPlayerScraper,
         GAME: MlbGameScraper,
         STAT: MlbStatScraper,
+        ADVANCED_STAT: MlbAdvancedStatScraper,
         LINE: MlbLineScraper,
         MATCHUP: MlbMatchupScraper,
         LINEUP: MlbLineupScraper,

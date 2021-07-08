@@ -1,5 +1,5 @@
 from flask_restful import reqparse
-from const.models import TEAM, PLAYER, GAME, STAT, LINE, MATCHUP, LINEUP
+from const.models import TEAM, PLAYER, GAME, STAT, ADVANCED_STAT, LINE, MATCHUP, LINEUP
 
 parsers = {}
 parser = reqparse.RequestParser()
@@ -24,6 +24,11 @@ stat_parser.add_argument("game_url", type=str, location="args", required=True)
 stat_parser.add_argument("away_team", type=str, location="args", required=True)
 stat_parser.add_argument("home_team", type=str, location="args", required=True)
 parsers[STAT] = stat_parser
+
+stat_parser = parser.copy()
+stat_parser.add_argument("season", type=int, location="args", required=True)
+stat_parser.add_argument("team", type=str, location="args", required=True)
+parsers[ADVANCED_STAT] = stat_parser
 
 line_parser = parser.copy()
 line_parser.add_argument("date", type=str, location="args", required=True)
