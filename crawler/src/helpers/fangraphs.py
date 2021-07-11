@@ -1,64 +1,37 @@
 def get_fangraph_id(team):
-    if team == "LAA":
-        return 1
-    elif team == "BAL":
-        return 2
-    elif team == "BOS":
-        return 3
-    elif team == "CHW":
-        return 4
-    elif team == "CLE":
-        return 5
-    elif team == "DET":
-        return 6
-    elif team == "KCR":
-        return 7
-    elif team == "MIN":
-        return 8
-    elif team == "NYY":
-        return 9
-    elif team == "OAK":
-        return 10
-    elif team == "SEA":
-        return 11
-    elif team == "TBR":
-        return 12
-    elif team == "TEX":
-        return 13
-    elif team == "TOR":
-        return 14
-    elif team == "ARI":
-        return 15
-    elif team == "ATL":
-        return 16
-    elif team == "CHC":
-        return 17
-    elif team == "CIN":
-        return 18
-    elif team == "COL":
-        return 19
-    elif team == "MIA":
-        return 20
-    elif team == "HOU":
-        return 21
-    elif team == "LAD":
-        return 22
-    elif team == "MIL":
-        return 23
-    elif team == "WSN":
-        return 24
-    elif team == "NYM":
-        return 25
-    elif team == "PHI":
-        return 26
-    elif team == "PIT":
-        return 27
-    elif team == "STL":
-        return 28
-    elif team == "SDP":
-        return 29
-    elif team == "SFG":
-        return 30
+    fangraph_dict = {
+        "LAA": 1,
+        "BAL": 2,
+        "BOS": 3,
+        "CHW": 4,
+        "CLE": 5,
+        "DET": 6,
+        "KCR": 7,
+        "MIN": 8,
+        "NYY": 9,
+        "OAK": 10,
+        "SEA": 11,
+        "TBR": 12,
+        "TEX": 13,
+        "TOR": 14,
+        "ARI": 15,
+        "ATL": 16,
+        "CHC": 17,
+        "CIN": 18,
+        "COL": 19,
+        "MIA": 20,
+        "HOU": 21,
+        "LAD": 22,
+        "MIL": 23,
+        "WSN": 24,
+        "NYM": 25,
+        "PHI": 26,
+        "PIT": 27,
+        "STL": 28,
+        "SDP": 29,
+        "SFG": 30,
+    }
+    return fangraph_dict[team]
 
 
 def build_endpoint(season, fangraph_id, month, type, stats):
