@@ -1,6 +1,16 @@
 from flask import Flask
 from flask_restful import Api, Resource
-from const.models import TEAM, PLAYER, GAME, STAT, LINE, MATCHUP, LINEUP, ADVANCED_STAT
+from const.models import (
+    TEAM,
+    PLAYER,
+    GAME,
+    STAT,
+    LINE,
+    MATCHUP,
+    LINEUP,
+    ADVANCED_STAT,
+    WEATHER,
+)
 from db_manager import DbManager
 from scrapers import get_scraper
 from args import Args
@@ -17,7 +27,8 @@ def fetch_resource(resource_type):
         db_manager.delete_resource(args.db_key)
     if not db_manager.resource_exists(args.db_key):
         resource_data = scraper.get_resource(args.query_params)
-        scraper.driver.quit()
+        if scraper.driver:
+            scraper.driver.quit()
         db_manager.save_resource(args.db_key, resource_data)
     return db_manager.fetch_resource(args.db_key)
 
@@ -62,6 +73,11 @@ class LineupResources(Resource):
         return fetch_resource(LINEUP)
 
 
+class WeatherResources(Resource):
+    def get(self):
+        return fetch_resource(WEATHER)
+
+
 api.add_resource(TeamResources, "/teams")
 api.add_resource(PlayerResources, "/players")
 api.add_resource(GameResources, "/games")
@@ -70,6 +86,7 @@ api.add_resource(AdvancedStatResources, "/advanced_stats")
 api.add_resource(LineResources, "/lines")
 api.add_resource(MatchupResources, "/matchups")
 api.add_resource(LineupResources, "/lineups")
+api.add_resource(WeatherResources, "/weathers")
 
 
 if __name__ == "__main__":
