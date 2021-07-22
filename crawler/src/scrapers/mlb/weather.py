@@ -1,4 +1,3 @@
-from helpers.weather import get_coordinates
 from urllib.request import urlopen
 import json
 
@@ -9,8 +8,8 @@ class MlbWeatherScraper:
     driver = None
 
     def get_resource(self, args):
-        team = args["team"]
-        lat, lng = get_coordinates(team)
+        lat = args["lat"]
+        lng = args["lng"]
         start_date = args["start_date"]
         end_date = args["end_date"]
         url = f"https://api.weather.com/v1/geocode/{lat}/{lng}/observations/historical.json?apiKey={API_KEY}&startDate={start_date}&endDate={end_date}&units=e"

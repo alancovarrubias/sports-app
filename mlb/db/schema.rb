@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_07_234207) do
+ActiveRecord::Schema.define(version: 2021_07_22_055027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,14 @@ ActiveRecord::Schema.define(version: 2021_02_07_234207) do
     t.integer "gb_p"
     t.index ["interval_type", "interval_id"], name: "index_batting_stats_on_interval_type_and_interval_id"
     t.index ["model_type", "model_id"], name: "index_batting_stats_on_model_type_and_model_id"
+  end
+
+  create_table "game_days", force: :cascade do |t|
+    t.bigint "season_id"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["season_id"], name: "index_game_days_on_season_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -119,6 +127,18 @@ ActiveRecord::Schema.define(version: 2021_02_07_234207) do
     t.string "abbr"
     t.string "link"
     t.index ["season_id"], name: "index_teams_on_season_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "username", default: ""
+    t.string "password_digest", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "weathers", force: :cascade do |t|
+    t.bigint "game_id"
+    t.index ["game_id"], name: "index_weathers_on_game_id"
   end
 
 end

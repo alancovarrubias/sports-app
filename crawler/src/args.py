@@ -28,7 +28,7 @@ DB_KEYS = {
         MATCHUP: ["date"],
         LINEUP: ["date"],
         ADVANCED_STAT: ["season", "team"],
-        WEATHER: ["team", "start_date", "end_date"],
+        WEATHER: ["lat", "lng", "start_date", "end_date"],
     },
 }
 

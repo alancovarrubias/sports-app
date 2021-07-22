@@ -1,5 +1,15 @@
 from flask_restful import reqparse
-from const.models import TEAM, PLAYER, GAME, STAT, ADVANCED_STAT, LINE, MATCHUP, LINEUP, WEATHER
+from const.models import (
+    TEAM,
+    PLAYER,
+    GAME,
+    STAT,
+    ADVANCED_STAT,
+    LINE,
+    MATCHUP,
+    LINEUP,
+    WEATHER,
+)
 
 parsers = {}
 parser = reqparse.RequestParser()
@@ -37,7 +47,8 @@ parsers[MATCHUP] = line_parser
 parsers[LINEUP] = line_parser
 
 weather_parser = parser.copy()
-weather_parser.add_argument("team", type=str, location="args", required=True)
+weather_parser.add_argument("lat", type=float, location="args", required=True)
+weather_parser.add_argument("lng", type=float, location="args", required=True)
 weather_parser.add_argument("start_date", type=str, location="args", required=True)
 weather_parser.add_argument("end_date", type=str, location="args", required=True)
 parsers[WEATHER] = weather_parser

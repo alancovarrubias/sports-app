@@ -1,3 +1,3 @@
 require 'net/http'
 # Database::Builder.run(2019)
-Database::Builder.run(2020, :SeasonStats)
+Database::Builder.run(2019, :Weathers)
