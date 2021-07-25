@@ -20,7 +20,7 @@ const Login: React.FC = () => {
             if (login.token) {
                 localStorage.setItem(AUTH_TOKEN, login.token)
                 isLoggedInVar(true)
-                history.push('/seasons')
+                history.push('/home')
             } else {
                 setInvalid(true)
             }

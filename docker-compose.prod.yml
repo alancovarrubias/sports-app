@@ -51,7 +51,18 @@ services:
     build:
       context: analyzer
       dockerfile: Dockerfile.prod
+  db:
+    image: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=true
+  mongo:
+    image: mongo
+    volumes:
+      - mongo:/data/db
 
 volumes:
   postgres:
+  mongo:
   letsencrypt:
