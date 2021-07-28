@@ -9,6 +9,7 @@ from const.models import (
     MATCHUP,
     LINEUP,
     WEATHER,
+    FORECAST,
 )
 
 parsers = {}
@@ -52,3 +53,8 @@ weather_parser.add_argument("lng", type=float, location="args", required=True)
 weather_parser.add_argument("start_date", type=str, location="args", required=True)
 weather_parser.add_argument("end_date", type=str, location="args", required=True)
 parsers[WEATHER] = weather_parser
+
+forecast_parser = parser.copy()
+forecast_parser.add_argument("team", type=str, location="args", required=True)
+forecast_parser.add_argument("date", type=str, location="args", required=True)
+parsers[FORECAST] = forecast_parser

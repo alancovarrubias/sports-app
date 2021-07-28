@@ -10,6 +10,7 @@ from const.models import (
     LINEUP,
     ADVANCED_STAT,
     WEATHER,
+    FORECAST,
 )
 from db_manager import DbManager
 from scrapers import get_scraper
@@ -78,6 +79,11 @@ class WeatherResources(Resource):
         return fetch_resource(WEATHER)
 
 
+class ForecastResources(Resource):
+    def get(self):
+        return fetch_resource(FORECAST)
+
+
 api.add_resource(TeamResources, "/teams")
 api.add_resource(PlayerResources, "/players")
 api.add_resource(GameResources, "/games")
@@ -87,6 +93,7 @@ api.add_resource(LineResources, "/lines")
 api.add_resource(MatchupResources, "/matchups")
 api.add_resource(LineupResources, "/lineups")
 api.add_resource(WeatherResources, "/weathers")
+api.add_resource(ForecastResources, "/forecasts")
 
 
 if __name__ == "__main__":

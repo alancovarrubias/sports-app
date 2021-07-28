@@ -9,6 +9,7 @@ from const.models import (
     LINEUP,
     ADVANCED_STAT,
     WEATHER,
+    FORECAST,
 )
 from request_parser import parsers
 
@@ -29,6 +30,7 @@ DB_KEYS = {
         LINEUP: ["date"],
         ADVANCED_STAT: ["season", "team"],
         WEATHER: ["lat", "lng", "start_date", "end_date"],
+        FORECAST: ["team", "date"],
     },
 }
 

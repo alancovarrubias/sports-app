@@ -9,6 +9,7 @@ from const.models import (
     MATCHUP,
     LINEUP,
     WEATHER,
+    FORECAST,
 )
 
 from scrapers.nba.team import NbaTeamScraper
@@ -26,6 +27,7 @@ from scrapers.mlb.line import MlbLineScraper
 from scrapers.mlb.matchup import MlbMatchupScraper
 from scrapers.mlb.lineup import MlbLineupScraper
 from scrapers.mlb.weather import MlbWeatherScraper
+from scrapers.mlb.forecast import MlbForecastScraper
 
 SportScrapers = {
     NBA: {
@@ -45,6 +47,7 @@ SportScrapers = {
         MATCHUP: MlbMatchupScraper,
         LINEUP: MlbLineupScraper,
         WEATHER: MlbWeatherScraper,
+        FORECAST: MlbForecastScraper,
     },
 }
 
