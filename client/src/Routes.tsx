@@ -1,10 +1,11 @@
 export enum Page {
   Login,
   Home,
-  Matchups,
   Seasons,
   Games,
   Game,
+  Forecasts,
+  Matchups,
 }
 type IRouteOptions = {
   game_id?: string | number
@@ -28,6 +29,8 @@ export const createRoute = (
       return createPath('/games', search)
     case Page.Game:
       return createPath(`/games/${game_id}`, search)
+    case Page.Forecasts:
+      return createPath(`/forecasts/${game_id}`, search)
   }
 }
 
@@ -52,6 +55,7 @@ export const getPage = (
 export const Routes = {
   [Page.Login]: '/login',
   [Page.Home]: '/home',
+  [Page.Forecasts]: '/forecasts',
   [Page.Matchups]: '/matchups',
   [Page.Seasons]: '/seasons',
   [Page.Games]: '/games',

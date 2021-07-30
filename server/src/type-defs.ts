@@ -7,6 +7,7 @@ export default gql`
     season(sport: String!, season_id: ID!): Season!
     games(sport: String!, season_id: ID!, offset: Int, limit: Int): [Game]!
     game(sport: String!, game_id: ID!): Game!
+    forecasts(sport: String!, game_id: ID!): [Forecast]!
   }
   type Mutation {
     login(username: String!, password: String!): AuthPayload
@@ -131,6 +132,7 @@ export default gql`
     home_score: Float
   }
   type Forecast {
+    id: ID!
     time: String
     conditions: String
     temp: Int
@@ -138,6 +140,7 @@ export default gql`
     humidity: Int
     wind: String
     pressure: Float
+    sport: String!
   }
   union Stat = NbaStat | MlbStat
 `

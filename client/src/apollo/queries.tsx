@@ -42,6 +42,20 @@ export const GET_SEASON = gql`
   }
 `
 
+export const GET_FORECASTS = gql`
+  query GetForecasts($sport: String!, $game_id: ID!) {
+    forecasts(sport: $sport, game_id: $game_id) {
+      id
+      sport
+      away_team {
+        name
+      }
+      home_team {
+        name
+      }
+    }
+  }
+`
 export const GET_MATCHUPS = gql`
   query GetMatchups($sport: String!, $date: String!) {
     matchups(sport: $sport, date: $date) {

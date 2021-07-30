@@ -1,47 +1,48 @@
 import React, { useContext } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
-import { convertToDateString } from 'app/helpers/date'
 import { Sport } from 'app/const'
 import { GET_MATCHUPS } from 'app/apollo/queries'
 import Table from 'app/components/common/Table'
 import SportContext from 'app/contexts/SportContext'
 import { createRoute, Page } from 'app/Routes'
-import { Game } from 'app/models'
+import { Forecast, Game } from 'app/models'
 
-const matchupRow = (game, { history, searchParams }) => {
-    const forecastsRoute = createRoute(Page.Forecasts, { game_id: game.id, searchParams })
-    return { values: [game.away_team.name, game.home_team.name], onClick: () => history.push(forecastsRoute) }
+const forecastRow = (forecast, { history, searchParams }) => {
+    const matchupRoute = createRoute(Page.Matchups, { searchParams })
+    return { values: [], onClick: () => history.push(matchupRoute) }
 }
 
 interface IMatchupsData {
-    matchups: Game[]
+    game: Game,
+    forecasts: Forecast[]
 }
 interface IMatchupsVars {
     sport: Sport
-    date: string
+    game_id: string
 }
 const Matchups: React.FC = () => {
     const history = useHistory()
     const [sport] = useContext(SportContext)
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
-    const date = searchParams.get('date') ? searchParams.get('date') : convertToDateString(new Date())
+    const date = searchParams.get('date')
+    const game_id = searchParams.get('game_id')
     const { error, loading, data } = useQuery<IMatchupsData, IMatchupsVars>(
         GET_MATCHUPS,
         {
-            variables: { sport, date },
+            variables: { sport, game_id },
         }
     )
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error!</p>
     if (!data) return <p>Missing Data</p>
-    const { matchups } = data
+    const { forecasts } = data
     const headers = ['Away Team', 'Home Team']
-    const rows = matchups.map(date => matchupRow(date, { history, searchParams }))
+    const rows = forecasts.map(forecast => forecastRow(forecast, { history, searchParams }))
     return (
         <div className="home">
-            <h2 data-testid="subheader">{date} Matchups</h2>
+            <h2 data-testid="subheader">{date} Forecasts</h2>
             <Table headers={headers} rows={rows} />
         </div>
     )

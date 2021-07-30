@@ -60,3 +60,13 @@ interface MlbStat {
         pts: string
     }
 }
+
+export interface Forecast {
+    time: string
+    conditions: string
+    temp: number
+    dew: number
+    humidity: number
+    wind: string
+    pressure: number
+}

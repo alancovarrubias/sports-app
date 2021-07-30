@@ -19,6 +19,7 @@ export default {
   },
   Query: {
     users: (_source, args, { dataSources }) => dataSources[AUTH].getUsers(args),
+    forecasts: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getForecasts(args),
     matchups: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getMatchups(args),
     season: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getSeason(args),
     seasons: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getSeasons(args),

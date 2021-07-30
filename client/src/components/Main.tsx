@@ -9,6 +9,7 @@ import { IS_LOGGED_IN } from 'app/apollo/queries'
 import './scss/Grid.scss'
 import './scss/style.scss'
 import Header from './Header'
+import Forecasts from './Forecasts'
 import Navbar from './Navbar'
 import Matchups from './Matchups'
 import Seasons from './Seasons'
@@ -36,6 +37,7 @@ const Main: React.FC = () => {
             <Route path={Routes[Page.Login]} component={Login} exact />
             <PrivateRoute path={Routes[Page.Home]} component={Home} exact />
             <PrivateRoute path={Routes[Page.Matchups]} component={Matchups} exact />
+            <PrivateRoute path={Routes[Page.Forecasts]} component={Forecasts} exact />
             <PrivateRoute path={Routes[Page.Seasons]} component={Seasons} exact />
             <PrivateRoute path={Routes[Page.Games]} component={Games} exact />
             <PrivateRoute
