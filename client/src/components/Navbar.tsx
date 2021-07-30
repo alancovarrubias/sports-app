@@ -31,6 +31,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn }) => {
   const searchParams = new URLSearchParams(location.search)
   searchParams.set('sport', sport)
   const gamesMatch = useRouteMatch(Routes[Page.Games])
+  /*
   const season_id = gamesMatch ? gamesMatch.params.season_id : null
   const gameMatch = useRouteMatch(Routes[Page.Game])
   const seasonsRoute = createRoute(Page.Seasons, { searchParams })
@@ -42,16 +43,13 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn }) => {
     setSport(nextSport)
     history.push(toggleSportRoute)
   }
+  */
   if (!isLoggedIn) {
     return null;
   }
-  const seasonsLink = <li onClick={() => history.push(seasonsRoute)}>Seasons</li>
-  const matchupsLink = <li onClick={() => history.push(gamesRoute)}>Matchups</li>
   return (
     <nav>
       <ul>
-        {gamesMatch && seasonsLink}
-        <li onClick={toggleSport}>Toggle Sport</li>
         <li onClick={logout}>Logout</li>
       </ul>
     </nav>

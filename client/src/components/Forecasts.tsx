@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useHistory, Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { Sport } from 'app/const'
 import { GET_FORECASTS } from 'app/apollo/queries'
@@ -9,8 +9,7 @@ import { createRoute, Page } from 'app/Routes'
 import { Forecast, Game } from 'app/models'
 
 const forecastRow = (forecast, { history, searchParams }) => {
-    const matchupRoute = createRoute(Page.Matchups, { searchParams })
-    return { values: [forecast.time, forecast.conditions, forecast.temp, forecast.dew, forecast.humidity, forecast.wind, forecast.pressure], onClick: () => history.push(matchupRoute) }
+    return { values: [forecast.time, forecast.conditions, forecast.temp, forecast.dew, forecast.humidity, forecast.wind, forecast.pressure] }
 }
 
 interface IMatchupsData {
@@ -34,17 +33,18 @@ const Matchups: React.FC = () => {
             variables: { sport, game_id },
         }
     )
-    console.log(error)
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error!</p>
     if (!data) return <p>Missing Data</p>
-    const { forecasts, game: {away_team, home_team} } = data
-    console.log(away_team.name)
-    console.log(home_team.name)
+    const { forecasts, game: { away_team, home_team } } = data
     const headers = ['Time', 'Conditions', 'Temp', 'Dew', 'Humidity', 'Wind', 'Pressure']
     const rows = forecasts.map(forecast => forecastRow(forecast, { history, searchParams }))
+    searchParams.delete('game_id')
+    const matchupsRoute = createRoute(Page.Matchups, { searchParams })
+    const matchupsLink = <Link to={matchupsRoute}>{date} Matchups</Link>
     return (
         <div className="home">
+            {matchupsLink}
             <h2 data-testid="subheader">{away_team.name} @ {home_team.name} {date} Forecasts</h2>
             <Table headers={headers} rows={rows} />
         </div>

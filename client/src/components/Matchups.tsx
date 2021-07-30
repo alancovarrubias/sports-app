@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useHistory, Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { convertToDateString } from 'app/helpers/date'
 import { Sport } from 'app/const'
@@ -10,6 +10,7 @@ import { createRoute, Page } from 'app/Routes'
 import { Game } from 'app/models'
 
 const matchupRow = (game, { history, searchParams }) => {
+    searchParams.set('game_id', game.id)
     const forecastsRoute = createRoute(Page.Forecasts, { game_id: game.id, searchParams })
     return { values: [game.away_team.name, game.home_team.name], onClick: () => history.push(forecastsRoute) }
 }
@@ -39,8 +40,12 @@ const Matchups: React.FC = () => {
     const { matchups } = data
     const headers = ['Away Team', 'Home Team']
     const rows = matchups.map(date => matchupRow(date, { history, searchParams }))
+    searchParams.delete('date')
+    const homeRoute = createRoute(Page.Home, { searchParams })
+    const homeLink = <Link to={homeRoute}>Home</Link>
     return (
         <div className="home">
+            {homeLink}
             <h2 data-testid="subheader">{date} Matchups</h2>
             <Table headers={headers} rows={rows} />
         </div>
