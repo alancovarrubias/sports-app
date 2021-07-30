@@ -8,8 +8,7 @@ class CreateForecasts < ActiveRecord::Migration[6.0]
       t.integer :temp
       t.integer :dew
       t.integer :humidity
-      t.integer :wind_speed
-      t.string :wind_direction
+      t.string :wind
       t.float :pressure
     end
   end
