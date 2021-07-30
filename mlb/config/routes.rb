@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :games, only: %i[show] do
     resources :batting_stats, only: %i[index]
     resources :pitching_stats, only: %i[index]
+    resources :forecasts, only: %i[index]
   end
   resources :pitching_stats, only: %i[show]
   resources :batting_stats, only: %i[show]
