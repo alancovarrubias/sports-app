@@ -30,6 +30,7 @@ class GameSerializer
       }
     }
   end
+=begin
   attribute :away_starter, if: proc { |_record, params| params[:team] } do |obj|
     away_starter = obj.away_starter
     {
@@ -78,4 +79,5 @@ class GameSerializer
       }
     end
   end
+=end
 end

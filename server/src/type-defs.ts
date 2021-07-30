@@ -65,6 +65,7 @@ export default gql`
     home_starter: Player!
     lines: [Line]!
     preds: [Pred]!
+    forecasts: [Forecast]!
     sport: String!
   }
   union Game = NbaGame | MlbGame
@@ -128,6 +129,15 @@ export default gql`
     desc: String
     away_score: Float
     home_score: Float
+  }
+  type Forecast {
+    time: String
+    conditions: String
+    temp: Int
+    dew: Int
+    humidity: Int
+    wind: String
+    pressure: Float
   }
   union Stat = NbaStat | MlbStat
 `

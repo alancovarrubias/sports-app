@@ -45,14 +45,15 @@ export const GET_SEASON = gql`
 export const GET_MATCHUPS = gql`
   query GetMatchups($sport: String!, $date: String!) {
     matchups(sport: $sport, date: $date) {
-      id
-      time
-      sport
-      away_team {
-        name
-      }
-      home_team {
-        name
+      ... on MlbGame {
+        id
+        sport
+        away_team {
+          name
+        }
+        home_team {
+          name
+        }
       }
     }
   }
