@@ -30,7 +30,7 @@ export const createRoute = (
     case Page.Game:
       return createPath(`/games/${game_id}`, search)
     case Page.Forecasts:
-      return createPath(`/forecasts/${game_id}`, search)
+      return createPath(`/forecasts`, search)
   }
 }
 

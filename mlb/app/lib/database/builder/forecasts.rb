@@ -2,7 +2,7 @@ module Database
   module Builder
     class Forecasts < Base
       def needs_data?(game)
-       game.forecasts.empty?
+        true
       end
 
 
@@ -20,7 +20,7 @@ module Database
             forecast_res = query_server(:forecasts, team: team, date: date)
             forecasts = forecast_res["forecasts"]
             forecasts.each do |forecast_data|
-              forecast = Forecast.find_or_create_by(season: @season, game: game)
+              forecast = Forecast.find_or_create_by(season: @season, game: game, time: forecast_data["time"])
               forecast.update(forecast_data)
             end
           end
