@@ -14,6 +14,7 @@ class Game < ApplicationRecord
   has_many :batters, through: :batting_stats, source: :model, source_type: 'Player'
   has_many :lines
   has_many :preds
+  has_many :forecasts
   scope :with_season, -> { includes(:season) }
   scope :with_team_stats, -> { includes(:away_team, :home_team, :team_batting_stats, :team_pitching_stats) }
   scope :with_player_stats, -> { includes(:batters, :pitchers, player_batting_stats: [:model], player_pitching_stats: [:model]) }
