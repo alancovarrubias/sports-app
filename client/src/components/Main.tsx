@@ -29,8 +29,8 @@ const Main: React.FC = () => {
   return (
     <SportContext.Provider value={sportHook}>
       <div className="grid-container">
-        <Header isLoggedIn={isLoggedIn} />
         <Navbar isLoggedIn={isLoggedIn} />
+        <Header isLoggedIn={isLoggedIn} />
         <main>
           <Switch>
             <Redirect exact from="/" to="/home" />
