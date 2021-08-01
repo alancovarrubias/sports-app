@@ -17,7 +17,7 @@ def get_team_endpoint(team):
         "SEA": "wa/seattle/98134",
         "TBR": "fl/st.-petersburg/33705",
         "TEX": "tx/arlington/76011",
-        "TOR": "/ca/toronto",
+        "TOR": "ca/toronto",
         "ARI": "az/phoenix/85004",
         "ATL": "ga/atlanta/30339",
         "CHC": "il/chicago/60613",

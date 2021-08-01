@@ -2,7 +2,7 @@ module Database
   module Builder
     class Forecasts < Base
       def needs_data?(game)
-        true
+        game.forecasts.empty?
       end
 
 
