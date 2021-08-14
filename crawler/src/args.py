@@ -30,7 +30,7 @@ DB_KEYS = {
         LINEUP: ["date"],
         ADVANCED_STAT: ["season", "team"],
         WEATHER: ["lat", "lng", "start_date", "end_date"],
-        FORECAST: ["team", "date"],
+        FORECAST: ["team", "game_time", "hour"],
     },
 }
 

@@ -56,5 +56,6 @@ parsers[WEATHER] = weather_parser
 
 forecast_parser = parser.copy()
 forecast_parser.add_argument("team", type=str, location="args", required=True)
-forecast_parser.add_argument("date", type=str, location="args", required=True)
+forecast_parser.add_argument("hour", type=int, location="args", required=True)
+forecast_parser.add_argument("game_time", type=str, location="args", required=True)
 parsers[FORECAST] = forecast_parser

@@ -1,53 +1,53 @@
 from scrapers.wunderground import WundergroundScraper
 from models.mlb.forecast import MlbForecast
+from helpers.timezones import get_timezone
+from helpers.wunderground import get_team_endpoint
+from datetime import datetime, timedelta
+import pytz
 
 
-def get_team_endpoint(team):
-    wunderground_dict = {
-        "LAA": "us/ca/anaheim/92806",
-        "BAL": "us/md/baltimore/21201",
-        "BOS": "us/ma/boston/02215",
-        "CHW": "us/il/chicago/60616",
-        "CLE": "us/oh/cleveland/44115",
-        "DET": "us/mi/detroit/48201",
-        "KCR": "us/mo/kansas-city/64129",
-        "MIN": "us/mn/minneapolis/55403",
-        "NYY": "us/ny/the-bronx/10451",
-        "OAK": "us/ca/oakland/94621",
-        "SEA": "us/wa/seattle/98134",
-        "TBR": "us/fl/st.-petersburg/33705",
-        "TEX": "us/tx/arlington/76011",
-        "TOR": "ca/toronto",
-        "ARI": "us/az/phoenix/85004",
-        "ATL": "us/ga/atlanta/30339",
-        "CHC": "us/il/chicago/60613",
-        "CIN": "us/oh/cincinnati/45202",
-        "COL": "us/co/denver/80205",
-        "MIA": "us/fl/miami/33125",
-        "HOU": "us/tx/houston/77002",
-        "LAD": "us/ca/los-angeles/90012",
-        "MIL": "us/wi/milwaukee/53214",
-        "WSN": "us/dc/washington/20003",
-        "NYM": "us/ny/queens/11368",
-        "PHI": "us/pa/philadelphia/19148",
-        "PIT": "us/pa/pittsburgh/15212",
-        "STL": "us/mo/st.-louis/63102",
-        "SDP": "us/ca/san-diego/92101",
-        "SFG": "us/ca/san-francisco/94107",
-    }
-    return wunderground_dict[team]
+DATETIME_FORMAT = "%m/%d/%Y %H:%M"
+DATE_FORMAT = "%Y-%m-%d"
 
 
 class MlbForecastScraper(WundergroundScraper):
-    def get_resource(self, args):
-        team = args["team"]
-        date = args["date"]
+    def get_date_forecasts(self, team, current_date, game_end_datetime):
         team_endpoint = get_team_endpoint(team)
-        endpoint = f"hourly/{team_endpoint}/date/{date}"
-        print(endpoint)
+        endpoint = f"hourly/{team_endpoint}/date/{current_date.strftime(DATE_FORMAT)}"
         self.get(endpoint)
         self.driver.implicitly_wait(15)
+        date = current_date.strftime(DATE_FORMAT)
         forecast_table = self.find_element("#hourly-forecast-table")
         forecast_rows = self.get_table_rows(forecast_table)
-        forecasts = [MlbForecast(row).toJson() for row in forecast_rows]
-        return {"forecasts": forecasts}
+        forecasts = [MlbForecast(row, date) for row in forecast_rows]
+        return [
+            forecast.toJson()
+            for forecast in forecasts
+            if current_date < game_end_datetime.date()
+            or forecast.hour <= game_end_datetime.hour
+        ]
+
+    def get_forecasts(self, query_datetime, game_datetime, team):
+        forecasts = []
+        current_date = query_datetime.date()
+        game_end_datetime = game_datetime + timedelta(hours=4)
+        while current_date <= game_end_datetime.date():
+            forecasts += self.get_date_forecasts(team, current_date, game_end_datetime)
+            current_date += timedelta(days=1)
+        return forecasts
+
+    def get_resource(self, args):
+        team = args["team"]
+        game_time = args["game_time"]
+        timezone = get_timezone(team)
+        query_datetime = datetime.now()
+        game_datetime = datetime.strptime(game_time, DATETIME_FORMAT)
+        utc_query_datetime = pytz.utc.localize(query_datetime)
+        utc_game_datetime = pytz.utc.localize(game_datetime)
+        local_query_datetime = utc_query_datetime.astimezone(timezone)
+        local_game_datetime = utc_game_datetime.astimezone(timezone)
+        forecasts = self.get_forecasts(local_query_datetime, local_game_datetime, team)
+        return {
+            "forecasts": forecasts,
+            "query_time": utc_query_datetime.strftime(DATETIME_FORMAT),
+        }
