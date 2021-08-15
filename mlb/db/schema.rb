@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_29_042943) do
+ActiveRecord::Schema.define(version: 2021_08_06_041435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,12 @@ ActiveRecord::Schema.define(version: 2021_07_29_042943) do
     t.integer "gb_p"
     t.index ["interval_type", "interval_id"], name: "index_batting_stats_on_interval_type_and_interval_id"
     t.index ["model_type", "model_id"], name: "index_batting_stats_on_model_type_and_model_id"
+  end
+
+  create_table "forecast_queries", force: :cascade do |t|
+    t.bigint "game_id"
+    t.datetime "time"
+    t.index ["game_id"], name: "index_forecast_queries_on_game_id"
   end
 
   create_table "forecasts", force: :cascade do |t|
