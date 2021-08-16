@@ -1,4 +1,3 @@
 class Forecast < ApplicationRecord
-  belongs_to :season
-  belongs_to :game
+  belongs_to :forecast_query
 end

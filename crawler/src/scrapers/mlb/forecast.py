@@ -11,31 +11,6 @@ DATE_FORMAT = "%Y-%m-%d"
 
 
 class MlbForecastScraper(WundergroundScraper):
-    def get_date_forecasts(self, team, current_date, game_end_datetime):
-        team_endpoint = get_team_endpoint(team)
-        endpoint = f"hourly/{team_endpoint}/date/{current_date.strftime(DATE_FORMAT)}"
-        self.get(endpoint)
-        self.driver.implicitly_wait(15)
-        date = current_date.strftime(DATE_FORMAT)
-        forecast_table = self.find_element("#hourly-forecast-table")
-        forecast_rows = self.get_table_rows(forecast_table)
-        forecasts = [MlbForecast(row, date) for row in forecast_rows]
-        return [
-            forecast.toJson()
-            for forecast in forecasts
-            if current_date < game_end_datetime.date()
-            or forecast.hour <= game_end_datetime.hour
-        ]
-
-    def get_forecasts(self, query_datetime, game_datetime, team):
-        forecasts = []
-        current_date = query_datetime.date()
-        game_end_datetime = game_datetime + timedelta(hours=4)
-        while current_date <= game_end_datetime.date():
-            forecasts += self.get_date_forecasts(team, current_date, game_end_datetime)
-            current_date += timedelta(days=1)
-        return forecasts
-
     def get_resource(self, args):
         team = args["team"]
         game_time = args["game_time"]
@@ -51,3 +26,28 @@ class MlbForecastScraper(WundergroundScraper):
             "forecasts": forecasts,
             "query_time": utc_query_datetime.strftime(DATETIME_FORMAT),
         }
+
+    def get_forecasts(self, query_datetime, game_datetime, team):
+        forecasts = []
+        current_date = query_datetime.date()
+        game_end_datetime = game_datetime + timedelta(hours=4)
+        while current_date <= game_end_datetime.date():
+            forecasts += self.get_date_forecasts(team, current_date, game_end_datetime)
+            current_date += timedelta(days=1)
+        return forecasts
+
+    def get_date_forecasts(self, team, current_date, game_end_datetime):
+        team_endpoint = get_team_endpoint(team)
+        endpoint = f"hourly/{team_endpoint}/date/{current_date.strftime(DATE_FORMAT)}"
+        self.get(endpoint)
+        self.driver.implicitly_wait(15)
+        forecast_table = self.find_element("#hourly-forecast-table")
+        forecast_rows = self.get_table_rows(forecast_table)
+        timezone = get_timezone(team)
+        forecasts = [MlbForecast(row, current_date, timezone) for row in forecast_rows]
+        return [
+            forecast.toJson()
+            for forecast in forecasts
+            if current_date < game_end_datetime.date()
+            or forecast.hour <= game_end_datetime.hour
+        ]

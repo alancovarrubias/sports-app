@@ -49,17 +49,15 @@ ActiveRecord::Schema.define(version: 2021_08_06_041435) do
   end
 
   create_table "forecasts", force: :cascade do |t|
-    t.bigint "season_id"
-    t.bigint "game_id"
-    t.string "time"
+    t.bigint "forecast_queries_id"
+    t.datetime "time"
     t.string "conditions"
     t.integer "temp"
     t.integer "dew"
     t.integer "humidity"
     t.string "wind"
     t.float "pressure"
-    t.index ["game_id"], name: "index_forecasts_on_game_id"
-    t.index ["season_id"], name: "index_forecasts_on_season_id"
+    t.index ["forecast_queries_id"], name: "index_forecasts_on_forecast_queries_id"
   end
 
   create_table "games", force: :cascade do |t|

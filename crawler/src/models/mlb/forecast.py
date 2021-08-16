@@ -1,6 +1,8 @@
 import json
-from models.abstract import AbstractModel
-from datetime import datetime
+from datetime import datetime, timedelta
+from pytz import timezone
+
+DATETIME_FORMAT = "%m/%d/%Y %H:%M"
 
 
 def parse_hour(cell):
@@ -22,9 +24,12 @@ def convert_pressure(cell):
 
 
 class MlbForecast:
-    def __init__(self, row, date):
-        self.date = date
-        self.hour = parse_hour(row[0])
+    def __init__(self, row, date, tz):
+        hour = parse_hour(row[0])
+        time = datetime.combine(date, datetime.min.time()) + timedelta(hours=hour)
+        utc_time = tz.localize(time).astimezone(timezone("UTC"))
+        self.hour = hour
+        self.time = utc_time.strftime(DATETIME_FORMAT)
         self.conditions = row[1].text
         self.temp = convert_temp(row[2])
         self.dew = convert_temp(row[7])
