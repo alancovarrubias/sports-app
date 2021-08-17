@@ -4,10 +4,7 @@ from helpers.timezones import get_timezone
 from helpers.wunderground import get_team_endpoint
 from datetime import datetime, timedelta
 import pytz
-
-
-DATETIME_FORMAT = "%m/%d/%Y %H:%M"
-DATE_FORMAT = "%Y-%m-%d"
+from helpers.datetime import DATE_FORMAT, DATETIME_FORMAT
 
 
 class MlbForecastScraper(WundergroundScraper):
@@ -15,16 +12,14 @@ class MlbForecastScraper(WundergroundScraper):
         team = args["team"]
         game_time = args["game_time"]
         timezone = get_timezone(team)
-        query_datetime = datetime.now()
+        query_datetime = pytz.utc.localize(datetime.now())
         game_datetime = datetime.strptime(game_time, DATETIME_FORMAT)
-        utc_query_datetime = pytz.utc.localize(query_datetime)
-        utc_game_datetime = pytz.utc.localize(game_datetime)
-        local_query_datetime = utc_query_datetime.astimezone(timezone)
-        local_game_datetime = utc_game_datetime.astimezone(timezone)
+        local_game_datetime = timezone.localize(game_datetime)
+        local_query_datetime = query_datetime.astimezone(timezone)
         forecasts = self.get_forecasts(local_query_datetime, local_game_datetime, team)
         return {
             "forecasts": forecasts,
-            "query_time": utc_query_datetime.strftime(DATETIME_FORMAT),
+            "query_time": query_datetime.strftime(DATETIME_FORMAT),
         }
 
     def get_forecasts(self, query_datetime, game_datetime, team):
@@ -43,8 +38,7 @@ class MlbForecastScraper(WundergroundScraper):
         self.driver.implicitly_wait(15)
         forecast_table = self.find_element("#hourly-forecast-table")
         forecast_rows = self.get_table_rows(forecast_table)
-        timezone = get_timezone(team)
-        forecasts = [MlbForecast(row, current_date, timezone) for row in forecast_rows]
+        forecasts = [MlbForecast(row, current_date) for row in forecast_rows]
         return [
             forecast.toJson()
             for forecast in forecasts

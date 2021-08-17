@@ -3,7 +3,7 @@ class CreateBattingStats < ActiveRecord::Migration[6.0]
     create_table :batting_stats do |t|
       t.references :interval, polymorphic: true
       t.references :model, polymorphic: true
-      t.boolean :starter
+      t.boolean :is_starter
       t.integer :ab
       t.integer :r
       t.integer :h

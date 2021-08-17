@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2021_08_06_041435) do
     t.bigint "interval_id"
     t.string "model_type"
     t.bigint "model_id"
-    t.boolean "starter"
+    t.boolean "is_starter"
     t.integer "ab"
     t.integer "r"
     t.integer "h"
@@ -45,28 +45,30 @@ ActiveRecord::Schema.define(version: 2021_08_06_041435) do
   create_table "forecast_queries", force: :cascade do |t|
     t.bigint "game_id"
     t.datetime "time"
+    t.integer "hour"
     t.index ["game_id"], name: "index_forecast_queries_on_game_id"
   end
 
   create_table "forecasts", force: :cascade do |t|
-    t.bigint "forecast_queries_id"
-    t.datetime "time"
+    t.bigint "forecast_query_id"
+    t.integer "hour"
+    t.datetime "local_time"
     t.string "conditions"
     t.integer "temp"
     t.integer "dew"
     t.integer "humidity"
     t.string "wind"
     t.float "pressure"
-    t.index ["forecast_queries_id"], name: "index_forecasts_on_forecast_queries_id"
+    t.index ["forecast_query_id"], name: "index_forecasts_on_forecast_query_id"
   end
 
   create_table "games", force: :cascade do |t|
     t.bigint "season_id"
     t.bigint "away_team_id"
     t.bigint "home_team_id"
-    t.date "date"
     t.integer "num"
-    t.time "time"
+    t.date "date"
+    t.time "local_time"
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
     t.index ["season_id"], name: "index_games_on_season_id"

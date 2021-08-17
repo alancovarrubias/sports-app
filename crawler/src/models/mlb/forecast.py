@@ -1,8 +1,6 @@
 import json
 from datetime import datetime, timedelta
-from pytz import timezone
-
-DATETIME_FORMAT = "%m/%d/%Y %H:%M"
+from helpers.datetime import DATETIME_FORMAT
 
 
 def parse_hour(cell):
@@ -24,12 +22,11 @@ def convert_pressure(cell):
 
 
 class MlbForecast:
-    def __init__(self, row, date, tz):
+    def __init__(self, row, date):
         hour = parse_hour(row[0])
         time = datetime.combine(date, datetime.min.time()) + timedelta(hours=hour)
-        utc_time = tz.localize(time).astimezone(timezone("UTC"))
         self.hour = hour
-        self.time = utc_time.strftime(DATETIME_FORMAT)
+        self.local_time = time.strftime(DATETIME_FORMAT)
         self.conditions = row[1].text
         self.temp = convert_temp(row[2])
         self.dew = convert_temp(row[7])

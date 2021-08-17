@@ -1,5 +1,6 @@
 module Database
   module Builder
+    TIME_FORMAT = '%Y-%m-%d %I:%M%p'.freeze
     class Lineups < Base
       PITCHER_REGEX = /.*(?=\ \()/.freeze
       BATTER_REGEX = /(?<=\.\ ).*(?=\ \()/.freeze
@@ -12,16 +13,21 @@ module Database
         matchups_res = query_server(:lineups, server_options)
         lineups = matchups_res['lineups']
         lineups.each do |lineup|
-          build_game_lineups(lineup)
+          build_game_lineups(lineup, date)
         end
       end
 
-      def build_game_lineups(lineup)
+      def build_game_lineups(lineup, date)
         away_team = build_team(lineup['away_team'])
         home_team = build_team(lineup['home_team'])
         game = @season.games.find_by(date: date, away_team: away_team, home_team: home_team)
-        time = lineup['time'].split("\n")[-1]
-        game.update(time: time)
+        local_time_str = "#{date} #{lineup['local_time']}"
+        local_time = Time.strptime(local_time_str, TIME_FORMAT)
+        game.update(local_time: local_time)
+        build_players(lineup, away_team, home_team, game)
+      end
+
+      def build_players(lineup, away_team, home_team, game)
         build_pitcher(lineup['away_pitcher'], away_team, game)
         build_pitcher(lineup['home_pitcher'], home_team, game)
         lineup['away_players'].each do |player|

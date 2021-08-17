@@ -3,6 +3,7 @@ class CreateForecastQueries < ActiveRecord::Migration[6.0]
     create_table :forecast_queries do |t|
       t.references :game
       t.datetime :time
+      t.integer :hour
     end
   end
 end
