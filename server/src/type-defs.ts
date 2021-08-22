@@ -7,7 +7,7 @@ export default gql`
     season(sport: String!, season_id: ID!): Season!
     games(sport: String!, season_id: ID!, offset: Int, limit: Int): [Game]!
     game(sport: String!, game_id: ID!): Game!
-    forecasts(sport: String!, game_id: ID!): [Forecast]!
+    forecasts(sport: String!, game_id: ID!): [ForecastQuery]!
   }
   type Mutation {
     login(username: String!, password: String!): AuthPayload
@@ -66,7 +66,7 @@ export default gql`
     home_starter: Player!
     lines: [Line]!
     preds: [Pred]!
-    forecasts: [Forecast]!
+    forecast_queries: [ForecastQuery]!
     sport: String!
   }
   union Game = NbaGame | MlbGame
@@ -131,16 +131,22 @@ export default gql`
     away_score: Float
     home_score: Float
   }
-  type Forecast {
+  type ForecastQuery {
     id: ID!
     time: String
+    forecasts: [Forecast]!
+    sport: String!
+  }
+  type Forecast {
+    id: ID!
+    hour: Int
+    local_time: String
     conditions: String
     temp: Int
     dew: Int
     humidity: Int
     wind: String
     pressure: Float
-    sport: String!
   }
   union Stat = NbaStat | MlbStat
 `

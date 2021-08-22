@@ -63,7 +63,16 @@ class MlbAPI extends RESTDataSource {
 
   async getForecasts({ game_id }) {
     const forecasts_res = await this.get(`games/${game_id}/forecasts`)
-    const forecasts = forecasts_res.data.map(forecast => forecast.attributes)
+    const forecast_queries = forecasts_res.data.map(forecast => forecast.attributes)
+    const forecasts = forecast_queries.map(query => {
+      const forecasts_data = query.forecasts.data.map(forecast => ({
+        ...forecast.attributes,
+      }))
+      return {
+        ...query,
+        forecasts: forecasts_data
+      }
+    })
     return forecasts.map(addMlbCacheMetadata)
   }
 }
