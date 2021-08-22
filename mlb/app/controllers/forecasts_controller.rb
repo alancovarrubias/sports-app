@@ -1,11 +1,11 @@
 class ForecastsController < ApplicationController
-  before_action :set_game, except: :show
+  before_action :set_game
 
-  # GET /games/:game_id/pitching_stats
+  # GET /games/:game_id/forecasts
   def index
-    @forecasts = @game.forecasts
+    @forecast_queries = @game.forecast_queries
 
-    render json: ForecastSerializer.new(@forecasts).serializable_hash
+    render json: ForecastQuerySerializer.new(@forecast_queries).serializable_hash
   end
 
   private

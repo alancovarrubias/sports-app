@@ -5,7 +5,7 @@ module Database
       PITCHER_REGEX = /.*(?=\ \()/.freeze
       BATTER_REGEX = /(?<=\.\ ).*(?=\ \()/.freeze
       def build
-        date = Date.yesterday
+        date = Date.tomorrow
         puts "Creating Lineups for #{date}"
         server_options = {
           date: date
