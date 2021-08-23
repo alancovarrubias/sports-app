@@ -8,8 +8,12 @@ import SportContext from 'app/contexts/SportContext'
 import { createRoute, Page } from 'app/Routes'
 import { ForecastQuery, Game } from 'app/models'
 
+const convertTime = (time) => {
+    return time
+}
+
 const forecastRow = (forecast) => {
-    return { values: [forecast.local_time, forecast.conditions, forecast.temp, forecast.dew, forecast.humidity, forecast.wind, forecast.pressure] }
+    return { values: [convertTime(forecast.local_time), forecast.conditions, forecast.temp, forecast.dew, forecast.humidity, forecast.wind, forecast.pressure] }
 }
 
 const forecastQueryRows = (forecastQueries, time) => {

@@ -7,7 +7,7 @@ module Database
       end
 
       def build
-        dates = [Date.tomorrow]
+        dates = [Date.today]
         dates.each do |date|
           puts "Building Forecasts for Date #{date}"
           @season.games.where(date: date).each do |game|
