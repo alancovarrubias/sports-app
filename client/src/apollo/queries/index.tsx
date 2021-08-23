@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client'
 
+export * from './forecasts'
 export const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
     isLoggedIn @client
@@ -42,34 +43,6 @@ export const GET_SEASON = gql`
   }
 `
 
-export const GET_FORECASTS = gql`
-  query GetForecasts($sport: String!, $game_id: ID!) {
-    game(sport: $sport, game_id: $game_id) {
-      ... on MlbGame {
-        id
-      	date
-        away_team {
-          name
-        }
-        home_team {
-          name
-        }
-      	sport
-      }
-    }
-    forecasts(sport: $sport, game_id: $game_id) {
-      id
-      sport
-      time
-      conditions
-      temp
-      dew
-      humidity
-      wind
-      pressure
-    }
-  }
-`
 export const GET_MATCHUPS = gql`
   query GetMatchups($sport: String!, $date: String!) {
     matchups(sport: $sport, date: $date) {

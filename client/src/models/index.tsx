@@ -61,6 +61,11 @@ interface MlbStat {
     }
 }
 
+
+export interface ForecastQuery {
+    time: string
+    forecasts: Forecast[]
+}
 export interface Forecast {
     time: string
     conditions: string

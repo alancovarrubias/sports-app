@@ -1,8 +1,8 @@
 class GameSerializer
   include JSONAPI::Serializer
   attributes :id, :date
-  attribute :time do |obj|
-    obj.time ? obj.time.strftime('%H:%M') : ''
+  attribute :local_time do |obj|
+    obj.local_time ? obj.local_time.strftime('%H:%M') : ''
   end
   attribute :away_team, if: proc { |_record, params| params[:team] } do |obj|
     team = obj.away_team

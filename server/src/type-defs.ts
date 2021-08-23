@@ -45,7 +45,7 @@ export default gql`
   type NbaGame {
     id: ID!
     date: String!
-    time: String!
+    local_time: String!
     away_team: Team!
     home_team: Team!
     away_players: [Player]!

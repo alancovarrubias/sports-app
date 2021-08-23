@@ -34,6 +34,7 @@ const Matchups: React.FC = () => {
             variables: { sport, date },
         }
     )
+    console.log(error)
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error!</p>
     if (!data) return <p>Missing Data</p>
