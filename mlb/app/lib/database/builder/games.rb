@@ -23,7 +23,7 @@ module Database
         end
       end
 
-      def build_game(games_res)
+      def build_games(games_res)
         games_res['games'].each do |game_data|
           game_attributes = {
             season: @season,

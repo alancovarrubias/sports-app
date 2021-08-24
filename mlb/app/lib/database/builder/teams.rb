@@ -17,7 +17,8 @@ module Database
       end
 
       def build_team(team_data)
-        team_attributes = team_data.merge(season: @season)
+        timezone = Const::Timezones::TEAMS[team_data['abbr'].to_sym]
+        team_attributes = team_data.merge(season: @season, timezone: timezone)
         ::Team.create(team_attributes)
       end
     end

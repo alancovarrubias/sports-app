@@ -1,6 +1,5 @@
 module Database
   module Builder
-    TIME_FORMAT = '%Y-%m-%d %I:%M%p'.freeze
     class Lineups < Base
       PITCHER_REGEX = /.*(?=\ \()/.freeze
       BATTER_REGEX = /(?<=\.\ ).*(?=\ \()/.freeze
@@ -21,9 +20,9 @@ module Database
         away_team = build_team(lineup['away_team'])
         home_team = build_team(lineup['home_team'])
         game = @season.games.find_by(date: date, away_team: away_team, home_team: home_team)
-        local_time_str = "#{date} #{lineup['local_time']}"
-        local_time = Time.strptime(local_time_str, TIME_FORMAT)
-        game.update(local_time: local_time)
+        zone = ActiveSupport::TimeZone.new(home_team.timezone)
+        datetime = zone.parse("#{date} #{lineup['local_time']}")
+        game.update(datetime: datetime)
         build_players(lineup, away_team, home_team, game)
       end
 

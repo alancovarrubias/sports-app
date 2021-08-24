@@ -44,15 +44,14 @@ ActiveRecord::Schema.define(version: 2021_08_06_041435) do
 
   create_table "forecast_queries", force: :cascade do |t|
     t.bigint "game_id"
-    t.datetime "time"
+    t.datetime "datetime"
     t.integer "hour"
     t.index ["game_id"], name: "index_forecast_queries_on_game_id"
   end
 
   create_table "forecasts", force: :cascade do |t|
     t.bigint "forecast_query_id"
-    t.integer "hour"
-    t.datetime "local_time"
+    t.datetime "datetime"
     t.string "conditions"
     t.integer "temp"
     t.integer "dew"
@@ -68,7 +67,7 @@ ActiveRecord::Schema.define(version: 2021_08_06_041435) do
     t.bigint "home_team_id"
     t.integer "num"
     t.date "date"
-    t.time "local_time"
+    t.datetime "datetime"
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
     t.index ["season_id"], name: "index_games_on_season_id"
@@ -138,6 +137,7 @@ ActiveRecord::Schema.define(version: 2021_08_06_041435) do
     t.string "city"
     t.string "abbr"
     t.string "link"
+    t.string "timezone"
     t.index ["season_id"], name: "index_teams_on_season_id"
   end
 

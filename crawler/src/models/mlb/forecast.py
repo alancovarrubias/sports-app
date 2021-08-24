@@ -1,6 +1,4 @@
-import json
-from datetime import datetime, timedelta
-from helpers.datetime import DATETIME_FORMAT
+from models.abstract import AbstractModel
 
 
 def parse_hour(cell):
@@ -21,19 +19,12 @@ def convert_pressure(cell):
     return float(cell.text.split(" ")[0])
 
 
-class MlbForecast:
-    def __init__(self, row, date):
-        hour = parse_hour(row[0])
-        time = datetime.combine(date, datetime.min.time()) + timedelta(hours=hour)
-        self.hour = hour
-        self.local_time = time.strftime(DATETIME_FORMAT)
+class MlbForecast(AbstractModel):
+    def build(self, row):
+        self.hour = parse_hour(row[0])
         self.conditions = row[1].text
         self.temp = convert_temp(row[2])
         self.dew = convert_temp(row[7])
         self.humidity = convert_temp(row[8])
         self.wind = row[9].text
         self.pressure = convert_pressure(row[10])
-
-    def toJson(self):
-        json_string = json.dumps(self, default=lambda o: o.__dict__)
-        return json.loads(json_string)

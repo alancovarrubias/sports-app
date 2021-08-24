@@ -1,6 +1,6 @@
 module Database
   module Builder
-    module Weather
+    module Const
       module Coordinates
         TEAMS = {
           ARI: [33.444, -112.049],

@@ -2,8 +2,7 @@ class CreateForecasts < ActiveRecord::Migration[6.0]
   def change
     create_table :forecasts do |t|
       t.references :forecast_query
-      t.integer :hour
-      t.datetime :local_time
+      t.datetime :datetime
       t.string :conditions
       t.integer :temp
       t.integer :dew

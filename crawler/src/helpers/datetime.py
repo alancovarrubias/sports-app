@@ -1,2 +1,2 @@
 DATE_FORMAT = f"%Y-%m-%d"
-DATETIME_FORMAT = f"{DATE_FORMAT} %H:%M"
+DATETIME_FORMAT = f"%Y-%m-%d %H:%M"

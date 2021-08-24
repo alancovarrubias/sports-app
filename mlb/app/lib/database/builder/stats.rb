@@ -36,8 +36,9 @@ module Database
         hour = clock_time[0...colon_index].to_i
         hour += 12 if time_text.include?('p.m.')
         minute = clock_time[-2..]
-        time = Time.parse("#{@game.date} #{time}:#{minute}")
-        @game.update(time: time)
+        zone = ActiveSupport::TimeZone.new(@game.home_team.timezone)
+        datetime = zone.parse("#{@game.date} #{time}:#{minute}")
+        @game.update(datetime: datetime)
       end
 
       def build_stats(stats_res)

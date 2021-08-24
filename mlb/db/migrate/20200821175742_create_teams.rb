@@ -6,6 +6,7 @@ class CreateTeams < ActiveRecord::Migration[6.0]
       t.string :city
       t.string :abbr
       t.string :link
+      t.string :timezone
     end
   end
 end
