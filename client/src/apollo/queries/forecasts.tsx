@@ -17,10 +17,10 @@ export const GET_FORECASTS = gql`
     }
     forecasts(sport: $sport, game_id: $game_id) {
       id
-      time
+      datetime
       sport
       forecasts {
-        local_time
+        datetime
         conditions
         temp
         dew

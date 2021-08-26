@@ -13,14 +13,14 @@ const convertTime = (time) => {
 }
 
 const forecastRow = (forecast) => {
-    return { values: [convertTime(forecast.local_time), forecast.conditions, forecast.temp, forecast.dew, forecast.humidity, forecast.wind, forecast.pressure] }
+    return { values: [convertTime(forecast.datetime), forecast.conditions, forecast.temp, forecast.dew, forecast.humidity, forecast.wind, forecast.pressure] }
 }
 
 const forecastQueryRows = (forecastQueries, time) => {
     if (!time) {
         return []
     }
-    const [selectedQuery] = forecastQueries.filter((query) => query.time == time)
+    const [selectedQuery] = forecastQueries.filter((query) => query.datetime == time)
     const rows = selectedQuery.forecasts.map(forecast => forecastRow(forecast))
     return rows
 }
@@ -45,12 +45,13 @@ const Matchups: React.FC = () => {
             variables: { sport, game_id },
         }
     )
+    console.log(data)
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error!</p>
     if (!data) return <p>Missing Data</p>
     const { forecasts: forecastQueries, game: { away_team, home_team } } = data
     const headers = ['Local Time', 'Conditions', 'Temp', 'Dew', 'Humidity', 'Wind', 'Pressure']
-    const queryTimes = forecastQueries.map(forecastQuery => forecastQuery.time)
+    const queryTimes = forecastQueries.map(forecastQuery => forecastQuery.datetime)
     const rows = forecastQueryRows(forecastQueries, time)
     searchParams.delete('game_id')
     const matchupsRoute = createRoute(Page.Matchups, { searchParams })

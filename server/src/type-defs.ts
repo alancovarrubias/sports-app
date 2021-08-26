@@ -45,7 +45,7 @@ export default gql`
   type NbaGame {
     id: ID!
     date: String!
-    local_time: String!
+    datetime: String!
     away_team: Team!
     home_team: Team!
     away_players: [Player]!
@@ -133,14 +133,13 @@ export default gql`
   }
   type ForecastQuery {
     id: ID!
-    time: String
+    datetime: String
     forecasts: [Forecast]!
     sport: String!
   }
   type Forecast {
     id: ID!
-    hour: Int
-    local_time: String
+    datetime: String
     conditions: String
     temp: Int
     dew: Int
