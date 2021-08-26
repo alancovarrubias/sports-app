@@ -29,9 +29,10 @@ class MlbForecastScraper(WundergroundScraper):
         date = (query_time + timedelta(hours=1)).date()
         game_end = game_time + timedelta(hours=GAME_LENGTH)
         while date <= game_end.date():
-            forecasts += self.get_date_forecasts(team, date, game_end)
-            for forecast in forecasts:
+            date_forecasts = self.get_date_forecasts(team, date, game_end)
+            for forecast in date_forecasts:
                 forecast["date"] = date.strftime(DATE_FORMAT)
+            forecasts += date_forecasts
             date += timedelta(days=1)
         return forecasts
 

@@ -3,6 +3,7 @@ class ForecastSerializer
   include JSONAPI::Serializer
   attributes :id, :conditions, :temp, :dew, :humidity, :wind, :pressure
   attribute :datetime do |obj|
-    obj.datetime.strftime(DATETIME_FORMAT)
+    zone = ActiveSupport::TimeZone.new(obj.forecast_query.game.home_team.timezone)
+    obj.datetime.in_time_zone(zone).strftime(DATETIME_FORMAT)
   end
 end
