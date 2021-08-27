@@ -22,7 +22,8 @@ module Database
       def query_forecasts(game)
         puts "Building Forecasts for Game #{game.id}"
         # hour is for caching each query by hour queried in mongodb
-        game_time = game.datetime.strftime(DATETIME_FORMAT)
+        zone = ActiveSupport::TimeZone.new(game.home_team.timezone)
+        game_time = game.datetime.in_time_zone(zone).strftime(DATETIME_FORMAT)
         hour = Time.now.hour
         query_params = {
           team: game.home_team.abbr, game_time: game_time, hour: hour

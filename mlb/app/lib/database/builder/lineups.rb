@@ -20,7 +20,7 @@ module Database
         away_team = build_team(lineup['away_team'])
         home_team = build_team(lineup['home_team'])
         game = @season.games.find_by(date: date, away_team: away_team, home_team: home_team)
-        zone = ActiveSupport::TimeZone.new(home_team.timezone)
+        zone = ActiveSupport::TimeZone.new('Eastern Time (US & Canada)')
         datetime = zone.parse("#{date} #{lineup['local_time']}")
         game.update(datetime: datetime)
         build_players(lineup, away_team, home_team, game)
