@@ -2,29 +2,26 @@ module Database
   module Builder
     class Forecasts < Base
       DATETIME_FORMAT = '%Y-%m-%d %H:%M'.freeze
-      def needs_data?(_game)
-        true
+      def needs_data?(game, hour)
+        game.forecast_queries.where(hour: hour).empty?
       end
 
       def build
-        dates = [Date.tomorrow]
-        dates.each do |date|
-          puts "Building Forecasts for Date #{date}"
-          @season.games.where(date: date).each do |game|
-            puts "Game #{game.id} missing time" unless game.datetime
-            next unless needs_data?(game) && game.datetime
+        now = DateTime.now
+        puts "Building Forecasts for time #{now}"
+        @season.games.where('datetime > ? AND datetime < ?', now, now + 2).each do |game|
+          hour = Time.now.hour
+          next unless needs_data?(game, hour)
 
-            query_forecasts(game)
-          end
+          query_forecasts(game, hour)
         end
       end
 
-      def query_forecasts(game)
+      def query_forecasts(game, hour)
         puts "Building Forecasts for Game #{game.id}"
         # hour is for caching each query by hour queried in mongodb
         zone = ActiveSupport::TimeZone.new(game.home_team.timezone)
         game_time = game.datetime.in_time_zone(zone).strftime(DATETIME_FORMAT)
-        hour = Time.now.hour
         query_params = {
           team: game.home_team.abbr, game_time: game_time, hour: hour
         }

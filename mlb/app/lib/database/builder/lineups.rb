@@ -3,16 +3,26 @@ module Database
     class Lineups < Base
       PITCHER_REGEX = /.*(?=\ \()/.freeze
       BATTER_REGEX = /(?<=\.\ ).*(?=\ \()/.freeze
+      DATE_FORMAT = '%Y-%m-%d'.freeze
+      def dates
+        zone = ActiveSupport::TimeZone.new('Pacific Time (US & Canada)')
+        today = DateTime.now.in_time_zone(zone).strftime(DATE_FORMAT)
+        tomorrow = (DateTime.now + 1).in_time_zone(zone).strftime(DATE_FORMAT)
+        [today, tomorrow]
+      end
+
       def build
-        date = Date.tomorrow
-        puts "Creating Lineups for #{date}"
-        server_options = {
-          date: date
-        }
-        matchups_res = query_server(:lineups, server_options)
-        lineups = matchups_res['lineups']
-        lineups.each do |lineup|
-          build_game_lineups(lineup, date)
+        dates.each do |date|
+          puts "Creating Lineups for #{date}"
+          server_options = {
+            date: date,
+            refetch: '1'
+          }
+          matchups_res = query_server(:lineups, server_options)
+          lineups = matchups_res['lineups']
+          lineups.each do |lineup|
+            build_game_lineups(lineup, date)
+          end
         end
       end
 
