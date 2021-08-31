@@ -1,3 +1,4 @@
+require 'net/http'
 namespace :cron do
   task hourly: :environment do
     year = Date.today.year
