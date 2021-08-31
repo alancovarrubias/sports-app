@@ -5,10 +5,7 @@ module Database
       BATTER_REGEX = /(?<=\.\ ).*(?=\ \()/.freeze
       DATE_FORMAT = '%Y-%m-%d'.freeze
       def dates
-        zone = ActiveSupport::TimeZone.new('Pacific Time (US & Canada)')
-        today = DateTime.now.in_time_zone(zone).strftime(DATE_FORMAT)
-        tomorrow = (DateTime.now + 1).in_time_zone(zone).strftime(DATE_FORMAT)
-        [today, tomorrow]
+        [Date.today, Date.tomorrow, Date.tomorrow + 1]
       end
 
       def build
@@ -29,7 +26,7 @@ module Database
       def build_game_lineups(lineup, date)
         away_team = build_team(lineup['away_team'])
         home_team = build_team(lineup['home_team'])
-        game = @season.games.find_by(date: date, away_team: away_team, home_team: home_team)
+        game = @season.games.find_or_create_by(date: date, away_team: away_team, home_team: home_team, num: 0)
         zone = ActiveSupport::TimeZone.new('Eastern Time (US & Canada)')
         datetime = zone.parse("#{date} #{lineup['local_time']}")
         game.update(datetime: datetime)

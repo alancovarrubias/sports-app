@@ -27,17 +27,13 @@ module Database
         games_res['games'].each do |game_data|
           game_attributes = {
             season: @season,
-            date: build_date(game_data['date']),
+            date: Date.parse(game_data['date']),
             away_team: @season.teams.find_by_abbr(game_data['away_team']),
             home_team: @season.teams.find_by_abbr(game_data['home_team']),
             num: game_data['num'].to_i
           }
           ::Game.create(game_attributes)
         end
-      end
-
-      def build_date(date)
-        Date.new(date[0...4].to_i, date[5...7].to_i, date[8...10].to_i)
       end
     end
   end
