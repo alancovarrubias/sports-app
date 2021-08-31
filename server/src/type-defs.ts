@@ -57,7 +57,7 @@ export default gql`
   type MlbGame {
     id: ID!
     date: String!
-    time: String!
+    datetime: String!
     away_team: Team!
     home_team: Team!
     away_players: [Player]!

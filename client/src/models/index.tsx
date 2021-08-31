@@ -22,7 +22,7 @@ export interface Team {
 export interface Game {
     id: string
     year: string
-    date: string
+    datetime: string
     away_team: Team
     home_team: Team
     lines: [Line]

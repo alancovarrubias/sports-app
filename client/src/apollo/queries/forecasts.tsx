@@ -5,7 +5,7 @@ export const GET_FORECASTS = gql`
     game(sport: $sport, game_id: $game_id) {
       ... on MlbGame {
         id
-      	date
+        datetime
         away_team {
           name
         }

@@ -48,7 +48,7 @@ const Matchups: React.FC = () => {
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error!</p>
     if (!data) return <p>Missing Data</p>
-    const { forecasts: forecastQueries, game: { away_team, home_team } } = data
+    const { forecasts: forecastQueries, game: { away_team, home_team, datetime } } = data
     const headers = ['Local Time', 'Conditions', 'Temp', 'Dew', 'Humidity', 'Wind', 'Pressure']
     const queryTimes = forecastQueries.map(forecastQuery => forecastQuery.datetime)
     const rows = forecastQueryRows(forecastQueries, time)
@@ -58,7 +58,7 @@ const Matchups: React.FC = () => {
     return (
         <div className="home">
             {matchupsLink}
-            <h2 data-testid="subheader">{away_team.name} @ {home_team.name} {date}</h2>
+            <h2 data-testid="subheader">{away_team.name} @ {home_team.name} {datetime} Local Time</h2>
             <h3>Forecast Query Times</h3>
             <select value={time} onChange={(e) => setTime(e.target.value)}>
                 {["", ...queryTimes].map((time, index) => <option key={index} value={time}>{time}</option>)}
