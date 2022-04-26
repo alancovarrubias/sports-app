@@ -34,6 +34,13 @@ services:
       dockerfile: Dockerfile.prod
       args:
         SECRET_KEY: ${SECRET_KEY}
+  football:
+    image: football:prod
+    build:
+      context: football
+      dockerfile: Dockerfile.prod
+      args:
+        SECRET_KEY: ${SECRET_KEY}
   auth:
     image: auth:prod
     build:

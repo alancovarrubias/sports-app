@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  port: 5432
+  username: postgres
+  password:
+  pool: 5
+
+development:
+  <<: *default
+  database: football_development
+
+test:
+  <<: *default
+  database: football_test
+
+production:
+  <<: *default
+  database: football_production

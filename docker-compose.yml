@@ -26,6 +26,11 @@ services:
     depends_on:
       - db
       - crawler
+  football:
+    build: football
+    depends_on:
+      - db
+      - crawler
   crawler:
     build: crawler
     depends_on:
