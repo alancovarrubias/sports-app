@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2022_04_26_075417) do
     t.bigint "season_id"
     t.string "name"
     t.string "abbr"
+    t.integer "league"
     t.index ["season_id"], name: "index_teams_on_season_id"
   end
 
