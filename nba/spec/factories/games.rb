@@ -3,6 +3,7 @@ FactoryBot.define do
     association :season
     association :away_team, factory: :team
     association :home_team, factory: :team
+    datetime { DateTime.now }
     trait :with_stats do
       after(:create) do |game|
         create_list(:team_stat, 2, game: game)

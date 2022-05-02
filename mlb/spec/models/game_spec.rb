@@ -13,14 +13,33 @@ RSpec.describe Game, type: :model do
     it { should have_many(:batting_stats) }
   end
 
-  describe 'methods' do
+  describe 'class methods' do
+    describe '#on_date' do
+      it 'returns games on the date passed' do
+        game = FactoryBot.create(:game, datetime: DateTime.now)
+        expect(Game.on_date(Date.today)).to include(game)
+      end
+
+      it 'does not return games days after the date passed' do
+        game = FactoryBot.create(:game, datetime: DateTime.now + 1.day)
+        expect(Game.on_date(Date.today)).not_to include(game)
+      end
+
+      it 'does not return games days before the date passed' do
+        game = FactoryBot.create(:game, datetime: DateTime.now - 1.day)
+        expect(Game.on_date(Date.today)).not_to include(game)
+      end
+    end
+  end
+
+  describe 'instance methods' do
     before do
       @game = FactoryBot.create(:game, :with_stats)
       # Build separate game and stats to test for isolation
       FactoryBot.create(:game, :with_stats)
     end
 
-    describe 'teams' do
+    describe '#teams' do
       it 'retrieves the teams from a game' do
         expect(@game.teams.length).to eq(2)
       end
@@ -32,53 +51,39 @@ RSpec.describe Game, type: :model do
       end
     end
 
-    describe 'pitchers' do
-      it 'retrieves the pitchers from a game' do
-        pitchers = PitchingStat.where(interval: @game, model_type: 'Player')
-        expect(@game.pitchers.length).to eq(pitchers.length)
-      end
+    it '#pitchers retrieves the pitchers from a game' do
+      pitchers = PitchingStat.where(interval: @game, model_type: 'Player')
+      expect(@game.pitchers.length).to eq(pitchers.length)
     end
 
-    describe 'batters' do
-      it 'retrieves the batters from a game' do
-        batters = BattingStat.where(interval: @game, model_type: 'Player')
-        expect(@game.batters.length).to eq(batters.length)
-      end
+    it '#batters retrieves the batters from a game' do
+      batters = BattingStat.where(interval: @game, model_type: 'Player')
+      expect(@game.batters.length).to eq(batters.length)
     end
 
-    describe 'players' do
-      it 'retrieves the players from a game' do
-        player_ids = (@game.batters + @game.pitchers).uniq
-        expect(@game.players.length).to eq(player_ids.length)
-      end
+    it '#players retrieves the players from a game' do
+      player_ids = (@game.batters + @game.pitchers).uniq
+      expect(@game.players.length).to eq(player_ids.length)
     end
 
-    describe 'team_pitching_stats' do
-      it "retrieves the pitching stat of the game's team" do
-        team_stats = PitchingStat.where(interval: @game, model_type: 'Team')
-        expect(@game.team_pitching_stats.length).to eq(team_stats.length)
-      end
+    it "#team_pitching_stats retrieves the pitching stat of the game's team" do
+      team_stats = PitchingStat.where(interval: @game, model_type: 'Team')
+      expect(@game.team_pitching_stats.length).to eq(team_stats.length)
     end
 
-    describe 'team_batting_stats' do
-      it "retrieves the batting stat of the game's team" do
-        team_stats = BattingStat.where(interval: @game, model_type: 'Team')
-        expect(@game.team_batting_stats.length).to eq(team_stats.length)
-      end
+    it "#team_batting_stats retrieves the batting stat of the game's team" do
+      team_stats = BattingStat.where(interval: @game, model_type: 'Team')
+      expect(@game.team_batting_stats.length).to eq(team_stats.length)
     end
 
-    describe 'player_pitching_stats' do
-      it "retrieves a list of pitching stats of the game's players" do
-        player_stats = PitchingStat.where(interval: @game, model_type: 'Player')
-        expect(@game.player_pitching_stats.length).to eq(player_stats.length)
-      end
+    it "#player_pitching_stats retrieves a list of pitching stats of the game's players" do
+      player_stats = PitchingStat.where(interval: @game, model_type: 'Player')
+      expect(@game.player_pitching_stats.length).to eq(player_stats.length)
     end
 
-    describe 'player_batting_stats' do
-      it "retrieves a list of batting stats of the game's players" do
-        player_stats = BattingStat.where(interval: @game, model_type: 'Player')
-        expect(@game.player_batting_stats.length).to eq(player_stats.length)
-      end
+    it "#player_batting_stats retrieves a list of batting stats of the game's players" do
+      player_stats = BattingStat.where(interval: @game, model_type: 'Player')
+      expect(@game.player_batting_stats.length).to eq(player_stats.length)
     end
   end
 end

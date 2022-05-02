@@ -25,6 +25,10 @@ class Game < ApplicationRecord
   scope :with_lines, -> { includes(:lines) }
   scope :with_preds, -> { includes(:preds) }
 
+  def self.on_date(date)
+    Game.where('datetime > :beginning AND datetime < :end', beginning: date.beginning_of_day, end: date.end_of_day)
+  end
+
   def players
     (pitchers + batters).uniq
   end

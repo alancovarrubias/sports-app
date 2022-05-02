@@ -4,7 +4,7 @@ class CreateGames < ActiveRecord::Migration[6.0]
       t.references :season
       t.references :away_team, references: :team
       t.references :home_team, references: :team
-      t.date :date
+      t.datetime :start_time
     end
   end
 end
