@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :line do
-    association :team
     association :game
     type { 'opener' }
     period { 'full_game' }
