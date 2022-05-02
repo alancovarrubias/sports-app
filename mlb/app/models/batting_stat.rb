@@ -8,8 +8,8 @@ class BattingStat < ApplicationRecord
   has_one :player, through: :self_ref, source: :model, source_type: 'Player'
   has_one :team, through: :self_ref, source: :model, source_type: 'Team'
 
-  scope :team_stats, -> { where(model_type: 'Team') }
-  scope :player_stats, -> { where(model_type: 'Player') }
   scope :season_stats, -> { where(interval_type: 'Season') }
   scope :game_stats, -> { where(interval_type: 'Game') }
+  scope :team_stats, -> { where(model_type: 'Team') }
+  scope :player_stats, -> { where(model_type: 'Player') }
 end

@@ -18,13 +18,19 @@ class Game < ApplicationRecord
   scope :with_season, -> { includes(:season) }
   scope :with_team_stats, -> { includes(:away_team, :home_team, :team_batting_stats, :team_pitching_stats) }
   scope :with_player_stats, lambda {
-                              includes(:batters, :pitchers, player_batting_stats: [:model], player_pitching_stats: [:model])
+                              includes(:batters, :pitchers,
+                                       player_batting_stats: [:model],
+                                       player_pitching_stats: [:model])
                             }
   scope :with_lines, -> { includes(:lines) }
   scope :with_preds, -> { includes(:preds) }
 
   def players
     (pitchers + batters).uniq
+  end
+
+  def teams
+    [away_team, home_team]
   end
 
   %i[away home].each do |side|
