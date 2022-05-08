@@ -6,29 +6,25 @@ import DataTable from 'app/components/common/DataTable'
 import { Resource, Sport } from 'app/const'
 import { createRoute, Page } from 'app/Routes'
 import { GET_GAMES } from 'app/apollo/queries'
-import Calculator from './Calculator'
 import { Season, Game } from 'app/models'
 import "app/components/scss/Games.scss"
 
-interface IGamesData {
+interface GamesData {
   season: Season
   games: Game[]
 }
-interface IGamesVars {
+interface GamesQuery {
   sport: Sport
   season_id: string
   offset?: number
   limit?: number
-}
-interface IParamTypes {
-  season_id: string
 }
 const Games: React.FC = () => {
   const [sport] = useContext(SportContext)
   const searchParams = new URLSearchParams(useLocation().search)
   const season_id = searchParams.get('season_id')
   const history = useHistory()
-  const { error, loading, data } = useQuery<IGamesData, IGamesVars>(
+  const { error, loading, data } = useQuery<GamesData, GamesQuery>(
     GET_GAMES,
     {
       variables: { sport, season_id },

@@ -1,1 +1,1 @@
-export const convertToDateString = (date) => date.toISOString().replace('T', ' ').substr(0, 10)
+export const convertToDateString = (date: Date): string => date.toISOString().replace('T', ' ').substr(0, 10)

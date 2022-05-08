@@ -9,7 +9,7 @@ const dateRow = (date, { history }) => {
   const searchParams = new URLSearchParams()
   searchParams.append('date', dateString)
   const matchupRoute = createRoute(Page.Matchups, { searchParams })
-  return { values: [dateString], onClick: () => history.push(matchupRoute) }
+  return { cells: [dateString], onClick: () => history.push(matchupRoute) }
 }
 
 const Home: React.FC = () => {

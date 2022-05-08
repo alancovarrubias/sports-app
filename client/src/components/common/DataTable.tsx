@@ -16,7 +16,7 @@ const DataTable: React.FC<IDataTableProps> = ({ resource, sport, data, rowClick 
   const { headers, keys } = DataConfig[sport][resource]
   const rows = data.map(datum => ({
     onClick: () => (rowClick ? rowClick(datum) : null),
-    values: keys.map(key => get(datum, key))
+    cells: keys.map(key => get(datum, key))
   }))
   return <Table headers={headers} rows={rows} />
 }

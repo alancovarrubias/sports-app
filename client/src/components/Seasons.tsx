@@ -9,10 +9,10 @@ import { createRoute, Page } from 'app/Routes'
 import DataTable from 'app/components/common/DataTable'
 import 'app/components/scss/Seasons.scss'
 
-interface ISeasonsData {
+interface SeasonsData {
   seasons: Season[]
 }
-interface ISeasonsVars {
+interface SeasonsQuery {
   sport: Sport
 }
 
@@ -20,7 +20,7 @@ const Seasons: React.FC = () => {
   const [sport] = useContext(SportContext)
   const history = useHistory()
   const searchParams = new URLSearchParams(useLocation().search)
-  const { error, loading, data } = useQuery<ISeasonsData, ISeasonsVars>(
+  const { error, loading, data } = useQuery<SeasonsData, SeasonsQuery>(
     GET_SEASONS,
     {
       variables: { sport },
@@ -34,7 +34,7 @@ const Seasons: React.FC = () => {
     data: data.seasons,
     resource: Resource.Season,
     sport,
-    rowClick: season => {
+    rowClick: () => {
       const gamesRoute = createRoute(Page.Games, { searchParams })
       history.push(gamesRoute)
     },

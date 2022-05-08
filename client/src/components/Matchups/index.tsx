@@ -4,21 +4,23 @@ import { useQuery } from '@apollo/client'
 import { convertToDateString } from 'app/helpers/date'
 import { Sport } from 'app/const'
 import { GET_MATCHUPS } from 'app/apollo/queries'
-import Table from 'app/components/common/Table'
+import Table, { RowBuilder, Row } from 'app/components/common/Table'
 import SportContext from 'app/contexts/SportContext'
 import { createRoute, Page } from 'app/Routes'
 import { Game } from 'app/models'
 
-const matchupRow = (game, { history, searchParams }) => {
+const MatchupRow = (game, { history, searchParams }): Row => {
     searchParams.set('game_id', game.id)
     const forecastsRoute = createRoute(Page.Forecasts, { game_id: game.id, searchParams })
-    return { values: [game.away_team.name, game.home_team.name], onClick: () => history.push(forecastsRoute) }
+    const cells = [game.away_team.name, game.home_team.name]
+    const onClick = () => history.push(forecastsRoute)
+    return RowBuilder(cells, onClick)
 }
 
-interface IMatchupsData {
+interface Matchups {
     matchups: Game[]
 }
-interface IMatchupsVars {
+interface Query {
     sport: Sport
     date: string
 }
@@ -28,7 +30,7 @@ const Matchups: React.FC = () => {
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
     const date = searchParams.get('date') ? searchParams.get('date') : convertToDateString(new Date())
-    const { error, loading, data } = useQuery<IMatchupsData, IMatchupsVars>(
+    const { error, loading, data } = useQuery<Matchups, Query>(
         GET_MATCHUPS,
         {
             variables: { sport, date },
@@ -40,7 +42,7 @@ const Matchups: React.FC = () => {
     if (!data) return <p>Missing Data</p>
     const { matchups } = data
     const headers = ['Away Team', 'Home Team']
-    const rows = matchups.map(date => matchupRow(date, { history, searchParams }))
+    const rows = matchups.map(game => MatchupRow(game, { history, searchParams }))
     searchParams.delete('date')
     const homeRoute = createRoute(Page.Home, { searchParams })
     const homeLink = <Link to={homeRoute}>Home</Link>
