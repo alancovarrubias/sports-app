@@ -19,19 +19,19 @@ module Database
 
       def query_forecasts(game, hour)
         puts "Building Forecasts for Game #{game.id}"
-        # hour is for caching each query by hour queried in mongodb
+        # hour caches each query by hour queried in mongodb
         zone = ActiveSupport::TimeZone.new(game.home_team.timezone)
         game_time = game.datetime.in_time_zone(zone).strftime(DATETIME_FORMAT)
         query_params = {
           team: game.home_team.abbr, game_time: game_time, hour: hour
         }
-        forecasts_res = query_server(:forecasts, query_params)
-        query = build_forecast_query(forecasts_res, game, hour)
-        build_forecasts(forecasts_res, query, game)
+        res = query_server(:forecasts, query_params)
+        query = build_forecast_query(res, game, hour)
+        build_forecasts(res, query, game)
       end
 
-      def build_forecast_query(forecast_res, game, hour)
-        query_time = DateTime.parse(forecast_res['query_time'])
+      def build_forecast_query(res, game, hour)
+        query_time = DateTime.parse(res['query_time'])
         ForecastQuery.find_or_create_by(datetime: query_time, game: game, hour: hour)
       end
 

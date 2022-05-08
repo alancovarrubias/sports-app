@@ -1,23 +1,20 @@
 module Database
   module Builder
-    MODEL_TYPES = %i[Teams Games Players Stats SeasonStats Lineups Forecasts].freeze
+    MODELS = %i[Teams Games Players Stats SeasonStats Lineups Forecasts].freeze
 
     module_function
 
-    def run(year, model = :All)
-      @season = ::Season.find_or_create_by(year: year)
-      model == :All ? build_all : build_model(model)
+    def run(year, options = {})
+      @season = Season.find_or_create_by(year: year)
+      @refetch = options[:refetch] ? 1 : 0
+      model = options[:model]
+      model ? build_table(model) : MODELS.each { |m| build_table(m) }
     end
 
-    def build_all
-      MODEL_TYPES.each { |model| build_model(model) }
-    end
+    def build_table(model)
+      raise 'Type must be valid resource type' unless MODELS.include?(model)
 
-    def build_model(model)
-      raise 'Type must be valid resource type' unless MODEL_TYPES.include?(model)
-
-      builder = Builder.const_get(model).new(@season)
-      builder.build
+      Builder.const_get(model).new(@season, @refetch).build
     end
   end
 end

@@ -1,2 +1,2 @@
 require 'net/http'
-Database::Builder.run(2021, :Teams)
+Database::Builder.run(2022)

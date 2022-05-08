@@ -4,10 +4,10 @@ import { isLoggedInVar } from 'app/apollo/cache'
 import SportContext from 'app/contexts/SportContext'
 import 'app/components/scss/Navbar.scss'
 
-interface NavbarProps {
+interface Props {
   isLoggedIn: boolean
 }
-const Navbar: React.FC<NavbarProps> = ({ isLoggedIn }) => {
+const Navbar: React.FC<Props> = ({ isLoggedIn }) => {
   const history = useHistory()
   const [sport] = useContext(SportContext)
   const logout = () => {

@@ -10,29 +10,23 @@ module Database
 
         puts "Building Games for Season #{@season.id}"
 
-        teams = @season.teams.map(&:abbr).join(',')
-        games_res = query_server(:games, season: @season.year, teams: teams)
-        build_team_links(games_res)
-        build_games(games_res)
-      end
-
-      def build_team_links(games_res)
-        games_res['team_links'].each do |abbr, link|
-          team = @season.teams.find_by_abbr(abbr)
-          team.update(link: link)
+        @season.teams.each do |team|
+          res = query_server(:games, season: @season.year, team: team.abbr)
+          build_games(res['games'])
+          team.update(link: res['team_link'])
         end
       end
 
-      def build_games(games_res)
-        games_res['games'].each do |game_data|
-          game_attributes = {
+      def build_games(games)
+        games.each do |data|
+          attributes = {
             season: @season,
-            date: Date.parse(game_data['date']),
-            away_team: @season.teams.find_by_abbr(game_data['away_team']),
-            home_team: @season.teams.find_by_abbr(game_data['home_team']),
-            num: game_data['num'].to_i
+            date: Date.parse(data['date']),
+            away_team: @season.teams.find_by_abbr(data['away_team']),
+            home_team: @season.teams.find_by_abbr(data['home_team']),
+            num: data['num'].to_i
           }
-          ::Game.create(game_attributes)
+          Game.create(attributes)
         end
       end
     end

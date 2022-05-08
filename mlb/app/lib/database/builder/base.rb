@@ -3,8 +3,9 @@ module Database
     class Base
       CRAWLER_TYPES = %i[teams games players stats weathers forecasts lineups].freeze
       ANALYZER_TYPES = %i[season_stats].freeze
-      def initialize(season)
+      def initialize(season, refetch)
         @season = season
+        @refetch = refetch
       end
 
       def query_server(model, options)
@@ -13,7 +14,7 @@ module Database
       end
 
       def query(endpoint, options)
-        query_params = options.merge(sport: 'MLB')
+        query_params = options.merge(sport: 'MLB', refetch: @refetch)
         query_params_string = query_params.map { |k, v| "#{k}=#{v}" }.join('&')
         url = URI.parse("http://#{endpoint}?#{query_params_string}")
         req = Net::HTTP::Get.new(url.to_s)

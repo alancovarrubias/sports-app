@@ -27,7 +27,7 @@ parsers[PLAYER] = player_parser
 
 game_parser = parser.copy()
 game_parser.add_argument("season", type=int, location="args", required=True)
-game_parser.add_argument("teams", type=str, location="args")
+game_parser.add_argument("team", type=str, location="args", required=True)
 parsers[GAME] = game_parser
 
 stat_parser = parser.copy()
