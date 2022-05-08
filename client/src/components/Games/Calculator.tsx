@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Game } from 'app/models'
-import Table from 'app/components/common/Table'
+import Table, { RowBuilder } from 'app/components/common/Table'
 
 enum Outcome {
     Win = 1,
@@ -77,7 +77,7 @@ const Calculator: React.FC<CalculatorProps> = ({ games }) => {
     const headers = ['Type', 'Wins', 'Losses', 'Skipped', 'Win Percentage']
     const totalValues = ['Total', totalWins, totalLosses, totalSkipped, percentage(totalWins, totalLosses)]
     const spreadValues = ['Total', spreadWins, spreadLosses, spreadSkipped, percentage(spreadWins, spreadLosses)]
-    const rows = [{ values: totalValues }, { values: spreadValues }]
+    const rows = [RowBuilder(totalValues), RowBuilder(spreadValues)]
     return (
         <div className="bet-calculator">
             <h3>Bet Range</h3>
