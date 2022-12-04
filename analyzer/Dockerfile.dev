@@ -4,8 +4,8 @@ ENV PYTHONUNBUFFERED=1
 RUN pip install pipenv
 ENV PROJECT_DIR /project
 WORKDIR ${PROJECT_DIR}
-COPY Pipfile Pipfile.lock ${PROJECT_DIR}/
-RUN pipenv install --system --dev
+COPY Pipfile ${PROJECT_DIR}/
+RUN pipenv install
 COPY . .
 
-CMD ["python", "src/main.py"]
+CMD ["pipenv", "run", "python", "src/main.py"]

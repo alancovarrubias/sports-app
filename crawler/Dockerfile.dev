@@ -12,9 +12,6 @@ RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable 
 
 RUN apt-get -y update
 
-# Magic happens
-
-RUN apt-get install -y google-chrome-stable
 # Installing Unzip
 RUN apt-get install -yqq unzip
 
@@ -32,8 +29,8 @@ ENV PYTHONUNBUFFERED=1
 RUN pip install pipenv
 ENV PROJECT_DIR /project
 WORKDIR ${PROJECT_DIR}
-COPY Pipfile Pipfile.lock ${PROJECT_DIR}/
-RUN pipenv install --system --dev
+COPY Pipfile ${PROJECT_DIR}/
+RUN pipenv install
 COPY . .
 
-CMD ["python", "src/api.py"]
+CMD ["pipenv", "run", "python", "src/api.py"]
