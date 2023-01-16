@@ -27,5 +27,4 @@
 /config/master.key
 .envrc
 
-.devcontainer/
 .vscode/
