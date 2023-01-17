@@ -4,12 +4,13 @@ class CreateGames < ActiveRecord::Migration[6.0]
       t.references :season
       t.references :away_team
       t.references :home_team
-      t.date :date
       t.integer :away_num
       t.integer :home_num
       t.integer :espn_id
       t.integer :kicked
       t.integer :status
+      t.datetime :current_time
+      t.date :date
     end
   end
 end
