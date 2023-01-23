@@ -3,18 +3,19 @@ from const.mlb import PITCHING, BATTING
 from const.models import PLAYER
 from models.abstract import AbstractModel
 from helpers.numeric import convert_numeric
+from selenium.webdriver.common.by import By
 
 
 ABBR_REGEX = r"[a-z.]*\d{2}"
 
 
 def get_name(cell):
-    anchor = cell.find_element_by_tag_name("a")
+    anchor = cell.find_element(By.TAG_NAME, "a")
     return anchor.text
 
 
 def get_abbr(cell):
-    anchor = cell.find_element_by_tag_name("a")
+    anchor = cell.find_element(By.TAG_NAME, "a")
     abbr = re.search(ABBR_REGEX, anchor.get_attribute("href")).group()
     return abbr
 

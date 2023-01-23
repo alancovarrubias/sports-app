@@ -1,3 +1,4 @@
+from selenium.webdriver.common.by import By
 from scrapers.baseball_reference import BaseballReferenceScraper
 from models.mlb.game import MlbGame
 import re
@@ -19,7 +20,7 @@ class MlbGameScraper(BaseballReferenceScraper):
         home_rows = list(filter(lambda row: row[3].text != "@", rows))
         home_games = [MlbGame(row).toJson() for row in home_rows]
         game_link = (
-            home_rows[0][1].find_element_by_tag_name("a").get_attribute("href")
+            home_rows[0][1].find_element(By.TAG_NAME, "a").get_attribute("href")
         )
         team_link = re.search(TEAM_LINK_REGEX, game_link).group()
 

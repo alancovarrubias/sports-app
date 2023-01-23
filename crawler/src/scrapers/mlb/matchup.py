@@ -15,7 +15,7 @@ class MlbMatchupScraper(EspnScraper):
             game_id = matchup["game_id"]
             endpoint = f"mlb/game/_/gameId/{game_id}"
             self.get(endpoint)
-            wrappers = self.driver.find_elements_by_css_selector(".caption-wrapper")
+            wrappers = self.driver.find_elements(By.CSS_SELECTOR, ".caption-wrapper")
             if len(wrappers) == 0:
                 stadium = self.find_element(".game-location").text
             else:

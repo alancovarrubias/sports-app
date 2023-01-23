@@ -2,6 +2,7 @@ from os import path
 from abc import ABC, abstractmethod
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
 
@@ -20,7 +21,8 @@ class AbstractScraper(ABC):
         self.driver.get(url)
 
     def find_element(self, selector):
-        return self.driver.find_element_by_css_selector(selector)
+        
+        return self.driver.find_element(By.CSS_SELECTOR, selector)
 
     def get_table_rows(self, table, table_selectors=None):
         if table_selectors is None:
@@ -31,10 +33,10 @@ class AbstractScraper(ABC):
             table_selectors["cells"] = "td"
         if "section" not in table_selectors:
             table_selectors["section"] = "tbody"
-        teams_body = table.find_element_by_tag_name(table_selectors["section"])
-        rows = teams_body.find_elements_by_css_selector(table_selectors["rows"])
+        teams_body = table.find_element(By.TAG_NAME, table_selectors["section"])
+        rows = teams_body.find_elements(By.CSS_SELECTOR, table_selectors["rows"])
         table_rows = [
-            row.find_elements_by_css_selector(table_selectors["cells"])
+            row.find_elements(By.CSS_SELECTOR, table_selectors["cells"])
             for row in rows
             if row
         ]

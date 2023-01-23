@@ -1,5 +1,6 @@
 import re
 from models.abstract import AbstractModel
+from selenium.webdriver.common.by import By
 
 ABBR_REGEX = r"[A-Z]{3}"
 
@@ -11,6 +12,6 @@ def get_name_city(title):
 
 class MlbTeam(AbstractModel):
     def build(self, row):
-        anchor = row[0].find_element_by_tag_name("a")
+        anchor = row[0].find_element(By.TAG_NAME, "a")
         self.abbr = re.search(ABBR_REGEX, anchor.get_attribute("href")).group()
         self.name, self.city = get_name_city(anchor.text)

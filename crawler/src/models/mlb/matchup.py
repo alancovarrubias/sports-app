@@ -1,13 +1,14 @@
+from selenium.webdriver.common.by import By
 from models.abstract import AbstractModel
 
 
 def get_team(cell):
-    link = cell.find_element_by_tag_name("a").get_attribute("href")
+    link = cell.find_element(By.TAG_NAME, "a").get_attribute("href")
     return link.split("/")[-2].upper()
 
 
 def get_game_id(cell):
-    link = cell.find_element_by_tag_name("a").get_attribute("href")
+    link = cell.find_element(By.TAG_NAME, "a").get_attribute("href")
     return link.split("/")[-1]
 
 
