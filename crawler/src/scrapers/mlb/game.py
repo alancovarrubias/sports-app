@@ -1,15 +1,15 @@
 from selenium.webdriver.common.by import By
-from scrapers.baseball_reference import BaseballReferenceScraper
+from scrapers.abstract import AbstractScraper
+from scrapers.websites import BASEBALL_REFERENCE_URL
 from models.mlb.game import MlbGame
 import re
 
-
 TEAM_LINK_REGEX = r"[A-Z]{3}"
+class MlbGameScraper(AbstractScraper):
+    def __init__(self):
+        super().__init__(BASEBALL_REFERENCE_URL)
 
-
-class MlbGameScraper(BaseballReferenceScraper):
     def get_resource(self, args):
-
         season = args["season"]
         team = args["team"]
 

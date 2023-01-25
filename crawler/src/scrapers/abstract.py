@@ -1,9 +1,9 @@
-from os import path
-from abc import ABC, abstractmethod
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from os import path
+from abc import ABC, abstractmethod
 
 
 class AbstractScraper(ABC):
@@ -21,7 +21,6 @@ class AbstractScraper(ABC):
         self.driver.get(url)
 
     def find_element(self, selector):
-        
         return self.driver.find_element(By.CSS_SELECTOR, selector)
 
     def get_table_rows(self, table, table_selectors=None):
@@ -43,5 +42,5 @@ class AbstractScraper(ABC):
         return [row for row in table_rows if row]
 
     @abstractmethod
-    def get_resource(self):
+    def get_resource(self, args):
         pass

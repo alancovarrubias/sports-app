@@ -1,16 +1,17 @@
-from scrapers.wunderground import WundergroundScraper
+from scrapers.abstract import AbstractScraper
+from scrapers.websites import WUNDERGROUND_URL
 from models.mlb.forecast import MlbForecast
 from helpers.timezones import get_timezone
 from helpers.wunderground import get_team_endpoint
 from datetime import datetime, timedelta
-import pytz
 from helpers.datetime import DATE_FORMAT, DATETIME_FORMAT
-
+import pytz
 
 GAME_LENGTH = 4
+class MlbForecastScraper(AbstractScraper):
+    def __init__(self):
+        super().__init__(WUNDERGROUND_URL)
 
-
-class MlbForecastScraper(WundergroundScraper):
     def get_resource(self, args):
         team = args["team"]
         timezone = get_timezone(team)

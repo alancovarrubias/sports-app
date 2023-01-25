@@ -2,8 +2,6 @@ from urllib.request import urlopen
 import json
 
 API_KEY = "6532d6454b8aa370768e63d6ba5a832e"
-
-
 class MlbWeatherScraper:
     driver = None
 

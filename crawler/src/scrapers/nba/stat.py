@@ -1,8 +1,11 @@
-from scrapers.basketball_reference import BasketballReferenceScraper
+from scrapers.abstract import AbstractScraper
+from scrapers.websites import BASKETBALL_REFERENCE_URL
 from models.nba.stat import NbaStat
 
+class NbaStatScraper(AbstractScraper):
+    def __init__(self):
+        super().__init__(BASKETBALL_REFERENCE_URL)
 
-class NbaStatScraper(BasketballReferenceScraper):
     def get_resource(self, args):
         away_team = args["away_team"]
         home_team = args["home_team"]

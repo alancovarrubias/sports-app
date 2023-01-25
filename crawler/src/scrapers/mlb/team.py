@@ -1,8 +1,11 @@
-from scrapers.baseball_reference import BaseballReferenceScraper
+from scrapers.abstract import AbstractScraper
+from scrapers.websites import BASEBALL_REFERENCE_URL
 from models.mlb.team import MlbTeam
 
+class MlbTeamScraper(AbstractScraper):
+    def __init__(self):
+        super().__init__(BASEBALL_REFERENCE_URL)
 
-class MlbTeamScraper(BaseballReferenceScraper):
     def get_resource(self, args):
         season = args["season"]
         endpoint = f"leagues/MLB/{season}.shtml"

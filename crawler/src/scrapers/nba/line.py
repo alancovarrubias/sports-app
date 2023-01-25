@@ -1,8 +1,11 @@
-from scrapers.sports_book_review import SportsBookReviewScraper
 from selenium.webdriver.common.by import By
+from scrapers.abstract import AbstractScraper
+from scrapers.websites import SPORTS_BOOK_REVIEW_URL
 
+class NbaLineScraper(AbstractScraper):
+    def __init__(self):
+        super().__init__(SPORTS_BOOK_REVIEW_URL)
 
-class NbaLineScraper(SportsBookReviewScraper):
     def get_resource(self, args):
         date = args["date"]
         endpoint = f"betting-odds/nba-basketball/totals?date={date}"

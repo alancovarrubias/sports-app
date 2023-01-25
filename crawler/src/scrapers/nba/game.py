@@ -1,6 +1,6 @@
-from scrapers.basketball_reference import BasketballReferenceScraper
+from scrapers.abstract import AbstractScraper
+from scrapers.websites import BASKETBALL_REFERENCE_URL
 from models.nba.game import NbaGame
-
 
 NBA_MONTHS = (
     "october",
@@ -14,8 +14,10 @@ NBA_MONTHS = (
     "june",
 )
 
+class NbaGameScraper(AbstractScraper):
+    def __init__(self):
+        super().__init__(BASKETBALL_REFERENCE_URL)
 
-class NbaGameScraper(BasketballReferenceScraper):
     def get_resource(self, args):
         games = []
         for month in NBA_MONTHS:

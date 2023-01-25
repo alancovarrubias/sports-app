@@ -6,9 +6,8 @@ client = MongoClient("mongodb://mongo:27017/")
 
 
 class DbManager:
-    def __init__(self, args):
-        self.resource_type = args.resource_type
-        self.collection = client[args.sport][args.resource_type]
+    def __init__(self, sport, resource_type):
+        self.collection = client[sport][resource_type]
 
     def fetch_resource(self, key):
         resource = self.collection.find_one({"key": key})

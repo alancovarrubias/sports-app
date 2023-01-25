@@ -1,4 +1,5 @@
-from scrapers.fangraphs import FangraphsScraper
+from scrapers.abstract import AbstractScraper
+from scrapers.websites import FANGRAPHS_URL
 from models.mlb.advanced_stat.pitching.full_season import (
     MlbFullSeasonAdvancedPitchingStat,
 )
@@ -8,20 +9,12 @@ from models.mlb.advanced_stat.batting.full_season import (
     MlbFullSeasonAdvancedBattingStat,
 )
 from models.mlb.advanced_stat.batting.handed import MlbHandedAdvancedBattingStat
-from helpers.fangraphs import (
-    get_fangraph_id,
-    build_full_season_batting_endpoint,
-    build_left_handed_batting_endpoint,
-    build_right_handed_batting_endpoint,
-    build_last_14_batting_endpoint,
-    build_full_season_pitching_endpoint,
-    build_left_handed_pitching_endpoint,
-    build_right_handed_pitching_endpoint,
-    build_last_30_pitching_endpoint,
-)
+from helpers.fangraphs import *
 
+class MlbAdvancedStatScraper(AbstractScraper):
+    def __init__(self):
+        super().__init__(FANGRAPHS_URL)
 
-class MlbAdvancedStatScraper(FangraphsScraper):
     def get_stats_table_rows(self, endpoint):
         self.get(endpoint)
         advanced_stats_table = self.find_element(".rgMasterTable")

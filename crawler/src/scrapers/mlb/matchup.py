@@ -1,8 +1,11 @@
-from scrapers.espn import EspnScraper
+from scrapers.abstract import AbstractScraper
+from scrapers.websites import ESPN_URL
 from models.mlb.matchup import MlbMatchup
 
+class MlbMatchupScraper(AbstractScraper):
+    def __init__(self):
+        super().__init__(ESPN_URL)
 
-class MlbMatchupScraper(EspnScraper):
     def get_resource(self, args):
         date = args["date"]
         endpoint = f"mlb/schedule/_/date/{date}"

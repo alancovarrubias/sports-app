@@ -1,15 +1,17 @@
-from scrapers.baseball_reference import BaseballReferenceScraper
+from selenium.webdriver.common.by import By
+from scrapers.abstract import AbstractScraper
+from scrapers.websites import BASEBALL_REFERENCE_URL
 from const.mlb import PITCHING, BATTING
 from const.models import TEAM, PLAYER
-from selenium.webdriver.common.by import By
 from models.mlb.stat import MlbStat
 from models.mlb.play import MlbPlay
 import re
 
 WORD_REGEX = r"[^\w]"
+class MlbStatScraper(AbstractScraper):
+    def __init__(self):
+        super().__init__(BASEBALL_REFERENCE_URL)
 
-
-class MlbStatScraper(BaseballReferenceScraper):
     def get_resource(self, args):
         game_url = args["game_url"]
         endpoint = f"boxes/{game_url[0:3]}/{game_url}.shtml"

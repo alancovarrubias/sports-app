@@ -1,8 +1,12 @@
-from scrapers.basketball_reference import BasketballReferenceScraper
+from scrapers.abstract import AbstractScraper
+from scrapers.websites import BASKETBALL_REFERENCE_URL
 from models.nba.team import NbaTeam
 
 
-class NbaTeamScraper(BasketballReferenceScraper):
+class NbaTeamScraper(AbstractScraper):
+    def __init__(self):
+        super().__init__(BASKETBALL_REFERENCE_URL)
+
     def get_resource(self, args):
         season = args["season"]
         endpoint = f"leagues/NBA_{season}_standings.html"
