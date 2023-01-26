@@ -1,4 +1,3 @@
-import re
 from models.abstract import AbstractModel
 from models.helpers import get_team_abbr
 

@@ -1,10 +1,7 @@
 from pymongo import MongoClient
-from const.models import STAT
 from bson.json_util import dumps, loads
 
 client = MongoClient("mongodb://mongo:27017/")
-
-
 class DbManager:
     def __init__(self, sport, resource_type):
         self.collection = client[sport][resource_type]

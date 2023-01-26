@@ -9,8 +9,8 @@ flask = "*"
 flask-restful = "*"
 packaging = "*"
 pymongo = "*"
-selenium = "4.7.2"
-webdriver-manager = "*"
+selenium = "3.14.0"
+webdriver-manager = "2.5.3"
 bson = "*"
 
 [requires]

@@ -14,6 +14,7 @@ NBA_MONTHS = (
     "june",
 )
 
+
 class NbaGameScraper(AbstractScraper):
     def __init__(self):
         super().__init__(BASKETBALL_REFERENCE_URL)

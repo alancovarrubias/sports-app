@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 import json
 
 
@@ -6,7 +6,6 @@ class AbstractModel(ABC):
     def __init__(self, row):
         self.build(row)
 
-    @abstractmethod
     def build(self, row):
         pass
 

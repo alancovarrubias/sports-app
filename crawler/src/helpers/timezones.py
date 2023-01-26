@@ -1,6 +1,5 @@
 from pytz import timezone
 
-
 TEAM_TZ = {
     "LAA": "W",
     "BAL": "E",
@@ -34,7 +33,6 @@ TEAM_TZ = {
     "SFG": "W",
 }
 
-
 TZ_KEY = {
     "A": "US/Arizona",
     "W": "US/Pacific",
@@ -42,7 +40,6 @@ TZ_KEY = {
     "C": "US/Central",
     "E": "US/Eastern",
 }
-
 
 def get_timezone(team):
     return timezone(TZ_KEY[TEAM_TZ[team]])
