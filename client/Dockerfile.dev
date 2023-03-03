@@ -4,6 +4,6 @@ ARG HOST
 ENV HOST=${HOST}
 WORKDIR /home/node/code
 COPY --chown=node:node package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
-COPY . .
+RUN yarn install
+COPY . /home/node/code
 CMD ["yarn", "dev"]
