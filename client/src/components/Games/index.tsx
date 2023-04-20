@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client'
 import SportContext from 'app/contexts/SportContext'
 import DataTable from 'app/components/common/DataTable'
 import { Resource, Sport } from 'app/const'
-import { createRoute, Page } from 'app/Routes'
+import { createRoute, Page } from 'app/routes'
 import { GET_GAMES } from 'app/apollo/queries'
 import { Season, Game } from 'app/models'
 import "app/components/scss/Games.scss"

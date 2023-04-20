@@ -1,7 +1,7 @@
 import React from 'react'
 import Table, { RowBuilder } from 'app/components/common/Table'
 import { useHistory } from 'react-router-dom'
-import { createRoute, Page } from 'app/Routes'
+import { createRoute, Page } from 'app/routes'
 import { convertToDateString } from 'app/helpers/date'
 
 const DateRow = (date, { history }) => {

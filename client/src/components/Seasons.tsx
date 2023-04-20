@@ -5,7 +5,7 @@ import SportContext from 'app/contexts/SportContext'
 import { Resource, Sport } from 'app/const'
 import { Season } from 'app/models'
 import { GET_SEASONS } from 'app/apollo/queries'
-import { createRoute, Page } from 'app/Routes'
+import { createRoute, Page } from 'app/routes'
 import DataTable from 'app/components/common/DataTable'
 import 'app/components/scss/Seasons.scss'
 

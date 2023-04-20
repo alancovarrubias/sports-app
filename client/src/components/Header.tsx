@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import SportContext from 'app/contexts/SportContext'
-import { createRoute, Page } from 'app/Routes'
+import { createRoute, Page } from 'app/routes'
 import { Sport } from 'app/const'
 import 'app/components/scss/Header.scss'
 
@@ -31,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
         onClick={toggleSport}
       >
         {sport} Database
-        </h1>
+      </h1>
     </header>
   )
 }

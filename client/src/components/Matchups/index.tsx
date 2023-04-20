@@ -6,7 +6,7 @@ import { Sport } from 'app/const'
 import { GET_MATCHUPS } from 'app/apollo/queries'
 import Table, { RowBuilder, Row } from 'app/components/common/Table'
 import SportContext from 'app/contexts/SportContext'
-import { createRoute, Page } from 'app/Routes'
+import { createRoute, Page } from 'app/routes'
 import { Game } from 'app/models'
 
 const MatchupRow = (game, { history, searchParams }): Row => {

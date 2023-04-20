@@ -6,7 +6,7 @@ import DataTable from 'app/components/common/DataTable'
 import { IGameProps } from './index'
 import { GET_GAME } from 'app/apollo/queries'
 import { IMlbGame } from 'app/models'
-import { createRoute, Page } from 'app/Routes'
+import { createRoute, Page } from 'app/routes'
 
 interface IGameData {
   game: IMlbGame

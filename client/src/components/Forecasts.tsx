@@ -5,7 +5,7 @@ import { Sport } from 'app/const'
 import { GET_FORECASTS } from 'app/apollo/queries'
 import Table from 'app/components/common/Table'
 import SportContext from 'app/contexts/SportContext'
-import { createRoute, Page } from 'app/Routes'
+import { createRoute, Page } from 'app/routes'
 import { ForecastQuery, Game } from 'app/models'
 
 const convertTime = (time) => {

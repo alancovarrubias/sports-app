@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
-import { AUTH_TOKEN } from './const'
+import { AUTH_TOKEN } from '../const'
 
 type PrivateRouteProps = {
     component: React.FC,
@@ -19,8 +19,8 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...re
                 loggedIn ? (
                     <Component {...props} />
                 ) : (
-                        <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-                    )
+                    <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+                )
             }
         />
     )
