@@ -4,7 +4,7 @@ import Games from '../Games'
 import GamesMock from '@mocks/apollo/Games'
 
 jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
+  ...jest.requireActual("react-router-dom") as object,
   useLocation: () => ({
     search: "?season_id=1"
   })
