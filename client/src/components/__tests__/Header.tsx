@@ -2,7 +2,7 @@ import React from 'react'
 import { renderWithApp } from '@test-utils/App'
 import user from '@testing-library/user-event'
 import Header from '../Header'
-import { Sport } from '@app/const'
+import { Sport } from 'app/const'
 
 test('renders a header with the specified sport context', () => {
   const { getByTestId } = renderWithApp(<Header />, {

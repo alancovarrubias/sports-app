@@ -1,6 +1,7 @@
 #root {
   height: 100%;
 }
+
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -11,13 +12,16 @@
     'main';
   height: 100%;
 }
+
 header {
   grid-area: header;
 }
+
 main {
   grid-area: main;
   overflow: auto;
 }
+
 nav {
   grid-area: nav;
 }

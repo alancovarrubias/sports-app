@@ -1,5 +1,5 @@
 # build stage
-FROM node:12-stretch
+FROM node:lts-alpine
 ARG HOST
 ENV HOST=${HOST}
 WORKDIR /home/node/code

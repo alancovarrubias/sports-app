@@ -1,6 +1,6 @@
 import { MockedResponse } from '@apollo/client/testing'
-import { GET_GAME } from '@app/apollo/queries'
-import { Sport } from '@app/const'
+import { GET_GAME } from 'app/apollo/queries'
+import { Sport } from 'app/const'
 import Season from '@mocks/models/Season'
 import Game from '@mocks/models/Game'
 

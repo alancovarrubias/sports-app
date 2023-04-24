@@ -1,6 +1,6 @@
 import { MockedResponse } from '@apollo/client/testing'
-import { GET_SEASONS } from '@app/apollo/queries'
-import { Sport } from '@app/const'
+import { GET_SEASONS } from 'app/apollo/queries'
+import { Sport } from 'app/const'
 
 const SeasonsMock: MockedResponse[] = [
   {
