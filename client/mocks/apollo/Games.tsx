@@ -16,6 +16,9 @@ const GamesMock: MockedResponse[] = [
     },
     result: {
       data: {
+        season: {
+          year: '2020'
+        },
         games: [
           {
             id: '1',

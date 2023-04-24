@@ -27,7 +27,7 @@ const Games: React.FC = () => {
   const { error, loading, data } = useQuery<GamesData, GamesQuery>(
     GET_GAMES,
     {
-      variables: { sport, season_id },
+      variables: { sport, season_id, limit: 100, offset: 0 },
     }
   )
   if (loading) return <p>Loading...</p>

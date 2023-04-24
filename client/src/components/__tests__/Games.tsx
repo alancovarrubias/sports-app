@@ -2,12 +2,15 @@ import React from 'react'
 import { renderWithApp, waitFor } from '@test-utils/App'
 import Games from '../Games'
 import GamesMock from '@mocks/apollo/Games'
-import { useParams } from 'react-router-dom'
 
-const mockedUseParams = useParams as jest.Mock
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useLocation: () => ({
+    search: "?season_id=1"
+  })
+}));
 
 const renderGames = () => {
-  mockedUseParams.mockReturnValue({ season_id: 1 })
   return renderWithApp(<Games />, { mocks: GamesMock })
 }
 test('renders a header with the specified sport context', async () => {
