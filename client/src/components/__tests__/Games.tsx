@@ -13,7 +13,7 @@ jest.mock("react-router-dom", () => ({
 const renderGames = () => {
   return renderWithApp(<Games />, { mocks: GamesMock })
 }
-test('renders a header with the specified sport context', async () => {
+test('renders games header with the specified sport context', async () => {
   const { getByTestId } = renderGames()
   await waitFor(() =>
     expect(getByTestId('subheader')).toHaveTextContent(/games$/i)

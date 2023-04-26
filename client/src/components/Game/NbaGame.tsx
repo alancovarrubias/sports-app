@@ -25,7 +25,6 @@ const NbaGame: React.FC<IGameProps> = ({ sport, game_id }) => {
   if (error) return <p>Error!</p>
   if (!data) return <p>Missing Data</p>
   const { game: { away_team, home_team, away_players, home_players } } = data
-  console.log(data)
   const awayPlayersProps = {
     data: away_players,
     sport,

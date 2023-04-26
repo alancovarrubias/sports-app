@@ -22,7 +22,12 @@ const Game: React.FC = () => {
     game_id,
   }
   const GameComponent = sport == Sport.NBA ? NbaGame : MlbGame
-  return <GameComponent {...props} />
+  return <>
+    <div className="subheader">
+      <h3 data-testid="subheader">Game</h3>
+    </div>
+    <GameComponent {...props} />
+  </>
 }
 
 export default Game

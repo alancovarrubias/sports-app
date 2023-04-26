@@ -10,7 +10,7 @@ const renderGame = () => {
   mockedUseParams.mockReturnValue({ season_id: 1, game_id: 1 })
   return renderWithApp(<Game />, { mocks: GameMock })
 }
-test('renders a header with the specified sport context', async () => {
+test('renders game header with the specified sport context', async () => {
   const { getByTestId } = renderGame()
   await waitFor(() =>
     expect(getByTestId('subheader')).toHaveTextContent(/game/i)
