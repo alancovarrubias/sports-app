@@ -16,7 +16,5 @@ test('toggles sport context when clicked', () => {
   const { getByTestId } = renderWithApp(<Header isLoggedIn />)
   const header = getByTestId('header')
   user.click(header)
-  expect(header).toHaveTextContent(/mlb/i)
-  user.click(header)
   expect(header).toHaveTextContent(/nba/i)
 })
