@@ -1,4 +1,3 @@
-
 export interface Season {
     id: string
     year: number
@@ -60,8 +59,6 @@ interface MlbStat {
         pts: string
     }
 }
-
-
 export interface ForecastQuery {
     datetime: string
     forecasts: Forecast[]

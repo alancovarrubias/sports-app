@@ -1,45 +1,56 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
-import { LOGIN_USER } from 'app/apollo/queries'
 import { AUTH_TOKEN } from 'app/const'
 import { isLoggedInVar } from 'app/apollo/cache'
 import 'app/components/scss/Login.scss'
+import { gql } from '@apollo/client';
+
+export const LOGIN_USER_MUTATION = gql`
+  mutation LoginUser($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      token
+    }
+  }
+`;
+
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [invalid, setInvalid] = useState(false)
-    const history = useHistory()
-    const [login] = useMutation(LOGIN_USER, {
-        variables: {
-            username,
-            password,
-        },
-        onCompleted: ({ login }) => {
-            if (login.token) {
-                localStorage.setItem(AUTH_TOKEN, login.token)
-                isLoggedInVar(true)
-                history.push('/home')
-            } else {
-                setInvalid(true)
+    const [loginError, setLoginError] = useState('')
+    const [login] = useMutation(LOGIN_USER_MUTATION,
+        {
+            onCompleted: ({ login }) => {
+                if (login.token) {
+                    localStorage.setItem(AUTH_TOKEN, login.token)
+                    isLoggedInVar(true)
+                }
+            },
+            onError: (error) => {
+                setLoginError(error.message)
             }
         }
-    })
+    )
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        login({ variables: { username, password } })
+    };
     return (
-        <div className="login">
+        <form className="login" onSubmit={handleSubmit}>
             <h1>Login</h1>
-            <div>
+            <label>
+                Username:
                 <input id="username" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-            </div>
-            <div>
+            </label>
+            <label>
+                Password:
                 <input id="password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            </div>
+            </label>
             <div>
-                <button onClick={() => login()}>Submit</button>
-                {invalid && <p>Invalid Credentials. Please try again.</p>}
+                {loginError && <p>{loginError}</p>}
+                <button type="submit">Submit</button>
             </div>
-        </div>
+        </form>
     )
 }
 

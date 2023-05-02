@@ -25,7 +25,7 @@ const Main: React.FC = () => {
   const sportParam = params.get('sport') as Sport
   const sport = sportParam ? sportParam : Sport.MLB
   const sportHook = useState(sport)
-  const { data: { isLoggedIn } } = useQuery(IS_LOGGED_IN);
+  const { data: { isLoggedIn } } = useQuery(IS_LOGGED_IN)
   return (
     <SportContext.Provider value={sportHook}>
       <div className="grid-container">

@@ -14,7 +14,11 @@ class AuthAPI extends RESTDataSource {
             }
         }
         const res = await this.post('sessions', user)
+        console.log(res)
         const token = res['user']['result']
+        if (!token) {
+            throw new Error('Failed to login')
+        }
         return {
             token
         }
