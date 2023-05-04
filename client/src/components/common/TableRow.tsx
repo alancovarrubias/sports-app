@@ -1,5 +1,5 @@
 import React, { ComponentType } from 'react'
-import 'app/components/scss/Table.scss'
+import 'app/scss/Table.scss'
 
 type Cell = ComponentType | string | number;
 type RowClick = () => void | undefined;

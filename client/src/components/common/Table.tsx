@@ -1,5 +1,5 @@
 import React, { ReactText } from 'react'
-import 'app/components/scss/Table.scss'
+import 'app/scss/Table.scss'
 import TableRow, { Row } from './TableRow'
 
 export { RowBuilder } from './TableRow'

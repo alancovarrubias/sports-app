@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { AUTH_TOKEN } from 'app/const'
 import { isLoggedInVar } from 'app/apollo/cache'
-import 'app/components/scss/Login.scss'
+import 'app/scss/Login.scss'
 import { gql } from '@apollo/client';
 
 export const LOGIN_USER_MUTATION = gql`

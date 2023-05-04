@@ -1,10 +1,12 @@
 import { ApolloClient, createHttpLink, gql } from '@apollo/client'
+import fetch from 'cross-fetch';
 import { setContext } from '@apollo/client/link/context';
 import { AUTH_TOKEN } from 'app/const'
 import { cache } from './cache'
 
 const httpLink = createHttpLink({
   uri: `${process.env.PROTOCOL}://${process.env.HOST}/graphql`,
+  fetch,
 })
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists

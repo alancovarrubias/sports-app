@@ -1,6 +1,7 @@
 {
   "name": "sports-app",
   "version": "0.0.1",
+  "license": "MIT",
   "scripts": {
     "dev": "webpack serve --config webpack.dev.config.ts",
     "build": "webpack --config webpack.prod.config.ts",
@@ -10,6 +11,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.7",
     "@blueprintjs/core": "^3.38.0",
+    "cross-fetch": "^3.1.5",
     "graphql": "^15.4.0",
     "lodash.get": "^4.4.2",
     "normalize.css": "^8.0.1",

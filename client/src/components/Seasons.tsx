@@ -7,7 +7,7 @@ import { Season } from 'app/models'
 import { GET_SEASONS } from 'app/apollo/queries'
 import { createRoute, Page } from 'app/routes'
 import DataTable from 'app/components/common/DataTable'
-import 'app/components/scss/Seasons.scss'
+import 'app/scss/Seasons.scss'
 
 interface SeasonsData {
   seasons: Season[]

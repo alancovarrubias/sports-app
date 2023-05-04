@@ -5,7 +5,7 @@ import { AUTH_TOKEN } from '../const'
 type PrivateRouteProps = {
     component: React.FC,
     path: string,
-    exact: boolean
+    exact?: boolean
 }
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
 

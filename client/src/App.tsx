@@ -2,14 +2,15 @@ import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/client'
 import client from 'app/apollo/client'
-import Main from 'app/components/Main'
+import AppRoutes from './AppRoutes'
+import 'app/scss/Grid.scss'
+import 'app/scss/style.scss'
 
-
-const App: React.FC = () => {
+const App = (): JSX.Element => {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Main />
+        <AppRoutes />
       </Router>
     </ApolloProvider>
   )

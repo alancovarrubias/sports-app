@@ -7,7 +7,7 @@ import { Resource, Sport } from 'app/const'
 import { createRoute, Page } from 'app/routes'
 import { GET_GAMES } from 'app/apollo/queries'
 import { Season, Game } from 'app/models'
-import "app/components/scss/Games.scss"
+import "app/scss/Games.scss"
 
 interface GamesData {
   season: Season

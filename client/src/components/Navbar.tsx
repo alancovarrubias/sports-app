@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { isLoggedInVar } from 'app/apollo/cache'
 import SportContext from 'app/contexts/SportContext'
-import 'app/components/scss/Navbar.scss'
+import 'app/scss/Navbar.scss'
 
 interface Props {
   isLoggedIn: boolean
