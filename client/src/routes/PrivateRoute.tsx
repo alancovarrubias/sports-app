@@ -7,8 +7,7 @@ type PrivateRouteProps = {
     path: string,
     exact?: boolean
 }
-const PrivateRoute = ({ component: Component, ...rest }: PrivateRouteProps) => {
-
+const PrivateRoute = ({ component: Component, ...rest }: PrivateRouteProps): JSX.Element => {
     const authToken = localStorage.getItem(AUTH_TOKEN)
     const loggedIn = authToken && authToken !== 'null'
 

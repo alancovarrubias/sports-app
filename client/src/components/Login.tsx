@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { AUTH_TOKEN } from 'app/const'
 import { isLoggedInVar } from 'app/apollo/cache'
-import 'app/scss/Login.scss'
 import { gql } from '@apollo/client';
+import 'app/scss/Login.scss'
 
 export const LOGIN_USER_MUTATION = gql`
   mutation LoginUser($username: String!, $password: String!) {
@@ -15,7 +15,7 @@ export const LOGIN_USER_MUTATION = gql`
 `;
 
 
-const Login: React.FC = () => {
+const Login = (): JSX.Element => {
     const history = useHistory()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')

@@ -14,7 +14,7 @@ const DateRow = (date, { history }) => {
   return RowBuilder(cells, onClick)
 }
 
-const TABLE_HEADERS = ['Pages']
+const TABLE_HEADERS = ['Paths']
 const Home: React.FC = () => {
   const history = useHistory()
   const today = new Date()

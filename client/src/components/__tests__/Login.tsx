@@ -1,11 +1,8 @@
-import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import { MockedProvider } from '@apollo/client/testing';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 import { GraphQLError } from 'graphql';
 import { AUTH_TOKEN } from 'app/const';
 import { LOGIN_USER_MUTATION } from '../Login';
-import AppRoutes from 'app/AppRoutes'
+import { renderApp } from '@test-utils/Render'
 
 
 jest.mock('../Home')
@@ -26,13 +23,7 @@ describe('Login component', () => {
 
     }
     const renderLoginComponent = (mocks) => {
-        render(
-            <MemoryRouter initialEntries={['/login']}>
-                <MockedProvider mocks={mocks} addTypename={false}>
-                    <AppRoutes />
-                </MockedProvider>
-            </MemoryRouter>
-        );
+        renderApp({ path: '/login', mocks })
 
         return {
             usernameInput: screen.getByLabelText('Username:'),
