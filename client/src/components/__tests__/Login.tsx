@@ -1,17 +1,37 @@
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 import { GraphQLError } from 'graphql';
-import Login, { LOGIN_USER_MUTATION } from '../Login';
+import { AUTH_TOKEN } from 'app/const';
+import { LOGIN_USER_MUTATION } from '../Login';
+import AppRoutes from 'app/AppRoutes'
 
+
+jest.mock('../Home')
 
 describe('Login component', () => {
     const loginVariables = { username: 'testuser', password: 'testpass' };
+    const token = 'abc123';
+    const createMock = (result) => {
+        return [
+            {
+                request: {
+                    query: LOGIN_USER_MUTATION,
+                    variables: loginVariables,
+                },
+                result,
+            },
+        ]
+
+    }
     const renderLoginComponent = (mocks) => {
         render(
-            <MockedProvider mocks={mocks} addTypename={false}>
-                <Login />
-            </MockedProvider>
+            <MemoryRouter initialEntries={['/login']}>
+                <MockedProvider mocks={mocks} addTypename={false}>
+                    <AppRoutes />
+                </MockedProvider>
+            </MemoryRouter>
         );
 
         return {
@@ -26,42 +46,37 @@ describe('Login component', () => {
         fireEvent.change(passwordInput, { target: { value: loginVariables.password } });
     };
 
-    it('should successfully log in the user and store the authentication token', async () => {
-        const token = 'abc123';
+    describe('successful login', () => {
+        it('should store the authentication token', async () => {
+            const mocks = createMock({ data: { login: { token } } })
 
-        const mocks = [
-            {
-                request: {
-                    query: LOGIN_USER_MUTATION,
-                    variables: { username: 'testuser', password: 'testpass' },
-                },
-                result: {
-                    data: { login: { token } }
-                },
-            },
-        ];
+            const { usernameInput, passwordInput, loginButton } = renderLoginComponent(mocks)
 
-        const { usernameInput, passwordInput, loginButton } = renderLoginComponent(mocks)
+            fillLoginForm(usernameInput, passwordInput, loginVariables)
 
-        fillLoginForm(usernameInput, passwordInput, loginVariables)
+            fireEvent.click(loginButton);
 
-        fireEvent.click(loginButton);
+            await waitFor(() => expect(getToken()).toEqual(token))
+        });
 
-        await waitFor(() => expect(getToken()).toEqual(token))
-    });
+        it('should redirect to the home page', async () => {
+            const mocks = createMock({ data: { login: { token } } })
+
+            const { usernameInput, passwordInput, loginButton } = renderLoginComponent(mocks)
+
+            fillLoginForm(usernameInput, passwordInput, loginVariables)
+
+            fireEvent.click(loginButton);
+            await waitFor(() => expect(getToken()).toEqual(token))
+
+            const homeElement = screen.getByText(/mock home/i);
+            expect(homeElement).toBeInTheDocument();
+        });
+    })
+
 
     it('should display an error message if there is an error logging in', async () => {
-        const mocks = [
-            {
-                request: {
-                    query: LOGIN_USER_MUTATION,
-                    variables: { username: 'testuser', password: 'testpass' },
-                },
-                result: {
-                    errors: [new GraphQLError('Failed to login')],
-                },
-            },
-        ];
+        const mocks = createMock({ errors: [new GraphQLError('Failed to login')] })
 
         const { usernameInput, passwordInput, loginButton } = renderLoginComponent(mocks)
 
@@ -74,5 +89,5 @@ describe('Login component', () => {
 });
 
 function getToken() {
-    return localStorage.getItem('auth-token');
+    return localStorage.getItem(AUTH_TOKEN);
 }

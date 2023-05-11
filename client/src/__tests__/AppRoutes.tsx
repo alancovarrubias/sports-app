@@ -15,35 +15,35 @@ const renderAppRoutes = (path) => {
     )
 }
 
-test('renders Login page when visiting /login', () => {
+test('/login renders login page', () => {
     renderAppRoutes('/login')
     const loginElement = screen.getByText(/mock login/i);
     expect(loginElement).toBeInTheDocument();
 });
 
-describe('User not logged in', () => {
-    test('redirects to the login page when visiting /', () => {
+describe('unauthorized user', () => {
+    test('/ redirects to login page', () => {
         renderAppRoutes('/')
         const loginElement = screen.getByText(/mock login/i);
         expect(loginElement).toBeInTheDocument();
     });
-    test('redirects to the login page when visiting /home', () => {
+    test('/home redirects to login page', () => {
         renderAppRoutes('/home')
         const loginElement = screen.getByText(/mock login/i);
         expect(loginElement).toBeInTheDocument();
     });
 })
 
-describe('User logged in', () => {
+describe('authorized user', () => {
     beforeEach(() => {
         localStorage.setItem(AUTH_TOKEN, 'TOKEN')
     })
-    test('redirects to the home page when visiting /', () => {
+    test('/ redirects to home page', () => {
         renderAppRoutes('/')
         const homeElement = screen.getByText(/mock home/i);
         expect(homeElement).toBeInTheDocument();
     });
-    test('redirects to the home page when visiting /home', () => {
+    test('/home renders home page', () => {
         renderAppRoutes('/home')
         const homeElement = screen.getByText(/mock home/i);
         expect(homeElement).toBeInTheDocument();

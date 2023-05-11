@@ -5,15 +5,13 @@ import Login from 'app/components/Login'
 import NoMatch from 'app/components/NoMatch'
 import PrivateRoute from 'app/routes/PrivateRoute'
 
-const AppRoutes = (): JSX.Element => {
-    return (
-        <Switch>
-            <Redirect exact from="/" to="/home" />
-            <Route path="/login" component={Login} />
-            <PrivateRoute path="/home" component={Home} />
-            <Route component={NoMatch} />
-        </Switch>
-    )
-}
+const AppRoutes = (): JSX.Element => (
+    <Switch>
+        <Redirect exact from="/" to="/home" />
+        <Route path="/login" component={Login} />
+        <PrivateRoute path="/home" component={Home} />
+        <Route component={NoMatch} />
+    </Switch>
+)
 
 export default AppRoutes

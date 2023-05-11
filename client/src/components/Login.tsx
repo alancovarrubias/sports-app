@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { AUTH_TOKEN } from 'app/const'
 import { isLoggedInVar } from 'app/apollo/cache'
@@ -15,6 +16,7 @@ export const LOGIN_USER_MUTATION = gql`
 
 
 const Login: React.FC = () => {
+    const history = useHistory()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [loginError, setLoginError] = useState('')
@@ -24,6 +26,7 @@ const Login: React.FC = () => {
                 if (login.token) {
                     localStorage.setItem(AUTH_TOKEN, login.token)
                     isLoggedInVar(true)
+                    history.push('/home')
                 }
             },
             onError: (error) => {

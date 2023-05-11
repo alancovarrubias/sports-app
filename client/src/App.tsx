@@ -6,14 +6,12 @@ import AppRoutes from './AppRoutes'
 import 'app/scss/Grid.scss'
 import 'app/scss/style.scss'
 
-const App = (): JSX.Element => {
-  return (
-    <ApolloProvider client={client}>
-      <Router>
-        <AppRoutes />
-      </Router>
-    </ApolloProvider>
-  )
-}
+const App = (): JSX.Element => (
+  <ApolloProvider client={client}>
+    <Router>
+      <AppRoutes />
+    </Router>
+  </ApolloProvider>
+)
 
 export default App
