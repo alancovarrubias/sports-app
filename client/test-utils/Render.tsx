@@ -9,6 +9,19 @@ interface RenderAppProps {
     mocks?: MockedResponse[]
     path?: string
 }
+export const renderComponent = (ui: JSX.Element, { mocks = [], path = '/' }: RenderAppProps) => {
+    const Wrapper = ({ children }) => {
+        return (
+            <MemoryRouter initialEntries={[path]}>
+                <MockedProvider mocks={mocks} addTypename={false}>
+                    {children as JSX.Element}
+                </MockedProvider>
+            </MemoryRouter>
+        )
+    }
+    return render(ui, { wrapper: Wrapper })
+}
+
 export const renderApp = ({ mocks = [], path = '/' }: RenderAppProps) => {
     return render(
         <MemoryRouter initialEntries={[path]}>
@@ -18,12 +31,12 @@ export const renderApp = ({ mocks = [], path = '/' }: RenderAppProps) => {
         </MemoryRouter>
     )
 }
-    export const createMock = (request, result) => {
-        return [
-            {
-                request,
-                result,
-            },
-        ]
+export const createMock = (request, result) => {
+    return [
+        {
+            request,
+            result,
+        },
+    ]
 
-    }
+}

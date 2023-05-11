@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
-import { AUTH_TOKEN } from 'app/const'
+import { AUTH_TOKEN, Paths } from 'app/const'
 import { isLoggedInVar } from 'app/apollo/cache'
 import { gql } from '@apollo/client';
 import 'app/scss/Login.scss'
@@ -26,7 +26,7 @@ const Login = (): JSX.Element => {
                 if (login.token) {
                     localStorage.setItem(AUTH_TOKEN, login.token)
                     isLoggedInVar(true)
-                    history.push('/home')
+                    history.push(Paths.Home)
                 }
             },
             onError: (error) => {

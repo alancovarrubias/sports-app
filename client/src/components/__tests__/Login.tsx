@@ -1,6 +1,6 @@
 import { fireEvent, waitFor, screen } from '@testing-library/react';
 import { GraphQLError } from 'graphql';
-import { AUTH_TOKEN } from 'app/const';
+import { AUTH_TOKEN, Paths } from 'app/const';
 import { LOGIN_USER_MUTATION } from '../Login';
 import { renderApp, createMock } from '@test-utils/Render'
 
@@ -10,7 +10,7 @@ jest.mock('../Home')
 describe('Login component', () => {
     const loginVariables = { username: 'testuser', password: 'testpass' }
     const renderLoginComponent = (mocks) => {
-        renderApp({ path: '/login', mocks })
+        renderApp({ path: Paths.Login, mocks })
 
         return {
             usernameInput: screen.getByLabelText('Username:'),
@@ -61,7 +61,8 @@ describe('Login component', () => {
     })
 
     describe('successful login', () => {
-        const loginFailureMock = () => createMock(request, { errors: [new GraphQLError('Failed to login')] })
+        const failureMessage = 'Failed to login'
+        const loginFailureMock = () => createMock(request, { errors: [new GraphQLError(failureMessage)] })
         it('should display an error message if there is an error logging in', async () => {
             const mocks = loginFailureMock()
 
@@ -71,7 +72,7 @@ describe('Login component', () => {
 
             fireEvent.click(loginButton);
 
-            await waitFor(() => expect(screen.queryByText('Failed to login')).toBeInTheDocument())
+            await waitFor(() => expect(screen.queryByText(failureMessage)).toBeInTheDocument())
         });
     })
 });
