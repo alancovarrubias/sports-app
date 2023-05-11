@@ -2,7 +2,7 @@ import { fireEvent, waitFor, screen } from '@testing-library/react';
 import { GraphQLError } from 'graphql';
 import { AUTH_TOKEN, Paths } from 'app/const';
 import { LOGIN_USER_MUTATION } from '../Login';
-import { renderApp, createMock } from '@test-utils/Render'
+import { renderLayout, createMock } from '@test-utils/Render'
 
 
 jest.mock('../Home')
@@ -10,7 +10,7 @@ jest.mock('../Home')
 describe('Login component', () => {
     const loginVariables = { username: 'testuser', password: 'testpass' }
     const renderLoginComponent = (mocks) => {
-        renderApp({ path: Paths.Login, mocks })
+        renderLayout({ path: Paths.Login, mocks })
 
         return {
             usernameInput: screen.getByLabelText('Username:'),

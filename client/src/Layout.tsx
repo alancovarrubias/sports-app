@@ -1,16 +1,21 @@
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
-import { AUTH_TOKEN, Paths } from 'app/const'
-import Home from 'app/components/Home'
-import Login from 'app/components/Login'
-import NoMatch from 'app/components/NoMatch'
-import PrivateRoute from 'app/routes/PrivateRoute'
+import AppRoutes from 'app/AppRoutes'
+import { AUTH_TOKEN } from 'app/const'
 
-const Layout = (): JSX.Element => {
-  if (localStorage.getItem(AUTH_TOKEN)) {
+const Logout = (): JSX.Element => {
+  if (!localStorage.getItem(AUTH_TOKEN)) {
     return null
   }
-  return <div>Logout</div>
+  return <button>Logout</button>
+}
+
+const Layout = (): JSX.Element => {
+  return (
+    <>
+      <Logout />
+      <AppRoutes />
+    </>
+  )
 }
 
 export default Layout
