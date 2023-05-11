@@ -18,3 +18,12 @@ export const renderApp = ({ mocks = [], path = '/' }: RenderAppProps) => {
         </MemoryRouter>
     )
 }
+    export const createMock = (request, result) => {
+        return [
+            {
+                request,
+                result,
+            },
+        ]
+
+    }
