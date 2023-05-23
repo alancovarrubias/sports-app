@@ -1,5 +1,5 @@
 # build stage
-FROM node:12-stretch
+FROM node:16
 WORKDIR /home/node/code
 COPY --chown=node:node package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
