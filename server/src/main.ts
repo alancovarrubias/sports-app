@@ -4,7 +4,7 @@ import resolvers from './resolvers'
 import typeDefs from './type-defs'
 import dataSources from './datasources'
 
-const server = new ApolloServer({
+export const server = new ApolloServer({
   cors: {
     origin: '*', // <- allow request from all domains
   },
