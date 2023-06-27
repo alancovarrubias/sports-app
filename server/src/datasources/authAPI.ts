@@ -28,6 +28,11 @@ class AuthAPI extends RESTDataSource {
         const res = await this.get('users')
         return res
     }
+
+    async currentUser(_args) {
+        const res = await this.get('users/current')
+        return res
+    }
 }
 
 export default AuthAPI

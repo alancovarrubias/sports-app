@@ -1,6 +1,7 @@
 import { gql } from 'apollo-server'
 export default gql`
   type Query {
+    currentUser: User
     users: [User]!
     matchups(sport: String!, date: String!): [Game]!
     seasons(sport: String!): [Season]!

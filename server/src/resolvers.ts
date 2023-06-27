@@ -18,6 +18,7 @@ export default {
     },
   },
   Query: {
+    currentUser: (_source, args, { dataSources }) => dataSources[AUTH].currentUser(args),
     users: (_source, args, { dataSources }) => dataSources[AUTH].getUsers(args),
     forecasts: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getForecasts(args),
     matchups: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getMatchups(args),
