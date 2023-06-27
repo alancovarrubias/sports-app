@@ -2,7 +2,6 @@ import { gql } from 'apollo-server'
 export default gql`
   type Query {
     currentUser: User
-    users: [User]!
     matchups(sport: String!, date: String!): [Game]!
     seasons(sport: String!): [Season]!
     season(sport: String!, season_id: ID!): Season!
@@ -11,7 +10,8 @@ export default gql`
     forecasts(sport: String!, game_id: ID!): [ForecastQuery]!
   }
   type Mutation {
-    login(username: String!, password: String!): AuthPayload
+    loginUser(email: String!, password: String!): String
+    registerUser(email: String!, password: String!): String
   }
   type AuthPayload {
     token: String

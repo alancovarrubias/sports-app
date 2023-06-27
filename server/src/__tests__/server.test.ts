@@ -21,28 +21,31 @@ describe('Apollo Server', () => {
     let server: ApolloServer;
     let query: any;
     let mutate: any;
+    let authAPI: any;
+
+    beforeAll(() => {
+        authAPI = new TestAuthAPI()
+        server = new ApolloServer({
+            typeDefs,
+            resolvers,
+            dataSources: () => ({
+                [AUTH]: authAPI
+            }),
+            context: () => ({ token: 'dummy_token' }), // Mock the token in the context
+        });
+        const testClient = createTestClient(server);
+
+        query = testClient.query;
+        mutate = testClient.mutate;
+    })
 
     afterEach(() => {
         jest.clearAllMocks();
     });
 
     it('should return the current user', async () => {
-        const authAPI = new TestAuthAPI();
-        const mockedGet = jest.fn();
+        const mockedGet = jest.spyOn(authAPI, 'get');
         mockedGet.mockResolvedValueOnce({ id: 1 });
-        authAPI.get = mockedGet;
-        server = new ApolloServer({
-            typeDefs,
-            resolvers,
-            dataSources: () => ({
-                [AUTH]: authAPI,
-            }),
-            context: () => ({ token: 'dummy_token' }), // Mock the token in the context
-        });
-
-        const testClient = createTestClient(server);
-        query = testClient.query;
-        mutate = testClient.mutate;
 
         const GET_CURRENT_USER = gql`
             query {
@@ -55,5 +58,35 @@ describe('Apollo Server', () => {
         const response = await query({ query: GET_CURRENT_USER });
         expect(response.data).toEqual({ currentUser: { id: '1' } });
         expect(mockedGet).toHaveBeenCalledWith('users/current');
+    });
+
+    it('should register a user', async () => {
+        const mockedPost = jest.spyOn(authAPI, 'post');
+        mockedPost.mockResolvedValueOnce({ token: 'dummy_token' });
+
+        const REGISTER_USER = gql`
+            mutation {
+                registerUser(email: "test@example.com", password: "password")
+            }
+        `;
+
+        const response = await mutate({ mutation: REGISTER_USER });
+        expect(response.data).toEqual({ registerUser: 'dummy_token' });
+        expect(mockedPost).toHaveBeenCalledWith('users', { email: 'test@example.com', password: 'password' });
+    });
+
+    it('should login a user', async () => {
+        const mockedPost = jest.spyOn(authAPI, 'post');
+        mockedPost.mockResolvedValueOnce({ token: 'dummy_token' });
+
+        const LOGIN_USER = gql`
+            mutation {
+                loginUser(email: "test@example.com", password: "password")
+            }
+        `;
+
+        const response = await mutate({ mutation: LOGIN_USER });
+        expect(response.data).toEqual({ loginUser: 'dummy_token' });
+        expect(mockedPost).toHaveBeenCalledWith('login', { email: 'test@example.com', password: 'password' });
     });
 });

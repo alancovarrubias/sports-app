@@ -19,7 +19,6 @@ export default {
   },
   Query: {
     currentUser: (_source, args, { dataSources }) => dataSources[AUTH].currentUser(args),
-    users: (_source, args, { dataSources }) => dataSources[AUTH].getUsers(args),
     forecasts: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getForecasts(args),
     matchups: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getMatchups(args),
     season: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getSeason(args),
@@ -28,6 +27,7 @@ export default {
     games: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getGames(args),
   },
   Mutation: {
-    login: (_source, args, { dataSources }) => dataSources[AUTH].login(args)
+    loginUser: (_source, args, { dataSources }) => dataSources[AUTH].loginUser(args),
+    registerUser: (_source, args, { dataSources }) => dataSources[AUTH].registerUser(args)
   }
 }
