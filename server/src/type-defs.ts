@@ -13,10 +13,6 @@ export default gql`
     loginUser(email: String!, password: String!): String
     registerUser(email: String!, password: String!): String
   }
-  type AuthPayload {
-    token: String
-    user: User
-  }
   type User {
     id: ID!
     username: String!

@@ -22,8 +22,10 @@ describe('Apollo Server', () => {
     let query: any;
     let mutate: any;
     let authAPI: any;
+    let dummyToken: any;
 
     beforeAll(() => {
+        dummyToken = { token: 'dummy_token' }
         authAPI = new TestAuthAPI()
         server = new ApolloServer({
             typeDefs,
@@ -31,7 +33,7 @@ describe('Apollo Server', () => {
             dataSources: () => ({
                 [AUTH]: authAPI
             }),
-            context: () => ({ token: 'dummy_token' }), // Mock the token in the context
+            context: () => (dummyToken), // Mock the token in the context
         });
         const testClient = createTestClient(server);
 
@@ -62,7 +64,7 @@ describe('Apollo Server', () => {
 
     it('should register a user', async () => {
         const mockedPost = jest.spyOn(authAPI, 'post');
-        mockedPost.mockResolvedValueOnce({ token: 'dummy_token' });
+        mockedPost.mockResolvedValueOnce(dummyToken);
 
         const REGISTER_USER = gql`
             mutation {
@@ -77,7 +79,7 @@ describe('Apollo Server', () => {
 
     it('should login a user', async () => {
         const mockedPost = jest.spyOn(authAPI, 'post');
-        mockedPost.mockResolvedValueOnce({ token: 'dummy_token' });
+        mockedPost.mockResolvedValueOnce(dummyToken);
 
         const LOGIN_USER = gql`
             mutation {
