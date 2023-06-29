@@ -22,10 +22,10 @@ describe('Apollo Server', () => {
     let query: any;
     let mutate: any;
     let authAPI: any;
-    let dummyToken: any;
+    let dummyToken: string;
 
     beforeAll(() => {
-        dummyToken = { token: 'dummy_token' }
+        dummyToken = 'dummy_token'
         authAPI = new TestAuthAPI()
         server = new ApolloServer({
             typeDefs,
@@ -33,7 +33,7 @@ describe('Apollo Server', () => {
             dataSources: () => ({
                 [AUTH]: authAPI
             }),
-            context: () => (dummyToken), // Mock the token in the context
+            context: () => ({ token: dummyToken }), // Mock the token in the context
         });
         const testClient = createTestClient(server);
 
@@ -64,7 +64,7 @@ describe('Apollo Server', () => {
 
     it('should register a user', async () => {
         const mockedPost = jest.spyOn(authAPI, 'post');
-        mockedPost.mockResolvedValueOnce(dummyToken);
+        mockedPost.mockResolvedValueOnce({ token: dummyToken });
 
         const REGISTER_USER = gql`
             mutation {
@@ -73,13 +73,13 @@ describe('Apollo Server', () => {
         `;
 
         const response = await mutate({ mutation: REGISTER_USER });
-        expect(response.data).toEqual({ registerUser: 'dummy_token' });
+        expect(response.data).toEqual({ registerUser: dummyToken });
         expect(mockedPost).toHaveBeenCalledWith('users', { email: 'test@example.com', password: 'password' });
     });
 
     it('should login a user', async () => {
         const mockedPost = jest.spyOn(authAPI, 'post');
-        mockedPost.mockResolvedValueOnce(dummyToken);
+        mockedPost.mockResolvedValueOnce({ token: dummyToken });
 
         const LOGIN_USER = gql`
             mutation {
@@ -88,7 +88,7 @@ describe('Apollo Server', () => {
         `;
 
         const response = await mutate({ mutation: LOGIN_USER });
-        expect(response.data).toEqual({ loginUser: 'dummy_token' });
+        expect(response.data).toEqual({ loginUser: dummyToken });
         expect(mockedPost).toHaveBeenCalledWith('login', { email: 'test@example.com', password: 'password' });
     });
 });
