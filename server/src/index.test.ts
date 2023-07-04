@@ -1,7 +1,9 @@
 import type { FormattedExecutionResult } from "graphql";
+import fetch, { Response } from "node-fetch";
 import request from "supertest";
 import createApolloServer from "./createApolloServer";
-import { USER } from "./const";
+import { MOCK_USER } from "./mocks";
+jest.mock("node-fetch");
 
 type SingleFormattedExecutionResult = {
   kind: "single";
@@ -36,7 +38,7 @@ describe("integration tests", () => {
       },
       {
         contextValue: {
-          user: USER,
+          user: MOCK_USER,
         },
       }
     );
@@ -45,30 +47,41 @@ describe("integration tests", () => {
     const body = response.body as SingleFormattedExecutionResult;
     expect(body.singleResult.errors).toBeUndefined();
     expect(body.singleResult.data).toEqual({
-      currentUser: USER,
+      currentUser: MOCK_USER,
     });
   });
 });
 
 describe("e2e tests", () => {
-  it("throws error without an authorization token", async () => {
+  it("throws error with an invalid authorization token", async () => {
+    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
+      Promise.resolve({ status: 401 } as Response)
+    );
     const response = await request(url).post("/").send({ query: GET_USER });
 
-    expect(response.body.kind === "single");
+    expect(fetch).toHaveBeenCalled();
     const error = response.body.errors[0];
     expect(error.extensions.code).toEqual("UNAUTHENTICATED");
     expect(error.message).toEqual("User is not authenticated");
   });
-  it("returns provided user with any authorization code", async () => {
+  it("returns provided user with a valid authorization code", async () => {
+    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
+      Promise.resolve({
+        status: 200,
+        json: () => Promise.resolve(MOCK_USER),
+      } as Response)
+    );
     const response = await request(url)
       .post("/")
-      .set({ Authorization: "dummy_token" })
+      .set({ Authorization: "valid_token" })
       .send({ query: GET_USER });
 
-    expect(response.body.kind === "single");
+    expect(fetch).toHaveBeenCalledWith("http://auth:3000/auth/verify", {
+      headers: { Authorization: "Bearer valid_token" },
+    });
     expect(response.body.errors).toBeUndefined();
     expect(response.body.data).toEqual({
-      currentUser: USER,
+      currentUser: MOCK_USER,
     });
   });
 });

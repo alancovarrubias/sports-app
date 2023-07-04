@@ -15,7 +15,7 @@ class AuthenticationController < ApplicationController
     decoded_token = decode_token(token)
 
     if decoded_token
-      render json: { valid: true, user_id: decoded_token['user_id'] }
+      render json: { valid: true, id: decoded_token['id'], email: decoded_token['email'] }
     else
       render json: { valid: false }, status: :unauthorized
     end
@@ -24,7 +24,7 @@ class AuthenticationController < ApplicationController
   private
 
   def generate_token(user)
-    payload = { user_id: user.id }
+    payload = { id: user.id, email: user.email }
     JWT.encode(payload, Rails.application.secrets.secret_key_base)
   end
 

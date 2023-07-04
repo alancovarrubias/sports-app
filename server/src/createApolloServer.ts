@@ -2,15 +2,33 @@ import { ApolloServer } from "@apollo/server";
 import { readFileSync } from "fs";
 import type { ListenOptions } from "net";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import resolvers from "./resolvers";
-import { USER, UserInterface } from "./const";
 import { GraphQLError } from "graphql";
+import fetch from "node-fetch";
+import resolvers from "./resolvers";
+import { User } from "./__generated__/resolvers-types";
 
 const typeDefs = readFileSync("./schema.graphql", { encoding: "utf-8" });
 
 interface MyContext {
-  user: UserInterface;
+  user: User;
 }
+
+const getUser = async (token) => {
+  const res = await fetch("http://auth:3000/auth/verify", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (res.status == 401) {
+    throw new GraphQLError("User is not authenticated", {
+      extensions: {
+        code: "UNAUTHENTICATED",
+        http: { status: res.status },
+      },
+    });
+  }
+  return await res.json();
+};
 
 export default async (listenOptions: ListenOptions = { port: 4000 }) => {
   const server = new ApolloServer<MyContext>({
@@ -20,17 +38,8 @@ export default async (listenOptions: ListenOptions = { port: 4000 }) => {
 
   const { url } = await startStandaloneServer(server, {
     context: async ({ req }) => {
-      const token = req.headers.authorization || "";
-      if (!token) {
-        throw new GraphQLError("User is not authenticated", {
-          extensions: {
-            code: "UNAUTHENTICATED",
-            http: { status: 401 },
-          },
-        });
-      }
       return {
-        user: USER,
+        user: await getUser(req.headers.authorization || ""),
       };
     },
     listen: listenOptions,
