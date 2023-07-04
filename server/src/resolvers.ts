@@ -1,33 +1,9 @@
-import { AUTH, NBA_STAT, MLB_STAT, NBA_GAME, MLB_GAME } from './const'
+import { Resolvers } from "./__generated__/resolvers-types";
 
-export default {
-  Game: {
-    __resolveType(obj) {
-      return MLB_GAME
-    },
-  },
-  Stat: {
-    __resolveType(obj) {
-      if (obj.pts >= 0) {
-        return NBA_STAT
-      }
-      if (obj.pitching || obj.batting) {
-        return MLB_STAT
-      }
-      return null
-    },
-  },
+const resolvers: Resolvers = {
   Query: {
-    currentUser: (_source, args, { dataSources }) => dataSources[AUTH].currentUser(args),
-    forecasts: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getForecasts(args),
-    matchups: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getMatchups(args),
-    season: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getSeason(args),
-    seasons: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getSeasons(args),
-    game: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getGame(args),
-    games: (_source, { sport, ...args }, { dataSources }) => dataSources[sport].getGames(args),
+    currentUser: (_root, _args, { user }) => user,
   },
-  Mutation: {
-    loginUser: (_source, args, { dataSources }) => dataSources[AUTH].loginUser(args),
-    registerUser: (_source, args, { dataSources }) => dataSources[AUTH].registerUser(args)
-  }
-}
+};
+
+export default resolvers;

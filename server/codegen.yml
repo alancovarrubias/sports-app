@@ -1,5 +1,6 @@
-schema: http://${HOST}:4000/graphql
+schema: "./schema.graphql"
 generates:
-  ./src/types.d.ts:
+  ./src/__generated__/resolvers-types.ts:
     plugins:
-      - typescript
+      - "typescript"
+      - "typescript-resolvers"

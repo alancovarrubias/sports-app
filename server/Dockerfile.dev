@@ -4,4 +4,4 @@ WORKDIR /home/node/code
 COPY --chown=node:node package.json yarn.lock ./
 RUN yarn install
 COPY . .
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]
