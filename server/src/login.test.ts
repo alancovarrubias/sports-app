@@ -29,10 +29,9 @@ type SingleFormattedExecutionResult = {
 };
 
 let server;
-let url;
 
 beforeAll(async () => {
-  ({ server, url } = await createApolloServer({ port: 0 }));
+  ({ server } = await createApolloServer({ port: 0 }));
 });
 
 afterAll(async () => {

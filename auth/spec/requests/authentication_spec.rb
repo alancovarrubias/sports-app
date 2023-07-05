@@ -8,6 +8,7 @@ RSpec.describe 'Authentication', type: :request do
       post '/auth/login', params: { email: 'test@example.com', password: 'password' }
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)).to have_key('token')
+      expect(JSON.parse(response.body)).to have_key('user')
     end
 
     it 'returns an error message on failed login' do
@@ -19,12 +20,12 @@ RSpec.describe 'Authentication', type: :request do
 
   describe 'GET /auth/verify' do
     let!(:user) { FactoryBot.create(:user) }
-    let!(:token) { JWT.encode({ user_id: user.id }, Rails.application.secrets.secret_key_base) }
+    let!(:token) { JWT.encode({ id: user.id, email: user.email }, Rails.application.secrets.secret_key_base) }
 
     it 'returns success and user_id for a valid token' do
       get '/auth/verify', headers: { 'Authorization' => "Bearer #{token}" }
       expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)).to eq({ 'valid' => true, 'user_id' => user.id })
+      expect(JSON.parse(response.body)).to eq({ 'valid' => true, 'id' => user.id, 'email' => user.email })
     end
 
     it 'returns unauthorized for an invalid token' do

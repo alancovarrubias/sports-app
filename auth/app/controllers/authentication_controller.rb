@@ -4,7 +4,7 @@ class AuthenticationController < ApplicationController
 
     if user&.authenticate(params[:password])
       token = generate_token(user)
-      render json: { token: token }
+      render json: { token: token, user: { id: user.id, email: user.email } }
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
