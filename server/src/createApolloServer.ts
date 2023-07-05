@@ -24,13 +24,8 @@ const verifyToken = async (token) => {
 
 const getUser = async (token) => {
   const res = await verifyToken(token);
-  if (res.status == 401) {
-    throw new GraphQLError("User is not authenticated", {
-      extensions: {
-        code: "UNAUTHENTICATED",
-        http: { status: res.status },
-      },
-    });
+  if (res.status != 200) {
+    return null;
   }
   return await res.json();
 };
