@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.154.2/containers/docker-from-docker-compose
 {
-  "name": "Server",
+  "name": "server",
   "dockerComposeFile": "../../docker-compose.yml",
   "service": "server",
   "workspaceFolder": "/home/node/code",
@@ -16,7 +16,8 @@
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
     "ms-azuretools.vscode-docker",
-    "misogi.ruby-rubocop"
+    "misogi.ruby-rubocop",
+    "esbenp.prettier-vscode"
   ]
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],

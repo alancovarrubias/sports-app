@@ -3,6 +3,7 @@ import fetch, { Response } from "node-fetch";
 import request from "supertest";
 import createApolloServer from "./createApolloServer";
 import { MOCK_USER } from "./mocks";
+import { AUTH_SERVER, VERIFY_PATH } from "./const";
 jest.mock("node-fetch");
 
 type SingleFormattedExecutionResult = {
@@ -18,6 +19,12 @@ const GET_USER = `#graphql
     }
   }
 `;
+
+const mockFetchResponse = (response: Response) => {
+  (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
+    Promise.resolve(response)
+  );
+};
 
 let server;
 let url;
@@ -54,9 +61,7 @@ describe("integration tests", () => {
 
 describe("e2e tests", () => {
   it("throws error with an invalid authorization token", async () => {
-    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-      Promise.resolve({ status: 401 } as Response)
-    );
+    mockFetchResponse({ status: 401 } as Response);
     const response = await request(url).post("/").send({ query: GET_USER });
 
     expect(fetch).toHaveBeenCalled();
@@ -65,18 +70,16 @@ describe("e2e tests", () => {
     expect(error.message).toEqual("User is not authenticated");
   });
   it("returns provided user with a valid authorization code", async () => {
-    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
-      Promise.resolve({
-        status: 200,
-        json: () => Promise.resolve(MOCK_USER),
-      } as Response)
-    );
+    mockFetchResponse({
+      status: 200,
+      json: () => Promise.resolve(MOCK_USER),
+    } as Response);
     const response = await request(url)
       .post("/")
       .set({ Authorization: "valid_token" })
       .send({ query: GET_USER });
 
-    expect(fetch).toHaveBeenCalledWith("http://auth:3000/auth/verify", {
+    expect(fetch).toHaveBeenCalledWith(AUTH_SERVER + VERIFY_PATH, {
       headers: { Authorization: "Bearer valid_token" },
     });
     expect(response.body.errors).toBeUndefined();
