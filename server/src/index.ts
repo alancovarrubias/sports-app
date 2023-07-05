@@ -1,4 +1,4 @@
-import createApolloServer from "./createApolloServer";
+import runApolloServer from "./runApolloServer";
 
-const { url } = await createApolloServer();
+const { url } = await runApolloServer();
 console.log(`🚀  Server ready at: ${url}`);

@@ -1,5 +1,6 @@
 {
     "testPathIgnorePatterns": [
         "/dist/"
-    ]
+    ],
+    "setupFilesAfterEnv": ["./jest.setup.ts"]
 }

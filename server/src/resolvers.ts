@@ -1,17 +1,5 @@
-import fetch from "node-fetch";
-import { AUTH_SERVER, LOGIN_PATH } from "./const";
 import { GraphQLError } from "graphql";
 import { Resolvers } from "./__generated__/resolvers-types";
-
-const attemptLogin = async (args) => {
-  return await fetch(AUTH_SERVER + LOGIN_PATH, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(args),
-  });
-};
 
 const resolvers: Resolvers = {
   Query: {
@@ -28,12 +16,11 @@ const resolvers: Resolvers = {
     },
   },
   Mutation: {
-    login: async (_root, args, _context) => {
-      const res = await attemptLogin(args);
-      if (res.status != 200) {
-        return null;
+    login: async (_root, args, { dataSources: { authAPI } }) => {
+      const res = await authAPI.attemptLogin(args);
+      if (res.status === 200) {
+        return res.json();
       }
-      return await res.json();
     },
   },
 };
