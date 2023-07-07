@@ -1,4 +1,9 @@
 import _ from "lodash";
+import {
+  hasNoErrors,
+  returnsData,
+  returnsError,
+} from "./test-utils/customMatchers";
 export {};
 declare global {
   namespace jest {
@@ -13,42 +18,19 @@ const getBody = (response) => {
   const body = response.body;
   return body.singleResult ? body.singleResult : body;
 };
+const withResponseBodyHook = (fn) => {
+  return function (response, ...args) {
+    return fn.apply(this, [getBody(response), ...args]);
+  };
+};
 expect.extend({
   toHaveNoErrors(response) {
-    const body = getBody(response);
-    if (body.errors) {
-      return {
-        pass: false,
-        message: () => `Expected errors to be empty`,
-      };
-    }
-    return { pass: true, message: () => "Success" };
+    return withResponseBodyHook(hasNoErrors)(response);
   },
   toReturnData(response, expectedData) {
-    const body = getBody(response);
-    if (!_.isEqual(body.data, expectedData)) {
-      return {
-        pass: false,
-        message: () => "Expected response data to equal expected data`,",
-      };
-    }
-    return { pass: true, message: () => "Success" };
+    return withResponseBodyHook(returnsData)(response, expectedData);
   },
-  toReturnError(response, message) {
-    const body = getBody(response);
-    const error = body.errors[0];
-    if (!error) {
-      return {
-        pass: false,
-        message: () => "Expected response to contain an error",
-      };
-    }
-    if (error.message !== message) {
-      return {
-        pass: false,
-        message: () => `Expected error message to be ${message}`,
-      };
-    }
-    return { pass: true, message: () => "Success" };
+  toReturnError(response, expectedMessage) {
+    return withResponseBodyHook(returnsError)(response, expectedMessage);
   },
 });

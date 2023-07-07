@@ -1,10 +1,10 @@
 import { startStandaloneServer } from "@apollo/server/standalone";
-import createApolloServer from "./createApolloServer";
+import initServer from "./initServer";
 import AuthAPI from "./dataSources/authAPI";
 import type { ListenOptions } from "net";
 
 export default async (listenOptions: ListenOptions = { port: 4000 }) => {
-  const server = createApolloServer();
+  const server = initServer();
   const { url } = await startStandaloneServer(server, {
     context: async ({ req }) => {
       const authAPI = new AuthAPI();

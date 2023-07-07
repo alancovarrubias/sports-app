@@ -1,8 +1,12 @@
 import fetch from "node-fetch";
-import runApolloServer from "../../src/runApolloServer";
-import { USER, AUTH_HEADERS } from "../mocks";
-import { mockFetch, executeE2ERequest, successfulResponse } from "../utils";
-import { CURRENT_USER_QUERY } from "../queries";
+import runServer from "../../src/runServer";
+import { USER, AUTH_HEADERS } from "../../test-utils/mocks";
+import {
+  mockFetch,
+  executeE2ERequest,
+  successfulResponse,
+} from "../../test-utils/helpers";
+import { CURRENT_USER_QUERY } from "../../test-utils/queries";
 import { VERIFY_URL } from "../../src/dataSources/authAPI";
 jest.mock("node-fetch");
 
@@ -13,7 +17,7 @@ let server;
 let url;
 
 beforeAll(async () => {
-  ({ server, url } = await runApolloServer({ port: 0 }));
+  ({ server, url } = await runServer({ port: 0 }));
 });
 
 afterAll(async () => {

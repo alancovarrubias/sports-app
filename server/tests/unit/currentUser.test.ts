@@ -1,13 +1,17 @@
-import createApolloServer from "../../src/createApolloServer";
-import { USER, LOGGED_IN_CONTEXT, LOGGED_OUT_CONTEXT } from "../mocks";
-import { CURRENT_USER_QUERY } from "../queries";
-import { executeRequest } from "../utils";
+import initServer from "../../src/initServer";
+import {
+  USER,
+  LOGGED_IN_CONTEXT,
+  LOGGED_OUT_CONTEXT,
+} from "../../test-utils/mocks";
+import { CURRENT_USER_QUERY } from "../../test-utils/queries";
+import { executeRequest } from "../../test-utils/helpers";
 jest.mock("node-fetch");
 
 let server;
 
 beforeAll(() => {
-  server = createApolloServer();
+  server = initServer();
 });
 
 describe("CurrentUser Query", () => {
