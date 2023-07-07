@@ -1,19 +1,19 @@
 import fetch from "node-fetch";
-import initServer from "../../src/initServer";
+import initServer from "@app/initServer";
+import { LOGIN_URL } from "@app/dataSources/authAPI";
 import {
   LOGIN_DATA,
   LOGIN_VARIABLES,
   LOGIN_REQUEST_OPTIONS,
   LOGGED_IN_CONTEXT,
   LOGGED_OUT_CONTEXT,
-} from "../../test-utils/mocks";
+} from "@test-utils/mocks";
 import {
   mockFetch,
   successfulResponse,
   executeRequest,
-} from "../../test-utils/helpers";
-import { LOGIN_MUTATION } from "../../test-utils/queries";
-import { LOGIN_URL } from "../../src/dataSources/authAPI";
+} from "@test-utils/helpers";
+import { LOGIN_MUTATION } from "@test-utils/queries";
 jest.mock("node-fetch");
 
 const LOGIN_RESPONSE = successfulResponse(LOGIN_DATA);

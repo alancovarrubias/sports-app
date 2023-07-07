@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { Resolvers } from "./__generated__/resolvers-types";
+import { Resolvers } from "@app/__generated__/resolvers-types";
 
 const resolvers: Resolvers = {
   Query: {

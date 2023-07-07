@@ -1,8 +1,8 @@
 import { ApolloServer } from "@apollo/server";
 import { readFileSync } from "fs";
-import AuthAPI from "./dataSources/authAPI";
-import resolvers from "./resolvers";
-import { User } from "./__generated__/resolvers-types";
+import AuthAPI from "@app/dataSources/authAPI";
+import resolvers from "@app/resolvers";
+import { User } from "@app/__generated__/resolvers-types";
 
 const typeDefs = readFileSync("./schema.graphql", { encoding: "utf-8" });
 

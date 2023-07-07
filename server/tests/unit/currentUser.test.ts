@@ -1,11 +1,7 @@
-import initServer from "../../src/initServer";
-import {
-  USER,
-  LOGGED_IN_CONTEXT,
-  LOGGED_OUT_CONTEXT,
-} from "../../test-utils/mocks";
-import { CURRENT_USER_QUERY } from "../../test-utils/queries";
-import { executeRequest } from "../../test-utils/helpers";
+import initServer from "@app/initServer";
+import { USER, LOGGED_IN_CONTEXT, LOGGED_OUT_CONTEXT } from "@test-utils/mocks";
+import { CURRENT_USER_QUERY } from "@test-utils/queries";
+import { executeRequest } from "@test-utils/helpers";
 jest.mock("node-fetch");
 
 let server;

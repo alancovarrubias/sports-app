@@ -1,6 +1,6 @@
 import request from "supertest";
 import fetch, { Response } from "node-fetch";
-import { TOKEN } from "./mocks";
+import { TOKEN } from "@test-utils/mocks";
 
 export const mockFetch = (response: Partial<Response>) => {
   (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(

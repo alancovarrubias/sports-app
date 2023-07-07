@@ -1,6 +1,11 @@
 {
-    "testPathIgnorePatterns": [
-        "/dist/"
-    ],
-    "setupFilesAfterEnv": ["./jest.setup.ts"]
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": ["/dist/"],
+    "setupFilesAfterEnv": ["./jest.setup.ts"],
+    "moduleNameMapper": {
+        "@app/(.*)": ["<rootDir>/src/$1"],
+        "@test-utils/(.*)": ["<rootDir>/test-utils/$1"]
+    }
+
 }

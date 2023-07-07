@@ -1,6 +1,6 @@
 import { startStandaloneServer } from "@apollo/server/standalone";
-import initServer from "./initServer";
-import AuthAPI from "./dataSources/authAPI";
+import initServer from "@app/initServer";
+import AuthAPI from "@app/dataSources/authAPI";
 import type { ListenOptions } from "net";
 
 export default async (listenOptions: ListenOptions = { port: 4000 }) => {

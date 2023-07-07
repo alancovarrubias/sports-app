@@ -1,4 +1,4 @@
-import AuthAPI from "../src/dataSources/authAPI";
+import AuthAPI from "@app/dataSources/authAPI";
 
 export const USER = {
   id: "1",

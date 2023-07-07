@@ -1,13 +1,13 @@
 import fetch from "node-fetch";
-import runServer from "../../src/runServer";
-import { USER, AUTH_HEADERS } from "../../test-utils/mocks";
+import runServer from "@app/runServer";
+import { VERIFY_URL } from "@app/dataSources/authAPI";
+import { USER, AUTH_HEADERS } from "@test-utils/mocks";
 import {
   mockFetch,
   executeE2ERequest,
   successfulResponse,
-} from "../../test-utils/helpers";
-import { CURRENT_USER_QUERY } from "../../test-utils/queries";
-import { VERIFY_URL } from "../../src/dataSources/authAPI";
+} from "@test-utils/helpers";
+import { CURRENT_USER_QUERY } from "@test-utils/queries";
 jest.mock("node-fetch");
 
 const CURRENT_USER_RESPONSE = successfulResponse(USER);
