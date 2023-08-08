@@ -1,23 +1,22 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useMutation } from '@apollo/client'
-import { AUTH_TOKEN, Paths } from 'app/const'
-import { isLoggedInVar } from 'app/apollo/cache'
 import { gql } from '@apollo/client';
-import 'app/scss/Login.scss'
+import { useMutation } from '@apollo/client'
+export const AUTH_TOKEN = 'auth-token'
+
 
 export const LOGIN_USER_MUTATION = gql`
-  mutation LoginUser($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
+  mutation LoginUser($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      user
       token
     }
   }
 `;
 
-
 const Login = (): JSX.Element => {
     const history = useHistory()
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loginError, setLoginError] = useState('')
     const [login] = useMutation(LOGIN_USER_MUTATION,
@@ -25,35 +24,43 @@ const Login = (): JSX.Element => {
             onCompleted: ({ login }) => {
                 if (login.token) {
                     localStorage.setItem(AUTH_TOKEN, login.token)
-                    isLoggedInVar(true)
-                    history.push(Paths.Home)
+                    history.push('home')
                 }
             },
             onError: (error) => {
                 setLoginError(error.message)
             }
+
         }
     )
     const handleSubmit = (event) => {
         event.preventDefault();
-        login({ variables: { username, password } })
+        login({ variables: { email, password } })
     };
     return (
-        <form className="login" onSubmit={handleSubmit}>
+        <>
             <h1>Login</h1>
-            <label>
-                Username:
-                <input id="username" type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-            </label>
-            <label>
-                Password:
-                <input id="password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            </label>
-            <div>
+            <form className="login" onSubmit={handleSubmit}>
+                <label htmlFor="email">Email:</label>
+                <input
+                    type="text"
+                    id="email"
+                    aria-label="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <label htmlFor="password">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    aria-label="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
                 {loginError && <p>{loginError}</p>}
-                <button type="submit">Submit</button>
-            </div>
-        </form>
+                <button>Submit</button>
+            </form>
+        </>
     )
 }
 

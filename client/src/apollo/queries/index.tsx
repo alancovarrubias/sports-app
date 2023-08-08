@@ -1,6 +1,0 @@
-export * from './auth'
-export * from './seasons'
-export * from './games'
-export * from './game'
-export * from './matchups'
-export * from './forecasts'

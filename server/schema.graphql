@@ -4,8 +4,8 @@ type User {
 }
 
 type AuthPayload {
-  token: String!
   user: User!
+  token: String!
 }
 
 type Query {

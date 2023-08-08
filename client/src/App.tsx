@@ -1,17 +1,20 @@
 import React from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { ApolloProvider } from '@apollo/client'
-import client from 'app/apollo/client'
-import Layout from './Layout'
-import 'app/scss/Grid.scss'
-import 'app/scss/style.scss'
+import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import Login from 'app/components/Login'
+import fetch from 'cross-fetch'
 
-const App = (): JSX.Element => (
-  <ApolloProvider client={client}>
-    <Router>
-      <Layout />
-    </Router>
-  </ApolloProvider>
-)
+const httpLink = createHttpLink({
+  uri: `${process.env.PROTOCOL}://${process.env.HOST}/graphql`,
+  fetch,
+})
+const client = new ApolloClient({ link: httpLink, cache: new InMemoryCache() })
+
+const App = (): JSX.Element => {
+  return (
+    <ApolloProvider client={client}>
+      <Login />
+    </ApolloProvider>
+  )
+}
 
 export default App
