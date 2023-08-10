@@ -1,5 +1,5 @@
 # build environment
-FROM node:12-stretch as build
+FROM node:lts-alpine as build
 ARG HOST
 ENV HOST=${HOST}
 WORKDIR /app
