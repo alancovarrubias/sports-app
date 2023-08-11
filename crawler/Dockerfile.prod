@@ -32,4 +32,4 @@ COPY Pipfile ${PROJECT_DIR}/
 RUN pipenv install --deploy
 COPY . .
 
-CMD ["pipenv", "run", "python", "src/api.py"]
+CMD ["pipenv", "run", "python", "src/app.py"]
