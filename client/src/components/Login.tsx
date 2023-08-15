@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { gql } from '@apollo/client';
 import { useMutation } from '@apollo/client'
-export const AUTH_TOKEN = 'auth-token'
-
+import { AUTH_TOKEN } from 'app/const'
 
 export const LOGIN_USER_MUTATION = gql`
   mutation LoginUser($email: String!, $password: String!) {

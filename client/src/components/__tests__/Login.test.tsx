@@ -1,8 +1,8 @@
 import React from 'react';
 import { GraphQLError } from 'graphql';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import Login, { LOGIN_USER_MUTATION, AUTH_TOKEN } from 'app/components/Login'
-import { MockedProvider, MockedResponse } from '@apollo/client/testing'
+import Login, { LOGIN_USER_MUTATION } from 'app/components/Login'
+import { AUTH_TOKEN } from 'app/const'
+import { renderWithMocks, screen, fireEvent, waitFor } from '@test-utils/index';
 
 const mockPush = jest.fn()
 jest.mock('react-router-dom', () => ({
@@ -11,16 +11,8 @@ jest.mock('react-router-dom', () => ({
     }),
 }));
 
-function getToken() {
+const getToken = () => {
     return localStorage.getItem(AUTH_TOKEN);
-}
-
-const renderApp = (mocks: MockedResponse[] = []) => {
-    return render(
-        <MockedProvider mocks={mocks} addTypename={false}>
-            <Login />
-        </MockedProvider>
-    )
 }
 
 const USER = { email: 'testemail', password: 'testpass' }
@@ -33,15 +25,15 @@ const submitLoginForm = ({ emailInput, passwordInput, loginButton }) => {
     fireEvent.change(passwordInput, { target: { value: USER.password } })
     fireEvent.click(loginButton)
 }
-const renderLogin = (mocks: MockedResponse[] = []) => {
-    renderApp(mocks)
+const renderLogin = (mocks = []) => {
+    renderWithMocks(<Login />, mocks)
     const emailInput = screen.getByLabelText(/email/i)
     const passwordInput = screen.getByLabelText(/password/i)
     const loginButton = screen.getByRole('button', { name: /submit/i })
     return { emailInput, passwordInput, loginButton }
 }
 
-describe('App', () => {
+describe('Login', () => {
     beforeEach(() => {
         localStorage.removeItem(AUTH_TOKEN)
     })
@@ -50,18 +42,6 @@ describe('App', () => {
             renderLogin()
             const loginHeader = screen.getByText(/login/i);
             expect(loginHeader).toBeInTheDocument();
-        });
-        test('contains email text input', () => {
-            const { emailInput } = renderLogin()
-            expect(emailInput).toBeInTheDocument();
-        });
-        test('contains password text input', () => {
-            const { passwordInput } = renderLogin()
-            expect(passwordInput).toBeInTheDocument();
-        });
-        test('contains submit button', () => {
-            const { loginButton } = renderLogin()
-            expect(loginButton).toBeInTheDocument();
         });
     })
 

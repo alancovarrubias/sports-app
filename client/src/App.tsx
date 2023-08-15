@@ -1,6 +1,7 @@
 import React from 'react'
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
-import Login from 'app/components/Login'
+import { BrowserRouter as Router } from 'react-router-dom'
+import Routes from 'app/routes/Routes'
 import fetch from 'cross-fetch'
 
 const httpLink = createHttpLink({
@@ -12,7 +13,9 @@ const client = new ApolloClient({ link: httpLink, cache: new InMemoryCache() })
 const App = (): JSX.Element => {
   return (
     <ApolloProvider client={client}>
-      <Login />
+      <Router>
+        <Routes />
+      </Router>
     </ApolloProvider>
   )
 }
