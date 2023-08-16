@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
-import { AUTH_TOKEN } from 'app/const'
+import { Paths } from 'app/const'
+import { getToken } from 'app/utils/auth'
 
 type PrivateRouteProps = {
     component: React.FC,
@@ -8,7 +9,7 @@ type PrivateRouteProps = {
     exact?: boolean
 }
 const PrivateRoute = ({ component: Component, ...rest }: PrivateRouteProps): JSX.Element => {
-    const authToken = localStorage.getItem(AUTH_TOKEN)
+    const authToken = getToken()
     const loggedIn = authToken && authToken !== 'null'
 
     return (
@@ -18,7 +19,7 @@ const PrivateRoute = ({ component: Component, ...rest }: PrivateRouteProps): JSX
                 loggedIn ? (
                     <Component {...props} />
                 ) : (
-                    <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+                    <Redirect to={{ pathname: Paths.Login, state: { from: props.location } }} />
                 )
             }
         />

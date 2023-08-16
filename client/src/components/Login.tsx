@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { gql } from '@apollo/client';
 import { useMutation } from '@apollo/client'
-import { AUTH_TOKEN } from 'app/const'
+import { Paths } from 'app/const'
+import { setToken } from 'app/utils/auth'
 
-export const LOGIN_USER_MUTATION = gql`
+export const LOGIN_MUTATION = gql`
   mutation LoginUser($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       user
@@ -18,12 +19,12 @@ const Login = (): JSX.Element => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loginError, setLoginError] = useState('')
-    const [login] = useMutation(LOGIN_USER_MUTATION,
+    const [login] = useMutation(LOGIN_MUTATION,
         {
             onCompleted: ({ login }) => {
                 if (login.token) {
-                    localStorage.setItem(AUTH_TOKEN, login.token)
-                    history.push('home')
+                    setToken(login.token)
+                    history.push(Paths.Home)
                 }
             },
             onError: (error) => {
@@ -39,7 +40,7 @@ const Login = (): JSX.Element => {
     return (
         <>
             <h1>Login</h1>
-            <form className="login" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <label htmlFor="email">Email:</label>
                 <input
                     type="text"

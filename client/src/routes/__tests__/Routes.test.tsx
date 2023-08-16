@@ -1,9 +1,11 @@
 import React from 'react'
 import Routes from 'app/routes/Routes'
-import { AUTH_TOKEN } from 'app/const'
+import { AUTH_TOKEN, Paths } from 'app/const'
+import { clearToken, setToken } from 'app/utils/auth'
 import { renderWithPath, screen } from '@test-utils/index'
 
 jest.mock('app/components/Login')
+jest.mock('app/components/Home')
 
 export const renderRoutes = (path) => {
     return renderWithPath(<Routes />, path)
@@ -12,32 +14,32 @@ export const renderRoutes = (path) => {
 describe('Routes', () => {
     describe('unauthorized user', () => {
         beforeEach(() => {
-            localStorage.removeItem(AUTH_TOKEN)
+            clearToken()
         })
         test('root path redirects to login page', () => {
-            renderRoutes('/')
-            const loginElement = screen.getByText(/login/i);
+            renderRoutes(Paths.Root)
+            const loginElement = screen.getByText(/mock login/i);
             expect(loginElement).toBeInTheDocument();
         });
         test('home path redirects to login page', () => {
-            renderRoutes('/home')
-            const loginElement = screen.getByText(/login/i);
+            renderRoutes(Paths.Home)
+            const loginElement = screen.getByText(/mock login/i);
             expect(loginElement).toBeInTheDocument();
         });
     })
 
     describe('authorized user', () => {
         beforeEach(() => {
-            localStorage.setItem(AUTH_TOKEN, 'TOKEN')
+            setToken('TOKEN')
         })
         test('root path redirects to home page', () => {
-            renderRoutes('/')
-            const homeElement = screen.getByText(/home/i);
+            renderRoutes(Paths.Root)
+            const homeElement = screen.getByText(/mock home/i);
             expect(homeElement).toBeInTheDocument();
         });
         test('home path renders home page', () => {
-            renderRoutes('/home')
-            const homeElement = screen.getByText(/home/i);
+            renderRoutes(Paths.Home)
+            const homeElement = screen.getByText(/mock home/i);
             expect(homeElement).toBeInTheDocument();
         });
     })
