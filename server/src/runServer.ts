@@ -8,9 +8,11 @@ export default async (listenOptions: ListenOptions = { port: 4000 }) => {
   const { url } = await startStandaloneServer(server, {
     context: async ({ req }) => {
       const authAPI = new AuthAPI();
-      const res = await authAPI.verifyToken(req.headers.authorization || "");
+      const token = req.headers.authorization || ""
+      const res = await authAPI.verifyToken(token);
+      const body = await res.json()
       return {
-        user: res.status === 200 ? await res.json() : null,
+        user: res.status === 200 ? body : null,
         dataSources: { authAPI },
       };
     },

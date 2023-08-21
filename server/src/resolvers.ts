@@ -19,7 +19,8 @@ const resolvers: Resolvers = {
     login: async (_root, args, { dataSources: { authAPI } }) => {
       const res = await authAPI.attemptLogin(args);
       if (res.status === 200) {
-        return res.json();
+        const body = await res.json()
+        return body;
       }
     },
   },
