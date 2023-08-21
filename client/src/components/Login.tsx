@@ -8,7 +8,9 @@ import { setToken } from 'app/utils/auth'
 export const LOGIN_MUTATION = gql`
   mutation LoginUser($email: String!, $password: String!) {
     login(email: $email, password: $password) {
-      user
+      user {
+        email
+      }
       token
     }
   }
