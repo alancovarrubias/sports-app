@@ -1,6 +1,6 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useReducer } from 'react'
 import { createContext } from 'react';
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 
 export const AuthContext = createContext(null);
 export const AuthDispatchContext = createContext(null);
@@ -13,8 +13,8 @@ export const CURRENT_USER = gql`
   }
 `;
 
-export function AuthProvider({ user, children }) {
-    const [auth, dispatch] = useReducer(AuthReducer, user)
+export function AuthProvider({ children }) {
+    const [auth, dispatch] = useReducer(AuthReducer, null)
     return (
         <AuthContext.Provider value={auth}>
             <AuthDispatchContext.Provider value={dispatch}>
@@ -25,10 +25,10 @@ export function AuthProvider({ user, children }) {
 }
 
 
-function AuthReducer(user, action) {
+function AuthReducer(_user, action) {
     switch (action.type) {
         case 'LOGIN': {
-            return user
+            return action.user
         }
         default: {
             throw Error('Unknown action' + action.type)

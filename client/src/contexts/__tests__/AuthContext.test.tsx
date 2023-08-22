@@ -1,9 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { AuthProvider, AuthContext } from 'app/contexts/AuthContext';
+import { AuthProvider, AuthContext, AuthDispatchContext } from 'app/contexts/AuthContext';
 
-const AuthContextTestComponent = (): JSX.Element => {
+const USER = 'fakeemail'
+const DispatchActionComponent = ({ action }): JSX.Element => {
     const user = useContext(AuthContext)
+    const dispatch = useContext(AuthDispatchContext)
+    useEffect(() => {
+        dispatch(action)
+    }, [])
     return (
         <div>{user}</div>
     )
@@ -11,14 +16,14 @@ const AuthContextTestComponent = (): JSX.Element => {
 
 describe('AuthProvider', () => {
     it('should passed in user', async () => {
-        const user = 'fakeemail'
+        const loginAction = { type: 'LOGIN', user: USER }
         render(
-            <AuthProvider user={user}>
-                <AuthContextTestComponent />
+            <AuthProvider>
+                <DispatchActionComponent action={loginAction} />
             </AuthProvider>,
         )
         await waitFor(() => {
-            expect(screen.getByText(user)).toBeInTheDocument()
+            expect(screen.getByText(USER)).toBeInTheDocument()
         })
     });
 });
