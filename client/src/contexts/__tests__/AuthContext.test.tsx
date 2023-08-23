@@ -1,29 +1,43 @@
-import React, { useContext, useEffect } from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import { AuthProvider, AuthContext, AuthDispatchContext } from 'app/contexts/AuthContext';
 
-const USER = 'fakeemail'
-const DispatchActionComponent = ({ action }): JSX.Element => {
+import React, { useContext } from 'react';
+import { GraphQLError } from 'graphql';
+import { renderWithMocks, screen, waitFor } from '@test-utils/index';
+import { AuthProvider, CURRENT_USER, AuthContext } from 'app/contexts/AuthContext';
+
+const USER = { email: 'testemail' }
+const request = {
+    query: CURRENT_USER,
+}
+function RenderAuthComponent(): JSX.Element {
     const user = useContext(AuthContext)
-    const dispatch = useContext(AuthDispatchContext)
-    useEffect(() => {
-        dispatch(action)
-    }, [])
     return (
-        <div>{user}</div>
+        <div>{String(user.isLoggedIn)}</div>
     )
 }
+function renderAuthProvider(mocks) {
+    renderWithMocks(
+        <AuthProvider>
+            <RenderAuthComponent />
+        </AuthProvider>,
+        mocks
+    )
 
+}
 describe('AuthProvider', () => {
-    it('should passed in user', async () => {
-        const loginAction = { type: 'LOGIN', user: USER }
-        render(
-            <AuthProvider>
-                <DispatchActionComponent action={loginAction} />
-            </AuthProvider>,
-        )
-        await waitFor(() => {
-            expect(screen.getByText(USER)).toBeInTheDocument()
-        })
-    });
-});
+    describe('login success', () => {
+        const currentUserSuccessMock = [{ request, result: { data: { currentUser: USER } } }]
+        test('renders page with login text', async () => {
+            renderAuthProvider(currentUserSuccessMock)
+            await waitFor(() => expect(screen.getByText('true')).toBeInTheDocument());
+        });
+    })
+    describe('login failure', () => {
+        const failureMessage = 'User is not authenticated'
+        const currentUserFailureMock = [{ request, result: { errors: [new GraphQLError(failureMessage)] } }]
+        test('renders page with login text', async () => {
+            renderAuthProvider(currentUserFailureMock)
+            await waitFor(() => expect(screen.getByText('false')).toBeInTheDocument());
+        });
+
+    })
+})

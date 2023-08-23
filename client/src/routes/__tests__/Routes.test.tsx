@@ -1,46 +1,51 @@
 import React from 'react'
+import { MemoryRouter } from 'react-router-dom'
+import { GraphQLError } from 'graphql';
 import Routes from 'app/routes/Routes'
-import { AUTH_TOKEN, Paths } from 'app/const'
-import { clearToken, setToken } from 'app/utils/auth'
-import { renderWithPath, screen } from '@test-utils/index'
+import { Paths } from 'app/const'
+import { AuthProvider, CURRENT_USER } from 'app/contexts/AuthContext'
+import { renderWithMocks, screen, waitFor } from '@test-utils/index'
 
 jest.mock('app/components/Login')
 jest.mock('app/components/Home')
 
-export const renderRoutes = (path) => {
-    return renderWithPath(<Routes />, path)
+const USER = { email: 'testemail' }
+const request = {
+    query: CURRENT_USER,
+}
+const currentUserSuccessMock = [{ request, result: { data: { currentUser: USER } } }]
+const loginFailureMock = [{ request, result: { errors: [new GraphQLError('User is not authenticated')] } }]
+export const renderRoutes = (path, isLoggedIn) => {
+    const mocks = isLoggedIn ? currentUserSuccessMock : loginFailureMock
+    return renderWithMocks(
+        <AuthProvider>
+            <MemoryRouter initialEntries={[path]}>
+                <Routes />
+            </MemoryRouter>
+        </AuthProvider>,
+        mocks
+    )
 }
 
 describe('Routes', () => {
-    describe('unauthorized user', () => {
-        beforeEach(() => {
-            clearToken()
-        })
-        test('root path redirects to login page', () => {
-            renderRoutes(Paths.Root)
-            const loginElement = screen.getByText(/mock login/i);
-            expect(loginElement).toBeInTheDocument();
+    describe('authorized user', () => {
+        test('root path redirects to home page', async () => {
+            renderRoutes(Paths.Root, true)
+            await waitFor(() => expect(screen.getByText(/mock home/i)).toBeInTheDocument());
         });
-        test('home path redirects to login page', () => {
-            renderRoutes(Paths.Home)
-            const loginElement = screen.getByText(/mock login/i);
-            expect(loginElement).toBeInTheDocument();
+        test('home path renders home page', async () => {
+            renderRoutes(Paths.Home, true)
+            await waitFor(() => expect(screen.getByText(/mock home/i)).toBeInTheDocument());
         });
     })
-
-    describe('authorized user', () => {
-        beforeEach(() => {
-            setToken('TOKEN')
-        })
-        test('root path redirects to home page', () => {
-            renderRoutes(Paths.Root)
-            const homeElement = screen.getByText(/mock home/i);
-            expect(homeElement).toBeInTheDocument();
+    describe('unauthorized user', () => {
+        test('root path redirects to login page', async () => {
+            renderRoutes(Paths.Root, false)
+            await waitFor(() => expect(screen.getByText(/mock login/i)).toBeInTheDocument());
         });
-        test('home path renders home page', () => {
-            renderRoutes(Paths.Home)
-            const homeElement = screen.getByText(/mock home/i);
-            expect(homeElement).toBeInTheDocument();
+        test('home path redirects to login page', async () => {
+            renderRoutes(Paths.Home, false)
+            await waitFor(() => expect(screen.getByText(/mock login/i)).toBeInTheDocument());
         });
     })
 })

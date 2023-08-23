@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { Paths } from 'app/const'
 import { getToken } from 'app/utils/auth'
+import { AuthContext } from 'app/contexts/AuthContext'
 
 type PrivateRouteProps = {
     component: React.FC,
@@ -9,14 +10,13 @@ type PrivateRouteProps = {
     exact?: boolean
 }
 const PrivateRoute = ({ component: Component, ...rest }: PrivateRouteProps): JSX.Element => {
-    const authToken = getToken()
-    const loggedIn = authToken && authToken !== 'null'
+    const auth = useContext(AuthContext)
 
     return (
         <Route
             {...rest}
             render={props =>
-                loggedIn ? (
+                auth.isLoggedIn ? (
                     <Component {...props} />
                 ) : (
                     <Redirect to={{ pathname: Paths.Login, state: { from: props.location } }} />
