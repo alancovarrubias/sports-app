@@ -1,8 +1,7 @@
 class CreateStats < ActiveRecord::Migration[6.0]
   def change
     create_table :stats do |t|
-      t.references :season
-      t.references :game
+      t.references :interval, polymorphic: true
       t.references :model, polymorphic: true
       t.integer :sp
       t.integer :fg

@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :stat do
-    association :season
-    association :game
     factory :player_stat do
       association :model, factory: :player
     end

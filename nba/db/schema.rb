@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2021_01_09_175511) do
     t.bigint "season_id"
     t.bigint "away_team_id"
     t.bigint "home_team_id"
-    t.date "date"
+    t.datetime "start_time"
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
     t.index ["season_id"], name: "index_games_on_season_id"
@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(version: 2021_01_09_175511) do
   end
 
   create_table "stats", force: :cascade do |t|
-    t.bigint "season_id"
-    t.bigint "game_id"
+    t.string "interval_type"
+    t.bigint "interval_id"
     t.string "model_type"
     t.bigint "model_id"
     t.integer "sp"
@@ -81,9 +81,8 @@ ActiveRecord::Schema.define(version: 2021_01_09_175511) do
     t.integer "pts"
     t.integer "ortg"
     t.integer "drtg"
-    t.index ["game_id"], name: "index_stats_on_game_id"
+    t.index ["interval_type", "interval_id"], name: "index_stats_on_interval_type_and_interval_id"
     t.index ["model_type", "model_id"], name: "index_stats_on_model_type_and_model_id"
-    t.index ["season_id"], name: "index_stats_on_season_id"
   end
 
   create_table "teams", force: :cascade do |t|
