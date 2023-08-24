@@ -1,51 +1,62 @@
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
-import { GraphQLError } from 'graphql';
 import Routes from 'app/routes/Routes'
 import { Paths } from 'app/const'
-import { AuthProvider, CURRENT_USER } from 'app/contexts/AuthContext'
 import { renderWithMocks, screen, waitFor } from '@test-utils/index'
-
-jest.mock('app/components/Login')
-jest.mock('app/components/Home')
+import UserProvider, { CURRENT_USER } from 'app/contexts/UserProvider'
+import { GraphQLError } from 'graphql'
+import { clearToken, setToken } from 'app/utils/auth'
 
 const USER = { email: 'testemail' }
 const request = {
     query: CURRENT_USER,
 }
-const currentUserSuccessMock = [{ request, result: { data: { currentUser: USER } } }]
-const loginFailureMock = [{ request, result: { errors: [new GraphQLError('User is not authenticated')] } }]
-export const renderRoutes = (path, isLoggedIn) => {
-    const mocks = isLoggedIn ? currentUserSuccessMock : loginFailureMock
+export const renderRoutes = (path, mocks) => {
     return renderWithMocks(
-        <AuthProvider>
+        <UserProvider>
             <MemoryRouter initialEntries={[path]}>
                 <Routes />
             </MemoryRouter>
-        </AuthProvider>,
+        </UserProvider>,
         mocks
     )
 }
 
 describe('Routes', () => {
-    describe('authorized user', () => {
-        test('root path redirects to home page', async () => {
-            renderRoutes(Paths.Root, true)
-            await waitFor(() => expect(screen.getByText(/mock home/i)).toBeInTheDocument());
-        });
-        test('home path renders home page', async () => {
-            renderRoutes(Paths.Home, true)
-            await waitFor(() => expect(screen.getByText(/mock home/i)).toBeInTheDocument());
-        });
+    describe('without token', () => {
+        beforeEach(() => {
+            clearToken()
+        })
+        test('no query is made', async () => {
+            renderRoutes(Paths.Root, [])
+            await waitFor(() => expect(screen.getByText(/login/i)).toBeInTheDocument());
+        })
     })
-    describe('unauthorized user', () => {
-        test('root path redirects to login page', async () => {
-            renderRoutes(Paths.Root, false)
-            await waitFor(() => expect(screen.getByText(/mock login/i)).toBeInTheDocument());
-        });
-        test('home path redirects to login page', async () => {
-            renderRoutes(Paths.Home, false)
-            await waitFor(() => expect(screen.getByText(/mock login/i)).toBeInTheDocument());
-        });
+    describe('with token', () => {
+        beforeEach(() => {
+            setToken('TOKEN')
+        })
+        describe('authorized user', () => {
+            const currentUserSuccessMock = [{ request, result: { data: { currentUser: USER } } }]
+            test('root path redirects to home page', async () => {
+                renderRoutes(Paths.Root, currentUserSuccessMock)
+                await waitFor(() => expect(screen.getByText(/home/i)).toBeInTheDocument());
+            });
+            test('home path renders home page', async () => {
+                renderRoutes(Paths.Home, currentUserSuccessMock)
+                await waitFor(() => expect(screen.getByText(/home/i)).toBeInTheDocument());
+            });
+        })
+        describe('unauthorized user', () => {
+            const currentUserFailureMock = [{ request, result: { errors: [new GraphQLError('User is not authenticated')] } }]
+            test('root path redirects to login page', async () => {
+                renderRoutes(Paths.Root, currentUserFailureMock)
+                await waitFor(() => expect(screen.getByText(/login/i)).toBeInTheDocument());
+            });
+            test('home path redirects to login page', async () => {
+                renderRoutes(Paths.Home, currentUserFailureMock)
+                await waitFor(() => expect(screen.getByText(/login/i)).toBeInTheDocument());
+            });
+        })
     })
 })

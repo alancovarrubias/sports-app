@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from 'app/components/Home'
 import { Paths } from 'app/const'
-import { render, screen, fireEvent, waitFor } from '@test-utils/index';
+import { screen, fireEvent, waitFor, renderWithContext } from '@test-utils/index';
 import { getToken, setToken } from 'app/utils/auth';
 
 const mockPush = jest.fn()
@@ -12,7 +12,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const renderHome = () => {
-    render(<Home />)
+    renderWithContext(<Home />, [], true)
     const logoutButton = screen.getByRole('button', { name: /logout/i })
     return { logoutButton }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { GraphQLError } from 'graphql';
 import Login, { LOGIN_MUTATION } from 'app/components/Login'
 import { Paths } from 'app/const'
-import { renderWithMocks, screen, fireEvent, waitFor } from '@test-utils/index';
+import { screen, fireEvent, waitFor, renderWithContext } from '@test-utils/index';
 import { getToken, clearToken } from 'app/utils/auth';
 
 const mockPush = jest.fn()
@@ -23,7 +23,7 @@ const submitLoginForm = ({ emailInput, passwordInput, loginButton }) => {
     fireEvent.click(loginButton)
 }
 const renderLogin = (mocks = []) => {
-    renderWithMocks(<Login />, mocks)
+    renderWithContext(<Login />, mocks, false)
     const emailInput = screen.getByLabelText(/email/i)
     const passwordInput = screen.getByLabelText(/password/i)
     const loginButton = screen.getByRole('button', { name: /submit/i })

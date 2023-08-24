@@ -1,13 +1,11 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { Paths } from 'app/const';
-import { clearToken } from 'app/utils/auth';
+import React, { useContext } from 'react'
+import { UserDispatchContext } from 'app/contexts/UserContext';
+import { logoutAction } from 'app/actions/userActions';
 
 const Home = (): JSX.Element => {
-  const history = useHistory()
+  const dispatch = useContext(UserDispatchContext)
   const handleLogout = () => {
-    clearToken()
-    history.push(Paths.Login)
+    dispatch(logoutAction())
   }
   return (
     <>

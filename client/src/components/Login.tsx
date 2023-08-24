@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
 import { gql } from '@apollo/client';
 import { useMutation } from '@apollo/client'
-import { Paths } from 'app/const'
-import { setToken } from 'app/utils/auth'
+import { loginAction } from 'app/actions/userActions';
+import { UserDispatchContext } from 'app/contexts/UserContext';
 
 export const LOGIN_MUTATION = gql`
   mutation LoginUser($email: String!, $password: String!) {
@@ -17,17 +16,14 @@ export const LOGIN_MUTATION = gql`
 `;
 
 const Login = (): JSX.Element => {
-    const history = useHistory()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loginError, setLoginError] = useState('')
+    const dispatch = useContext(UserDispatchContext)
     const [login] = useMutation(LOGIN_MUTATION,
         {
             onCompleted: ({ login }) => {
-                if (login.token) {
-                    setToken(login.token)
-                    history.push(Paths.Home)
-                }
+                dispatch(loginAction(login))
             },
             onError: (error) => {
                 setLoginError(error.message)
