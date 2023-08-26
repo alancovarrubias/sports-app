@@ -1,5 +1,4 @@
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from os import path
@@ -14,8 +13,7 @@ class AbstractScraper(ABC):
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.page_load_strategy = 'eager'
-        options = ChromeDriverManager().install()
-        self.driver = webdriver.Chrome(options, options=chrome_options)
+        self.driver = webdriver.Chrome(options=chrome_options)
 
     def get(self, endpoint):
         url = path.join(self.base_url, endpoint)
