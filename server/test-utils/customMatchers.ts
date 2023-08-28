@@ -4,7 +4,7 @@ export const hasNoErrors = (body) => {
   if (body.errors) {
     return {
       pass: false,
-      message: () => `Expected errors to be empty`,
+      message: () => body.errors[0].message
     };
   }
   return { pass: true, message: () => "Success" };

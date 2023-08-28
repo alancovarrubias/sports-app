@@ -1,3 +1,12 @@
+scalar Date
+
+type Game {
+  id: ID!
+  date: Date!
+  away_team: String!
+  home_team: String!
+}
+
 type User {
   id: ID!
   email: String!
@@ -10,6 +19,7 @@ type AuthPayload {
 
 type Query {
   currentUser: User!
+  games: [Game!]!
 }
 
 type Mutation {

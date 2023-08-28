@@ -1,3 +1,14 @@
+export const GAMES_QUERY = `#graphql
+  query Games {
+    games {
+      id
+      date
+      away_team
+      home_team
+    }
+  }
+`;
+
 export const CURRENT_USER_QUERY = `#graphql
   query CurrentUser {
     currentUser {
