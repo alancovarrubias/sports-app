@@ -1,5 +1,7 @@
 import { Game } from "@app/__generated__/resolvers-types";
 import AuthAPI from "@app/dataSources/authAPI";
+import NbaApi from "@app/dataSources/nbaApi";
+import { dataSources } from "@app/runServer";
 
 export const USER = {
   id: "1",
@@ -25,22 +27,28 @@ export const LOGIN_REQUEST_OPTIONS = {
   },
   body: JSON.stringify(LOGIN_VARIABLES),
 };
-const dataSources = {
-  authAPI: new AuthAPI()
-}
 export const LOGGED_IN_CONTEXT = {
   user: USER,
-  dataSources
+  dataSources,
 };
 export const LOGGED_OUT_CONTEXT = {
   user: null,
-  dataSources
+  dataSources,
 };
 
 export const GAME: Game = {
   id: "1",
-  away_team: "LAD",
-  home_team: "LAA",
-  date: "2020-06-25"
-}
-
+  date: "2020-06-25",
+  away_team: {
+    id: "1",
+    abbr: "LAD",
+    city: "Los Angeles",
+    name: "Dodgers",
+  },
+  home_team: {
+    id: "2",
+    abbr: "LAA",
+    city: "Los Angeles",
+    name: "Angels",
+  },
+};

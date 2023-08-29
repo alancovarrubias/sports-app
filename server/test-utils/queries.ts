@@ -1,10 +1,20 @@
 export const GAMES_QUERY = `#graphql
-  query Games {
-    games {
+  query Games($seasonId: String!) {
+    games(seasonId: $seasonId) {
       id
       date
-      away_team
-      home_team
+      away_team {
+        id
+        abbr
+        city
+        name
+      }
+      home_team {
+        id
+        abbr
+        city
+        name
+      }
     }
   }
 `;

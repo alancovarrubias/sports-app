@@ -25,9 +25,9 @@ export type AuthPayload = {
 
 export type Game = {
   __typename?: 'Game';
-  away_team: Scalars['String']['output'];
+  away_team: Team;
   date: Scalars['Date']['output'];
-  home_team: Scalars['String']['output'];
+  home_team: Team;
   id: Scalars['ID']['output'];
 };
 
@@ -46,6 +46,19 @@ export type Query = {
   __typename?: 'Query';
   currentUser: User;
   games: Array<Game>;
+};
+
+
+export type QueryGamesArgs = {
+  seasonId: Scalars['String']['input'];
+};
+
+export type Team = {
+  __typename?: 'Team';
+  abbr: Scalars['String']['output'];
+  city: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type User = {
@@ -133,6 +146,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  Team: ResolverTypeWrapper<Team>;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -146,6 +160,7 @@ export type ResolversParentTypes = {
   Mutation: {};
   Query: {};
   String: Scalars['String']['output'];
+  Team: Team;
   User: User;
 };
 
@@ -160,9 +175,9 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type GameResolvers<ContextType = any, ParentType extends ResolversParentTypes['Game'] = ResolversParentTypes['Game']> = {
-  away_team?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  away_team?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
   date?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
-  home_team?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  home_team?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -173,7 +188,15 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   currentUser?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  games?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType>;
+  games?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType, RequireFields<QueryGamesArgs, 'seasonId'>>;
+};
+
+export type TeamResolvers<ContextType = any, ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team']> = {
+  abbr?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  city?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -188,6 +211,7 @@ export type Resolvers<ContextType = any> = {
   Game?: GameResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Team?: TeamResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 

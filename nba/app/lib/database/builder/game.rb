@@ -7,6 +7,7 @@ module Database
         puts "Building Games for Season #{@season.id}"
 
         games_res = query_server(:Game, season: @season.year)
+        puts games_res
         games_res['games'].each do |game_data|
           build_game(game_data)
         end

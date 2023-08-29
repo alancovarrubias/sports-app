@@ -4,18 +4,27 @@ import AuthAPI from "@app/dataSources/authAPI";
 import type { ListenOptions } from "net";
 import NbaApi from "./dataSources/nbaApi";
 
+export const dataSources = {
+  authAPI: new AuthAPI(),
+  nbaApi: new NbaApi(),
+};
+
+async function getUser(token) {
+  const res = await dataSources.authAPI.verifyToken(token);
+  if (res.status === 200) {
+    const body = await res.json();
+    return body;
+  }
+}
 export default async (listenOptions: ListenOptions = { port: 4000 }) => {
   const server = initServer();
   const { url } = await startStandaloneServer(server, {
     context: async ({ req }) => {
-      const authAPI = new AuthAPI();
-      const nbaApi = new NbaApi();
-      const token = req.headers.authorization || ""
-      const res = await authAPI.verifyToken(token);
-      const body = await res.json()
+      const token = req.headers.authorization || "";
+      const user = await getUser(token);
       return {
-        user: res.status === 200 ? body : null,
-        dataSources: { authAPI, nbaApi },
+        user,
+        dataSources,
       };
     },
     listen: listenOptions,

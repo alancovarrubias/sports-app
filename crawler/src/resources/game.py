@@ -8,7 +8,7 @@ from const.models import GAME
 class GameResource(BaseResource):
     def __init__(self):
         self.resource_type = GAME
-        self.nba_keys = ["season", "team"]
+        self.nba_keys = ["season"]
         self.nba_scraper = NbaGameScraper()
         self.mlb_keys = ["season", "team"]
         self.mlb_scraper = MlbGameScraper()
