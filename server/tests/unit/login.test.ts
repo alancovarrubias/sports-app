@@ -2,11 +2,10 @@ import fetch from "node-fetch";
 import initServer from "@app/initServer";
 import { LOGIN_URL } from "@app/dataSources/authAPI";
 import {
-  LOGIN_DATA,
-  LOGIN_VARIABLES,
-  LOGIN_REQUEST_OPTIONS,
   LOGGED_IN_CONTEXT,
   LOGGED_OUT_CONTEXT,
+  USER,
+  TOKEN
 } from "@test-utils/mocks";
 import {
   mockFetch,
@@ -15,6 +14,23 @@ import {
 } from "@test-utils/helpers";
 import { LOGIN_MUTATION } from "@test-utils/queries";
 jest.mock("node-fetch");
+
+const LOGIN_DATA = {
+  token: TOKEN,
+  user: USER,
+};
+const LOGIN_VARIABLES = {
+  email: USER.email,
+  password: "password",
+};
+
+const LOGIN_REQUEST_OPTIONS = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(LOGIN_VARIABLES),
+};
 
 const LOGIN_RESPONSE = successfulResponse(LOGIN_DATA);
 
