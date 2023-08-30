@@ -1,11 +1,11 @@
 import fetch from "node-fetch";
 import initServer from "@app/initServer";
-import { LOGIN_URL } from "@app/dataSources/authAPI";
+import { LOGIN_URL } from "@app/dataSources/authAp";
 import {
   LOGGED_IN_CONTEXT,
   LOGGED_OUT_CONTEXT,
   USER,
-  TOKEN
+  TOKEN,
 } from "@test-utils/mocks";
 import {
   mockFetch,

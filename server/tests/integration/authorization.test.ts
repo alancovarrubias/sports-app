@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import runServer from "@app/runServer";
-import { VERIFY_URL } from "@app/dataSources/authAPI";
+import { VERIFY_URL } from "@app/dataSources/authAp";
 import { USER, AUTH_HEADERS } from "@test-utils/mocks";
 import {
   mockFetch,

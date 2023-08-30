@@ -29,8 +29,8 @@ const resolvers: Resolvers = {
     ),
   },
   Mutation: {
-    login: async (_root, args, { dataSources: { authAPI } }) => {
-      const res = await authAPI.attemptLogin(args);
+    login: async (_root, args, { dataSources: { authApi } }) => {
+      const res = await authApi.attemptLogin(args);
       const body = await res.json();
       return body;
     },

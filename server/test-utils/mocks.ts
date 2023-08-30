@@ -1,5 +1,5 @@
 import { Game } from "@app/__generated__/resolvers-types";
-import AuthAPI from "@app/dataSources/authAPI";
+import AuthAPI from "@app/dataSources/authAp";
 import NbaApi from "@app/dataSources/nbaApi";
 import { dataSources } from "@app/runServer";
 
