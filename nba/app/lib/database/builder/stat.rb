@@ -9,7 +9,7 @@ module Database
           puts "Building Stats for Game #{game.id}"
 
           server_options = {
-            season: @season.year, game_url: @game.url, home_team: @game.home_team.abbr, away_team: @game.away_team.abbr
+            game_url: @game.url, home_team: @game.home_team.abbr, away_team: @game.away_team.abbr
           }
           stats_res = query_server(:Stat, server_options)
           build_stats(stats_res)
@@ -34,8 +34,7 @@ module Database
         abbr = stat.delete('abbr')
         model = model_type == 'Player' ? ::Player.find_by(abbr: abbr, team: team) : team
         stat_query = {
-          season: @season,
-          game: @game,
+          interval: @game,
           model: model
         }
         stat_object = ::Stat.find_or_create_by(stat_query)

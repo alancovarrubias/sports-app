@@ -7,7 +7,7 @@ from scrapers.mlb.stat import MlbStatScraper
 class StatResource(BaseResource):
     def __init__(self):
         self.resource_type = STAT
-        self.nba_keys = ["game_url"]
+        self.nba_keys = ["game_url", "away_team", "home_team"]
         self.nba_scraper = NbaStatScraper()
         self.mlb_keys = ["game_url"]
         self.mlb_scraper = MlbStatScraper()

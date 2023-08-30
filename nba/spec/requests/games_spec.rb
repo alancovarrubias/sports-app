@@ -7,7 +7,7 @@ RSpec.describe 'Games', type: :request do
   end
 
   describe 'GET /season/:season_id/games' do
-    it 'retrieves list of seasons' do
+    it 'retrieves list of games' do
       get season_games_path(@season)
       expect(response).to have_http_status(200)
       expect(data.length).to eq(@season.games.length)
@@ -15,7 +15,7 @@ RSpec.describe 'Games', type: :request do
   end
 
   describe 'GET /games/:id' do
-    it 'retrieves specific season' do
+    it 'retrieves specific game' do
       game = @season.games.first
       get game_path(game)
       expect(response).to have_http_status(200)

@@ -11,11 +11,11 @@ class NbaStatScraper(AbstractScraper):
         home_team = args["home_team"]
         game_url = args["game_url"]
         endpoint = f"boxscores/{game_url}.html"
+        self.get(endpoint)
         away_basic = self.find_element(f"#box-{away_team}-game-basic")
         away_advanced = self.find_element(f"#box-{away_team}-game-advanced")
         home_basic = self.find_element(f"#box-{home_team}-game-basic")
         home_advanced = self.find_element(f"#box-{home_team}-game-advanced")
-        self.get(endpoint)
 
         def get_team_stats(basic_stats_table, advanced_stats_table):
             css_config = {"section": "tfoot", "cells": "th, td"}

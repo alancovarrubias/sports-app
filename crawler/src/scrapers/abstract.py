@@ -12,6 +12,7 @@ class AbstractScraper(ABC):
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.page_load_strategy = 'eager'
         self.driver = webdriver.Chrome(options=chrome_options)
 
     def get(self, endpoint):
