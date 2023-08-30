@@ -1,4 +1,4 @@
-import AuthApi from "./authAp";
+import AuthApi from "./authApi";
 import NbaApi from "./nbaApi";
 
 export interface DataSources {

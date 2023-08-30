@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import initServer from "@app/initServer";
-import { LOGIN_URL } from "@app/dataSources/authAp";
+import { LOGIN_URL } from "@app/dataSources/authApi";
 import {
   LOGGED_IN_CONTEXT,
   LOGGED_OUT_CONTEXT,
