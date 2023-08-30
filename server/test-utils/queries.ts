@@ -1,3 +1,12 @@
+export const SEASONS_QUERY = `#graphql
+  query Seasons {
+    seasons {
+      id
+      year
+    }
+  }
+`;
+
 export const GAMES_QUERY = `#graphql
   query Games($seasonId: String!) {
     games(seasonId: $seasonId) {

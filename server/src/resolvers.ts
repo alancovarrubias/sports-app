@@ -20,6 +20,13 @@ const resolvers: Resolvers = {
     currentUser: withAuthentication((_root, _args, { user }) => {
       return user;
     }),
+    seasons: withAuthentication(
+      async (_root, _args, { dataSources: { nbaApi } }) => {
+        const res = await nbaApi.fetchSeasons();
+        const body = await res.json();
+        return body.data.map((season) => season.attributes);
+      }
+    ),
     games: withAuthentication(
       async (_root, args, { dataSources: { nbaApi } }) => {
         const res = await nbaApi.fetchGames(args.seasonId);

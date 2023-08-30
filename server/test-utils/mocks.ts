@@ -1,4 +1,4 @@
-import { Game } from "@app/__generated__/resolvers-types";
+import { Game, Season } from "@app/__generated__/resolvers-types";
 import dataSources from "@app/dataSources";
 
 export const USER = {
@@ -32,6 +32,11 @@ export const LOGGED_IN_CONTEXT = {
 export const LOGGED_OUT_CONTEXT = {
   user: null,
   dataSources,
+};
+
+export const SEASON: Season = {
+  id: "1",
+  year: 2020,
 };
 
 export const GAME: Game = {

@@ -13,7 +13,6 @@ jest.mock("node-fetch");
 const CURRENT_USER_RESPONSE = successfulResponse(USER);
 const UNAUTHENTICATED_RESPONSE = {
   status: 401,
-  json: () => Promise.resolve({}),
 };
 
 let server;

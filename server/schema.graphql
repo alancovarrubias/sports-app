@@ -1,5 +1,10 @@
 scalar Date
 
+type Season {
+  id: ID!
+  year: Int!
+}
+
 type Team {
   id: ID!
   abbr: String!
@@ -26,6 +31,7 @@ type AuthPayload {
 
 type Query {
   currentUser: User!
+  seasons: [Season!]!
   games(seasonId: String!): [Game!]!
 }
 
