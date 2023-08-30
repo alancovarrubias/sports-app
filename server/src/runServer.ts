@@ -1,13 +1,7 @@
 import { startStandaloneServer } from "@apollo/server/standalone";
 import initServer from "@app/initServer";
-import AuthAPI from "@app/dataSources/authAp";
+import dataSources from "@app/dataSources";
 import type { ListenOptions } from "net";
-import NbaApi from "./dataSources/nbaApi";
-
-export const dataSources = {
-  authApi: new AuthAPI(),
-  nbaApi: new NbaApi(),
-};
 
 async function getUser(token) {
   const res = await dataSources.authApi.verifyToken(token);

@@ -4,7 +4,7 @@ const buildAuthURL = (path) => "http://auth:3000" + path;
 export const VERIFY_URL = buildAuthURL("/auth/verify");
 export const LOGIN_URL = buildAuthURL("/auth/login");
 
-export default class AuthAPI {
+export default class AuthApi {
   verifyToken = (token) => {
     return fetch(VERIFY_URL, {
       headers: {

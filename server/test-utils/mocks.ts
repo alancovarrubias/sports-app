@@ -1,7 +1,5 @@
 import { Game } from "@app/__generated__/resolvers-types";
-import AuthAPI from "@app/dataSources/authAp";
-import NbaApi from "@app/dataSources/nbaApi";
-import { dataSources } from "@app/runServer";
+import dataSources from "@app/dataSources";
 
 export const USER = {
   id: "1",
