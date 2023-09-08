@@ -21,6 +21,7 @@ pylint = "*"
 black = "*"
 rope = "*"
 pytest = "*"
+pytest-mock = "*"
 
 [pipenv]
 allow_prereleases = true

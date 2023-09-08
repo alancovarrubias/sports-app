@@ -1,18 +1,17 @@
 from selenium.webdriver.common.by import By
 import re
-from scraper import Scraper
+from v2.scrapers.base_scraper import BaseScraper
 
 
 def flatten_nested_list(nested_list):
     return [element for sublist in nested_list for element in sublist]
 
 
-class ScheduleScraper(Scraper):
-    URL = "https://www.espn.com/nfl/schedule/_/week/1/year/2023/seasontype/2"
-    CACHE = "schedule.html"
-
-    def __init__(self):
-        super().__init__(ScheduleScraper.URL, ScheduleScraper.CACHE)
+class ScheduleScraper(BaseScraper):
+    def build_url(self, week, year):
+        return (
+            f"https://www.espn.com/nfl/schedule/_/week/{week}/year/{year}/seasontype/2"
+        )
 
     def get_game_ids(self):
         tables = self.driver.find_elements(By.CSS_SELECTOR, ".ScheduleTables")

@@ -1,13 +1,10 @@
 from selenium.webdriver.common.by import By
-from scraper import Scraper
+from v2.scrapers.base_scraper import BaseScraper
 
 
-class BoxscoreScraper(Scraper):
-    URL = "https://www.espn.com/nfl/boxscore/_/gameId/401547658"
-    CACHE = "boxscore.html"
-
-    def __init__(self):
-        super().__init__(BoxscoreScraper.URL, BoxscoreScraper.CACHE)
+class BoxscoreScraper(BaseScraper):
+    def build_url(self, game_id):
+        return f"https://www.espn.com/nfl/boxscore/_/gameId/{game_id}"
 
     def get_away_comp_att(self):
         return self.get_data(0, 0, 0)
