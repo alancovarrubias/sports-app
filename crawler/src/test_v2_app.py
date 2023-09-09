@@ -1,8 +1,8 @@
 import pytest
 from v2_app import app, process_request
 from flask import json
+from v2.scrapers.boxscore_scraper import BoxscoreScraper
 from v2.scrapers.schedule_scraper import ScheduleScraper
-from v2.scrapers.base_scraper import BaseScraper
 from unittest.mock import Mock
 
 
@@ -11,9 +11,18 @@ def client():
     with app.test_client() as client:
         yield client
 
+def test_games_show(client, mocker):
+    mocked_process_request = mocker.patch("v2_app.process_request")
+    mocked_process_request.return_value = []
+    response = client.get("/api/games/12345")
+    assert response.status_code == 200
+    data = json.loads(response.data)
+    assert data == []
 
-def test_games_resource(client, mocker):
-    mocked_process_request = mocker.patch("v2.app.process_request")
+    mocked_process_request.assert_called_once_with(BoxscoreScraper, 12345)
+
+def test_games_index(client, mocker):
+    mocked_process_request = mocker.patch("v2_app.process_request")
     mocked_process_request.return_value = []
     response = client.get("/api/games?year=2020&week=1")
     assert response.status_code == 200
@@ -23,12 +32,12 @@ def test_games_resource(client, mocker):
     mocked_process_request.assert_called_once_with(ScheduleScraper, 1, 2020)
 
 
-class TestScraper(BaseScraper):
-    def build_url(self, *args):
-        return ""
+class TestScraper:
+    def fetch(self, *args):
+        pass
 
     def parse_data(self):
-        return {}
+        pass
 
 
 def test_process_request(mocker):

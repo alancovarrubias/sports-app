@@ -42,6 +42,6 @@ class TestScheduleScraper:
         mock_get.assert_called_once_with(TestScheduleScraper.MOCKED_URL)
 
     def test_scrape_data(self, mocked_scraper):
-        assert mocked_scraper.scrape_data() == {
+        assert mocked_scraper.parse_data() == {
             "games": TestScheduleScraper.MOCK_GAME_IDS
         }

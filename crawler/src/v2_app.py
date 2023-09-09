@@ -1,4 +1,5 @@
 from flask import Flask, request
+from v2.scrapers.boxscore_scraper import BoxscoreScraper
 from v2.scrapers.schedule_scraper import ScheduleScraper
 
 
@@ -10,14 +11,16 @@ def process_request(Scraper, *args):
 
 app = Flask(__name__)
 
-
 @app.route("/api/games", methods=["GET"])
-def my_route():
+def games_index():
     year = request.args.get("year", type=int)
     week = request.args.get("week", type=int)
 
     return process_request(ScheduleScraper, week, year)
 
+@app.route("/api/games/<int:game_id>", methods=["GET"])
+def games_show(game_id):
+    return process_request(BoxscoreScraper, game_id)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

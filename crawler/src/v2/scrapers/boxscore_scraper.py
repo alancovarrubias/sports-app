@@ -9,7 +9,7 @@ class BoxscoreScraper(BaseScraper):
     def build_url(self, game_id):
         return f"https://www.espn.com/nfl/boxscore/_/gameId/{game_id}"
 
-    def scrape_data(self):
+    def parse_data(self):
         return {
             "start_time": self.get_start_time(),
             "game_clock": self.get_game_clock(),

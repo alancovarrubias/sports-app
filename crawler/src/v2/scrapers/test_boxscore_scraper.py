@@ -30,7 +30,7 @@ class TestBoxscore:
         mock_get.assert_called_once_with(TestBoxscore.MOCKED_URL)
 
     def test_scrape_data(self, mocked_scraper):
-        assert mocked_scraper.scrape_data() == {
+        assert mocked_scraper.parse_data() == {
             "start_time": "12:00 AM, August 28, 2023",
             "game_clock": "Final",
             "away_team": {

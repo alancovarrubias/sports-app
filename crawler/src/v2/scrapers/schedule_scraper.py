@@ -13,7 +13,7 @@ class ScheduleScraper(BaseScraper):
             f"https://www.espn.com/nfl/schedule/_/week/{week}/year/{year}/seasontype/2"
         )
 
-    def scrape_data(self):
+    def parse_data(self):
         return {"games": self.get_game_ids()}
 
     def get_game_ids(self):
