@@ -1,8 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from abc import ABC, abstractmethod
 
 
-class BaseScraper:
+class BaseScraper(ABC):
     def __init__(self):
         self.driver = self.init_driver()
 
@@ -17,6 +18,14 @@ class BaseScraper:
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.page_load_strategy = "eager"
         return webdriver.Chrome(options=chrome_options)
+
+    @abstractmethod
+    def build_url(self, *args):
+        pass
+
+    @abstractmethod
+    def parse_data(self):
+        pass
 
     def __enter__(self):
         return self

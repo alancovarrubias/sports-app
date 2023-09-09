@@ -23,11 +23,20 @@ def test_games_resource(client, mocker):
     mocked_process_request.assert_called_once_with(ScheduleScraper, 1, 2020)
 
 
+class TestScraper(BaseScraper):
+    def build_url(self, *args):
+        return ""
+
+    def parse_data(self):
+        return {}
+
+
 def test_process_request(mocker):
-    mock_constructor = Mock(spec=BaseScraper)
-    mock_instance = BaseScraper()
+    mock_constructor = Mock(spec=TestScraper)
+    mock_instance = TestScraper()
     mock_fetch = mocker.patch.object(mock_instance, "fetch", autospec=True)
-    mock_fetch.return_value = {}
+    mock_parse_data = mocker.patch.object(mock_instance, "parse_data", autospec=True)
+    mock_parse_data.return_value = {}
     mock_constructor.return_value = mock_instance
     args = [1, 2020]
     return_value = process_request(mock_constructor, *args)
