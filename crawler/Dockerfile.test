@@ -34,4 +34,4 @@ COPY Pipfile Pipfile.lock ${PROJECT_DIR}/
 RUN pipenv install --system --deploy
 COPY . .
 
-CMD ["python", "test.py"]
+CMD ["pipenv", "run", "python", "-m", "pytest"]

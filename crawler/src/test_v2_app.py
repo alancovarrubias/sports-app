@@ -1,5 +1,5 @@
 import pytest
-from v2.app import app, process_request
+from v2_app import app, process_request
 from flask import json
 from v2.scrapers.schedule_scraper import ScheduleScraper
 from v2.scrapers.base_scraper import BaseScraper
