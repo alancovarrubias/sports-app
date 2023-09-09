@@ -13,6 +13,9 @@ class ScheduleScraper(BaseScraper):
             f"https://www.espn.com/nfl/schedule/_/week/{week}/year/{year}/seasontype/2"
         )
 
+    def scrape_data(self):
+        return {"games": self.get_game_ids()}
+
     def get_game_ids(self):
         tables = self.driver.find_elements(By.CSS_SELECTOR, ".ScheduleTables")
         table_ids = [self.get_table_game_ids(table) for table in tables]

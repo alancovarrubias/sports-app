@@ -29,44 +29,42 @@ class TestBoxscore:
 
         mock_get.assert_called_once_with(TestBoxscore.MOCKED_URL)
 
-    def test_away_comp_att(self, mocked_scraper):
-        assert mocked_scraper.get_away_comp_att() == "15/27"
-
-    def test_away_passing_yards(self, mocked_scraper):
-        assert mocked_scraper.get_away_passing_yards() == "104"
-
-    def test_away_carries(self, mocked_scraper):
-        assert mocked_scraper.get_away_carries() == "31"
-
-    def test_away_rushing_yards(self, mocked_scraper):
-        assert mocked_scraper.get_away_rushing_yards() == "131"
-
-    def test_home_comp_att(self, mocked_scraper):
-        assert mocked_scraper.get_home_comp_att() == "28/54"
-
-    def test_home_passing_yards(self, mocked_scraper):
-        assert mocked_scraper.get_home_passing_yards() == "257"
-
-    def test_home_carries(self, mocked_scraper):
-        assert mocked_scraper.get_home_carries() == "21"
-
-    def test_home_rushing_yards(self, mocked_scraper):
-        assert mocked_scraper.get_home_rushing_yards() == "91"
-
-    def test_game_time(self, mocked_scraper):
-        assert mocked_scraper.get_game_time() == "Final"
+    def test_scrape_data(self, mocked_scraper):
+        assert mocked_scraper.scrape_data() == {
+            "start_time": "12:00 AM, August 28, 2023",
+            "game_clock": "Final",
+            "away_team": {
+                "name": "Houston Texans",
+                "comp_att": "15/27",
+                "passing_yards": "104",
+                "carries": "31",
+                "rushing_yards": "131",
+            },
+            "home_team": {
+                "name": "New Orleans Saints",
+                "comp_att": "28/54",
+                "passing_yards": "257",
+                "carries": "21",
+                "rushing_yards": "91",
+            },
+        }
 
     def test_away_scores(self, mocked_scraper):
-        assert mocked_scraper.get_away_scores() == ["HOU", "7", "3", "7", "0", "17"]
+        assert mocked_scraper.get_scores(BoxscoreScraper.AWAY_INDEX) == [
+            "HOU",
+            "7",
+            "3",
+            "7",
+            "0",
+            "17",
+        ]
 
     def test_home_scores(self, mocked_scraper):
-        assert mocked_scraper.get_home_scores() == ["NO", "0", "7", "3", "3", "13"]
-
-    def test_away_team(self, mocked_scraper):
-        assert mocked_scraper.get_away_team() == "Houston Texans"
-
-    def test_home_team(self, mocked_scraper):
-        assert mocked_scraper.get_home_team() == "New Orleans Saints"
-
-    def test_game_time(self, mocked_scraper):
-        assert mocked_scraper.get_game_time() == "12:00 AM, August 28, 2023"
+        assert mocked_scraper.get_scores(BoxscoreScraper.HOME_INDEX) == [
+            "NO",
+            "0",
+            "7",
+            "3",
+            "3",
+            "13",
+        ]
