@@ -11,10 +11,12 @@ class BoxscoreScraper(BaseScraper):
 
     def parse_data(self):
         return {
-            "start_time": self.get_start_time(),
-            "game_clock": self.get_game_clock(),
-            "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),
-            "home_team": self.team_stats(BoxscoreScraper.HOME_INDEX),
+            "game": {
+                "start_time": self.get_start_time(),
+                "game_clock": self.get_game_clock(),
+                "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),
+                "home_team": self.team_stats(BoxscoreScraper.HOME_INDEX),
+            }
         }
 
     def get_start_time(self):

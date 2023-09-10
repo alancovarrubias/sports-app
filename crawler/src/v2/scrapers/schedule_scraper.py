@@ -14,7 +14,7 @@ class ScheduleScraper(BaseScraper):
         )
 
     def parse_data(self):
-        return {"games": self.get_game_ids()}
+        return {"espn_game_ids": self.get_game_ids()}
 
     def get_game_ids(self):
         tables = self.driver.find_elements(By.CSS_SELECTOR, ".ScheduleTables")

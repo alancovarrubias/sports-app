@@ -31,22 +31,24 @@ class TestBoxscore:
 
     def test_scrape_data(self, mocked_scraper):
         assert mocked_scraper.parse_data() == {
-            "start_time": "12:00 AM, August 28, 2023",
-            "game_clock": "Final",
-            "away_team": {
-                "name": "Houston Texans",
-                "comp_att": "15/27",
-                "passing_yards": "104",
-                "carries": "31",
-                "rushing_yards": "131",
-            },
-            "home_team": {
-                "name": "New Orleans Saints",
-                "comp_att": "28/54",
-                "passing_yards": "257",
-                "carries": "21",
-                "rushing_yards": "91",
-            },
+            "game": {
+                "start_time": "12:00 AM, August 28, 2023",
+                "game_clock": "Final",
+                "away_team": {
+                    "name": "Houston Texans",
+                    "comp_att": "15/27",
+                    "passing_yards": "104",
+                    "carries": "31",
+                    "rushing_yards": "131",
+                },
+                "home_team": {
+                    "name": "New Orleans Saints",
+                    "comp_att": "28/54",
+                    "passing_yards": "257",
+                    "carries": "21",
+                    "rushing_yards": "91",
+                },
+            }
         }
 
     def test_away_scores(self, mocked_scraper):
