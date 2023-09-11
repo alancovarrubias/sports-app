@@ -4,7 +4,7 @@ class CreateTeams < ActiveRecord::Migration[6.0]
       t.references :season
       t.string :name
       t.string :abbr
-      t.integer :league
+      t.string :league
     end
   end
 end

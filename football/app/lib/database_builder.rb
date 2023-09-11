@@ -10,7 +10,6 @@ class DatabaseBuilder
       home_team = season.teams.find_or_create_by(name: home_name)
       game = season.games.find_or_create_by(espn_id: game_id, away_team: away_team, home_team: home_team)
       game.update(game_clock: res['game']['game_clock'], start_time: res['game']['start_time'])
-      game.start_time
     end
   end
 
