@@ -4,11 +4,11 @@ class Game < ApplicationRecord
   belongs_to :home_team, class_name: 'Team'
   has_many :stats
 
-  def full_game_stat
-    stats.find_by(interval: 'Full Game')
-  end
-
-  def first_half_stat
-    stats.find_by(interval: 'First Half')
+  VENUES = %w[away home].freeze
+  INTERVALS = ['Full Game', 'First Half'].freeze
+  VENUES.product(INTERVALS).each do |venue, interval|
+    define_method("#{venue}_#{interval.methodize}_stat") do
+      stats.find_by(interval: interval, team: send("#{venue}_team"))
+    end
   end
 end

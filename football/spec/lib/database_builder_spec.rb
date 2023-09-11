@@ -45,6 +45,5 @@ RSpec.describe DatabaseBuilder do
     expect(game).to be_truthy
     expect(game.start_time).to eq(DateTime.new(2023, 8, 28, 0, 0, 0))
     expect(game.game_clock).to eq('Final')
-    expect(game)
   end
 end
