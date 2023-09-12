@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe DatabaseBuilder do
   subject { DatabaseBuilder.new }
+  let(:year) { 2023 }
+  let(:week) { 1 }
   let(:game_id) { '401547658' }
   let(:games_response) { { 'espn_game_ids' => [game_id] } }
   let(:away_team_name) { 'Houston Texans' }
@@ -31,18 +33,18 @@ RSpec.describe DatabaseBuilder do
   end
 
   before do
-    @season = FactoryBot.create(:season, year: 2023)
-    stub_request(:get, 'http://crawler:5000/api/games?year=2023&week=1')
+    stub_request(:get, "http://crawler:5000/api/games?year=#{year}&week=#{week}")
       .to_return(status: 200, body: games_response.to_json)
     stub_request(:get, "http://crawler:5000/api/games/#{game_id}")
       .to_return(status: 200, body: game_response.to_json)
-    subject.run
+    subject.run(year, week)
   end
 
   describe 'game' do
     before do
-      @game = @season.games.find_by_espn_id(game_id)
+      @game = Game.find_by_espn_id(game_id)
     end
+    it { expect(@game.season.year).to eq(year) }
     it { expect(@game.start_time).to eq(DateTime.new(2023, 8, 28, 0, 0, 0)) }
     it { expect(@game.game_clock).to eq(game_clock) }
 

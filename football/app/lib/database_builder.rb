@@ -1,7 +1,7 @@
 class DatabaseBuilder
-  def run
-    @season = Season.find_or_create_by(year: 2023)
-    game_ids = query('http://crawler:5000/api/games?year=2023&week=1')['espn_game_ids']
+  def run(year, week)
+    @season = Season.find_or_create_by(year: year)
+    game_ids = query("http://crawler:5000/api/games?year=#{year}&week=#{week}")['espn_game_ids']
     game_ids.map do |game_id|
       @game_data = query("http://crawler:5000/api/games/#{game_id}")['game']
       build_game(game_id)
