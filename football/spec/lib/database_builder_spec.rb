@@ -45,5 +45,17 @@ RSpec.describe DatabaseBuilder do
     expect(game).to be_truthy
     expect(game.start_time).to eq(DateTime.new(2023, 8, 28, 0, 0, 0))
     expect(game.game_clock).to eq('Final')
+    away_stat = game.away_full_game_stat
+    expect(away_stat.completions).to eq(15)
+    expect(away_stat.attempts).to eq(27)
+    expect(away_stat.passing_yards).to eq(104)
+    expect(away_stat.carries).to eq(31)
+    expect(away_stat.rushing_yards).to eq(131)
+    home_stat = game.home_full_game_stat
+    expect(home_stat.completions).to eq(28)
+    expect(home_stat.attempts).to eq(54)
+    expect(home_stat.passing_yards).to eq(257)
+    expect(home_stat.carries).to eq(21)
+    expect(home_stat.rushing_yards).to eq(91)
   end
 end
