@@ -26,7 +26,9 @@ class DatabaseBuilder
     away_team = build_team(@game_data['away_team'])
     home_team = build_team(@game_data['home_team'])
     @game = @season.games.find_or_create_by(espn_id: game_id, away_team: away_team, home_team: home_team, week: week)
-    @game.update(game_clock: @game_data['game_clock'], start_time: @game_data['start_time'])
+    start_time = DateTime.parse(@game_data['start_time'])
+    date = start_time.in_time_zone('Pacific Time (US & Canada)').to_date
+    @game.update(game_clock: @game_data['game_clock'], start_time: start_time, date: date)
   end
 
   def build_team(team_data)

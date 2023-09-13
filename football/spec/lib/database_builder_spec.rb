@@ -8,6 +8,8 @@ RSpec.describe DatabaseBuilder do
   let(:options) { { week: week, year: year } }
   let(:query_params) { "week=#{week}&year=#{year}" }
   let(:game_id) { '401547658' }
+  let(:start_time) { DateTime.new(2023, 8, 28, 0, 0, 0) }
+  let(:date) { start_time.in_time_zone('Pacific Time (US & Canada)').to_date }
   let(:games_response) { { 'year' => year.to_s, 'week' => week.to_s, 'espn_game_ids' => [game_id] } }
   let(:away_team_name) { 'Houston Texans' }
   let(:home_team_name) { 'New Orleans Saints' }
@@ -63,7 +65,8 @@ RSpec.describe DatabaseBuilder do
     it 'should be accurate' do
       expect(@game.season.year).to eq(year)
       expect(@game.week).to eq(week)
-      expect(@game.start_time).to eq(DateTime.new(2023, 8, 28, 0, 0, 0))
+      expect(@game.date).to eq(date)
+      expect(@game.start_time).to eq(start_time)
       expect(@game.game_clock).to eq(game_clock)
     end
 
