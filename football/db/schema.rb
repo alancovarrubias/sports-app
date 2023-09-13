@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2023_09_10_091243) do
     t.bigint "away_team_id"
     t.bigint "home_team_id"
     t.integer "espn_id"
+    t.integer "week"
     t.date "date"
     t.datetime "start_time"
     t.string "game_clock"

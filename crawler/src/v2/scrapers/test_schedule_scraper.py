@@ -43,5 +43,7 @@ class TestScheduleScraper:
 
     def test_scrape_data(self, mocked_scraper):
         assert mocked_scraper.parse_data() == {
+            "year": "2023",
+            "week": "1",
             "espn_game_ids": TestScheduleScraper.MOCK_GAME_IDS
         }

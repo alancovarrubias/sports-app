@@ -1,28 +1,31 @@
 class DatabaseBuilder
-  def run(year, week)
-    @season = Season.find_or_create_by(year: year)
-    game_ids = query("http://crawler:5000/api/games?year=#{year}&week=#{week}")['espn_game_ids']
-    game_ids.map do |game_id|
-      @game_data = query("http://crawler:5000/api/games/#{game_id}")['game']
-      build_game(game_id)
+  GAMES_URL = 'http://crawler:5000/api/games'.freeze
+  def run(options = {})
+    url = get_games_url(options)
+    games_res = query(url)
+    @season = Season.find_or_create_by(year: games_res['year'])
+    games_res['espn_game_ids'].map do |game_id|
+      @game_data = query("#{GAMES_URL}/#{game_id}")['game']
+      build_game(game_id, games_res['week'])
       build_stat(@game.away_team, @game_data['away_team'])
       build_stat(@game.home_team, @game_data['home_team'])
     end
   end
 
+  def get_games_url(year: nil, week: nil)
+    year && week ? "#{GAMES_URL}?year=#{year}&week=#{week}" : GAMES_URL
+  end
+
   def query(url)
     url = URI.parse(url)
-    req = Net::HTTP::Get.new(url.to_s)
-    res = Net::HTTP.start(url.host, url.port, read_timeout: 500) do |http|
-      http.request(req)
-    end
+    res = Net::HTTP.get_response(url)
     JSON.parse(res.body)
   end
 
-  def build_game(game_id)
+  def build_game(game_id, week)
     away_team = build_team(@game_data['away_team'])
     home_team = build_team(@game_data['home_team'])
-    @game = @season.games.find_or_create_by(espn_id: game_id, away_team: away_team, home_team: home_team)
+    @game = @season.games.find_or_create_by(espn_id: game_id, away_team: away_team, home_team: home_team, week: week)
     @game.update(game_clock: @game_data['game_clock'], start_time: @game_data['start_time'])
   end
 

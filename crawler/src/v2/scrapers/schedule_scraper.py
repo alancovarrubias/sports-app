@@ -14,7 +14,18 @@ class ScheduleScraper(BaseScraper):
         )
 
     def parse_data(self):
-        return {"espn_game_ids": self.get_game_ids()}
+        return {"year": self.get_year(), "week": self.get_week(),"espn_game_ids": self.get_game_ids()}
+
+    def get_year(self):
+        return self.get_active_url(r'\/year\/(\d{4})\/')
+    
+    def get_week(self):
+        return self.get_active_url(r'\/week\/(\d{1,2})\/')
+    
+    def get_active_url(self, pattern):
+        is_active = self.driver.find_elements(By.CSS_SELECTOR, ".custom--week.is-active")[1]
+        url = is_active.find_element(By.CSS_SELECTOR, "a").get_attribute('href')
+        return re.search(pattern, url).group(1)
 
     def get_game_ids(self):
         tables = self.driver.find_elements(By.CSS_SELECTOR, ".ScheduleTables")
