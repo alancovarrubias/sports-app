@@ -8,10 +8,12 @@ def flatten_nested_list(nested_list):
 
 
 class ScheduleScraper(BaseScraper):
+    THIS_WEEK_URL = "https://www.espn.com/nfl/schedule"
     def build_url(self, week, year):
-        return (
-            f"https://www.espn.com/nfl/schedule/_/week/{week}/year/{year}/seasontype/2"
-        )
+        if week is None and year is None:
+            return ScheduleScraper.THIS_WEEK_URL
+        else:
+            return f"{ScheduleScraper.THIS_WEEK_URL}/_/week/{week}/year/{year}/seasontype/2"
 
     def parse_data(self):
         return {"year": self.get_year(), "week": self.get_week(),"espn_game_ids": self.get_game_ids()}

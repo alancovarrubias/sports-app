@@ -21,7 +21,7 @@ def test_games_show(client, mocker):
 
     mocked_process_request.assert_called_once_with(BoxscoreScraper, 12345)
 
-def test_games_index(client, mocker):
+def test_games_index_with_query_params(client, mocker):
     mocked_process_request = mocker.patch("v2_app.process_request")
     mocked_process_request.return_value = []
     response = client.get("/api/games?year=2020&week=1")
@@ -30,6 +30,16 @@ def test_games_index(client, mocker):
     assert data == []
 
     mocked_process_request.assert_called_once_with(ScheduleScraper, 1, 2020)
+
+def test_games_index_empty_query_params(client, mocker):
+    mocked_process_request = mocker.patch("v2_app.process_request")
+    mocked_process_request.return_value = []
+    response = client.get("/api/games")
+    assert response.status_code == 200
+    data = json.loads(response.data)
+    assert data == []
+
+    mocked_process_request.assert_called_once_with(ScheduleScraper, None, None)
 
 
 class TestScraper:

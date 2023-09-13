@@ -3,7 +3,7 @@ from v2.scrapers.schedule_scraper import ScheduleScraper
 
 
 class TestScheduleScraper:
-    MOCKED_URL = "https://www.espn.com/nfl/schedule/_/week/1/year/2023/seasontype/2"
+    SPECIFIC_WEEK_URL = f"{ScheduleScraper.THIS_WEEK_URL}/_/week/1/year/2023/seasontype/2"
     MOCK_PATH = "file:///project/tmp/schedule.html"
     MOCK_GAME_IDS = [
         "401547353",
@@ -35,11 +35,17 @@ class TestScheduleScraper:
         with ScheduleScraper() as scraper:
             yield scraper
 
-    def test_current_url(self, scraper, mocker):
+    def test_this_week_url(self, scraper, mocker):
+        mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
+        scraper.fetch(None, None)
+
+        mock_get.assert_called_once_with(ScheduleScraper.THIS_WEEK_URL)
+
+    def test_specific_week_url(self, scraper, mocker):
         mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
         scraper.fetch("1", "2023")
 
-        mock_get.assert_called_once_with(TestScheduleScraper.MOCKED_URL)
+        mock_get.assert_called_once_with(TestScheduleScraper.SPECIFIC_WEEK_URL)
 
     def test_scrape_data(self, mocked_scraper):
         assert mocked_scraper.parse_data() == {
