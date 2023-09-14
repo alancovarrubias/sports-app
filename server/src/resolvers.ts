@@ -21,15 +21,15 @@ const resolvers: Resolvers = {
       return user;
     }),
     seasons: withAuthentication(
-      async (_root, _args, { dataSources: { nbaApi } }) => {
-        const res = await nbaApi.fetchSeasons();
+      async (_root, _args, { dataSources: { footballApi } }) => {
+        const res = await footballApi.fetchSeasons();
         const body = await res.json();
         return body.data.map((season) => season.attributes);
       }
     ),
     games: withAuthentication(
-      async (_root, args, { dataSources: { nbaApi } }) => {
-        const res = await nbaApi.fetchGames(args.seasonId);
+      async (_root, args, { dataSources: { footballApi } }) => {
+        const res = await footballApi.fetchGames(args.seasonId);
         const body = await res.json();
         return body.data.map((game) => game.attributes);
       }

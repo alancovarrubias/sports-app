@@ -7,7 +7,7 @@ import {
   mockFetch,
   successfulResponse,
 } from "@test-utils/helpers";
-import { buildGamesUrl } from "@app/dataSources/nbaApi";
+import { buildGamesUrl } from "@app/dataSources/footballApi";
 jest.mock("node-fetch");
 
 let server;

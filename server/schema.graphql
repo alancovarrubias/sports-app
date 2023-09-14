@@ -7,9 +7,9 @@ type Season {
 
 type Team {
   id: ID!
-  abbr: String!
-  city: String!
-  name: String!
+  abbr: String
+  city: String
+  name: String
 }
 
 type Game {

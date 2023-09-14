@@ -11,7 +11,7 @@ import {
   mockFetch,
   successfulResponse,
 } from "@test-utils/helpers";
-import { buildSeasonsUrl } from "@app/dataSources/nbaApi";
+import { buildSeasonsUrl } from "@app/dataSources/footballApi";
 jest.mock("node-fetch");
 
 let server;
