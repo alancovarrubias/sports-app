@@ -8,14 +8,16 @@ export const GAMES_QUERY = gql`
       id
       date
       away_team {
-        id
-        name
+        ...TeamData
       }
       home_team {
-        id
-        name
+        ...TeamData
       }
     }
+  }
+  fragment TeamData on Team {
+    id
+    name
   }
 `;
 

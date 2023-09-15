@@ -14,10 +14,12 @@ const GAMES = [
     id: "1",
     date: "2023-09-07",
     away_team: {
+      __typename: "Team",
       id: "1",
       name: "Detroit Lions"
     },
     home_team: {
+      __typename: "Team",
       id: "2",
       name: "Kansas City Chiefs"
     }
@@ -26,10 +28,12 @@ const GAMES = [
     id: "2",
     date: "2023-09-10",
     away_team: {
+      __typename: "Team",
       id: "3",
       name: "Carolina Panthers"
     },
     home_team: {
+      __typename: "Team",
       id: "4",
       name: "Atlanta Falcons"
     }
