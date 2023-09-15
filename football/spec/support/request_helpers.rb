@@ -23,6 +23,20 @@ module RequestHelpers
       'season_id' => team.season.id }
   end
 
+  def build_stat_hash(stat)
+    {
+      'id' => stat.id,
+      'team_id' => stat.team_id,
+      'game_id' => stat.game_id,
+      'interval' => stat.interval,
+      'attempts' => stat.attempts,
+      'completions' => stat.completions,
+      'passing_yards' => stat.passing_yards,
+      'carries' => stat.carries,
+      'rushing_yards' => stat.rushing_yards
+    }
+  end
+
   def build_game_hash(game)
     {
       'id' => game.id.to_s,
@@ -31,7 +45,9 @@ module RequestHelpers
         'id' => game.id,
         'date' => game.date.to_s,
         'away_team' => build_team_hash(game.away_team),
-        'home_team' => build_team_hash(game.home_team)
+        'home_team' => build_team_hash(game.home_team),
+        'away_full_game_stat' => build_stat_hash(game.away_full_game_stat),
+        'home_full_game_stat' => build_stat_hash(game.home_full_game_stat)
       }
     }
   end

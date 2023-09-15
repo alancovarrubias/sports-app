@@ -8,7 +8,9 @@ class Game < ApplicationRecord
   INTERVALS = ['Full Game', 'First Half'].freeze
   VENUES.product(INTERVALS).each do |venue, interval|
     define_method("#{venue}_#{interval.methodize}_stat") do
-      stats.find_by(interval: interval, team: send("#{venue}_team"))
+      stats.find do |stat|
+        stat.interval == interval && stat.team_id == send("#{venue}_team_id")
+      end
     end
   end
 end
