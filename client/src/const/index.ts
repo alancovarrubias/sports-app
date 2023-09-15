@@ -4,4 +4,5 @@ export enum Paths {
   Root = '/',
   Login = '/login',
   Home = '/home',
+  Games = '/games',
 }

@@ -46,6 +46,10 @@ describe('Routes', () => {
                 renderRoutes(Paths.Home, currentUserSuccessMock)
                 await waitFor(() => expect(screen.getByText(/home/i)).toBeInTheDocument());
             });
+            test('games path renders games page', async () => {
+                renderRoutes(Paths.Games, currentUserSuccessMock)
+                await waitFor(() => expect(screen.getByText(/games/i)).toBeInTheDocument());
+            });
         })
         describe('unauthorized user', () => {
             const currentUserFailureMock = [{ request, result: { errors: [new GraphQLError('User is not authenticated')] } }]
@@ -55,6 +59,10 @@ describe('Routes', () => {
             });
             test('home path redirects to login page', async () => {
                 renderRoutes(Paths.Home, currentUserFailureMock)
+                await waitFor(() => expect(screen.getByText(/login/i)).toBeInTheDocument());
+            });
+            test('games path redirects to login page', async () => {
+                renderRoutes(Paths.Games, currentUserFailureMock)
                 await waitFor(() => expect(screen.getByText(/login/i)).toBeInTheDocument());
             });
         })
