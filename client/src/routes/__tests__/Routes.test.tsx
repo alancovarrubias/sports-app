@@ -7,18 +7,15 @@ import UserProvider, { CURRENT_USER } from 'app/contexts/UserProvider'
 import { GraphQLError } from 'graphql'
 import { clearToken, setToken } from 'app/utils/auth'
 
-const USER = { email: 'testemail' }
-const request = {
-    query: CURRENT_USER,
-}
-export const renderRoutes = (path, mocks) => {
+jest.mock('app/components/Games')
+export const renderRoutes = (path, result) => {
     return renderWithMocks(
         <UserProvider>
             <MemoryRouter initialEntries={[path]}>
                 <Routes />
             </MemoryRouter>
         </UserProvider>,
-        mocks
+        [{ request: { query: CURRENT_USER }, result }]
     )
 }
 
@@ -37,32 +34,32 @@ describe('Routes', () => {
             setToken('TOKEN')
         })
         describe('authorized user', () => {
-            const currentUserSuccessMock = [{ request, result: { data: { currentUser: USER } } }]
+            const currentUserSuccess = { data: { currentUser: { email: 'testemail' } } }
             test('root path redirects to home page', async () => {
-                renderRoutes(Paths.Root, currentUserSuccessMock)
+                renderRoutes(Paths.Root, currentUserSuccess)
                 await waitFor(() => expect(screen.getByText(/home/i)).toBeInTheDocument());
             });
             test('home path renders home page', async () => {
-                renderRoutes(Paths.Home, currentUserSuccessMock)
+                renderRoutes(Paths.Home, currentUserSuccess)
                 await waitFor(() => expect(screen.getByText(/home/i)).toBeInTheDocument());
             });
             test('games path renders games page', async () => {
-                renderRoutes(Paths.Games, currentUserSuccessMock)
+                renderRoutes(Paths.Games, currentUserSuccess)
                 await waitFor(() => expect(screen.getByText(/games/i)).toBeInTheDocument());
             });
         })
         describe('unauthorized user', () => {
-            const currentUserFailureMock = [{ request, result: { errors: [new GraphQLError('User is not authenticated')] } }]
+            const currentUserFailure = { errors: [new GraphQLError('User is not authenticated')] }
             test('root path redirects to login page', async () => {
-                renderRoutes(Paths.Root, currentUserFailureMock)
+                renderRoutes(Paths.Root, currentUserFailure)
                 await waitFor(() => expect(screen.getByText(/login/i)).toBeInTheDocument());
             });
             test('home path redirects to login page', async () => {
-                renderRoutes(Paths.Home, currentUserFailureMock)
+                renderRoutes(Paths.Home, currentUserFailure)
                 await waitFor(() => expect(screen.getByText(/login/i)).toBeInTheDocument());
             });
             test('games path redirects to login page', async () => {
-                renderRoutes(Paths.Games, currentUserFailureMock)
+                renderRoutes(Paths.Games, currentUserFailure)
                 await waitFor(() => expect(screen.getByText(/login/i)).toBeInTheDocument());
             });
         })
