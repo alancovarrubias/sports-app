@@ -1,5 +1,3 @@
-scalar Date
-
 type Season {
   id: ID!
   year: Int!
@@ -23,7 +21,8 @@ type Stat {
 
 type Game {
   id: ID!
-  date: Date!
+  date: String!
+  start_time: String!
   away_team: Team!
   home_team: Team!
   away_full_game_stat: Stat!

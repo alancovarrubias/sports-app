@@ -13,6 +13,7 @@ const GAME =
 {
   id: "1",
   date: "2023-09-07",
+  start_time: "2023-09-15T00:15:00.000Z",
   away_team: {
     __typename: "Team",
     id: "1",
@@ -68,6 +69,7 @@ describe('Home', () => {
     renderGames()
     await waitFor(() => {
       expect(screen.getByText(GAME.date)).toBeInTheDocument()
+      expect(screen.getByText("September 14, 2023 at 5:15 PM")).toBeInTheDocument()
       expect(screen.getByText(GAME.away_team.name)).toBeInTheDocument()
       expect(screen.getByText(GAME.away_full_game_stat.attempts)).toBeInTheDocument()
       expect(screen.getByText(GAME.away_full_game_stat.completions)).toBeInTheDocument()

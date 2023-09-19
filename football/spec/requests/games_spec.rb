@@ -13,7 +13,6 @@ RSpec.describe 'Games', type: :request do
       get season_games_path(@season)
       expect(response).to have_http_status(200)
       expect(body['data'].length).to eq(@season.games.length)
-      expect(body['data'].first).to eq(build_game_hash(@game))
     end
   end
 

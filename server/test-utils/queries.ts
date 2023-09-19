@@ -12,6 +12,7 @@ export const GAMES_QUERY = `#graphql
     games(seasonId: $seasonId) {
       id
       date
+      start_time
       away_team {
         id
         abbr
