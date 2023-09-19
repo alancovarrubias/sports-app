@@ -27,16 +27,28 @@ export const GAMES_QUERY = gql`
   }
   fragment StatData on Stat {
     id
+    attempts
     carries
+    completions
+    passing_yards
+    rushing_yards
   }
 `;
 
 export const GAME_HEADERS = [
   'Date',
   'Away Team',
-  'Home Team',
+  'Away Attempts',
   'Away Carries',
-  'Home Carries'
+  'Away Completions',
+  'Away Passing Yards',
+  'Away Rushing Yards',
+  'Home Team',
+  'Home Attempts',
+  'Home Carries',
+  'Home Completions',
+  'Home Passing Yards',
+  'Home Rushing Yards',
 ]
 
 const Games = (): JSX.Element => {
@@ -54,13 +66,25 @@ const Games = (): JSX.Element => {
             <tr key={game.id}>
               <td>{game.date}</td>
               <td>{game.away_team.name}</td>
+              <StatRow stat={game.away_full_game_stat} />
               <td>{game.home_team.name}</td>
-              <td>{game.away_full_game_stat.carries}</td>
-              <td>{game.home_full_game_stat.carries}</td>
+              <StatRow stat={game.home_full_game_stat} />
             </tr>
           ))}
         </tbody>
       </table>
+    </>
+  )
+}
+
+const StatRow = ({ stat }) => {
+  return (
+    <>
+      <td>{stat.attempts}</td>
+      <td>{stat.completions}</td>
+      <td>{stat.carries}</td>
+      <td>{stat.passing_yards}</td>
+      <td>{stat.rushing_yards}</td>
     </>
   )
 }

@@ -9,59 +9,42 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-const GAMES = [
-  {
+const GAME =
+{
+  id: "1",
+  date: "2023-09-07",
+  away_team: {
+    __typename: "Team",
     id: "1",
-    date: "2023-09-07",
-    away_team: {
-      __typename: "Team",
-      id: "1",
-      name: "Detroit Lions"
-    },
-    home_team: {
-      __typename: "Team",
-      id: "2",
-      name: "Kansas City Chiefs"
-    },
-    away_full_game_stat: {
-      __typename: "Stat",
-      id: "1",
-      carries: 1
-    },
-    home_full_game_stat: {
-      __typename: "Stat",
-      id: "2",
-      carries: 2
-    }
+    name: "Detroit Lions"
   },
-  {
+  home_team: {
+    __typename: "Team",
     id: "2",
-    date: "2023-09-10",
-    away_team: {
-      __typename: "Team",
-      id: "3",
-      name: "Carolina Panthers"
-    },
-    home_team: {
-      __typename: "Team",
-      id: "4",
-      name: "Atlanta Falcons"
-    },
-    away_full_game_stat: {
-      __typename: "Stat",
-      id: "3",
-      carries: 3
-    },
-    home_full_game_stat: {
-      __typename: "Stat",
-      id: "4",
-      carries: 4
-    }
+    name: "Kansas City Chiefs"
+  },
+  away_full_game_stat: {
+    __typename: "Stat",
+    id: "1",
+    attempts: 1,
+    completions: 2,
+    carries: 3,
+    passing_yards: 4,
+    rushing_yards: 5,
+  },
+  home_full_game_stat: {
+    __typename: "Stat",
+    id: "2",
+    attempts: 6,
+    completions: 7,
+    carries: 8,
+    passing_yards: 9,
+    rushing_yards: 10,
   }
-]
+}
 const result = {
   data: {
-    games: GAMES
+    games: [GAME]
   }
 }
 
@@ -84,13 +67,19 @@ describe('Home', () => {
   test('renders game data', async () => {
     renderGames()
     await waitFor(() => {
-      GAMES.forEach(game => {
-        expect(screen.getByText(game.date)).toBeInTheDocument()
-        expect(screen.getByText(game.away_team.name)).toBeInTheDocument()
-        expect(screen.getByText(game.home_team.name)).toBeInTheDocument()
-        expect(screen.getByText(game.away_full_game_stat.carries)).toBeInTheDocument()
-        expect(screen.getByText(game.home_full_game_stat.carries)).toBeInTheDocument()
-      })
+      expect(screen.getByText(GAME.date)).toBeInTheDocument()
+      expect(screen.getByText(GAME.away_team.name)).toBeInTheDocument()
+      expect(screen.getByText(GAME.away_full_game_stat.attempts)).toBeInTheDocument()
+      expect(screen.getByText(GAME.away_full_game_stat.completions)).toBeInTheDocument()
+      expect(screen.getByText(GAME.away_full_game_stat.carries)).toBeInTheDocument()
+      expect(screen.getByText(GAME.away_full_game_stat.passing_yards)).toBeInTheDocument()
+      expect(screen.getByText(GAME.away_full_game_stat.rushing_yards)).toBeInTheDocument()
+      expect(screen.getByText(GAME.home_team.name)).toBeInTheDocument()
+      expect(screen.getByText(GAME.home_full_game_stat.attempts)).toBeInTheDocument()
+      expect(screen.getByText(GAME.home_full_game_stat.completions)).toBeInTheDocument()
+      expect(screen.getByText(GAME.home_full_game_stat.carries)).toBeInTheDocument()
+      expect(screen.getByText(GAME.home_full_game_stat.passing_yards)).toBeInTheDocument()
+      expect(screen.getByText(GAME.home_full_game_stat.rushing_yards)).toBeInTheDocument()
     })
   });
 })
