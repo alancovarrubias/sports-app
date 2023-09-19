@@ -24,6 +24,22 @@ export const GAMES_QUERY = `#graphql
         city
         name
       }
+      away_full_game_stat {
+        id
+        attempts
+        carries
+        completions
+        passing_yards
+        rushing_yards
+      }
+      home_full_game_stat {
+        id
+        attempts
+        carries
+        completions
+        passing_yards
+        rushing_yards
+      }
     }
   }
 `;

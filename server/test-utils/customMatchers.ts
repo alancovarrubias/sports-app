@@ -4,7 +4,7 @@ export const hasNoErrors = (body) => {
   if (body.errors) {
     return {
       pass: false,
-      message: () => body.errors[0].message
+      message: () => body.errors[0].message,
     };
   }
   return { pass: true, message: () => "Success" };
@@ -14,7 +14,7 @@ export const returnsData = (body, expectedData) => {
   if (!_.isEqual(body.data, expectedData)) {
     return {
       pass: false,
-      message: () => "Expected response data to equal expected data`,",
+      message: () => body.data,
     };
   }
   return { pass: true, message: () => "Success" };

@@ -12,11 +12,22 @@ type Team {
   name: String
 }
 
+type Stat {
+  id: ID!
+  attempts: Int!
+  completions: Int!
+  carries: Int!
+  rushing_yards: Int!
+  passing_yards: Int!
+}
+
 type Game {
   id: ID!
   date: Date!
   away_team: Team!
   home_team: Team!
+  away_full_game_stat: Stat!
+  home_full_game_stat: Stat!
 }
 
 type User {

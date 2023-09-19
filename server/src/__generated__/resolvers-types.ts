@@ -25,8 +25,10 @@ export type AuthPayload = {
 
 export type Game = {
   __typename?: 'Game';
+  away_full_game_stat: Stat;
   away_team: Team;
   date: Scalars['Date']['output'];
+  home_full_game_stat: Stat;
   home_team: Team;
   id: Scalars['ID']['output'];
 };
@@ -58,6 +60,16 @@ export type Season = {
   __typename?: 'Season';
   id: Scalars['ID']['output'];
   year: Scalars['Int']['output'];
+};
+
+export type Stat = {
+  __typename?: 'Stat';
+  attempts: Scalars['Int']['output'];
+  carries: Scalars['Int']['output'];
+  completions: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  passing_yards: Scalars['Int']['output'];
+  rushing_yards: Scalars['Int']['output'];
 };
 
 export type Team = {
@@ -154,6 +166,7 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   Season: ResolverTypeWrapper<Season>;
+  Stat: ResolverTypeWrapper<Stat>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Team: ResolverTypeWrapper<Team>;
   User: ResolverTypeWrapper<User>;
@@ -170,6 +183,7 @@ export type ResolversParentTypes = {
   Mutation: {};
   Query: {};
   Season: Season;
+  Stat: Stat;
   String: Scalars['String']['output'];
   Team: Team;
   User: User;
@@ -186,8 +200,10 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type GameResolvers<ContextType = any, ParentType extends ResolversParentTypes['Game'] = ResolversParentTypes['Game']> = {
+  away_full_game_stat?: Resolver<ResolversTypes['Stat'], ParentType, ContextType>;
   away_team?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
   date?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  home_full_game_stat?: Resolver<ResolversTypes['Stat'], ParentType, ContextType>;
   home_team?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -206,6 +222,16 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type SeasonResolvers<ContextType = any, ParentType extends ResolversParentTypes['Season'] = ResolversParentTypes['Season']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type StatResolvers<ContextType = any, ParentType extends ResolversParentTypes['Stat'] = ResolversParentTypes['Stat']> = {
+  attempts?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  carries?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  completions?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  passing_yards?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  rushing_yards?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -230,6 +256,7 @@ export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Season?: SeasonResolvers<ContextType>;
+  Stat?: StatResolvers<ContextType>;
   Team?: TeamResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };

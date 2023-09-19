@@ -54,4 +54,20 @@ export const GAME: Game = {
     city: "Los Angeles",
     name: "Angels",
   },
+  away_full_game_stat: {
+    id: "1",
+    attempts: 1,
+    completions: 2,
+    carries: 3,
+    rushing_yards: 4,
+    passing_yards: 5,
+  },
+  home_full_game_stat: {
+    id: "2",
+    attempts: 1,
+    completions: 2,
+    carries: 3,
+    rushing_yards: 4,
+    passing_yards: 5,
+  },
 };

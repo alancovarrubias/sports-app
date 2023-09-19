@@ -32,8 +32,7 @@ describe("Games Query", () => {
       contextValue: LOGGED_IN_CONTEXT,
     });
 
-    const gamesUrl = buildGamesUrl(variables.seasonId);
-    expect(fetch).toHaveBeenCalledWith(gamesUrl);
+    expect(fetch).toHaveBeenCalledWith(buildGamesUrl(variables.seasonId));
     expect(response).toHaveNoErrors();
     expect(response).toReturnData({
       games: [GAME],
