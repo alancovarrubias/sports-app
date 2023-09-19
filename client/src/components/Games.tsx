@@ -13,18 +13,30 @@ export const GAMES_QUERY = gql`
       home_team {
         ...TeamData
       }
+      away_full_game_stat {
+        ...StatData
+      }
+      home_full_game_stat {
+        ...StatData
+      }
     }
   }
   fragment TeamData on Team {
     id
     name
   }
+  fragment StatData on Stat {
+    id
+    carries
+  }
 `;
 
 export const GAME_HEADERS = [
   'Date',
   'Away Team',
-  'Home Team'
+  'Home Team',
+  'Away Carries',
+  'Home Carries'
 ]
 
 const Games = (): JSX.Element => {
@@ -43,6 +55,8 @@ const Games = (): JSX.Element => {
               <td>{game.date}</td>
               <td>{game.away_team.name}</td>
               <td>{game.home_team.name}</td>
+              <td>{game.away_full_game_stat.carries}</td>
+              <td>{game.home_full_game_stat.carries}</td>
             </tr>
           ))}
         </tbody>

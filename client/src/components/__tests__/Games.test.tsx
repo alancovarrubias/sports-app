@@ -22,6 +22,16 @@ const GAMES = [
       __typename: "Team",
       id: "2",
       name: "Kansas City Chiefs"
+    },
+    away_full_game_stat: {
+      __typename: "Stat",
+      id: "1",
+      carries: 1
+    },
+    home_full_game_stat: {
+      __typename: "Stat",
+      id: "2",
+      carries: 2
     }
   },
   {
@@ -36,6 +46,16 @@ const GAMES = [
       __typename: "Team",
       id: "4",
       name: "Atlanta Falcons"
+    },
+    away_full_game_stat: {
+      __typename: "Stat",
+      id: "3",
+      carries: 3
+    },
+    home_full_game_stat: {
+      __typename: "Stat",
+      id: "4",
+      carries: 4
     }
   }
 ]
@@ -68,6 +88,8 @@ describe('Home', () => {
         expect(screen.getByText(game.date)).toBeInTheDocument()
         expect(screen.getByText(game.away_team.name)).toBeInTheDocument()
         expect(screen.getByText(game.home_team.name)).toBeInTheDocument()
+        expect(screen.getByText(game.away_full_game_stat.carries)).toBeInTheDocument()
+        expect(screen.getByText(game.home_full_game_stat.carries)).toBeInTheDocument()
       })
     })
   });
