@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from abc import ABC, abstractmethod
+import time
 
 
 class BaseScraper(ABC):
@@ -10,6 +11,7 @@ class BaseScraper(ABC):
     def fetch(self, *args):
         url = self.build_url(*args)
         self.driver.get(url)
+        time.sleep(1)
 
     def init_driver(self):
         chrome_options = Options()
