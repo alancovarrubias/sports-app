@@ -33,7 +33,8 @@ class DatabaseBuilder
 
   def build_team(team_data)
     team_name = team_data.delete('name')
-    @season.teams.find_or_create_by(name: team_name)
+    team_abbr = team_data.delete('abbr')
+    @season.teams.find_or_create_by(name: team_name, abbr: team_abbr)
   end
 
   def build_stat(team, team_data)

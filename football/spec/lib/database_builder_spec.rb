@@ -13,6 +13,8 @@ RSpec.describe DatabaseBuilder do
   let(:games_response) { { 'year' => year.to_s, 'week' => week.to_s, 'espn_game_ids' => [game_id] } }
   let(:away_team_name) { 'Houston Texans' }
   let(:home_team_name) { 'New Orleans Saints' }
+  let(:away_team_abbr) { 'HOU' }
+  let(:home_team_abbr) { 'NO' }
   let(:game_clock) { 'Final' }
   let(:game_response) do
     {
@@ -21,6 +23,7 @@ RSpec.describe DatabaseBuilder do
         'game_clock' => game_clock,
         'away_team' => {
           'name' => away_team_name,
+          'abbr' => away_team_abbr,
           'comp_att' => '15/27',
           'passing_yards' => '104',
           'carries' => '31',
@@ -28,11 +31,19 @@ RSpec.describe DatabaseBuilder do
         },
         'home_team' => {
           'name' => home_team_name,
+          'abbr' => home_team_abbr,
           'comp_att' => '28/54',
           'passing_yards' => '257',
           'carries' => '21',
           'rushing_yards' => '91'
         }
+      }
+    }
+  end
+  let(:playbyplay_response) do
+    {
+      'game' => {
+        'kicked' => 'HST'
       }
     }
   end
@@ -43,6 +54,8 @@ RSpec.describe DatabaseBuilder do
       .to_return(status: 200, body: games_response.to_json)
     stub_request(:get, "#{games_url}/#{game_id}")
       .to_return(status: 200, body: game_response.to_json)
+    stub_request(:get, "#{games_url}/#{game_id}/playbyplay")
+      .to_return(status: 200, body: playbyplay_response.to_json)
   end
 
   describe 'urls', :focus do
@@ -73,6 +86,8 @@ RSpec.describe DatabaseBuilder do
     describe 'teams' do
       it { expect(@game.away_team.name).to eq(away_team_name) }
       it { expect(@game.home_team.name).to eq(home_team_name) }
+      it { expect(@game.away_team.abbr).to eq(away_team_abbr) }
+      it { expect(@game.home_team.abbr).to eq(home_team_abbr) }
     end
 
     describe 'away_full_game_stat' do
