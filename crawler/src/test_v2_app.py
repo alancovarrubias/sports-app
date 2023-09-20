@@ -11,36 +11,39 @@ def client():
     with app.test_client() as client:
         yield client
 
-def test_games_show(client, mocker):
-    mocked_process_request = mocker.patch("v2_app.process_request")
-    mocked_process_request.return_value = []
+@pytest.fixture
+def mock_process_request(mocker):
+    process_request = mocker.patch("v2_app.process_request")
+    process_request.return_value = []
+    yield process_request
+
+def test_games_show(mock_process_request, client):
     response = client.get("/api/games/12345")
     assert response.status_code == 200
-    data = json.loads(response.data)
-    assert data == []
+    assert json.loads(response.data) == []
 
-    mocked_process_request.assert_called_once_with(BoxscoreScraper, 12345)
+    mock_process_request.assert_called_once_with(BoxscoreScraper, 12345)
 
-def test_games_index_with_query_params(client, mocker):
-    mocked_process_request = mocker.patch("v2_app.process_request")
-    mocked_process_request.return_value = []
+def test_games_show(mock_process_request, client):
+    response = client.get("/api/games/12345")
+    assert response.status_code == 200
+    assert json.loads(response.data) == []
+
+    mock_process_request.assert_called_once_with(BoxscoreScraper, 12345)
+
+def test_games_index_with_query_params(mock_process_request, client):
     response = client.get("/api/games?year=2020&week=1")
     assert response.status_code == 200
-    data = json.loads(response.data)
-    assert data == []
+    assert json.loads(response.data) == []
 
-    mocked_process_request.assert_called_once_with(ScheduleScraper, 1, 2020)
+    mock_process_request.assert_called_once_with(ScheduleScraper, 1, 2020)
 
-def test_games_index_empty_query_params(client, mocker):
-    mocked_process_request = mocker.patch("v2_app.process_request")
-    mocked_process_request.return_value = []
+def test_games_index_empty_query_params(mock_process_request, client):
     response = client.get("/api/games")
     assert response.status_code == 200
-    data = json.loads(response.data)
-    assert data == []
+    assert json.loads(response.data) == []
 
-    mocked_process_request.assert_called_once_with(ScheduleScraper, None, None)
-
+    mock_process_request.assert_called_once_with(ScheduleScraper, None, None)
 
 class TestScraper:
     def fetch(self, *args):
