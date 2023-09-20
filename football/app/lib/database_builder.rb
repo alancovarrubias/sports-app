@@ -38,7 +38,7 @@ class DatabaseBuilder
   end
 
   def build_stat(team, team_data)
-    stat = @game.stats.find_or_create_by(team: team, interval: 'Full Game')
+    stat = @game.stats.find_or_create_by(team: team, interval: :full_game)
     team_data['completions'], team_data['attempts'] = team_data.delete('comp_att').split('/')
     stat.update(team_data)
   end

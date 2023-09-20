@@ -5,9 +5,8 @@ class Game < ApplicationRecord
   has_many :stats
 
   VENUES = %w[away home].freeze
-  INTERVALS = ['Full Game', 'First Half'].freeze
-  VENUES.product(INTERVALS).each do |venue, interval|
-    define_method("#{venue}_#{interval.methodize}_stat") do
+  VENUES.product(Stat.intervals.keys).each do |venue, interval|
+    define_method("#{venue}_#{interval}_stat") do
       stats.find do |stat|
         stat.interval == interval && stat.team_id == send("#{venue}_team_id")
       end

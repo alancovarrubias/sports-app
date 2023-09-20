@@ -16,10 +16,10 @@ RSpec.describe Game, type: :model do
     let!(:away_team) { FactoryBot.create(:team, name: 'Away Team') }
     let!(:home_team) { FactoryBot.create(:team, name: 'Home Team') }
     let!(:game) { FactoryBot.create(:game, away_team: away_team, home_team: home_team) }
-    let!(:away_full_game_stat) { FactoryBot.create(:stat, interval: 'Full Game', game: game, team: away_team) }
-    let!(:home_full_game_stat) { FactoryBot.create(:stat, interval: 'Full Game', game: game, team: home_team) }
-    let!(:away_first_half_stat) { FactoryBot.create(:stat, interval: 'First Half', game: game, team: away_team) }
-    let!(:home_first_half_stat) { FactoryBot.create(:stat, interval: 'First Half', game: game, team: home_team) }
+    let!(:away_full_game_stat) { FactoryBot.create(:stat, interval: :full_game, game: game, team: away_team) }
+    let!(:home_full_game_stat) { FactoryBot.create(:stat, interval: :full_game, game: game, team: home_team) }
+    let!(:away_first_half_stat) { FactoryBot.create(:stat, interval: :first_half, game: game, team: away_team) }
+    let!(:home_first_half_stat) { FactoryBot.create(:stat, interval: :first_half, game: game, team: home_team) }
     it { expect(game.away_full_game_stat).to eq(away_full_game_stat) }
     it { expect(game.home_full_game_stat).to eq(home_full_game_stat) }
     it { expect(game.away_first_half_stat).to eq(away_first_half_stat) }

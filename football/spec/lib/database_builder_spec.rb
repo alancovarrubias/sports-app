@@ -58,7 +58,7 @@ RSpec.describe DatabaseBuilder do
       .to_return(status: 200, body: playbyplay_response.to_json)
   end
 
-  describe 'urls', :focus do
+  describe 'urls' do
     it 'with options queries games URL with query params' do
       subject.run(options)
       expect(a_request(:get, "#{games_url}?#{query_params}")).to have_been_made.once

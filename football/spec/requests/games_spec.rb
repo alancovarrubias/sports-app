@@ -4,8 +4,8 @@ RSpec.describe 'Games', type: :request do
   before do
     @season = FactoryBot.create(:season)
     @game = FactoryBot.create(:game, season: @season)
-    @away_full_game_stat = FactoryBot.create(:stat, game: @game, team: @game.away_team, interval: 'Full Game')
-    @home_full_game_stat = FactoryBot.create(:stat, game: @game, team: @game.home_team, interval: 'Full Game')
+    @away_full_game_stat = FactoryBot.create(:stat, game: @game, team: @game.away_team, interval: :full_game)
+    @home_full_game_stat = FactoryBot.create(:stat, game: @game, team: @game.home_team, interval: :full_game)
   end
 
   describe 'GET /season/:season_id/games' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Seasons', :focus, type: :request do
+RSpec.describe 'Seasons', type: :request do
   before do
     @season = FactoryBot.create(:season)
   end

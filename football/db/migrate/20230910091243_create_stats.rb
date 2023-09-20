@@ -3,7 +3,7 @@ class CreateStats < ActiveRecord::Migration[6.0]
     create_table :stats do |t|
       t.references :team
       t.references :game
-      t.string :interval
+      t.integer :interval
       t.integer :completions
       t.integer :attempts
       t.integer :passing_yards

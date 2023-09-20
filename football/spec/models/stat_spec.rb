@@ -9,4 +9,9 @@ RSpec.describe Stat, type: :model do
     it { should belong_to(:game) }
     it { should belong_to(:team) }
   end
+
+  describe 'enums' do
+    it { should define_enum_for(:interval).with_values(%i[full_game first_half]) }
+    it { should allow_values(:full_game, :first_half).for(:interval) }
+  end
 end

@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2023_09_10_091243) do
   create_table "stats", force: :cascade do |t|
     t.bigint "team_id"
     t.bigint "game_id"
-    t.string "interval"
+    t.integer "interval"
     t.integer "completions"
     t.integer "attempts"
     t.integer "passing_yards"
