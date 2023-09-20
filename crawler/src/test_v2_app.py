@@ -1,6 +1,7 @@
 import pytest
 from v2_app import app, process_request
 from flask import json
+from v2.scrapers.playbyplay_scraper import PlaybyplayScraper
 from v2.scrapers.boxscore_scraper import BoxscoreScraper
 from v2.scrapers.schedule_scraper import ScheduleScraper
 from unittest.mock import Mock
@@ -18,11 +19,11 @@ def mock_process_request(mocker):
     yield process_request
 
 def test_games_show(mock_process_request, client):
-    response = client.get("/api/games/12345")
+    response = client.get("/api/games/12345/playbyplay")
     assert response.status_code == 200
     assert json.loads(response.data) == []
 
-    mock_process_request.assert_called_once_with(BoxscoreScraper, 12345)
+    mock_process_request.assert_called_once_with(PlaybyplayScraper, 12345)
 
 def test_games_show(mock_process_request, client):
     response = client.get("/api/games/12345")
