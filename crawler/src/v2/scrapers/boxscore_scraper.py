@@ -30,6 +30,7 @@ class BoxscoreScraper(BaseScraper):
     def team_stats(self, away_home):
         return {
             "name": self.get_team_name(away_home),
+            "abbr": self.get_abbr(away_home),
             "comp_att": self.get_data(away_home, 0, 0),
             "passing_yards": self.get_data(away_home, 0, 1),
             "carries": self.get_data(away_home, 1, 0),
@@ -39,6 +40,9 @@ class BoxscoreScraper(BaseScraper):
     def get_team_name(self, away_home):
         team_logos = self.driver.find_elements(By.CSS_SELECTOR, ".Gamestrip__Logo")
         return team_logos[away_home].get_attribute("alt")
+
+    def get_abbr(self, away_home):
+        return self.get_scores(away_home)[0]
 
     def get_data(self, home_away, pass_rush, data_index):
         category = self.get_category(pass_rush)

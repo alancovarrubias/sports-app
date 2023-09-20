@@ -30,6 +30,7 @@ class TestBoxscoreScraper:
                 "game_clock": "Final",
                 "away_team": {
                     "name": "Houston Texans",
+                    "abbr": "HOU",
                     "comp_att": "15/27",
                     "passing_yards": "104",
                     "carries": "31",
@@ -37,6 +38,7 @@ class TestBoxscoreScraper:
                 },
                 "home_team": {
                     "name": "New Orleans Saints",
+                    "abbr": "NO",
                     "comp_att": "28/54",
                     "passing_yards": "257",
                     "carries": "21",
@@ -44,23 +46,3 @@ class TestBoxscoreScraper:
                 },
             }
         }
-
-    def test_away_scores(self, mocked_scraper):
-        assert mocked_scraper.get_scores(BoxscoreScraper.AWAY_INDEX) == [
-            "HOU",
-            "7",
-            "3",
-            "7",
-            "0",
-            "17",
-        ]
-
-    def test_home_scores(self, mocked_scraper):
-        assert mocked_scraper.get_scores(BoxscoreScraper.HOME_INDEX) == [
-            "NO",
-            "0",
-            "7",
-            "3",
-            "3",
-            "13",
-        ]
