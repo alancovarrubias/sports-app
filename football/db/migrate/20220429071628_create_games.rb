@@ -6,6 +6,7 @@ class CreateGames < ActiveRecord::Migration[6.0]
       t.references :home_team
       t.integer :espn_id
       t.integer :week
+      t.integer :kicked
       t.date :date
       t.datetime :start_time
       t.string :game_clock

@@ -12,6 +12,11 @@ RSpec.describe Game, type: :model do
     it { should have_many(:stats) }
   end
 
+  describe 'enum' do
+    it { should define_enum_for(:kicked).with_values(%i[away home]) }
+    it { should allow_values(:away, :home).for(:kicked) }
+  end
+
   describe 'stats filter methods' do
     let!(:away_team) { FactoryBot.create(:team, name: 'Away Team') }
     let!(:home_team) { FactoryBot.create(:team, name: 'Home Team') }

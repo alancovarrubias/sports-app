@@ -79,6 +79,7 @@ RSpec.describe DatabaseBuilder do
       expect(@game.season.year).to eq(year)
       expect(@game.week).to eq(week)
       expect(@game.date).to eq(date)
+      expect(@game.kicked).to eq('away')
       expect(@game.start_time).to eq(start_time)
       expect(@game.game_clock).to eq(game_clock)
     end

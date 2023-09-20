@@ -4,7 +4,8 @@ class Game < ApplicationRecord
   belongs_to :home_team, class_name: 'Team'
   has_many :stats
 
-  VENUES = %w[away home].freeze
+  VENUES = %i[away home].freeze
+  enum kicked: VENUES
   VENUES.product(Stat.intervals.keys).each do |venue, interval|
     define_method("#{venue}_#{interval}_stat") do
       stats.find do |stat|
