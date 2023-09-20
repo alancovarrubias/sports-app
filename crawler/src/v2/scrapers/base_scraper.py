@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from abc import ABC, abstractmethod
 import time
+import os
 
 
 class BaseScraper(ABC):
@@ -28,6 +29,16 @@ class BaseScraper(ABC):
     @abstractmethod
     def parse_data(self):
         pass
+
+    def get_url_or_file(self, url, file):
+        path = f"/project/tmp/{file}"
+        if os.path.exists(path):
+            self.driver.get(f"file://{path}")
+        else:
+            self.driver.get(url)
+            time.sleep(1)
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(self.driver.page_source)
 
     def __enter__(self):
         return self

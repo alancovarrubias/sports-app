@@ -2,20 +2,14 @@ import pytest
 from v2.scrapers.boxscore_scraper import BoxscoreScraper
 
 
-def save_url_to_file(driver, url, file):
-    driver.get(url)
-    with open(f"/project/tmp/{file}", "w", encoding="utf-8") as f:
-        f.write(driver.page_source)
-
-
-class TestBoxscore:
-    MOCKED_URL = "https://www.espn.com/nfl/boxscore/_/gameId/401547658"
-    MOCK_PATH = "file:///project/tmp/boxscore.html"
+class TestBoxscoreScraper:
+    MOCK_URL = "https://www.espn.com/nfl/boxscore/_/gameId/401547658"
+    MOCK_FILE = "boxscore.html"
 
     @pytest.fixture(scope="class")
     def mocked_scraper(self):
         with BoxscoreScraper() as scraper:
-            scraper.driver.get(TestBoxscore.MOCK_PATH)
+            scraper.get_url_or_file(TestBoxscoreScraper.MOCK_URL, TestBoxscoreScraper.MOCK_FILE)
             yield scraper
 
     @pytest.fixture(scope="class")
@@ -27,7 +21,7 @@ class TestBoxscore:
         mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
         scraper.fetch("401547658")
 
-        mock_get.assert_called_once_with(TestBoxscore.MOCKED_URL)
+        mock_get.assert_called_once_with(TestBoxscoreScraper.MOCK_URL)
 
     def test_scrape_data(self, mocked_scraper):
         assert mocked_scraper.parse_data() == {

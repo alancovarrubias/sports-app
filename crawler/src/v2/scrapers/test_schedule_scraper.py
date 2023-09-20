@@ -3,8 +3,8 @@ from v2.scrapers.schedule_scraper import ScheduleScraper
 
 
 class TestScheduleScraper:
-    SPECIFIC_WEEK_URL = f"{ScheduleScraper.THIS_WEEK_URL}/_/week/1/year/2023/seasontype/2"
-    MOCK_PATH = "file:///project/tmp/schedule.html"
+    MOCK_URL = f"{ScheduleScraper.THIS_WEEK_URL}/_/week/1/year/2023/seasontype/2"
+    MOCK_FILE = "schedule.html"
     MOCK_GAME_IDS = [
         "401547353",
         "401547403",
@@ -27,7 +27,7 @@ class TestScheduleScraper:
     @pytest.fixture(scope="class")
     def mocked_scraper(self):
         with ScheduleScraper() as scraper:
-            scraper.driver.get(TestScheduleScraper.MOCK_PATH)
+            scraper.get_url_or_file(TestScheduleScraper.MOCK_URL, TestScheduleScraper.MOCK_FILE)
             yield scraper
 
     @pytest.fixture(scope="class")
@@ -45,7 +45,7 @@ class TestScheduleScraper:
         mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
         scraper.fetch("1", "2023")
 
-        mock_get.assert_called_once_with(TestScheduleScraper.SPECIFIC_WEEK_URL)
+        mock_get.assert_called_once_with(TestScheduleScraper.MOCK_URL)
 
     def test_scrape_data(self, mocked_scraper):
         assert mocked_scraper.parse_data() == {
