@@ -5,9 +5,14 @@ class DatabaseBuilder
     games_res = query(url)
     @season = Season.find_or_create_by(year: games_res['year'])
     games_res['espn_game_ids'].map do |game_id|
-      @playbyplay_data = query("#{GAMES_URL}/#{game_id}/playbyplay")['game']
       @game_data = query("#{GAMES_URL}/#{game_id}")['game']
       build_game(game_id, games_res['week'])
+      next unless @game_data['game_clock']
+
+      unless @game.kicked
+        @playbyplay_data = query("#{GAMES_URL}/#{game_id}/playbyplay")['game']
+        @game.update(kicked: kicked)
+      end
       build_stat(@game.away_team, @game_data['away_team'])
       build_stat(@game.home_team, @game_data['home_team'])
     end
@@ -42,7 +47,7 @@ class DatabaseBuilder
     @game = @season.games.find_or_create_by(espn_id: game_id, away_team: away_team, home_team: home_team, week: week)
     start_time = DateTime.parse(@game_data['start_time'])
     date = start_time.in_time_zone('Pacific Time (US & Canada)').to_date
-    @game.update(game_clock: @game_data['game_clock'], start_time: start_time, date: date, kicked: kicked)
+    @game.update(game_clock: @game_data['game_clock'], start_time: start_time, date: date)
   end
 
   def build_team(team_data)

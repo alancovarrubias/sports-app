@@ -10,14 +10,27 @@ class BoxscoreScraper(BaseScraper):
         return f"https://www.espn.com/nfl/boxscore/_/gameId/{game_id}"
 
     def parse_data(self):
-        return {
-            "game": {
-                "start_time": self.get_start_time(),
-                "game_clock": self.get_game_clock(),
-                "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),
-                "home_team": self.team_stats(BoxscoreScraper.HOME_INDEX),
+        if "boxscore" in self.driver.current_url:
+            return {
+                "game": {
+                    "start_time": self.get_start_time(),
+                    "game_clock": self.get_game_clock(),
+                    "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),
+                    "home_team": self.team_stats(BoxscoreScraper.HOME_INDEX),
+                }
             }
-        }
+        else:
+            return {
+                "game": {
+                    "start_time": self.get_start_time(),
+                    "away_team": {
+                        "name": self.get_team_name(BoxscoreScraper.AWAY_INDEX),
+                    },
+                    "home_team": {
+                        "name": self.get_team_name(BoxscoreScraper.AWAY_INDEX),
+                    }
+                }
+            }
 
     def get_start_time(self):
         date = self.driver.find_element(By.CSS_SELECTOR, ".GameInfo__Meta :first-child")
