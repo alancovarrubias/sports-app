@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Games', type: :request do
+  let(:previous_date) { '2020-12-24' }
+  let(:date) { '2020-12-25' }
   before do
-    @game = FactoryBot.create(:game)
+    @previous_game = FactoryBot.create(:game, date: previous_date)
+    @game = FactoryBot.create(:game, date: date)
     @away_full_game_stat = FactoryBot.create(:stat, game: @game, team: @game.away_team, interval: :full_game)
     @home_full_game_stat = FactoryBot.create(:stat, game: @game, team: @game.home_team, interval: :full_game)
   end
@@ -12,6 +15,12 @@ RSpec.describe 'Games', type: :request do
       get games_path
       expect(response).to have_http_status(200)
       expect(body['data'].length).to eq(Game.all.length)
+    end
+
+    it 'retrieves list of games on date with query param', :focus do
+      get games_path, params: { date: date }
+      expect(response).to have_http_status(200)
+      expect(body['data'].length).to eq(Game.where(date: date).length)
     end
   end
 
