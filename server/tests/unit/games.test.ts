@@ -17,7 +17,7 @@ beforeAll(() => {
 });
 
 const variables = {
-  seasonId: "1",
+  date: "2020-12-25",
 };
 
 const GAMES_RESPONSE = successfulResponse({
@@ -32,7 +32,7 @@ describe("Games Query", () => {
       contextValue: LOGGED_IN_CONTEXT,
     });
 
-    expect(fetch).toHaveBeenCalledWith(buildGamesUrl(variables.seasonId));
+    expect(fetch).toHaveBeenCalledWith(buildGamesUrl(variables.date));
     expect(response).toHaveNoErrors();
     expect(response).toReturnData({
       games: [GAME],

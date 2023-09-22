@@ -44,7 +44,7 @@ type AuthPayload {
 type Query {
   currentUser: User!
   seasons: [Season!]!
-  games(seasonId: String!): [Game!]!
+  games(date: String!): [Game!]!
 }
 
 type Mutation {

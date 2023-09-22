@@ -29,7 +29,7 @@ const resolvers: Resolvers = {
     ),
     games: withAuthentication(
       async (_root, args, { dataSources: { footballApi } }) => {
-        const res = await footballApi.fetchGames(args.seasonId);
+        const res = await footballApi.fetchGames(args.date);
         const body = await res.json();
         const data = body.data.map((game) => game.attributes);
         return data;

@@ -14,6 +14,7 @@ const GAME =
   id: "1",
   date: "2023-09-07",
   start_time: "2023-09-15T00:15:00.000Z",
+  game_clock: "Halftime",
   away_team: {
     __typename: "Team",
     id: "1",
@@ -51,7 +52,7 @@ const result = {
 
 const request = {
   query: GAMES_QUERY,
-  variables: { seasonId: '1' }
+  variables: { date: "2023-09-23" }
 }
 const gamesMock = [{ request, result }]
 const renderGames = () => {

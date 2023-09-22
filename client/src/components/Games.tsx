@@ -3,8 +3,8 @@ import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client'
 
 export const GAMES_QUERY = gql`
-  query Games($seasonId: String!) {
-    games(seasonId: $seasonId) {
+  query Games($date: String!) {
+    games(date: $date) {
       id
       date
       start_time
@@ -54,11 +54,7 @@ export const GAME_HEADERS = [
   'Home Passing Yards',
   'Home Rushing Yards',
 ]
-const utcDateStr = "2023-09-15T00:15:00.000Z";
 
-// Create a Date object from the UTC string
-
-// Convert to PST (Pacific Standard Time) without seconds
 function convertTime(utcDateStr) {
   const utcDate = new Date(utcDateStr);
   return new Intl.DateTimeFormat('en-US', {
@@ -70,12 +66,11 @@ function convertTime(utcDateStr) {
     minute: 'numeric',
     hour12: true,
   }).format(utcDate);
-  return utcDate
 }
 
 
 const Games = (): JSX.Element => {
-  const { data, loading } = useQuery(GAMES_QUERY, { variables: { seasonId: '1' } })
+  const { data, loading } = useQuery(GAMES_QUERY, { variables: { date: "2023-09-23" } })
   if (loading) return <p>Loading...</p>
   return (
     <>

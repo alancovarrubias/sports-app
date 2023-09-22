@@ -55,7 +55,7 @@ export type Query = {
 
 
 export type QueryGamesArgs = {
-  seasonId: Scalars['String']['input'];
+  date: Scalars['String']['input'];
 };
 
 export type Season = {
@@ -214,7 +214,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   currentUser?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  games?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType, RequireFields<QueryGamesArgs, 'seasonId'>>;
+  games?: Resolver<Array<ResolversTypes['Game']>, ParentType, ContextType, RequireFields<QueryGamesArgs, 'date'>>;
   seasons?: Resolver<Array<ResolversTypes['Season']>, ParentType, ContextType>;
 };
 

@@ -8,8 +8,8 @@ export const SEASONS_QUERY = `#graphql
 `;
 
 export const GAMES_QUERY = `#graphql
-  query Games($seasonId: String!) {
-    games(seasonId: $seasonId) {
+  query Games($date: String!) {
+    games(date: $date) {
       id
       date
       start_time
