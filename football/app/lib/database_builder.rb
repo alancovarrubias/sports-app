@@ -1,11 +1,12 @@
 class DatabaseBuilder
   GAMES_URL = 'http://crawler:5000/api/games'.freeze
-  def run(options = {})
+  def run(league, options = {})
+    @league = league
     url = get_games_url(options)
     games_res = query(url)
-    @season = Season.find_or_create_by(year: games_res['year'], league: :nfl)
+    @season = Season.find_or_create_by(year: games_res['year'], league: league)
     games_res['espn_game_ids'].map do |game_id|
-      @game_data = query("#{GAMES_URL}/#{game_id}")['game']
+      @game_data = query("#{GAMES_URL}/#{game_id}?league=#{@league}")['game']
       build_game(game_id, games_res['week'])
       next if @game_data['game_clock'] == 'Not Started'
 
@@ -16,7 +17,7 @@ class DatabaseBuilder
   end
 
   def get_games_url(year: nil, week: nil)
-    year && week ? "#{GAMES_URL}?year=#{year}&week=#{week}" : GAMES_URL
+    year && week ? "#{GAMES_URL}?year=#{year}&week=#{week}&league=#{@league}" : "#{GAMES_URL}?league=#{@league}"
   end
 
   def query(url)
@@ -26,7 +27,7 @@ class DatabaseBuilder
   end
 
   def kicked(game_id)
-    playbyplay_data = query("#{GAMES_URL}/#{game_id}/playbyplay")['game']
+    playbyplay_data = query("#{GAMES_URL}/#{game_id}/playbyplay?league=#{@league}")['game']
     case playbyplay_data['received']
     when @game.home_team.name
       :away

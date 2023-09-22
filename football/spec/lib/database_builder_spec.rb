@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DatabaseBuilder do
   subject { DatabaseBuilder.new }
+  let(:league) { 'nfl' }
   let(:year) { 2023 }
   let(:week) { 1 }
   let(:games_url) { DatabaseBuilder::GAMES_URL }
@@ -48,31 +49,31 @@ RSpec.describe DatabaseBuilder do
     }
   end
   before do
-    stub_request(:get, "#{games_url}?#{query_params}")
+    stub_request(:get, "#{games_url}?#{query_params}&league=#{league}")
       .to_return(status: 200, body: games_response.to_json)
-    stub_request(:get, games_url)
+    stub_request(:get, "#{games_url}?league=#{league}")
       .to_return(status: 200, body: games_response.to_json)
-    stub_request(:get, "#{games_url}/#{game_id}")
+    stub_request(:get, "#{games_url}/#{game_id}?league=#{league}")
       .to_return(status: 200, body: game_response.to_json)
-    stub_request(:get, "#{games_url}/#{game_id}/playbyplay")
+    stub_request(:get, "#{games_url}/#{game_id}/playbyplay?league=#{league}")
       .to_return(status: 200, body: playbyplay_response.to_json)
   end
 
   describe 'urls' do
     it 'with options queries games URL with query params' do
-      subject.run(options)
-      expect(a_request(:get, "#{games_url}?#{query_params}")).to have_been_made.once
+      subject.run(league, options)
+      expect(a_request(:get, "#{games_url}?#{query_params}&league=#{league}")).to have_been_made.once
     end
 
     it 'without options queries games URL without query params' do
-      subject.run
-      expect(a_request(:get, games_url)).to have_been_made.once
+      subject.run(league)
+      expect(a_request(:get, "#{games_url}?league=#{league}")).to have_been_made.once
     end
   end
 
   describe 'game attributes' do
     before do
-      subject.run(options)
+      subject.run(league, options)
       @game = Game.find_by_espn_id(game_id)
     end
     it 'should be accurate' do

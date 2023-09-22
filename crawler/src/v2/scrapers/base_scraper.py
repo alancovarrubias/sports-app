@@ -12,7 +12,7 @@ class BaseScraper(ABC):
     def fetch(self, *args):
         url = self.build_url(*args)
         self.driver.get(url)
-        time.sleep(1)
+        time.sleep(3)
 
     def get_sport(self, league):
         if league == 'nfl':
