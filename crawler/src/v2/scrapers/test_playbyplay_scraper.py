@@ -32,6 +32,6 @@ class TestPlaybyplayScraper:
     def test_scrape_data(self, mocked_scraper):
         assert mocked_scraper.parse_data() == {
             "game": {
-              "kicked": "HST",
+              "received": "New Orleans Saints",
             }
         }

@@ -43,7 +43,7 @@ RSpec.describe DatabaseBuilder do
   let(:playbyplay_response) do
     {
       'game' => {
-        'kicked' => 'HST'
+        'received' => 'New Orleans Saints'
       }
     }
   end

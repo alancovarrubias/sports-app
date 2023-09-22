@@ -10,14 +10,10 @@ class PlaybyplayScraper(BaseScraper):
     def parse_data(self):
         return {
             "game": {
-                "kicked": self.get_kicked()
+                "received": self.get_received()
             }
         }
 
-    def get_kicked(self):
-        plays = self.driver.find_elements(By.CSS_SELECTOR, ".PlayListItem__Description")
-        text = plays[0].text
-        pattern = r'\b[A-Z]{2,3}\b'
-        matches = re.findall(pattern, text)
-        return matches[0]
-
+    def get_received(self):
+        team_logos = self.driver.find_elements(By.CSS_SELECTOR, ".AccordionHeader__Left__TeamLogo")
+        return team_logos[0].get_attribute("alt")

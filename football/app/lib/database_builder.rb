@@ -7,12 +7,9 @@ class DatabaseBuilder
     games_res['espn_game_ids'].map do |game_id|
       @game_data = query("#{GAMES_URL}/#{game_id}")['game']
       build_game(game_id, games_res['week'])
-      next unless @game_data['game_clock']
+      next if @game_data['game_clock'] == 'Not Started'
 
-      unless @game.kicked
-        @playbyplay_data = query("#{GAMES_URL}/#{game_id}/playbyplay")['game']
-        @game.update(kicked: kicked)
-      end
+      @game.update(kicked: kicked(game_id)) unless @game.kicked
       build_stat(@game.away_team, @game_data['away_team'])
       build_stat(@game.home_team, @game_data['home_team'])
     end
@@ -28,15 +25,12 @@ class DatabaseBuilder
     JSON.parse(res.body)
   end
 
-  def kicked
-    kicked_to_team_abbr = {
-      'HST' => 'HOU'
-    }
-    kicked_abbr = @playbyplay_data['kicked']
-    team_abbr = kicked_to_team_abbr[kicked_abbr] || kicked_abbr
-    if team_abbr == @game.away_team.abbr
+  def kicked(game_id)
+    playbyplay_data = query("#{GAMES_URL}/#{game_id}/playbyplay")['game']
+    case playbyplay_data['received']
+    when @game.home_team.name
       :away
-    elsif team_abbr == @game.home_team.abbr
+    when @game.away_team.name
       :home
     end
   end

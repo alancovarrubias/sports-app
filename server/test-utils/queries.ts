@@ -13,6 +13,8 @@ export const GAMES_QUERY = `#graphql
       id
       date
       start_time
+      game_clock
+      kicked
       away_team {
         id
         abbr

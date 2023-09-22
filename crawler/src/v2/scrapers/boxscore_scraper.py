@@ -23,11 +23,12 @@ class BoxscoreScraper(BaseScraper):
             return {
                 "game": {
                     "start_time": self.get_start_time(),
+                    "game_clock": "Not Started",
                     "away_team": {
                         "name": self.get_team_name(BoxscoreScraper.AWAY_INDEX),
                     },
                     "home_team": {
-                        "name": self.get_team_name(BoxscoreScraper.AWAY_INDEX),
+                        "name": self.get_team_name(BoxscoreScraper.HOME_INDEX),
                     }
                 }
             }

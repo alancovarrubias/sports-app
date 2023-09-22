@@ -8,6 +8,7 @@ export const GAMES_QUERY = gql`
       id
       date
       start_time
+      game_clock
       away_team {
         ...TeamData
       }
@@ -39,6 +40,7 @@ export const GAMES_QUERY = gql`
 export const GAME_HEADERS = [
   'Date',
   'Start Time',
+  'Game Clock',
   'Away Team',
   'Away Attempts',
   'Away Carries',
@@ -87,6 +89,7 @@ const Games = (): JSX.Element => {
             <tr key={game.id}>
               <td>{game.date}</td>
               <td>{convertTime(game.start_time)}</td>
+              <td>{game.game_clock}</td>
               <td>{game.away_team.name}</td>
               <StatRow stat={game.away_full_game_stat} />
               <td>{game.home_team.name}</td>
@@ -100,6 +103,9 @@ const Games = (): JSX.Element => {
 }
 
 const StatRow = ({ stat }) => {
+  if (!stat) {
+    return null
+  }
   return (
     <>
       <td>{stat.attempts}</td>

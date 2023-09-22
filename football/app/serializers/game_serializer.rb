@@ -6,5 +6,7 @@ class GameSerializer
              :home_team,
              :away_full_game_stat,
              :home_full_game_stat,
-             :start_time
+             :start_time,
+             :game_clock,
+             :kicked
 end

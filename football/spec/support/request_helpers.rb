@@ -45,6 +45,8 @@ module RequestHelpers
         'id' => game.id,
         'date' => game.date.to_s,
         'start_time' => game.start_time.strftime('%Y-%m-%dT%H:%M:%S.%LZ'),
+        'game_clock' => game.game_clock,
+        'kicked' => game.kicked,
         'away_team' => build_team_hash(game.away_team),
         'home_team' => build_team_hash(game.home_team),
         'away_full_game_stat' => build_stat_hash(game.away_full_game_stat),

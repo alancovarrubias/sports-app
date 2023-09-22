@@ -23,10 +23,12 @@ type Game {
   id: ID!
   date: String!
   start_time: String!
+  game_clock: String!
+  kicked: String!
   away_team: Team!
   home_team: Team!
-  away_full_game_stat: Stat!
-  home_full_game_stat: Stat!
+  away_full_game_stat: Stat
+  home_full_game_stat: Stat
 }
 
 type User {

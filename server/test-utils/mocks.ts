@@ -43,6 +43,8 @@ export const GAME: Game = {
   id: "1",
   date: "2020-06-25",
   start_time: "2023-09-15T00:15:00.000Z",
+  game_clock: "Not Started",
+  kicked: "away",
   away_team: {
     id: "1",
     abbr: "LAD",
