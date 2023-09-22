@@ -25,11 +25,11 @@ export type AuthPayload = {
 export type Game = {
   __typename?: 'Game';
   away_full_game_stat?: Maybe<Stat>;
-  away_team: Team;
+  away_team?: Maybe<Team>;
   date: Scalars['String']['output'];
   game_clock: Scalars['String']['output'];
   home_full_game_stat?: Maybe<Stat>;
-  home_team: Team;
+  home_team?: Maybe<Team>;
   id: Scalars['ID']['output'];
   kicked: Scalars['String']['output'];
   start_time: Scalars['String']['output'];
@@ -197,11 +197,11 @@ export type AuthPayloadResolvers<ContextType = any, ParentType extends Resolvers
 
 export type GameResolvers<ContextType = any, ParentType extends ResolversParentTypes['Game'] = ResolversParentTypes['Game']> = {
   away_full_game_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
-  away_team?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
+  away_team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType>;
   date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   game_clock?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   home_full_game_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
-  home_team?: Resolver<ResolversTypes['Team'], ParentType, ContextType>;
+  home_team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   kicked?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   start_time?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

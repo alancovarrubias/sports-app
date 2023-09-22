@@ -25,18 +25,24 @@ RSpec.describe DatabaseBuilder do
         'away_team' => {
           'name' => away_team_name,
           'abbr' => away_team_abbr,
+          'score' => '17',
           'comp_att' => '15/27',
           'passing_yards' => '104',
           'carries' => '31',
-          'rushing_yards' => '131'
+          'rushing_yards' => '131',
+          'longest_rush' => '21',
+          'longest_pass' => '26'
         },
         'home_team' => {
           'name' => home_team_name,
           'abbr' => home_team_abbr,
+          'score' => '13',
           'comp_att' => '28/54',
           'passing_yards' => '257',
           'carries' => '21',
-          'rushing_yards' => '91'
+          'rushing_yards' => '91',
+          'longest_rush' => '26',
+          'longest_pass' => '53'
         }
       }
     }
@@ -101,6 +107,9 @@ RSpec.describe DatabaseBuilder do
       it { expect(@away_stat.passing_yards).to eq(104) }
       it { expect(@away_stat.carries).to eq(31) }
       it { expect(@away_stat.rushing_yards).to eq(131) }
+      it { expect(@away_stat.longest_rush).to eq(21) }
+      it { expect(@away_stat.longest_pass).to eq(26) }
+      it { expect(@away_stat.score).to eq(17) }
     end
 
     describe 'home_full_game_stat' do
@@ -112,6 +121,8 @@ RSpec.describe DatabaseBuilder do
       it { expect(@home_stat.passing_yards).to eq(257) }
       it { expect(@home_stat.carries).to eq(21) }
       it { expect(@home_stat.rushing_yards).to eq(91) }
+      it { expect(@home_stat.longest_rush).to eq(26) }
+      it { expect(@home_stat.score).to eq(13) }
     end
   end
 end

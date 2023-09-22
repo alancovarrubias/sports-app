@@ -6,6 +6,8 @@ import {
   executeRequest,
   mockFetch,
   successfulResponse,
+  buildDataModels,
+  buildDataModel,
 } from "@test-utils/helpers";
 import { buildGamesUrl } from "@app/dataSources/footballApi";
 jest.mock("node-fetch");
@@ -20,9 +22,15 @@ const variables = {
   date: "2020-12-25",
 };
 
-const GAMES_RESPONSE = successfulResponse({
-  data: [{ id: "1", type: "game", attributes: GAME }],
-});
+const buildGamesModel = (game) => {
+  const newGame = {
+    ...game,
+    away_full_game_stat: buildDataModel(game.away_full_game_stat, "stat"),
+    home_full_game_stat: buildDataModel(game.home_full_game_stat, "stat"),
+  };
+  return buildDataModels([newGame], "game");
+};
+const GAMES_RESPONSE = successfulResponse(buildGamesModel(GAME));
 describe("Games Query", () => {
   it("returns games and runs query when logged in", async () => {
     mockFetch(GAMES_RESPONSE);

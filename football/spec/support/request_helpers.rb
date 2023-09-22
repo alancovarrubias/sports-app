@@ -24,15 +24,26 @@ module RequestHelpers
 
   def build_stat_hash(stat)
     {
-      'id' => stat.id,
-      'team_id' => stat.team_id,
-      'game_id' => stat.game_id,
-      'interval' => stat.interval,
-      'attempts' => stat.attempts,
-      'completions' => stat.completions,
-      'passing_yards' => stat.passing_yards,
-      'carries' => stat.carries,
-      'rushing_yards' => stat.rushing_yards
+      'data' => {
+        'id' => stat.id.to_s,
+        'type' => 'stat',
+        'attributes' => {
+          'id' => stat.id,
+          'attempts' => stat.attempts,
+          'completions' => stat.completions,
+          'passing_yards' => stat.passing_yards,
+          'carries' => stat.carries,
+          'rushing_yards' => stat.rushing_yards,
+          'longest_rush' => stat.longest_rush,
+          'longest_pass' => stat.longest_pass,
+          'score' => stat.score,
+          'total_plays' => stat.total_plays,
+          'total_yards' => stat.total_yards,
+          'ave_per_car' => stat.ave_per_car,
+          'ave_per_att' => stat.ave_per_att,
+          'ave_per_play' => stat.ave_per_play
+        }
+      }
     }
   end
 

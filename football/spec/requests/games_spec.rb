@@ -17,7 +17,7 @@ RSpec.describe 'Games', type: :request do
       expect(body['data'].length).to eq(Game.all.length)
     end
 
-    it 'retrieves list of games on date with query param', :focus do
+    it 'retrieves list of games on date with query param' do
       get games_path, params: { date: date }
       expect(response).to have_http_status(200)
       expect(body['data'].length).to eq(Game.where(date: date).length)

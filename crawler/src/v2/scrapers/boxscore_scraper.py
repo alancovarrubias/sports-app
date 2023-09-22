@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from v2.scrapers.base_scraper import BaseScraper
+import re
 
 
 class BoxscoreScraper(BaseScraper):
@@ -46,11 +47,19 @@ class BoxscoreScraper(BaseScraper):
         return {
             "name": self.get_team_name(away_home),
             "abbr": self.get_abbr(away_home),
+            "score": self.get_score(away_home),
             "comp_att": self.get_data(away_home, 0, 0),
-            "passing_yards": self.get_data(away_home, 0, 1),
+            "passing_yards": self.get_data(away_home, 2, 1),
             "carries": self.get_data(away_home, 1, 0),
             "rushing_yards": self.get_data(away_home, 1, 1),
+            "longest_rush": self.get_data(away_home, 1, 3),
+            "longest_pass": self.get_data(away_home, 2, 4),
         }
+
+    def get_score(self, away_home):
+        scores = self.driver.find_elements(By.CSS_SELECTOR, ".Gamestrip__Score")
+        match = re.search(r'\d{1,2}', scores[away_home].text)
+        return match.group()
 
     def get_team_name(self, away_home):
         team_logos = self.driver.find_elements(By.CSS_SELECTOR, ".Gamestrip__Logo")

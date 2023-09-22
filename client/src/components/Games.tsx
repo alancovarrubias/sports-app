@@ -1,6 +1,7 @@
 import React from 'react'
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client'
+import moment from 'moment-timezone'
 
 export const GAMES_QUERY = gql`
   query Games($date: String!) {
@@ -68,9 +69,15 @@ function convertTime(utcDateStr) {
   }).format(utcDate);
 }
 
+function todayDate() {
+  return moment.tz('America/Los_Angeles').format('YYYY-MM-DD');
+}
+
 
 const Games = (): JSX.Element => {
-  const { data, loading } = useQuery(GAMES_QUERY, { variables: { date: "2023-09-23" } })
+  const urlParams = new URLSearchParams(window.location.search);
+  const date = urlParams.get('date') || todayDate()
+  const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
   if (loading) return <p>Loading...</p>
   return (
     <>
@@ -85,14 +92,25 @@ const Games = (): JSX.Element => {
               <td>{game.date}</td>
               <td>{convertTime(game.start_time)}</td>
               <td>{game.game_clock}</td>
-              <td>{game.away_team.name}</td>
+              <TeamRow team={game.away_team} />
               <StatRow stat={game.away_full_game_stat} />
-              <td>{game.home_team.name}</td>
+              <TeamRow team={game.home_team} />
               <StatRow stat={game.home_full_game_stat} />
             </tr>
           ))}
         </tbody>
       </table>
+    </>
+  )
+}
+
+const TeamRow = ({ team }) => {
+  if (!team) {
+    return null
+  }
+  return (
+    <>
+      <td>{team.name}</td>
     </>
   )
 }

@@ -15,6 +15,13 @@ const withAuthentication = (resolverFunction) => {
   };
 };
 
+const resolveData = ({ data }) => {
+  if (!data) {
+    return null;
+  }
+  return data.attributes;
+};
+
 const resolvers: Resolvers = {
   Query: {
     currentUser: withAuthentication((_root, _args, { user }) => {
@@ -31,7 +38,14 @@ const resolvers: Resolvers = {
       async (_root, args, { dataSources: { footballApi } }) => {
         const res = await footballApi.fetchGames(args.date);
         const body = await res.json();
-        const data = body.data.map((game) => game.attributes);
+        console.log(body.data[0].attributes);
+        const data = body.data.map(({ attributes }) => {
+          return {
+            ...attributes,
+            away_full_game_stat: resolveData(attributes.away_full_game_stat),
+            home_full_game_stat: resolveData(attributes.home_full_game_stat),
+          };
+        });
         return data;
       }
     ),

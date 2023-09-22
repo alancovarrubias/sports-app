@@ -32,3 +32,19 @@ export const executeRequest = (
     }
   );
 };
+
+export const buildDataModel = (model, type) => ({
+  data: {
+    id: model.id,
+    type,
+    attributes: model,
+  },
+});
+
+export const buildDataModels = (models, type) => ({
+  data: models.map((model) => ({
+    id: model.id,
+    type,
+    attributes: model,
+  })),
+});
