@@ -19,32 +19,32 @@ def mock_process_request(mocker):
     yield process_request
 
 def test_games_show(mock_process_request, client):
-    response = client.get("/api/games/12345/playbyplay")
+    response = client.get("/api/games/12345/playbyplay?league=cfb")
     assert response.status_code == 200
     assert json.loads(response.data) == []
 
-    mock_process_request.assert_called_once_with(PlaybyplayScraper, 12345)
+    mock_process_request.assert_called_once_with(PlaybyplayScraper, 12345, 'cfb')
 
 def test_games_show(mock_process_request, client):
-    response = client.get("/api/games/12345")
+    response = client.get("/api/games/12345?league=nfl")
     assert response.status_code == 200
     assert json.loads(response.data) == []
 
-    mock_process_request.assert_called_once_with(BoxscoreScraper, 12345)
+    mock_process_request.assert_called_once_with(BoxscoreScraper, 12345, 'nfl')
 
 def test_games_index_with_query_params(mock_process_request, client):
-    response = client.get("/api/games?year=2020&week=1")
+    response = client.get("/api/games?year=2020&week=1&league=nfl")
     assert response.status_code == 200
     assert json.loads(response.data) == []
 
-    mock_process_request.assert_called_once_with(ScheduleScraper, 1, 2020)
+    mock_process_request.assert_called_once_with(ScheduleScraper, 1, 2020, 'nfl')
 
 def test_games_index_empty_query_params(mock_process_request, client):
-    response = client.get("/api/games")
+    response = client.get("/api/games?league=cfb")
     assert response.status_code == 200
     assert json.loads(response.data) == []
 
-    mock_process_request.assert_called_once_with(ScheduleScraper, None, None)
+    mock_process_request.assert_called_once_with(ScheduleScraper, None, None, 'cfb')
 
 class TestScraper:
     def fetch(self, *args):
@@ -61,7 +61,7 @@ def test_process_request(mocker):
     mock_parse_data = mocker.patch.object(mock_instance, "parse_data", autospec=True)
     mock_parse_data.return_value = {}
     mock_constructor.return_value = mock_instance
-    args = [1, 2020]
+    args = [1, 2020, 'nfl']
     return_value = process_request(mock_constructor, *args)
 
     mock_constructor.assert_called_once()

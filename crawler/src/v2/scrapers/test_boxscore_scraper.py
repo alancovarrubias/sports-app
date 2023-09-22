@@ -3,13 +3,14 @@ from v2.scrapers.boxscore_scraper import BoxscoreScraper
 
 
 class TestBoxscoreScraper:
-    MOCK_URL = "https://www.espn.com/nfl/boxscore/_/gameId/401547658"
+    NFL_URL = "https://www.espn.com/nfl/boxscore/_/gameId/401547658"
+    CFB_URL = "https://www.espn.com/college-football/boxscore/_/gameId/401547658"
     MOCK_FILE = "boxscore.html"
 
     @pytest.fixture(scope="class")
     def mocked_scraper(self):
         with BoxscoreScraper() as scraper:
-            scraper.get_url_or_file(TestBoxscoreScraper.MOCK_URL, TestBoxscoreScraper.MOCK_FILE)
+            scraper.get_url_or_file(TestBoxscoreScraper.NFL_URL, TestBoxscoreScraper.MOCK_FILE)
             yield scraper
 
     @pytest.fixture(scope="class")
@@ -17,11 +18,17 @@ class TestBoxscoreScraper:
         with BoxscoreScraper() as scraper:
             yield scraper
 
-    def test_current_url(self, scraper, mocker):
+    def test_nfl_url(self, scraper, mocker):
         mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
-        scraper.fetch("401547658")
+        scraper.fetch("401547658", 'nfl')
 
-        mock_get.assert_called_once_with(TestBoxscoreScraper.MOCK_URL)
+        mock_get.assert_called_once_with(TestBoxscoreScraper.NFL_URL)
+
+    def test_cfb_url(self, scraper, mocker):
+        mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
+        scraper.fetch("401547658", 'cfb')
+
+        mock_get.assert_called_once_with(TestBoxscoreScraper.CFB_URL)
 
     def test_scrape_data(self, mocked_scraper):
         assert mocked_scraper.parse_data() == {

@@ -6,8 +6,9 @@ class BoxscoreScraper(BaseScraper):
     AWAY_INDEX = 0
     HOME_INDEX = 1
 
-    def build_url(self, game_id):
-        return f"https://www.espn.com/nfl/boxscore/_/gameId/{game_id}"
+    def build_url(self, game_id, league):
+        sport = self.get_sport(league)
+        return f"https://www.espn.com/{sport}/boxscore/_/gameId/{game_id}"
 
     def parse_data(self):
         if "boxscore" in self.driver.current_url:

@@ -8,12 +8,26 @@ def flatten_nested_list(nested_list):
 
 
 class ScheduleScraper(BaseScraper):
-    THIS_WEEK_URL = "https://www.espn.com/nfl/schedule"
-    def build_url(self, week, year):
+    def build_url(self, week, year, league):
+        if league == 'nfl':
+            return self.get_nfl_url(week, year)
+        elif league == 'cfb80':
+            return self.get_cfb_url(week, year, '80')
+        elif league == 'cfb81':
+            return self.get_cfb_url(week, year, '81')
+
+    
+    def get_nfl_url(self, week, year):
         if week is None and year is None:
-            return ScheduleScraper.THIS_WEEK_URL
+            return "https://www.espn.com/nfl/schedule"
         else:
-            return f"{ScheduleScraper.THIS_WEEK_URL}/_/week/{week}/year/{year}/seasontype/2"
+            return f"https://www.espn.com/nfl/schedule/_/week/{week}/year/{year}/seasontype/2"
+
+    def get_cfb_url(self, week, year, num):
+        if week is None and year is None:
+            return f"https://www.espn.com/college-football/schedule/_/group/{num}"
+        else:
+            return f"https://www.espn.com/college-football/schedule/_/week/{week}/year/{year}/seasontype/2/group/{num}"
 
     def parse_data(self):
         return {"year": self.get_year(), "week": self.get_week(),"espn_game_ids": self.get_game_ids()}
@@ -25,7 +39,7 @@ class ScheduleScraper(BaseScraper):
         return self.get_active_url(r'\/week\/(\d{1,2})\/')
     
     def get_active_url(self, pattern):
-        is_active = self.driver.find_elements(By.CSS_SELECTOR, ".custom--week.is-active")[1]
+        is_active = self.driver.find_elements(By.CSS_SELECTOR, ".custom--week.is-active")[0]
         url = is_active.find_element(By.CSS_SELECTOR, "a").get_attribute('href')
         return re.search(pattern, url).group(1)
 

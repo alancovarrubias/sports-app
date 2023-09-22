@@ -4,8 +4,9 @@ import re
 
 
 class PlaybyplayScraper(BaseScraper):
-    def build_url(self, game_id):
-        return f"https://www.espn.com/nfl/playbyplay/_/gameId/{game_id}"
+    def build_url(self, game_id, league):
+        sport = self.get_sport(league)
+        return f"https://www.espn.com/{sport}/playbyplay/_/gameId/{game_id}"
 
     def parse_data(self):
         return {
