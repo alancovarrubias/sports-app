@@ -18,7 +18,14 @@ def games_index():
     week = request.args.get("week", type=int)
     league = request.args.get("league", type=str)
 
-    return process_request(ScheduleScraper, week, year, league)
+    if league == 'nfl':
+        return process_request(ScheduleScraper, week, year, league)
+    if league == 'cfb':
+        cfb80 = process_request(ScheduleScraper, week, year, 'cfb80')
+        cfb81 = process_request(ScheduleScraper, week, year, 'cfb81')
+        cfb80['espn_game_ids'] = cfb80['espn_game_ids'] + cfb81['espn_game_ids']
+        return cfb80
+
 
 @app.route("/api/games/<int:game_id>", methods=["GET"])
 def games_show(game_id):

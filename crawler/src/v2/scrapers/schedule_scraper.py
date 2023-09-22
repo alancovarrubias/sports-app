@@ -30,7 +30,11 @@ class ScheduleScraper(BaseScraper):
             return f"https://www.espn.com/college-football/schedule/_/week/{week}/year/{year}/seasontype/2/group/{num}"
 
     def parse_data(self):
-        return {"year": self.get_year(), "week": self.get_week(),"espn_game_ids": self.get_game_ids()}
+        return {
+            "year": self.get_year(),
+            "week": self.get_week(),
+            "espn_game_ids": self.get_game_ids()
+        }
 
     def get_year(self):
         return self.get_active_url(r'\/year\/(\d{4})\/')
