@@ -61,8 +61,7 @@ class BoxscoreScraper(BaseScraper):
     def get_data(self, home_away, pass_rush, data_index):
         category = self.get_category(pass_rush)
         category_tables = self.get_tables(category, home_away)
-        data_item = self.get_data_item(category_tables, data_index)
-        return data_item.text
+        return self.get_data_item(category_tables, data_index)
 
     def get_category(self, index):
         return self.driver.find_elements(By.CSS_SELECTOR, ".Boxscore__Category")[index]
@@ -71,9 +70,12 @@ class BoxscoreScraper(BaseScraper):
         return category.find_elements(By.CSS_SELECTOR, ".Boxscore__Team")[home_away]
 
     def get_data_item(self, table, data_index):
-        data_row = table.find_elements(By.CSS_SELECTOR, ".Boxscore__Totals")[1]
+        boxscore_totals = table.find_elements(By.CSS_SELECTOR, ".Boxscore__Totals")
+        if (len(boxscore_totals) == 0):
+            return ""
+        data_row = boxscore_totals[1]
         data = data_row.find_elements(By.CSS_SELECTOR, ".Boxscore__Totals_Items")
-        return data[data_index]
+        return data[data_index].text
 
     def get_scores(self, away_home):
         game_table = self.driver.find_element(By.CSS_SELECTOR, ".Gamestrip__Table")
