@@ -3,7 +3,7 @@ class DatabaseBuilder
   def run(options = {})
     url = get_games_url(options)
     games_res = query(url)
-    @season = Season.find_or_create_by(year: games_res['year'])
+    @season = Season.find_or_create_by(year: games_res['year'], league: :nfl)
     games_res['espn_game_ids'].map do |game_id|
       @game_data = query("#{GAMES_URL}/#{game_id}")['game']
       build_game(game_id, games_res['week'])

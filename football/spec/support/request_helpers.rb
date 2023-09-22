@@ -19,7 +19,6 @@ module RequestHelpers
     { 'id' => team.id,
       'name' => team.name,
       'abbr' => team.abbr,
-      'league' => team.league,
       'season_id' => team.season.id }
   end
 

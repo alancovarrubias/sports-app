@@ -11,6 +11,6 @@ RSpec.describe Team, type: :model do
 
   describe 'validations' do
     it { should validate_presence_of(:name) }
-    it { should validate_uniqueness_of(:name).scoped_to(:season_id, :league) }
+    it { should validate_uniqueness_of(:name).scoped_to(:season_id) }
   end
 end

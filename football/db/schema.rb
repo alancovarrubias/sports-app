@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2023_09_10_091243) do
 
   create_table "seasons", force: :cascade do |t|
     t.integer "year"
+    t.integer "league"
   end
 
   create_table "stats", force: :cascade do |t|
@@ -60,7 +61,6 @@ ActiveRecord::Schema.define(version: 2023_09_10_091243) do
     t.bigint "season_id"
     t.string "name"
     t.string "abbr"
-    t.string "league"
     t.index ["season_id"], name: "index_teams_on_season_id"
   end
 
