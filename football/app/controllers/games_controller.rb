@@ -13,7 +13,7 @@ class GamesController < ApplicationController
   end
 
   def set_games
-    @games = Game.includes(:away_team, :home_team).where(season_id: params[:season_id])
+    @games = Game.includes(:away_team, :home_team)
   end
 
   def set_game

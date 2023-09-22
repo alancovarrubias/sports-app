@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe GamesController, type: :routing do
   describe 'routing' do
     it 'routes to #index' do
-      expect(get: '/seasons/1/games').to route_to('games#index', season_id: '1')
+      expect(get: '/games').to route_to('games#index')
     end
 
     it 'routes to #show' do
