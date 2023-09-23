@@ -1,3 +1,4 @@
+require 'net/http'
 class DatabaseBuilder
   GAMES_URL = 'http://crawler:5000/api/games'.freeze
   def run(league, options = {})
