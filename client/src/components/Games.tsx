@@ -9,6 +9,7 @@ export const GAMES_QUERY = gql`
       id
       date
       start_time
+      kicked
       game_clock
       away_team {
         ...TeamData
@@ -35,25 +36,39 @@ export const GAMES_QUERY = gql`
     completions
     passing_yards
     rushing_yards
+    score
+    total_plays
+    total_yards
+    ave_per_car
+    ave_per_att
+    ave_per_play
   }
 `;
+
+const statHeaders = (away_home) => {
+  return [
+    `${away_home} Team`,
+    `${away_home} Attempts`,
+    `${away_home} Carries`,
+    `${away_home} Completions`,
+    `${away_home} Passing Yards`,
+    `${away_home} Rushing Yards`,
+    `${away_home} Score`,
+    `${away_home} Total Plays`,
+    `${away_home} Total Yards`,
+    `${away_home} Ave Per Car`,
+    `${away_home} Ave Per Att`,
+    `${away_home} Ave Per Play`,
+  ]
+}
 
 export const GAME_HEADERS = [
   'Date',
   'Start Time',
   'Game Clock',
-  'Away Team',
-  'Away Attempts',
-  'Away Carries',
-  'Away Completions',
-  'Away Passing Yards',
-  'Away Rushing Yards',
-  'Home Team',
-  'Home Attempts',
-  'Home Carries',
-  'Home Completions',
-  'Home Passing Yards',
-  'Home Rushing Yards',
+  'Kicked',
+  ...statHeaders('Away'),
+  ...statHeaders('Home'),
 ]
 
 function convertTime(utcDateStr) {
@@ -92,6 +107,7 @@ const Games = (): JSX.Element => {
               <td>{game.date}</td>
               <td>{convertTime(game.start_time)}</td>
               <td>{game.game_clock}</td>
+              <td>{game.kicked}</td>
               <TeamRow team={game.away_team} />
               <StatRow stat={game.away_full_game_stat} />
               <TeamRow team={game.home_team} />
@@ -106,18 +122,14 @@ const Games = (): JSX.Element => {
 
 const TeamRow = ({ team }) => {
   if (!team) {
-    return null
+    return <td />
   }
-  return (
-    <>
-      <td>{team.name}</td>
-    </>
-  )
+  return <td>{team.name}</td>
 }
 
 const StatRow = ({ stat }) => {
   if (!stat) {
-    return null
+    stat = {}
   }
   return (
     <>
@@ -126,6 +138,12 @@ const StatRow = ({ stat }) => {
       <td>{stat.carries}</td>
       <td>{stat.passing_yards}</td>
       <td>{stat.rushing_yards}</td>
+      <td>{stat.score}</td>
+      <td>{stat.total_plays}</td>
+      <td>{stat.total_yards}</td>
+      <td>{stat.ave_per_car}</td>
+      <td>{stat.ave_per_att}</td>
+      <td>{stat.ave_per_play}</td>
     </>
   )
 }
