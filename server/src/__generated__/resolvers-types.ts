@@ -67,11 +67,17 @@ export type Season = {
 export type Stat = {
   __typename?: 'Stat';
   attempts: Scalars['Int']['output'];
+  ave_per_att: Scalars['Float']['output'];
+  ave_per_car: Scalars['Float']['output'];
+  ave_per_play: Scalars['Float']['output'];
   carries: Scalars['Int']['output'];
   completions: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
   passing_yards: Scalars['Int']['output'];
   rushing_yards: Scalars['Int']['output'];
+  score: Scalars['Int']['output'];
+  total_plays: Scalars['Int']['output'];
+  total_yards: Scalars['Int']['output'];
 };
 
 export type Team = {
@@ -161,6 +167,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   Game: ResolverTypeWrapper<Game>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
@@ -177,6 +184,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   AuthPayload: AuthPayload;
   Boolean: Scalars['Boolean']['output'];
+  Float: Scalars['Float']['output'];
   Game: Game;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
@@ -226,11 +234,17 @@ export type SeasonResolvers<ContextType = any, ParentType extends ResolversParen
 
 export type StatResolvers<ContextType = any, ParentType extends ResolversParentTypes['Stat'] = ResolversParentTypes['Stat']> = {
   attempts?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  ave_per_att?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  ave_per_car?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  ave_per_play?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   carries?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   completions?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   passing_yards?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   rushing_yards?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  score?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  total_plays?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  total_yards?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

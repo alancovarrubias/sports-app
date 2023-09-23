@@ -34,6 +34,12 @@ export const GAMES_QUERY = `#graphql
         completions
         passing_yards
         rushing_yards
+        score
+        total_plays
+        total_yards
+        ave_per_car
+        ave_per_att
+        ave_per_play
       }
       home_full_game_stat {
         id
@@ -42,6 +48,12 @@ export const GAMES_QUERY = `#graphql
         completions
         passing_yards
         rushing_yards
+        score
+        total_plays
+        total_yards
+        ave_per_car
+        ave_per_att
+        ave_per_play
       }
     }
   }

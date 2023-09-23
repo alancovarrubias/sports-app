@@ -38,7 +38,6 @@ const resolvers: Resolvers = {
       async (_root, args, { dataSources: { footballApi } }) => {
         const res = await footballApi.fetchGames(args.date);
         const body = await res.json();
-        console.log(body.data[0].attributes);
         const data = body.data.map(({ attributes }) => {
           return {
             ...attributes,

@@ -17,6 +17,12 @@ type Stat {
   carries: Int!
   rushing_yards: Int!
   passing_yards: Int!
+  score: Int!
+  total_plays: Int!
+  total_yards: Int!
+  ave_per_car: Float!
+  ave_per_att: Float!
+  ave_per_play: Float!
 }
 
 type Game {
