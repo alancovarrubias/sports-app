@@ -73,6 +73,8 @@ export type Stat = {
   carries: Scalars['Int']['output'];
   completions: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
+  longest_pass: Scalars['Int']['output'];
+  longest_rush: Scalars['Int']['output'];
   passing_yards: Scalars['Int']['output'];
   rushing_yards: Scalars['Int']['output'];
   score: Scalars['Int']['output'];
@@ -240,6 +242,8 @@ export type StatResolvers<ContextType = any, ParentType extends ResolversParentT
   carries?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   completions?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  longest_pass?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  longest_rush?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   passing_yards?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   rushing_yards?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   score?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;

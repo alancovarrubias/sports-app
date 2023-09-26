@@ -18,6 +18,8 @@ type Stat {
   rushing_yards: Int!
   passing_yards: Int!
   score: Int!
+  longest_rush: Int!
+  longest_pass: Int!
   total_plays: Int!
   total_yards: Int!
   ave_per_car: Float!

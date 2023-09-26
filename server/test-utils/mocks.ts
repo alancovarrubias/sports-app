@@ -70,6 +70,8 @@ export const GAME: Game = {
     ave_per_car: 9.0,
     ave_per_att: 10.0,
     ave_per_play: 11.0,
+    longest_pass: 12,
+    longest_rush: 13,
   },
   home_full_game_stat: {
     id: "2",
@@ -84,5 +86,7 @@ export const GAME: Game = {
     ave_per_car: 9.0,
     ave_per_att: 10.0,
     ave_per_play: 11.0,
+    longest_pass: 12,
+    longest_rush: 13,
   },
 };

@@ -40,6 +40,8 @@ export const GAMES_QUERY = `#graphql
         ave_per_car
         ave_per_att
         ave_per_play
+        longest_pass
+        longest_rush
       }
       home_full_game_stat {
         id
@@ -54,6 +56,8 @@ export const GAMES_QUERY = `#graphql
         ave_per_car
         ave_per_att
         ave_per_play
+        longest_pass
+        longest_rush
       }
     }
   }
