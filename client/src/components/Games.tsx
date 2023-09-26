@@ -49,8 +49,8 @@ const statHeaders = (away_home) => {
   return [
     `${away_home} Team`,
     `${away_home} Attempts`,
-    `${away_home} Carries`,
     `${away_home} Completions`,
+    `${away_home} Carries`,
     `${away_home} Passing Yards`,
     `${away_home} Rushing Yards`,
     `${away_home} Score`,
