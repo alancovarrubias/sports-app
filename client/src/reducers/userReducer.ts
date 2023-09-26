@@ -18,7 +18,7 @@ export function userReducer(_user, action) {
 export function userAfterRoute({ type }) {
     switch (type) {
         case LOGIN:
-            return Paths.Home
+            return Paths.Games
         case LOGOUT:
             return Paths.Login
     }

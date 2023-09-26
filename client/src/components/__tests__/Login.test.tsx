@@ -55,7 +55,7 @@ describe('Login', () => {
         test('redirects to home page', async () => {
             const loginElements = renderLogin(loginSuccessMock)
             submitLoginForm(loginElements)
-            await waitFor(() => expect(mockPush).toHaveBeenCalledWith(Paths.Home))
+            await waitFor(() => expect(mockPush).toHaveBeenCalledWith(Paths.Games))
         });
     })
 

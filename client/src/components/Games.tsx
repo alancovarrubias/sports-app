@@ -84,7 +84,7 @@ function convertTime(utcDateStr) {
   }).format(utcDate);
 }
 
-function todayDate() {
+export function todayDate() {
   return moment.tz('America/Los_Angeles').format('YYYY-MM-DD');
 }
 
