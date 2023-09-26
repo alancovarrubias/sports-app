@@ -13,5 +13,9 @@ class StatSerializer
              :total_yards,
              :ave_per_car,
              :ave_per_att,
-             :ave_per_play
+             :ave_per_play,
+             :typa,
+             :typai,
+             :typc,
+             :typp
 end

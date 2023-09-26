@@ -41,7 +41,11 @@ module RequestHelpers
           'total_yards' => stat.total_yards,
           'ave_per_car' => stat.ave_per_car,
           'ave_per_att' => stat.ave_per_att,
-          'ave_per_play' => stat.ave_per_play
+          'ave_per_play' => stat.ave_per_play,
+          'typa' => stat.typa,
+          'typai' => stat.typai,
+          'typc' => stat.typc,
+          'typp' => stat.typp
         }
       }
     }
