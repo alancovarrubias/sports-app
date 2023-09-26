@@ -12,14 +12,36 @@ class Stat < ApplicationRecord
   end
 
   def ave_per_car
-    (rushing_yards / carries.to_f).round(1)
+    float_div(rushing_yards, carries, 1)
   end
 
   def ave_per_att
-    (passing_yards / attempts.to_f).round(1)
+    float_div(passing_yards, attempts, 1)
   end
 
   def ave_per_play
-    (total_yards / total_plays.to_f).round(2)
+    float_div(total_yards, total_plays)
+  end
+
+  def typa
+    float_div(passing_yards, completions)
+  end
+
+  def typai
+    float_div(passing_yards - longest_pass, completions - 1)
+  end
+
+  def typc
+    float_div(rushing_yards - longest_rush, carries - 1)
+  end
+
+  def typp
+    float_div(total_yards - longest_rush - longest_pass, total_plays - 2)
+  end
+
+  private
+
+  def float_div(num, denom, round = 2)
+    (num / denom.to_f).round(round)
   end
 end

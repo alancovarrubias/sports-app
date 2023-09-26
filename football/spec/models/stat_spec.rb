@@ -22,7 +22,9 @@ RSpec.describe Stat, type: :model do
                                 attempts: 43,
                                 carries: 15,
                                 passing_yards: 191,
-                                rushing_yards: 182)
+                                rushing_yards: 182,
+                                longest_pass: 40,
+                                longest_rush: 30)
     end
 
     it { expect(@stat.ave_per_car).to eq(12.1) }
@@ -30,5 +32,9 @@ RSpec.describe Stat, type: :model do
     it { expect(@stat.ave_per_play).to eq(6.43) }
     it { expect(@stat.total_plays).to eq(58) }
     it { expect(@stat.total_yards).to eq(373) }
+    it { expect(@stat.typa).to eq(7.07) }
+    it { expect(@stat.typai).to eq(5.81) }
+    it { expect(@stat.typc).to eq(10.86) }
+    it { expect(@stat.typp).to eq(5.41) }
   end
 end
