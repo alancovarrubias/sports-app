@@ -5,6 +5,5 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-builder = DatabaseBuilder.new
-builder.run(:nfl)
-builder.run(:cfb)
+DatabaseSeed::Runner.new(:nfl).run
+DatabaseSeed::Runner.new(:cfb).run

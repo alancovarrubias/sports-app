@@ -14,24 +14,20 @@ class BoxscoreScraper(BaseScraper):
     def parse_data(self):
         if "boxscore" in self.driver.current_url:
             return {
-                "game": {
-                    "start_time": self.get_start_time(),
-                    "game_clock": self.get_game_clock(),
-                    "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),
-                    "home_team": self.team_stats(BoxscoreScraper.HOME_INDEX),
-                }
+                "start_time": self.get_start_time(),
+                "game_clock": self.get_game_clock(),
+                "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),
+                "home_team": self.team_stats(BoxscoreScraper.HOME_INDEX),
             }
         else:
             return {
-                "game": {
-                    "start_time": self.get_start_time(),
-                    "game_clock": "Not Started",
-                    "away_team": {
-                        "name": self.get_team_name(BoxscoreScraper.AWAY_INDEX),
-                    },
-                    "home_team": {
-                        "name": self.get_team_name(BoxscoreScraper.HOME_INDEX),
-                    }
+                "start_time": self.get_start_time(),
+                "game_clock": "Not Started",
+                "away_team": {
+                    "name": self.get_team_name(BoxscoreScraper.AWAY_INDEX),
+                },
+                "home_team": {
+                    "name": self.get_team_name(BoxscoreScraper.HOME_INDEX),
                 }
             }
 

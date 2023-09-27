@@ -10,9 +10,7 @@ class PlaybyplayScraper(BaseScraper):
 
     def parse_data(self):
         return {
-            "game": {
-                "received": self.get_received()
-            }
+            "received": self.get_received()
         }
 
     def get_received(self):

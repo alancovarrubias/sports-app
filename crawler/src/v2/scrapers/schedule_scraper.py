@@ -33,7 +33,7 @@ class ScheduleScraper(BaseScraper):
         return {
             "year": self.get_year(),
             "week": self.get_week(),
-            "espn_game_ids": self.get_game_ids()
+            "espn_ids": self.get_game_ids()
         }
 
     def get_year(self):
