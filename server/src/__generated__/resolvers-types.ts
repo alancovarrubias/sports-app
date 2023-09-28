@@ -24,10 +24,12 @@ export type AuthPayload = {
 
 export type Game = {
   __typename?: 'Game';
+  away_first_half_stat?: Maybe<Stat>;
   away_full_game_stat?: Maybe<Stat>;
   away_team?: Maybe<Team>;
   date?: Maybe<Scalars['String']['output']>;
   game_clock?: Maybe<Scalars['String']['output']>;
+  home_first_half_stat?: Maybe<Stat>;
   home_full_game_stat?: Maybe<Stat>;
   home_team?: Maybe<Team>;
   id: Scalars['ID']['output'];
@@ -80,6 +82,10 @@ export type Stat = {
   score: Scalars['Int']['output'];
   total_plays: Scalars['Int']['output'];
   total_yards: Scalars['Int']['output'];
+  typa: Scalars['Float']['output'];
+  typai: Scalars['Float']['output'];
+  typc: Scalars['Float']['output'];
+  typp: Scalars['Float']['output'];
 };
 
 export type Team = {
@@ -206,10 +212,12 @@ export type AuthPayloadResolvers<ContextType = any, ParentType extends Resolvers
 };
 
 export type GameResolvers<ContextType = any, ParentType extends ResolversParentTypes['Game'] = ResolversParentTypes['Game']> = {
+  away_first_half_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
   away_full_game_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
   away_team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType>;
   date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   game_clock?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  home_first_half_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
   home_full_game_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
   home_team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -249,6 +257,10 @@ export type StatResolvers<ContextType = any, ParentType extends ResolversParentT
   score?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   total_plays?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   total_yards?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  typa?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  typai?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  typc?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  typp?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

@@ -7,6 +7,33 @@ export const SEASONS_QUERY = `#graphql
   }
 `;
 
+const TEAM_ATTRIBUTES = `#graphql
+  id
+  abbr
+  city
+  name
+`;
+const STAT_ATTRIBUTES = `#graphql
+  id
+  attempts
+  carries
+  completions
+  passing_yards
+  rushing_yards
+  score
+  total_plays
+  total_yards
+  ave_per_car
+  ave_per_att
+  ave_per_play
+  longest_pass
+  longest_rush
+  typa
+  typai
+  typc
+  typp
+`;
+
 export const GAMES_QUERY = `#graphql
   query Games($date: String!) {
     games(date: $date) {
@@ -16,48 +43,22 @@ export const GAMES_QUERY = `#graphql
       game_clock
       kicked
       away_team {
-        id
-        abbr
-        city
-        name
+        ${TEAM_ATTRIBUTES}
       }
       home_team {
-        id
-        abbr
-        city
-        name
+        ${TEAM_ATTRIBUTES}
       }
       away_full_game_stat {
-        id
-        attempts
-        carries
-        completions
-        passing_yards
-        rushing_yards
-        score
-        total_plays
-        total_yards
-        ave_per_car
-        ave_per_att
-        ave_per_play
-        longest_pass
-        longest_rush
+        ${STAT_ATTRIBUTES}
       }
       home_full_game_stat {
-        id
-        attempts
-        carries
-        completions
-        passing_yards
-        rushing_yards
-        score
-        total_plays
-        total_yards
-        ave_per_car
-        ave_per_att
-        ave_per_play
-        longest_pass
-        longest_rush
+        ${STAT_ATTRIBUTES}
+      }
+      away_first_half_stat {
+        ${STAT_ATTRIBUTES}
+      }
+      home_first_half_stat {
+        ${STAT_ATTRIBUTES}
       }
     }
   }

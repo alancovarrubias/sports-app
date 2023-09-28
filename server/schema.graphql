@@ -25,6 +25,10 @@ type Stat {
   ave_per_car: Float!
   ave_per_att: Float!
   ave_per_play: Float!
+  typa: Float!
+  typai: Float!
+  typc: Float!
+  typp: Float!
 }
 
 type Game {
@@ -37,6 +41,8 @@ type Game {
   home_team: Team
   away_full_game_stat: Stat
   home_full_game_stat: Stat
+  away_first_half_stat: Stat
+  home_first_half_stat: Stat
 }
 
 type User {
