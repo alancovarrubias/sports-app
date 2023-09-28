@@ -9,7 +9,7 @@ import { Paths } from 'app/const'
 const Routes = (): JSX.Element => {
     return (
         <Switch>
-            <Redirect exact from={Paths.Root} to={Paths.Home} />
+            <Redirect exact from={Paths.Root} to={Paths.Games} />
             <Route path={Paths.Login} component={Login} />
             <PrivateRoute path={Paths.Home} component={Home} />
             <PrivateRoute path={Paths.Games} component={Games} />

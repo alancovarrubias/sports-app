@@ -42,6 +42,10 @@ export const GAMES_QUERY = gql`
     ave_per_car
     ave_per_att
     ave_per_play
+    typa
+    typai
+    typc
+    typp
   }
 `;
 
@@ -59,6 +63,10 @@ const statHeaders = (away_home) => {
     `${away_home} Ave Per Car`,
     `${away_home} Ave Per Att`,
     `${away_home} Ave Per Play`,
+    `${away_home} typa`,
+    `${away_home} typai`,
+    `${away_home} typc`,
+    `${away_home} typp`,
   ]
 }
 
@@ -67,8 +75,22 @@ export const GAME_HEADERS = [
   'Start Time',
   'Game Clock',
   'Kicked',
-  ...statHeaders('Away'),
-  ...statHeaders('Home'),
+  `Team`,
+  `Attempts`,
+  `Completions`,
+  `Carries`,
+  `Passing Yards`,
+  `Rushing Yards`,
+  `Score`,
+  `Total Plays`,
+  `Total Yards`,
+  `Ave Per Car`,
+  `Ave Per Att`,
+  `Ave Per Play`,
+  `TYPA`,
+  `TYPAI`,
+  `TYPC`,
+  `TYPP`,
 ]
 
 function convertTime(utcDateStr) {
@@ -103,16 +125,20 @@ const Games = (): JSX.Element => {
         </thead>
         <tbody>
           {data.games.map(game => (
-            <tr key={game.id}>
-              <td>{game.date}</td>
-              <td>{convertTime(game.start_time)}</td>
-              <td>{game.game_clock}</td>
-              <td>{game.kicked}</td>
-              <TeamRow team={game.away_team} />
-              <StatRow stat={game.away_full_game_stat} />
-              <TeamRow team={game.home_team} />
-              <StatRow stat={game.home_full_game_stat} />
-            </tr>
+            <>
+              <tr key={game.id}>
+                <td rowSpan="2">{game.date}</td>
+                <td rowSpan="2">{convertTime(game.start_time)}</td>
+                <td rowSpan="2">{game.game_clock}</td>
+                <td rowSpan="2">{game.kicked}</td>
+                <TeamRow team={game.away_team} />
+                <StatRow stat={game.away_full_game_stat} />
+              </tr>
+              <tr>
+                <TeamRow team={game.home_team} />
+                <StatRow stat={game.home_full_game_stat} />
+              </tr>
+            </>
           ))}
         </tbody>
       </table>
@@ -144,6 +170,10 @@ const StatRow = ({ stat }) => {
       <td>{stat.ave_per_car}</td>
       <td>{stat.ave_per_att}</td>
       <td>{stat.ave_per_play}</td>
+      <td>{stat.typa}</td>
+      <td>{stat.typai}</td>
+      <td>{stat.typc}</td>
+      <td>{stat.typp}</td>
     </>
   )
 }

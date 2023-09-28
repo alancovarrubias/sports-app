@@ -37,7 +37,7 @@ describe('Routes', () => {
             const currentUserSuccess = { data: { currentUser: { email: 'testemail' } } }
             test('root path redirects to home page', async () => {
                 renderRoutes(Paths.Root, currentUserSuccess)
-                await waitFor(() => expect(screen.getByText(/home/i)).toBeInTheDocument());
+                await waitFor(() => expect(screen.getByText(/games/i)).toBeInTheDocument());
             });
             test('home path renders home page', async () => {
                 renderRoutes(Paths.Home, currentUserSuccess)
