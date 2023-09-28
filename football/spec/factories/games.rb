@@ -8,5 +8,6 @@ FactoryBot.define do
     start_time { DateTime.now }
     game_clock { 'Final' }
     week { 1 }
+    kicked { 'away' }
   end
 end

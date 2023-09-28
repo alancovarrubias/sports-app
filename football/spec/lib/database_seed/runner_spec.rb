@@ -21,10 +21,15 @@ RSpec.shared_examples 'Stat attributes' do |method|
   end
 end
 
-RSpec.describe DatabaseSeed::Runner do
+RSpec.describe DatabaseSeed::Runner, :focus do
   subject { DatabaseSeed::Runner.new(league) }
   let(:league) { :nfl }
+
   let(:url_builder) { DatabaseSeed::UrlBuilder.new(league) }
+  let(:schedule_url) { url_builder.schedule(options) }
+  let(:boxscore_url) { url_builder.boxscore(espn_id) }
+  let(:playbyplay_url) { url_builder.playbyplay(espn_id) }
+
   let(:schedule_data) { fetch_file('schedule_data.json') }
   let(:boxscore_data) { fetch_file('boxscore_data.json') }
   let(:not_started_boxscore_data) { fetch_file('not_started_boxscore_data.json') }
@@ -32,11 +37,13 @@ RSpec.describe DatabaseSeed::Runner do
   let(:away_team_data) { boxscore_data['away_team'] }
   let(:home_team_data) { boxscore_data['home_team'] }
   let(:playbyplay_data) { fetch_file('playbyplay_data.json') }
+
   let(:year) { schedule_data['year'].to_i }
   let(:week) { schedule_data['week'].to_i }
   let(:options) { { week: week, year: year } }
   let(:espn_id) { schedule_data['espn_ids'][0].to_i }
   let(:start_time) { DateTime.parse(boxscore_data['start_time']) }
+  let(:game_clock) { boxscore_data['game_clock'] }
   let(:date) { start_time.in_time_zone('Pacific Time (US & Canada)').to_date }
   let(:kicked) { 'away' }
 
@@ -49,60 +56,62 @@ RSpec.describe DatabaseSeed::Runner do
     JSON.parse(File.read(path))
   end
 
-  def create_game(game_clock)
+  def create_game(game_clock, kicked = nil)
     season = FactoryBot.create(:season, year: year, league: league)
-    FactoryBot.create(:game, espn_id: espn_id, season: season, start_time: start_time, game_clock: game_clock)
+    FactoryBot.create(:game, espn_id: espn_id, season: season, start_time: start_time, game_clock: game_clock,
+                             kicked: kicked)
   end
 
   before do
-    stub_url(url_builder.schedule(options), schedule_data)
-    stub_url(url_builder.schedule, schedule_data)
-    stub_url(url_builder.boxscore(espn_id), boxscore_data)
-    stub_url(url_builder.playbyplay(espn_id), playbyplay_data)
+    stub_url(schedule_url, schedule_data)
+    stub_url(boxscore_url, boxscore_data)
+    stub_url(playbyplay_url, playbyplay_data)
   end
 
   describe 'urls called' do
-    it 'with options queries games URL with query params' do
+    it 'with options' do
       subject.run(options)
-      expect(a_request(:get, url_builder.schedule(options))).to have_been_made
+      expect(a_request(:get, schedule_url)).to have_been_made
+      expect(a_request(:get, boxscore_url)).to have_been_made
     end
 
-    it 'without options queries games URL without query params' do
+    it 'without options' do
+      stub_url(url_builder.schedule, schedule_data)
       subject.run
       expect(a_request(:get, url_builder.schedule)).to have_been_made
     end
 
-    it 'boxscore is called with non existing game' do
-      subject.run(options)
-      expect(a_request(:get, url_builder.boxscore(espn_id))).to have_been_made
-    end
-
-    it 'boxscore is not called with DateTime.now before start_time' do
+    it 'current time before game start time' do
       allow(DateTime).to receive(:now).and_return(start_time - 1.second)
       create_game('Not Started')
       subject.run(options)
-      expect(a_request(:get, url_builder.boxscore(espn_id))).not_to have_been_made
-      expect(a_request(:get, url_builder.playbyplay(espn_id))).not_to have_been_made
+      expect(a_request(:get, boxscore_url)).not_to have_been_made
+      expect(a_request(:get, playbyplay_url)).not_to have_been_made
     end
 
-    it 'boxscore is called with DateTime.now equal to start_time' do
+    it 'current time equal to start time' do
       allow(DateTime).to receive(:now).and_return(start_time)
       create_game('Not Started')
       subject.run(options)
-      expect(a_request(:get, url_builder.boxscore(espn_id))).to have_been_made
-      expect(a_request(:get, url_builder.playbyplay(espn_id))).to have_been_made
+      expect(a_request(:get, boxscore_url)).to have_been_made
+      expect(a_request(:get, playbyplay_url)).to have_been_made
     end
-    it "boxscore is not called with game with 'Final' game_clock" do
+    it 'game with game clock Final exists' do
       create_game('Final')
       subject.run(options)
-      expect(a_request(:get, url_builder.boxscore(espn_id))).not_to have_been_made
-      expect(a_request(:get, url_builder.playbyplay(espn_id))).not_to have_been_made
+      expect(a_request(:get, boxscore_url)).not_to have_been_made
+      expect(a_request(:get, playbyplay_url)).not_to have_been_made
     end
-    it "playbyplay is not called with game_data with game_clock 'Not Started'" do
+    it 'Not Started game clock response' do
       stub_url(url_builder.boxscore(espn_id), not_started_boxscore_data)
       subject.run(options)
-      expect(a_request(:get, url_builder.boxscore(espn_id))).to have_been_made
-      expect(a_request(:get, url_builder.playbyplay(espn_id))).not_to have_been_made
+      expect(a_request(:get, boxscore_url)).to have_been_made
+      expect(a_request(:get, playbyplay_url)).not_to have_been_made
+    end
+    it 'game with kicked exists' do
+      create_game('Not Started', kicked)
+      subject.run(options)
+      expect(a_request(:get, playbyplay_url)).not_to have_been_made
     end
   end
 
@@ -114,14 +123,14 @@ RSpec.describe DatabaseSeed::Runner do
 
     describe 'season' do
       it 'should be accurate' do
-        expect(@game.season.year).to eq(schedule_data['year'].to_i)
+        expect(@game.season.year).to eq(year)
       end
     end
 
     describe 'game' do
       it 'should be accurate' do
-        expect(@game.week).to eq(schedule_data['week'].to_i)
-        expect(@game.game_clock).to eq(boxscore_data['game_clock'])
+        expect(@game.week).to eq(week)
+        expect(@game.game_clock).to eq(game_clock)
         expect(@game.date).to eq(date)
         expect(@game.espn_id).to eq(espn_id)
         expect(@game.kicked).to eq(kicked)
@@ -160,9 +169,10 @@ RSpec.describe DatabaseSeed::Runner do
       end
     end
   end
+
   describe 'Halftime boxscore' do
     before do
-      stub_url(url_builder.boxscore(espn_id), halftime_boxscore_data)
+      stub_url(boxscore_url, halftime_boxscore_data)
       subject.run(options)
       @game = Game.find_by_espn_id(espn_id)
     end

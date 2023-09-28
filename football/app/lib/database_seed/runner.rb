@@ -20,23 +20,9 @@ module DatabaseSeed
       update_game
       return if @boxscore_data['game_clock'] == 'Not Started'
 
-      @playbyplay_data = @http_client.get(@url_builder.playbyplay(espn_id))
-      build_stats
-    end
-
-    def build_stats
-      @game.update(kicked: kicked) unless @game.kicked
+      update_kicked(espn_id) unless @game.kicked
       build_stat('away_team')
       build_stat('home_team')
-    end
-
-    def kicked
-      case @playbyplay_data['received']
-      when @game.home_team.name
-        :away
-      when @game.away_team.name
-        :home
-      end
     end
 
     def update_game
@@ -57,6 +43,20 @@ module DatabaseSeed
       name = team_data.delete('name')
       abbr = team_data.delete('abbr')
       @season.teams.find_or_create_by(name: name, abbr: abbr)
+    end
+
+    def update_kicked(espn_id)
+      @playbyplay_data = @http_client.get(@url_builder.playbyplay(espn_id))
+      @game.update(kicked: kicked)
+    end
+
+    def kicked
+      case @playbyplay_data['received']
+      when @game.home_team.name
+        :away
+      when @game.away_team.name
+        :home
+      end
     end
 
     def build_stat(team_name)
