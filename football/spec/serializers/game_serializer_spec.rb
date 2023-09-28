@@ -49,31 +49,37 @@ end
 
 def build_game_hash(game)
   {
-    'id' => game.id.to_s,
-    'type' => 'game',
-    'attributes' => {
-      'id' => game.id,
-      'date' => game.date.to_s,
-      'start_time' => game.start_time.strftime('%Y-%m-%dT%H:%M:%S.%LZ'),
-      'game_clock' => game.game_clock,
-      'kicked' => game.kicked,
-      'away_team' => build_team_hash(game.away_team),
-      'home_team' => build_team_hash(game.home_team),
-      'away_full_game_stat' => build_stat_hash(game.away_full_game_stat),
-      'home_full_game_stat' => build_stat_hash(game.home_full_game_stat)
+    'data' => {
+      'id' => game.id.to_s,
+      'type' => 'game',
+      'attributes' => {
+        'id' => game.id,
+        'date' => game.date.to_s,
+        'start_time' => game.start_time.strftime('%Y-%m-%dT%H:%M:%S.%LZ'),
+        'game_clock' => game.game_clock,
+        'kicked' => game.kicked,
+        'away_team' => build_team_hash(game.away_team),
+        'home_team' => build_team_hash(game.home_team),
+        'away_full_game_stat' => build_stat_hash(game.away_full_game_stat),
+        'home_full_game_stat' => build_stat_hash(game.home_full_game_stat),
+        'away_first_half_stat' => build_stat_hash(game.away_first_half_stat),
+        'home_first_half_stat' => build_stat_hash(game.home_first_half_stat)
+      }
     }
   }
 end
 
-RSpec.describe 'GameSerializer', :focus do
+RSpec.describe 'GameSerializer' do
   before do
     @game = FactoryBot.create(:game)
     FactoryBot.create(:stat, game: @game, team: @game.away_team, interval: :full_game)
     FactoryBot.create(:stat, game: @game, team: @game.home_team, interval: :full_game)
+    FactoryBot.create(:stat, game: @game, team: @game.away_team, interval: :first_half)
+    FactoryBot.create(:stat, game: @game, team: @game.home_team, interval: :first_half)
     @game_hash = JSON.parse(GameSerializer.new(@game).to_json)
   end
 
   it 'retrieves list of games' do
-    expect(@game_hash).to eq({ 'data' => build_game_hash(@game) })
+    expect(@game_hash).to eq(build_game_hash(@game))
   end
 end

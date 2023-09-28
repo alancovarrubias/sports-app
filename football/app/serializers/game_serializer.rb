@@ -13,4 +13,10 @@ class GameSerializer
   attribute :home_full_game_stat do |object|
     StatSerializer.new(object.home_full_game_stat)
   end
+  attribute :away_first_half_stat do |object|
+    StatSerializer.new(object.away_first_half_stat)
+  end
+  attribute :home_first_half_stat do |object|
+    StatSerializer.new(object.home_first_half_stat)
+  end
 end
