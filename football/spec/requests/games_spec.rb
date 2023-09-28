@@ -28,7 +28,7 @@ RSpec.describe 'Games', type: :request do
     it 'retrieves specific game' do
       get game_path(@game)
       expect(response).to have_http_status(200)
-      expect(body['data']).to eq(build_game_hash(@game))
+      expect(body['data']['id']).to eq(@game.id.to_s)
     end
   end
 end

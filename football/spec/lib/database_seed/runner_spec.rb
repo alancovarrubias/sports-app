@@ -21,7 +21,7 @@ RSpec.shared_examples 'Stat attributes' do |method|
   end
 end
 
-RSpec.describe DatabaseSeed::Runner, :focus do
+RSpec.describe DatabaseSeed::Runner do
   subject { DatabaseSeed::Runner.new(league) }
   let(:league) { :nfl }
 
