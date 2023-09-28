@@ -21,13 +21,14 @@ RSpec.shared_examples 'Stat attributes' do |method|
   end
 end
 
-RSpec.describe DatabaseSeed::Runner, :focus do
+RSpec.describe DatabaseSeed::Runner do
   subject { DatabaseSeed::Runner.new(league) }
   let(:league) { :nfl }
   let(:url_builder) { DatabaseSeed::UrlBuilder.new(league) }
   let(:schedule_data) { fetch_file('schedule_data.json') }
   let(:boxscore_data) { fetch_file('boxscore_data.json') }
   let(:not_started_boxscore_data) { fetch_file('not_started_boxscore_data.json') }
+  let(:halftime_boxscore_data) { fetch_file('halftime_boxscore_data.json') }
   let(:away_team_data) { boxscore_data['away_team'] }
   let(:home_team_data) { boxscore_data['home_team'] }
   let(:playbyplay_data) { fetch_file('playbyplay_data.json') }
@@ -46,6 +47,11 @@ RSpec.describe DatabaseSeed::Runner, :focus do
   def fetch_file(filename)
     path = Rails.root.join('spec', 'fixtures', filename)
     JSON.parse(File.read(path))
+  end
+
+  def create_game(game_clock)
+    season = FactoryBot.create(:season, year: year, league: league)
+    FactoryBot.create(:game, espn_id: espn_id, season: season, start_time: start_time, game_clock: game_clock)
   end
 
   before do
@@ -73,8 +79,7 @@ RSpec.describe DatabaseSeed::Runner, :focus do
 
     it 'boxscore is not called with DateTime.now before start_time' do
       allow(DateTime).to receive(:now).and_return(start_time - 1.second)
-      season = FactoryBot.create(:season, year: year, league: league)
-      FactoryBot.create(:game, espn_id: espn_id, game_clock: 'Not Started', season: season, start_time: start_time)
+      create_game('Not Started')
       subject.run(options)
       expect(a_request(:get, url_builder.boxscore(espn_id))).not_to have_been_made
       expect(a_request(:get, url_builder.playbyplay(espn_id))).not_to have_been_made
@@ -82,15 +87,13 @@ RSpec.describe DatabaseSeed::Runner, :focus do
 
     it 'boxscore is called with DateTime.now equal to start_time' do
       allow(DateTime).to receive(:now).and_return(start_time)
-      season = FactoryBot.create(:season, year: year, league: league)
-      FactoryBot.create(:game, espn_id: espn_id, game_clock: 'Not Started', season: season, start_time: start_time)
+      create_game('Not Started')
       subject.run(options)
       expect(a_request(:get, url_builder.boxscore(espn_id))).to have_been_made
       expect(a_request(:get, url_builder.playbyplay(espn_id))).to have_been_made
     end
     it "boxscore is not called with game with 'Final' game_clock" do
-      season = FactoryBot.create(:season, year: year, league: league)
-      FactoryBot.create(:game, espn_id: espn_id, game_clock: 'Final', season: season)
+      create_game('Final')
       subject.run(options)
       expect(a_request(:get, url_builder.boxscore(espn_id))).not_to have_been_made
       expect(a_request(:get, url_builder.playbyplay(espn_id))).not_to have_been_made
@@ -103,7 +106,7 @@ RSpec.describe DatabaseSeed::Runner, :focus do
     end
   end
 
-  describe 'attributes' do
+  describe 'default route' do
     before do
       subject.run(options)
       @game = Game.find_by_espn_id(espn_id)
@@ -151,8 +154,29 @@ RSpec.describe DatabaseSeed::Runner, :focus do
     end
 
     describe 'first_half_stats' do
-      expect(@game.away_first_half_stat).to be_nil
-      expect(@game.home_first_half_stat).to be_nil
+      it 'should not exist' do
+        expect(@game.away_first_half_stat).to be_nil
+        expect(@game.home_first_half_stat).to be_nil
+      end
+    end
+  end
+  describe 'Halftime boxscore' do
+    before do
+      stub_url(url_builder.boxscore(espn_id), halftime_boxscore_data)
+      subject.run(options)
+      @game = Game.find_by_espn_id(espn_id)
+    end
+
+    describe 'away_first_half_stat' do
+      include_examples 'Stat attributes', :away_first_half_stat do
+        let(:team_data) { away_team_data }
+      end
+    end
+
+    describe 'home_first_half_stat' do
+      include_examples 'Stat attributes', :home_first_half_stat do
+        let(:team_data) { home_team_data }
+      end
     end
   end
 end
