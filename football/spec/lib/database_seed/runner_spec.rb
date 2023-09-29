@@ -102,6 +102,12 @@ RSpec.describe DatabaseSeed::Runner do
       expect(a_request(:get, boxscore_url)).not_to have_been_made
       expect(a_request(:get, playbyplay_url)).not_to have_been_made
     end
+    it 'game with game clock Final exists' do
+      create_game('Final/OT')
+      subject.run(options)
+      expect(a_request(:get, boxscore_url)).not_to have_been_made
+      expect(a_request(:get, playbyplay_url)).not_to have_been_made
+    end
     it 'Not Started game clock response' do
       stub_url(url_builder.boxscore(espn_id), not_started_boxscore_data)
       subject.run(options)

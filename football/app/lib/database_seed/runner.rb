@@ -14,7 +14,7 @@ module DatabaseSeed
 
     def build_game(espn_id)
       @game = @season.games.find_or_create_by(espn_id: espn_id)
-      return if @game.game_clock == 'Final' || @game.start_time && DateTime.now < @game.start_time
+      return if @game.game_clock&.include?('Final') || @game.start_time && DateTime.now < @game.start_time
 
       @boxscore_data = @http_client.get(@url_builder.boxscore(espn_id))
       update_game
