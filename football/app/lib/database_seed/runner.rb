@@ -42,7 +42,9 @@ module DatabaseSeed
       team_data = @boxscore_data[team_name]
       name = team_data.delete('name')
       abbr = team_data.delete('abbr')
-      @season.teams.find_or_create_by(name: name, abbr: abbr)
+      team = @season.teams.find_or_create_by(name: name)
+      team.update(abbr: abbr)
+      team
     end
 
     def update_kicked(espn_id)
