@@ -23,6 +23,12 @@ export const GAMES_QUERY = gql`
       home_full_game_stat {
         ...StatData
       }
+      away_full_game_stat {
+        ...StatData
+      }
+      home_full_game_stat {
+        ...StatData
+      }
     }
   }
   fragment TeamData on Team {
@@ -75,7 +81,10 @@ export const GAME_HEADERS = [
   'Start Time',
   'Game Clock',
   'Kicked',
-  `Team`,
+  `Away vs Home`,
+]
+
+export const STAT_HEADERS = [
   `Attempts`,
   `Completions`,
   `Carries`,
@@ -118,11 +127,9 @@ const Games = (): JSX.Element => {
   if (loading) return <p>Loading...</p>
   return (
     <>
-      <div>Games</div>
+      <div>{date} Games</div>
       <table>
-        <thead>
-          <tr>{GAME_HEADERS.map((header, index) => <th key={index}>{header}</th>)}</tr>
-        </thead>
+        <Header />
         <tbody>
           {data.games.map(game => (
             <>
@@ -132,10 +139,12 @@ const Games = (): JSX.Element => {
                 <td rowSpan={2}>{game.game_clock}</td>
                 <td rowSpan={2}>{game.kicked}</td>
                 <TeamRow team={game.away_team} />
+                <StatRow stat={game.away_first_half_stat} />
                 <StatRow stat={game.away_full_game_stat} />
               </tr>
               <tr>
                 <TeamRow team={game.home_team} />
+                <StatRow stat={game.home_first_half_stat} />
                 <StatRow stat={game.home_full_game_stat} />
               </tr>
             </>
@@ -143,6 +152,19 @@ const Games = (): JSX.Element => {
         </tbody>
       </table>
     </>
+  )
+}
+const Header = () => {
+  const headers = [...GAME_HEADERS, ...STAT_HEADERS, ...STAT_HEADERS]
+  return (
+    <thead>
+      <tr>
+        <th colSpan={5}>Game Stats</th>
+        <th colSpan={15}>First Half</th>
+        <th colSpan={15}>Full Game</th>
+      </tr>
+      <tr>{headers.map((header, index) => <th key={index}>{header}</th>)}</tr>
+    </thead>
   )
 }
 
