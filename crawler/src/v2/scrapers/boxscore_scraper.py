@@ -49,7 +49,7 @@ class BoxscoreScraper(BaseScraper):
             "carries": self.get_data(away_home, 1, 0),
             "rushing_yards": self.get_data(away_home, 1, 1),
             "longest_rush": self.get_data(away_home, 1, 3),
-            "longest_pass": self.get_data(away_home, 2, 4),
+            "longest_pass": self.get_data(away_home, 2, 3),
         }
 
     def get_score(self, away_home):

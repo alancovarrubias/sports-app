@@ -23,10 +23,10 @@ export const GAMES_QUERY = gql`
       home_full_game_stat {
         ...StatData
       }
-      away_full_game_stat {
+      away_first_half_stat {
         ...StatData
       }
-      home_full_game_stat {
+      home_first_half_stat {
         ...StatData
       }
     }
@@ -48,33 +48,14 @@ export const GAMES_QUERY = gql`
     ave_per_car
     ave_per_att
     ave_per_play
+    longest_rush
+    longest_pass
     typa
     typai
     typc
     typp
   }
 `;
-
-const statHeaders = (away_home) => {
-  return [
-    `${away_home} Team`,
-    `${away_home} Attempts`,
-    `${away_home} Completions`,
-    `${away_home} Carries`,
-    `${away_home} Passing Yards`,
-    `${away_home} Rushing Yards`,
-    `${away_home} Score`,
-    `${away_home} Total Plays`,
-    `${away_home} Total Yards`,
-    `${away_home} Ave Per Car`,
-    `${away_home} Ave Per Att`,
-    `${away_home} Ave Per Play`,
-    `${away_home} typa`,
-    `${away_home} typai`,
-    `${away_home} typc`,
-    `${away_home} typp`,
-  ]
-}
 
 export const GAME_HEADERS = [
   'Date',
@@ -96,6 +77,8 @@ export const STAT_HEADERS = [
   `Ave Per Car`,
   `Ave Per Att`,
   `Ave Per Play`,
+  'Longest Rush',
+  'Longest Pass',
   `TYPA`,
   `TYPAI`,
   `TYPC`,
@@ -159,9 +142,9 @@ const Header = () => {
   return (
     <thead>
       <tr>
-        <th colSpan={5}>Game Stats</th>
-        <th colSpan={15}>First Half</th>
-        <th colSpan={15}>Full Game</th>
+        <th colSpan={GAME_HEADERS.length}>Game Stats</th>
+        <th colSpan={STAT_HEADERS.length}>First Half</th>
+        <th colSpan={STAT_HEADERS.length}>Full Game</th>
       </tr>
       <tr>{headers.map((header, index) => <th key={index}>{header}</th>)}</tr>
     </thead>
@@ -192,6 +175,8 @@ const StatRow = ({ stat }) => {
       <td>{stat.ave_per_car}</td>
       <td>{stat.ave_per_att}</td>
       <td>{stat.ave_per_play}</td>
+      <td>{stat.longest_rush}</td>
+      <td>{stat.longest_pass}</td>
       <td>{stat.typa}</td>
       <td>{stat.typai}</td>
       <td>{stat.typc}</td>

@@ -4,14 +4,14 @@ class CreateStats < ActiveRecord::Migration[6.0]
       t.references :team
       t.references :game
       t.integer :interval
-      t.integer :score
-      t.integer :completions
-      t.integer :attempts
-      t.integer :passing_yards
-      t.integer :longest_pass
-      t.integer :carries
-      t.integer :rushing_yards
-      t.integer :longest_rush
+      t.integer :score, default: 0
+      t.integer :completions, default: 0
+      t.integer :attempts, default: 0
+      t.integer :passing_yards, default: 0
+      t.integer :longest_pass, default: 0
+      t.integer :carries, default: 0
+      t.integer :rushing_yards, default: 0
+      t.integer :longest_rush, default: 0
     end
   end
 end
