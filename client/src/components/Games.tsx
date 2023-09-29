@@ -127,10 +127,10 @@ const Games = (): JSX.Element => {
           {data.games.map(game => (
             <>
               <tr key={game.id}>
-                <td rowSpan="2">{game.date}</td>
-                <td rowSpan="2">{convertTime(game.start_time)}</td>
-                <td rowSpan="2">{game.game_clock}</td>
-                <td rowSpan="2">{game.kicked}</td>
+                <td rowSpan={2}>{game.date}</td>
+                <td rowSpan={2}>{convertTime(game.start_time)}</td>
+                <td rowSpan={2}>{game.game_clock}</td>
+                <td rowSpan={2}>{game.kicked}</td>
                 <TeamRow team={game.away_team} />
                 <StatRow stat={game.away_full_game_stat} />
               </tr>

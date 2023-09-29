@@ -23,7 +23,7 @@ def games_index():
     if league == 'cfb':
         cfb80 = process_request(ScheduleScraper, week, year, 'cfb80')
         cfb81 = process_request(ScheduleScraper, week, year, 'cfb81')
-        cfb80['espn_game_ids'] = cfb80['espn_game_ids'] + cfb81['espn_game_ids']
+        cfb80['espn_ids'] = cfb80['espn_ids'] + cfb81['espn_ids']
         return cfb80
 
 
