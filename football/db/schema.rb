@@ -48,14 +48,14 @@ ActiveRecord::Schema.define(version: 2023_09_10_091243) do
     t.bigint "team_id"
     t.bigint "game_id"
     t.integer "interval"
-    t.integer "score"
-    t.integer "completions"
-    t.integer "attempts"
-    t.integer "passing_yards"
-    t.integer "longest_pass"
-    t.integer "carries"
-    t.integer "rushing_yards"
-    t.integer "longest_rush"
+    t.integer "score", default: 0
+    t.integer "completions", default: 0
+    t.integer "attempts", default: 0
+    t.integer "passing_yards", default: 0
+    t.integer "longest_pass", default: 0
+    t.integer "carries", default: 0
+    t.integer "rushing_yards", default: 0
+    t.integer "longest_rush", default: 0
     t.index ["game_id"], name: "index_stats_on_game_id"
     t.index ["team_id"], name: "index_stats_on_team_id"
   end
