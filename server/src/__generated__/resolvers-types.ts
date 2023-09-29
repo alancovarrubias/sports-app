@@ -32,7 +32,7 @@ export type Game = {
   home_first_half_stat?: Maybe<Stat>;
   home_full_game_stat?: Maybe<Stat>;
   home_team?: Maybe<Team>;
-  id: Scalars['ID']['output'];
+  id?: Maybe<Scalars['ID']['output']>;
   kicked?: Maybe<Scalars['String']['output']>;
   start_time?: Maybe<Scalars['String']['output']>;
 };
@@ -68,31 +68,31 @@ export type Season = {
 
 export type Stat = {
   __typename?: 'Stat';
-  attempts: Scalars['Int']['output'];
-  ave_per_att: Scalars['Float']['output'];
-  ave_per_car: Scalars['Float']['output'];
-  ave_per_play: Scalars['Float']['output'];
-  carries: Scalars['Int']['output'];
-  completions: Scalars['Int']['output'];
-  id: Scalars['ID']['output'];
-  longest_pass: Scalars['Int']['output'];
-  longest_rush: Scalars['Int']['output'];
-  passing_yards: Scalars['Int']['output'];
-  rushing_yards: Scalars['Int']['output'];
-  score: Scalars['Int']['output'];
-  total_plays: Scalars['Int']['output'];
-  total_yards: Scalars['Int']['output'];
-  typa: Scalars['Float']['output'];
-  typai: Scalars['Float']['output'];
-  typc: Scalars['Float']['output'];
-  typp: Scalars['Float']['output'];
+  attempts?: Maybe<Scalars['Int']['output']>;
+  ave_per_att?: Maybe<Scalars['Float']['output']>;
+  ave_per_car?: Maybe<Scalars['Float']['output']>;
+  ave_per_play?: Maybe<Scalars['Float']['output']>;
+  carries?: Maybe<Scalars['Int']['output']>;
+  completions?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['ID']['output']>;
+  longest_pass?: Maybe<Scalars['Int']['output']>;
+  longest_rush?: Maybe<Scalars['Int']['output']>;
+  passing_yards?: Maybe<Scalars['Int']['output']>;
+  rushing_yards?: Maybe<Scalars['Int']['output']>;
+  score?: Maybe<Scalars['Int']['output']>;
+  total_plays?: Maybe<Scalars['Int']['output']>;
+  total_yards?: Maybe<Scalars['Int']['output']>;
+  typa?: Maybe<Scalars['Float']['output']>;
+  typai?: Maybe<Scalars['Float']['output']>;
+  typc?: Maybe<Scalars['Float']['output']>;
+  typp?: Maybe<Scalars['Float']['output']>;
 };
 
 export type Team = {
   __typename?: 'Team';
   abbr?: Maybe<Scalars['String']['output']>;
   city?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
+  id?: Maybe<Scalars['ID']['output']>;
   name?: Maybe<Scalars['String']['output']>;
 };
 
@@ -220,7 +220,7 @@ export type GameResolvers<ContextType = any, ParentType extends ResolversParentT
   home_first_half_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
   home_full_game_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
   home_team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   kicked?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   start_time?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -243,31 +243,31 @@ export type SeasonResolvers<ContextType = any, ParentType extends ResolversParen
 };
 
 export type StatResolvers<ContextType = any, ParentType extends ResolversParentTypes['Stat'] = ResolversParentTypes['Stat']> = {
-  attempts?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  ave_per_att?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  ave_per_car?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  ave_per_play?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  carries?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  completions?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  longest_pass?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  longest_rush?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  passing_yards?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  rushing_yards?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  score?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  total_plays?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  total_yards?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  typa?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  typai?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  typc?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  typp?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  attempts?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  ave_per_att?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  ave_per_car?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  ave_per_play?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  carries?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  completions?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  longest_pass?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  longest_rush?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  passing_yards?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  rushing_yards?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  score?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  total_plays?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  total_yards?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  typa?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  typai?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  typc?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  typp?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type TeamResolvers<ContextType = any, ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team']> = {
   abbr?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   city?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

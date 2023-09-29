@@ -4,35 +4,35 @@ type Season {
 }
 
 type Team {
-  id: ID!
+  id: ID
   abbr: String
   city: String
   name: String
 }
 
 type Stat {
-  id: ID!
-  attempts: Int!
-  completions: Int!
-  carries: Int!
-  rushing_yards: Int!
-  passing_yards: Int!
-  score: Int!
-  longest_rush: Int!
-  longest_pass: Int!
-  total_plays: Int!
-  total_yards: Int!
-  ave_per_car: Float!
-  ave_per_att: Float!
-  ave_per_play: Float!
-  typa: Float!
-  typai: Float!
-  typc: Float!
-  typp: Float!
+  id: ID
+  attempts: Int
+  completions: Int
+  carries: Int
+  rushing_yards: Int
+  passing_yards: Int
+  score: Int
+  longest_rush: Int
+  longest_pass: Int
+  total_plays: Int
+  total_yards: Int
+  ave_per_car: Float
+  ave_per_att: Float
+  ave_per_play: Float
+  typa: Float
+  typai: Float
+  typc: Float
+  typp: Float
 }
 
 type Game {
-  id: ID!
+  id: ID
   date: String
   start_time: String
   game_clock: String
