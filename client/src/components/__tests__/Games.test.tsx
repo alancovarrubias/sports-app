@@ -1,6 +1,22 @@
 import React from 'react';
-import Games, { GAMES_QUERY, GAME_HEADERS, todayDate } from 'app/components/Games'
+import Games, { GAMES_QUERY, todayDate, getOrder } from 'app/components/Games'
 import { renderWithContext, waitFor, screen } from '@test-utils/index';
+
+const uniqueNumbers = new Set();
+
+function generateUniqueNumber() {
+  let num;
+  do {
+    num = Math.floor(Math.random() * 1000); // Adjust the range as needed
+  } while (uniqueNumbers.has(num));
+
+  uniqueNumbers.add(num);
+  return num;
+}
+
+function randomSort(a, b) {
+  return Math.random() - 0.5;
+}
 
 const mockPush = jest.fn()
 jest.mock('react-router-dom', () => ({
@@ -9,12 +25,35 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-const GAME =
-{
-  id: "1",
+let statId = 1
+const createStat = () => ({
+  __typename: "Stat",
+  id: String(statId++),
+  attempts: generateUniqueNumber(),
+  score: generateUniqueNumber(),
+  completions: generateUniqueNumber(),
+  carries: generateUniqueNumber(),
+  passing_yards: generateUniqueNumber(),
+  rushing_yards: generateUniqueNumber(),
+  ave_per_play: generateUniqueNumber(),
+  ave_per_att: generateUniqueNumber(),
+  ave_per_car: generateUniqueNumber(),
+  total_plays: generateUniqueNumber(),
+  total_yards: generateUniqueNumber(),
+  longest_rush: generateUniqueNumber(),
+  longest_pass: generateUniqueNumber(),
+  typa: generateUniqueNumber(),
+  typai: generateUniqueNumber(),
+  typc: generateUniqueNumber(),
+  typp: generateUniqueNumber(),
+})
+
+let gameId = 1
+const createGame = (overrides = {}) => ({
+  id: String(gameId++),
   date: "2023-09-07",
   start_time: "2023-09-15T00:15:00.000Z",
-  game_clock: "Halftime",
+  game_clock: "Final",
   kicked: 'away',
   away_team: {
     __typename: "Team",
@@ -26,61 +65,38 @@ const GAME =
     id: "2",
     name: "Kansas City Chiefs"
   },
-  away_full_game_stat: {
-    __typename: "Stat",
-    id: "1",
-    attempts: 1,
-    completions: 2,
-    score: 2413,
-    carries: 3,
-    passing_yards: 4,
-    rushing_yards: 5,
-    ave_per_play: 6,
-    ave_per_att: 7,
-    ave_per_car: 113,
-    total_plays: 114,
-    total_yards: 115
-  },
-  home_full_game_stat: {
-    __typename: "Stat",
-    id: "2",
-    attempts: 106,
-    score: 1233,
-    completions: 107,
-    carries: 108,
-    passing_yards: 109,
-    rushing_yards: 110,
-    ave_per_play: 111,
-    ave_per_att: 112,
-    ave_per_car: 113,
-    total_plays: 114,
-    total_yards: 115
+  away_full_game_stat: createStat(),
+  home_full_game_stat: createStat(),
+  away_first_half_stat: createStat(),
+  home_first_half_stat: createStat(),
+  ...overrides
+})
+
+const createMock = (games) => {
+  const result = {
+    data: {
+      games
+    }
   }
+
+  const request = {
+    query: GAMES_QUERY,
+    variables: { date: todayDate() }
+  }
+  const gamesMock = [{ request, result }]
+
+  return gamesMock
 }
-const result = {
-  data: {
-    games: [GAME]
-  }
+const renderGames = (games) => {
+  renderWithContext(<Games />, createMock(games), true)
 }
 
-const request = {
-  query: GAMES_QUERY,
-  variables: { date: todayDate() }
-}
-const gamesMock = [{ request, result }]
-const renderGames = () => {
-  renderWithContext(<Games />, gamesMock, true)
-}
-
-describe('Home', () => {
-  test('renders game headers', async () => {
-    renderGames()
-    await waitFor(() => {
-      GAME_HEADERS.forEach(header => expect(screen.getByText(header)).toBeInTheDocument())
-    })
+describe('GameTable content', () => {
+  const GAME = createGame({ game_clock: 'Halftime' })
+  beforeEach(() => {
+    renderGames([GAME])
   })
   test('renders game data', async () => {
-    renderGames()
     await waitFor(() => {
       expect(screen.getByText(GAME.date)).toBeInTheDocument()
       expect(screen.getByText("September 14, 2023 at 5:15 PM")).toBeInTheDocument()
@@ -99,3 +115,46 @@ describe('Home', () => {
     })
   });
 })
+
+describe('getOrder', () => {
+  const NOT_STARTED = 'Not Started'
+  const FIRST_QUARTER = '15:00 - 1st'
+  const SECOND_QUARTER = '15:00 - 2nd'
+  const HALFTIME = 'Halftime'
+  const THIRD_QUARTER = '15:00 - 3rd'
+  const FOURTH_QUARTER = '15:00 - 4th'
+  const FINAL = 'Final'
+  test('Halftime', async () => {
+    expect(getOrder(HALFTIME)).toEqual(-1)
+    expect(getOrder(FIRST_QUARTER)).toEqual(0)
+    expect(getOrder(SECOND_QUARTER)).toEqual(1)
+    expect(getOrder(NOT_STARTED)).toEqual(2)
+    expect(getOrder(FINAL)).toEqual(3)
+  })
+})
+
+expect.extend({
+  toMatchBefore(received, expected) {
+    const receivedPosition = received.getBoundingClientRect().top;
+    const expectedPosition = expected.getBoundingClientRect().top;
+    const pass = receivedPosition < expectedPosition;
+
+    if (pass) {
+      return {
+        message: () =>
+          `Expected element to appear before ${this.utils.printExpected(
+            expected
+          )}`,
+        pass: true,
+      };
+    } else {
+      return {
+        message: () =>
+          `Expected element to appear before ${this.utils.printExpected(
+            expected
+          )}`,
+        pass: false,
+      };
+    }
+  },
+});
