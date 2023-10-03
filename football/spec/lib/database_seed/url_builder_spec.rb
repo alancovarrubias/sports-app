@@ -6,6 +6,7 @@ RSpec.describe DatabaseSeed::UrlBuilder do
   let(:year) { 2023 }
   let(:week) { 1 }
   let(:espn_id) { 401_547_658 }
+  let(:finished) { 0 }
 
   describe '#schedule' do
     it 'with options' do
@@ -22,6 +23,6 @@ RSpec.describe DatabaseSeed::UrlBuilder do
   end
 
   it '#playbyplay' do
-    expect(subject.playbyplay(espn_id)).to eq("http://crawler:5000/api/games/#{espn_id}/playbyplay?league=#{league}")
+    expect(subject.playbyplay(espn_id, finished)).to eq("http://crawler:5000/api/games/#{espn_id}/playbyplay?league=#{league}&finished=#{finished}")
   end
 end

@@ -3,12 +3,10 @@ from v2.scrapers.playbyplay_scraper import PlaybyplayScraper
 from v2.scrapers.boxscore_scraper import BoxscoreScraper
 from v2.scrapers.schedule_scraper import ScheduleScraper
 
-
 def process_request(Scraper, *args):
     scraper_instance = Scraper()
     scraper_instance.fetch(*args)
     return scraper_instance.parse_data()
-
 
 app = Flask(__name__)
 
@@ -35,7 +33,8 @@ def games_show(game_id):
 @app.route("/api/games/<int:game_id>/playbyplay", methods=["GET"])
 def games_show_playbyplay(game_id):
     league = request.args.get("league", type=str)
-    return process_request(PlaybyplayScraper, game_id, league)
+    finished = request.args.get("finished", type=int)
+    return process_request(PlaybyplayScraper, game_id, league, finished)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

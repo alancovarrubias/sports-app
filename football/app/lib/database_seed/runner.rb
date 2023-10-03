@@ -18,9 +18,11 @@ module DatabaseSeed
 
       @boxscore_data = @http_client.get(@url_builder.boxscore(espn_id))
       update_game
-      return if @boxscore_data['game_clock'] == 'Not Started'
+      game_clock = @boxscore_data['game_clock']
+      return if game_clock == 'Not Started'
 
-      update_kicked(espn_id) unless @game.kicked
+      finished = game_clock == 'Final' ? 1 : 0
+      update_kicked(espn_id, finished) unless @game.kicked
       build_stat('away_team')
       build_stat('home_team')
     end
@@ -47,8 +49,8 @@ module DatabaseSeed
       team
     end
 
-    def update_kicked(espn_id)
-      @playbyplay_data = @http_client.get(@url_builder.playbyplay(espn_id))
+    def update_kicked(espn_id, finished)
+      @playbyplay_data = @http_client.get(@url_builder.playbyplay(espn_id, finished))
       @game.update(kicked: kicked)
     end
 

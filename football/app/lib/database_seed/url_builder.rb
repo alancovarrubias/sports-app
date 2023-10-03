@@ -13,8 +13,8 @@ module DatabaseSeed
       "#{GAMES_URL}/#{espn_id}?league=#{@league}"
     end
 
-    def playbyplay(espn_id)
-      "#{GAMES_URL}/#{espn_id}/playbyplay?league=#{@league}"
+    def playbyplay(espn_id, finished)
+      "#{GAMES_URL}/#{espn_id}/playbyplay?league=#{@league}&finished=#{finished}"
     end
   end
 end

@@ -19,11 +19,11 @@ def mock_process_request(mocker):
     yield process_request
 
 def test_games_show(mock_process_request, client):
-    response = client.get("/api/games/12345/playbyplay?league=cfb")
+    response = client.get("/api/games/12345/playbyplay?league=cfb&finished=0")
     assert response.status_code == 200
     assert json.loads(response.data) == []
 
-    mock_process_request.assert_called_once_with(PlaybyplayScraper, 12345, 'cfb')
+    mock_process_request.assert_called_once_with(PlaybyplayScraper, 12345, 'cfb', '0')
 
 def test_games_show(mock_process_request, client):
     response = client.get("/api/games/12345?league=nfl")
