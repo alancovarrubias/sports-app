@@ -4,9 +4,9 @@ from v2.scrapers.boxscore_scraper import BoxscoreScraper
 from v2.scrapers.schedule_scraper import ScheduleScraper
 
 def process_request(Scraper, *args):
-    scraper_instance = Scraper()
-    scraper_instance.fetch(*args)
-    return scraper_instance.parse_data()
+    with Scraper() as scraper:
+        scraper.fetch(*args)
+        return scraper.parse_data()
 
 app = Flask(__name__)
 

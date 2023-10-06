@@ -6,9 +6,6 @@ import os
 
 
 class BaseScraper(ABC):
-    def __init__(self):
-        self.driver = self.init_driver()
-
     def fetch(self, *args):
         url = self.build_url(*args)
         self.driver.get(url)
@@ -47,6 +44,7 @@ class BaseScraper(ABC):
                 f.write(self.driver.page_source)
 
     def __enter__(self):
+        self.driver = self.init_driver()
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
