@@ -2,6 +2,7 @@ import React from 'react'
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
+import GameTable from './GameTable'
 
 export const GAMES_QUERY = gql`
   query Games($date: String!) {
@@ -58,11 +59,10 @@ export const GAMES_QUERY = gql`
 `;
 
 export const GAME_HEADERS = [
-  'Date',
   'Start Time',
   'Game Clock',
   'Kicked',
-  `Away vs Home`,
+  'Matchups'
 ]
 
 export const STAT_HEADERS = [
@@ -85,18 +85,6 @@ export const STAT_HEADERS = [
   `TYPP`,
 ]
 
-function convertTime(utcDateStr) {
-  const utcDate = new Date(utcDateStr);
-  return new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Los_Angeles',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true,
-  }).format(utcDate);
-}
 const SECONDS_IN_MINUTE = 60
 const MINUTES_IN_QUARTER = 60
 
@@ -159,94 +147,36 @@ export const getOrder = (inputString) => {
   }
 }
 
+function convertTime(utcDateStr) {
+  const utcDate = new Date(utcDateStr);
+  return new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Los_Angeles',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  }).format(utcDate);
+}
+
 const Games = (): JSX.Element => {
   const urlParams = new URLSearchParams(window.location.search);
   const date = urlParams.get('date') || todayDate()
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
   if (loading) return <p>Loading...</p>
   const sortedGames = [...data.games].sort((game1, game2) => getOrder(game1.game_clock) - getOrder(game2.game_clock))
+  const styledGames = sortedGames.map((game, index) => (
+    {
+      ...game,
+      start_time: convertTime(game.start_time),
+      style: { backgroundColor: getColor(game, index) }
+    }
+  ))
   return (
     <>
       <div>{date} Games</div>
-      <table>
-        <Header />
-        <tbody>
-          {sortedGames.map((game, index) => (
-            <GameRow key={game.id} game={game} index={index} />)
-          )}
-        </tbody>
-      </table>
-    </>
-  )
-}
-
-const Header = () => {
-  const headers = [...GAME_HEADERS, ...STAT_HEADERS, ...STAT_HEADERS]
-  return (
-    <thead>
-      <tr>
-        <th colSpan={GAME_HEADERS.length}>Game Stats</th>
-        <th colSpan={STAT_HEADERS.length}>First Half</th>
-        <th colSpan={STAT_HEADERS.length}>Full Game</th>
-      </tr>
-      <tr>{headers.map((header, index) => <th key={index}>{header}</th>)}</tr>
-    </thead>
-  )
-}
-
-const GameRow = ({ game, index }) => {
-  const style = { backgroundColor: getColor(game, index) }
-  return (
-    <>
-      <tr key={game.id} style={style}>
-        <td rowSpan={2}>{game.date}</td>
-        <td rowSpan={2}>{convertTime(game.start_time)}</td>
-        <td rowSpan={2}>{game.game_clock}</td>
-        <td rowSpan={2}>{game.kicked}</td>
-        <TeamRow team={game.away_team} />
-        <StatRow stat={game.away_first_half_stat} />
-        <StatRow stat={game.away_full_game_stat} />
-      </tr>
-      <tr style={style}>
-        <TeamRow team={game.home_team} />
-        <StatRow stat={game.home_first_half_stat} />
-        <StatRow stat={game.home_full_game_stat} />
-      </tr>
-    </>
-  )
-
-}
-
-const TeamRow = ({ team }) => {
-  if (!team) {
-    return <td />
-  }
-  return <td>{team.name}</td>
-}
-
-const StatRow = ({ stat }) => {
-  if (!stat) {
-    stat = {}
-  }
-  return (
-    <>
-      <td>{stat.attempts}</td>
-      <td>{stat.completions}</td>
-      <td>{stat.carries}</td>
-      <td>{stat.passing_yards}</td>
-      <td>{stat.rushing_yards}</td>
-      <td>{stat.score}</td>
-      <td>{stat.total_plays}</td>
-      <td>{stat.total_yards}</td>
-      <td>{stat.ave_per_car}</td>
-      <td>{stat.ave_per_att}</td>
-      <td>{stat.ave_per_play}</td>
-      <td>{stat.longest_rush}</td>
-      <td>{stat.longest_pass}</td>
-      <td>{stat.typa}</td>
-      <td>{stat.typai}</td>
-      <td>{stat.typc}</td>
-      <td>{stat.typp}</td>
+      <GameTable games={styledGames} />
     </>
   )
 }

@@ -1,6 +1,13 @@
 class Stat < ApplicationRecord
   belongs_to :game
   belongs_to :team
+  before_save :convert_blank_to_zeros
+
+  def convert_blank_to_zeros
+    attributes.each do |attr_name, attr_value|
+      self[attr_name] = 0 if attr_value.respond_to?(:blank?) && attr_value.blank?
+    end
+  end
 
   enum interval: %i[full_game first_half]
   def total_plays
