@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client'
 import moment from 'moment-timezone'
@@ -87,9 +88,14 @@ export const STAT_HEADERS = [
 
 const SECONDS_IN_MINUTE = 60
 const MINUTES_IN_QUARTER = 60
+const TIMEZONE = 'America/Los_Angeles'
 
 export function todayDate() {
-  return moment.tz('America/Los_Angeles').format('YYYY-MM-DD');
+  return moment.tz(TIMEZONE)
+}
+
+function changeDate(date, numDays) {
+  return date.clone().add(numDays, 'day')
 }
 
 function getSeconds(time) {
@@ -150,7 +156,7 @@ export const getOrder = (gameClock) => {
 function convertTime(utcDateStr) {
   const utcDate = new Date(utcDateStr);
   return new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Los_Angeles',
+    timeZone: TIMEZONE,
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -162,8 +168,22 @@ function convertTime(utcDateStr) {
 
 const Games = (): JSX.Element => {
   const urlParams = new URLSearchParams(window.location.search);
-  const date = urlParams.get('date') || todayDate()
+  const date = urlParams.get('date') || todayDate().format('YYYY-MM-DD');
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
+  const history = useHistory()
+  const onPreviousClick = () => {
+    const startDate = moment.tz(date, TIMEZONE);
+    const nextDate = changeDate(startDate, -1).format('YYYY-MM-DD');
+    history.push(`/games?date=${nextDate}`)
+  }
+  const onNextClick = () => {
+    const startDate = moment.tz(date, TIMEZONE);
+    const nextDate = changeDate(startDate, 1).format('YYYY-MM-DD');
+    history.push(`/games?date=${nextDate}`)
+  }
+  const onRefresh = () => {
+    window.location.reload();
+  }
   if (loading) return <p>Loading...</p>
   const sortedGames = [...data.games].sort((game1, game2) => getOrder(game1.game_clock) - getOrder(game2.game_clock))
   const styledGames = sortedGames.map((game, index) => (
@@ -176,6 +196,9 @@ const Games = (): JSX.Element => {
   return (
     <>
       <div>{date} Games</div>
+      <button onClick={onRefresh}>Refresh</button>
+      <button onClick={onPreviousClick}>Previous Day</button>
+      <button onClick={onNextClick}>Next Day</button>
       <GameTable games={styledGames} />
     </>
   )
