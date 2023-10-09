@@ -97,11 +97,6 @@ function getSeconds(time) {
   return parseInt(split[0]) * SECONDS_IN_MINUTE + parseInt(split[1])
 }
 
-function getQuarter(inputString) {
-  const quarterMatch = inputString.match(/\d+(st|nd|rd|th)/)
-  return parseInt(quarterMatch[0][0]);
-}
-
 const getColor = (game, index) => {
   const order = getOrder(game.game_clock)
   const oddEven = index % 2
@@ -121,11 +116,9 @@ const getColor = (game, index) => {
 }
 
 export const getOrder = (inputString) => {
-  const timeMatch = inputString.match(/\d{1,2}:\d{2}/);
-  if (timeMatch) {
-    const time = timeMatch[0];
-    const quarter = getQuarter(inputString)
-    const seconds = getSeconds(time) / (SECONDS_IN_MINUTE * MINUTES_IN_QUARTER)
+  const quarterMatch = inputString.match(/\d+(st|nd|rd|th)/)
+  if (quarterMatch) {
+    const quarter = parseInt(quarterMatch[0][0]);
     let orderNum
     switch (quarter) {
       case 2:
@@ -139,7 +132,14 @@ export const getOrder = (inputString) => {
         orderNum = 3
         break
     }
-    return orderNum - (1 - seconds)
+    const timeMatch = inputString.match(/\d{1,2}:\d{2}/);
+    if (!timeMatch) {
+      return orderNum
+    }
+    const time = timeMatch[0];
+    const seconds = getSeconds(time)
+    const secondRatio = 1 - (seconds / (SECONDS_IN_MINUTE * MINUTES_IN_QUARTER))
+    return orderNum - secondRatio
   } else {
     if (inputString == 'Halftime') return -1
     if (inputString == 'Not Started') return 4

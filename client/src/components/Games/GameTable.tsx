@@ -111,11 +111,8 @@ const StatRow = ({ stat }) => {
     return (
         <>
             {STAT_COLUMNS.map(column => {
-                if (column == 'c/att') {
-                    return <td>{stat['completions']}/{stat['attempts']}</td>
-
-                }
-                return <td>{stat[column]}</td>
+                const text = column == 'c/att' ? `${stat['completions']}/${stat['attempts']}` : stat[column]
+                return <td key={column}>{text}</td>
             })}
         </>
     )
