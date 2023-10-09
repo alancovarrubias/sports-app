@@ -71,6 +71,7 @@ const Header = () => {
 }
 
 const GameRow = ({ game }) => {
+    const gameFinished = game.game_clock.includes('Final')
     return (
         <>
             <tr key={game.id} style={game.style}>
@@ -78,21 +79,23 @@ const GameRow = ({ game }) => {
                 <td rowSpan={2}>{game.game_clock}</td>
                 <TeamRow team={game.away_team} />
                 <td rowSpan={2}>{game.kicked}</td>
-                <StatsRow firstHalfStat={game.away_first_half_stat} fullGameStat={game.away_full_game_stat} />
+                <StatsRow gameFinished={gameFinished} firstHalfStat={game.away_first_half_stat} fullGameStat={game.away_full_game_stat} />
             </tr>
             <tr style={game.style}>
                 <TeamRow team={game.home_team} />
-                <StatsRow firstHalfStat={game.home_first_half_stat} fullGameStat={game.home_full_game_stat} />
+                <StatsRow gameFinished={gameFinished} firstHalfStat={game.home_first_half_stat} fullGameStat={game.home_full_game_stat} />
             </tr>
         </>
     )
 }
 
-const StatsRow = ({ firstHalfStat, fullGameStat }) => {
+const StatsRow = ({ gameFinished, firstHalfStat, fullGameStat }) => {
+    const firstStat = gameFinished ? firstHalfStat : firstHalfStat || fullGameStat
+    const secondStat = gameFinished ? fullGameStat : null
     return (
         <>
-            <StatRow stat={firstHalfStat || fullGameStat} />
-            <StatRow stat={firstHalfStat ? fullGameStat : null} />
+            <StatRow stat={firstStat} />
+            <StatRow stat={secondStat} />
         </>
     )
 }
@@ -111,7 +114,7 @@ const StatRow = ({ stat }) => {
     return (
         <>
             {STAT_COLUMNS.map(column => {
-                const text = column == 'c/att' ? `${stat['completions']}/${stat['attempts']}` : stat[column]
+                const text = column == 'c/att' && stat['attempts'] ? `${stat['completions']}/${stat['attempts']}` : stat[column]
                 return <td key={column}>{text}</td>
             })}
         </>

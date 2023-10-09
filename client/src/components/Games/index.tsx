@@ -115,8 +115,8 @@ const getColor = (game, index) => {
   }
 }
 
-export const getOrder = (inputString) => {
-  const quarterMatch = inputString.match(/\d+(st|nd|rd|th)/)
+export const getOrder = (gameClock) => {
+  const quarterMatch = gameClock.match(/\d+(st|nd|rd|th)/)
   if (quarterMatch) {
     const quarter = parseInt(quarterMatch[0][0]);
     let orderNum
@@ -132,7 +132,7 @@ export const getOrder = (inputString) => {
         orderNum = 3
         break
     }
-    const timeMatch = inputString.match(/\d{1,2}:\d{2}/);
+    const timeMatch = gameClock.match(/\d{1,2}:\d{2}/);
     if (!timeMatch) {
       return orderNum
     }
@@ -141,9 +141,9 @@ export const getOrder = (inputString) => {
     const secondRatio = 1 - (seconds / (SECONDS_IN_MINUTE * MINUTES_IN_QUARTER))
     return orderNum - secondRatio
   } else {
-    if (inputString == 'Halftime') return -1
-    if (inputString == 'Not Started') return 4
-    if (inputString == 'Final') return 5
+    if (gameClock == 'Halftime') return -1
+    if (gameClock == 'Not Started') return 4
+    if (gameClock.includes('Final')) return 5
   }
 }
 
