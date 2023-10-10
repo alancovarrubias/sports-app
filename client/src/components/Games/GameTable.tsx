@@ -109,13 +109,11 @@ const TeamRow = ({ team }) => {
     return <td>{team.name}</td>
 }
 
-const BORDERED_COLUMNS = ['c/att', 'carries', 'longest_pass', 'total_plays']
+const BORDERED_COLUMNS = ['c/att', 'carries', 'longest_pass', 'total_plays', 'score']
 
 const getClassName = (column) => {
     if (BORDERED_COLUMNS.includes(column)) {
         return 'bordered'
-    } else if (column == 'score') {
-        return 'border-red'
     } else {
         return null
     }
