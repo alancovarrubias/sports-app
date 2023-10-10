@@ -98,8 +98,7 @@ describe('GameTable content', () => {
   })
   test('renders game data', async () => {
     await waitFor(() => {
-      expect(screen.getByText(GAME.date)).toBeInTheDocument()
-      expect(screen.getByText("September 14, 2023 at 5:15 PM")).toBeInTheDocument()
+      expect(screen.getByText("5:15 PM")).toBeInTheDocument()
       expect(screen.getByText(GAME.away_team.name)).toBeInTheDocument()
       expect(screen.getByText(GAME.away_full_game_stat.attempts)).toBeInTheDocument()
       expect(screen.getByText(GAME.away_full_game_stat.completions)).toBeInTheDocument()

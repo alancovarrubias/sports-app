@@ -12,14 +12,14 @@ export const STAT_HEADERS = [
     'Total Yards',
     'Rushing Yards',
     'Carries',
-    'Ave Per Car',
+    'Yards Per Car',
     'TYPC',
     'C/ATT',
-    'Ave Per Att',
+    'Yards Per Att',
     'TYPA',
     'TYPAI',
     'Total Plays',
-    'Ave Per Play',
+    'Yards Per Play',
     'TYPP',
     'Longest Pass',
     'Longest Rush',
@@ -45,14 +45,16 @@ const STAT_COLUMNS = [
 
 const GameTable = ({ games }): JSX.Element => {
     return (
-        <table>
-            <Header />
-            <tbody>
-                {games.map((game) => (
-                    <GameRow key={game.id} game={game} />)
-                )}
-            </tbody>
-        </table>
+        <div className="table-container">
+            <table>
+                <Header />
+                <tbody>
+                    {games.map((game) => (
+                        <GameRow key={game.id} game={game} />)
+                    )}
+                </tbody>
+            </table>
+        </div>
     )
 }
 
@@ -74,7 +76,7 @@ const GameRow = ({ game }) => {
     const gameFinished = game.game_clock.includes('Final')
     return (
         <>
-            <tr key={game.id} style={game.style}>
+            <tr key={game.id} style={game.style} className="borderTop">
                 <td rowSpan={2}>{game.start_time}</td>
                 <td rowSpan={2}>{game.game_clock}</td>
                 <TeamRow team={game.away_team} />
@@ -107,6 +109,18 @@ const TeamRow = ({ team }) => {
     return <td>{team.name}</td>
 }
 
+const BORDERED_COLUMNS = ['c/att', 'carries', 'longest_pass', 'total_plays']
+
+const getClassName = (column) => {
+    if (BORDERED_COLUMNS.includes(column)) {
+        return 'bordered'
+    } else if (column == 'score') {
+        return 'border-red'
+    } else {
+        return null
+    }
+}
+
 const StatRow = ({ stat }) => {
     if (!stat) {
         stat = {}
@@ -115,7 +129,7 @@ const StatRow = ({ stat }) => {
         <>
             {STAT_COLUMNS.map(column => {
                 const text = column == 'c/att' && stat['attempts'] ? `${stat['completions']}/${stat['attempts']}` : stat[column]
-                return <td key={column}>{text}</td>
+                return <td className={getClassName(column)} key={column}>{text}</td>
             })}
         </>
     )

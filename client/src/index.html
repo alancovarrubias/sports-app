@@ -14,6 +14,32 @@
         border: 1px solid #000;
         text-align: center;
       }
+      .bordered {
+        border-left:9px;
+        border-left-style:solid;
+        border-left-color:black;
+      }
+      .border-red {
+        border-left:9px;
+        border-left-style:solid;
+        border-left-color: gray;
+      }
+      .borderTop {
+        border-top-style: solid;
+        border-top-width: 9px;
+      }
+      .table-container {
+        width: 100%;
+        max-height: 90vh; /* Set a maximum height for the table to enable scrolling */
+        overflow-y: auto; /* Enable vertical scrolling for the table body */
+        border: 1px solid #ccc; /* Optional: Add a border for styling */
+      }
+      thead {
+        position: sticky;
+        top: 0; /* Stick the header to the top of the container */
+        background-color: #f0f0f0; /* Optional: Header background color */
+        z-index: 1; /* Ensure the header appears above the table body */
+      }
       td {
         border: 1px solid #000;
         text-align: center;

@@ -157,9 +157,6 @@ function convertTime(utcDateStr) {
   const utcDate = new Date(utcDateStr);
   return new Intl.DateTimeFormat('en-US', {
     timeZone: TIMEZONE,
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
     hour12: true,
