@@ -87,7 +87,7 @@ export const STAT_HEADERS = [
 ]
 
 const SECONDS_IN_MINUTE = 60
-const MINUTES_IN_QUARTER = 60
+const MINUTES_IN_QUARTER = 15
 const TIMEZONE = 'America/Los_Angeles'
 
 export function todayDate() {
