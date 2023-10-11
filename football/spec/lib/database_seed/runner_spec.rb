@@ -213,6 +213,7 @@ RSpec.describe DatabaseSeed::Runner do
         it 'should have data' do
           stat = @game.away_full_game_stat
           expect(stat.attempts).to eq(0)
+          expect(stat.typa).to eq(0)
         end
       end
     end

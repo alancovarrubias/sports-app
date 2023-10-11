@@ -42,6 +42,8 @@ class Stat < ApplicationRecord
   private
 
   def float_div(num, denom, round = 2)
+    return 0 if denom.zero?
+
     (num / denom.to_f).round(round)
   end
 end
