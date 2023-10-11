@@ -13,6 +13,10 @@ RSpec.describe DatabaseSeed::UrlBuilder do
       expect(subject.schedule(week: week, year: year)).to eq("http://crawler:5000/api/games?year=#{year}&week=#{week}&league=#{league}")
     end
 
+    it 'with league override' do
+      expect(subject.schedule(week: week, year: year, league: :cfb81)).to eq("http://crawler:5000/api/games?year=#{year}&week=#{week}&league=cfb81")
+    end
+
     it 'without options' do
       expect(subject.schedule).to eq("http://crawler:5000/api/games?league=#{league}")
     end

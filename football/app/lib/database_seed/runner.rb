@@ -7,9 +7,21 @@ module DatabaseSeed
     end
 
     def run(options = {})
-      @schedule_data = @http_client.get(@url_builder.schedule(options))
+      @schedule_data = get_schedule_data(options)
       @season = Season.find_or_create_by(year: @schedule_data['year'], league: @league)
       @schedule_data['espn_ids'].each { |espn_id| build_game(espn_id) }
+    end
+
+    def get_schedule_data(options)
+      case @league
+      when :nfl
+        @http_client.get(@url_builder.schedule(options))
+      when :cfb
+        cfb_80_schedule = @http_client.get(@url_builder.schedule(options.merge(league: :cfb80)))
+        cfb_81_schedule = @http_client.get(@url_builder.schedule(options.merge(league: :cfb81)))
+        cfb_80_schedule['espn_ids'] = cfb_80_schedule['espn_ids'] + cfb_81_schedule['espn_ids']
+        cfb_80_schedule
+      end
     end
 
     def build_game(espn_id)

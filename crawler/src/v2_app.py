@@ -15,6 +15,7 @@ def games_index():
     year = request.args.get("year", type=int)
     week = request.args.get("week", type=int)
     league = request.args.get("league", type=str)
+    return process_request(ScheduleScraper, week, year, league)
 
     if league == 'nfl':
         return process_request(ScheduleScraper, week, year, league)

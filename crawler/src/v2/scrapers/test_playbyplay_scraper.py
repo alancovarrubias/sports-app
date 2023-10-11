@@ -11,6 +11,7 @@ class TestPlaybyplayScraper:
     def mocked_scraper(self):
         with PlaybyplayScraper() as scraper:
             scraper.get_url_or_file(TestPlaybyplayScraper.NFL_URL, TestPlaybyplayScraper.MOCK_FILE)
+            scraper.logo_index = 0
             yield scraper
 
     @pytest.fixture(scope="class")
@@ -20,13 +21,13 @@ class TestPlaybyplayScraper:
 
     def test_nfl_url(self, scraper, mocker):
         mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
-        scraper.fetch("401547658", 'nfl')
+        scraper.fetch("401547658", 'nfl', 1)
 
         mock_get.assert_called_once_with(TestPlaybyplayScraper.NFL_URL)
 
     def test_current_url(self, scraper, mocker):
         mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
-        scraper.fetch("401547658", 'cfb')
+        scraper.fetch("401547658", 'cfb', 1)
 
         mock_get.assert_called_once_with(TestPlaybyplayScraper.CFB_URL)
 

@@ -5,8 +5,8 @@ module DatabaseSeed
       @league = league
     end
 
-    def schedule(year: nil, week: nil)
-      year && week ? "#{GAMES_URL}?year=#{year}&week=#{week}&league=#{@league}" : "#{GAMES_URL}?league=#{@league}"
+    def schedule(year: nil, week: nil, league: @league)
+      year && week ? "#{GAMES_URL}?year=#{year}&week=#{week}&league=#{league}" : "#{GAMES_URL}?league=#{league}"
     end
 
     def boxscore(espn_id)

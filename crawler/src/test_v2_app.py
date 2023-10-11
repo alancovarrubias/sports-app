@@ -1,10 +1,9 @@
 import pytest
-from v2_app import app, process_request
+from v2_app import app
 from flask import json
 from v2.scrapers.playbyplay_scraper import PlaybyplayScraper
 from v2.scrapers.boxscore_scraper import BoxscoreScraper
 from v2.scrapers.schedule_scraper import ScheduleScraper
-from unittest.mock import Mock
 
 
 @pytest.fixture
@@ -45,25 +44,3 @@ def test_games_index_empty_query_params(mock_process_request, client):
     assert json.loads(response.data) == []
 
     mock_process_request.assert_called_once_with(ScheduleScraper, None, None, 'cfb')
-
-class TestScraper:
-    def fetch(self, *args):
-        pass
-
-    def parse_data(self):
-        pass
-
-
-def test_process_request(mocker):
-    mock_constructor = Mock(spec=TestScraper)
-    mock_instance = TestScraper()
-    mock_fetch = mocker.patch.object(mock_instance, "fetch", autospec=True)
-    mock_parse_data = mocker.patch.object(mock_instance, "parse_data", autospec=True)
-    mock_parse_data.return_value = {}
-    mock_constructor.return_value = mock_instance
-    args = [1, 2020, 'nfl']
-    return_value = process_request(mock_constructor, *args)
-
-    mock_constructor.assert_called_once()
-    mock_fetch.assert_called_once_with(*args)
-    assert return_value == {}

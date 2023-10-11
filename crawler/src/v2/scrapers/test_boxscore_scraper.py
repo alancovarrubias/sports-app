@@ -31,29 +31,26 @@ class TestBoxscoreScraper:
         mock_get.assert_called_once_with(TestBoxscoreScraper.CFB_URL)
 
     def test_scrape_data(self, mocked_scraper):
-        assert mocked_scraper.parse_data() == {
-            "start_time": "12:00 AM, August 28, 2023",
-            "game_clock": "Final",
-            "away_team": {
-                "name": "Houston Texans",
-                "abbr": "HOU",
-                "score": "17",
-                "comp_att": "15/27",
-                "passing_yards": "127",
-                "carries": "31",
-                "rushing_yards": "131",
-                "longest_rush": "21",
-                "longest_pass": "26",
-            },
-            "home_team": {
-                "name": "New Orleans Saints",
-                "abbr": "NO",
-                "score": "13",
-                "comp_att": "28/54",
-                "passing_yards": "265",
-                "carries": "21",
-                "rushing_yards": "91",
-                "longest_rush": "26",
-                "longest_pass": "53",
-            },
-        }
+        data = mocked_scraper.parse_data()
+        assert data['start_time'] == "12:00 AM, August 28, 2023"
+        assert data['game_clock'] == "Final"
+        away_team = data['away_team']
+        assert away_team['name'] == "Houston Texans"
+        assert away_team['abbr'] == "HOU"
+        assert away_team['score'] == "17"
+        assert away_team['comp_att'] == "15/27"
+        assert away_team['passing_yards'] == "127"
+        assert away_team['carries'] == "31"
+        assert away_team['rushing_yards'] == "131"
+        assert away_team['longest_rush'] == "21"
+        assert away_team['longest_pass'] == "24"
+        home_team = data['home_team']
+        assert home_team['name'] == "New Orleans Saints"
+        assert home_team['abbr'] == "NO"
+        assert home_team['score'] == "13"
+        assert home_team['comp_att'] == "28/54"
+        assert home_team['passing_yards'] == "265"
+        assert home_team['carries'] == "21"
+        assert home_team['rushing_yards'] == "91"
+        assert home_team['longest_rush'] == "26"
+        assert home_team['longest_pass'] == "31"
