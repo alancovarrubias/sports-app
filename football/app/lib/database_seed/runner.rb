@@ -68,6 +68,8 @@ module DatabaseSeed
       team = @game.send(team_name)
       full_game_stat = @game.stats.find_or_create_by(team: team, interval: :full_game)
       team_data['completions'], team_data['attempts'] = team_data.delete('comp_att').split('/')
+
+      team_data = team_data.transform_values(&:to_i)
       full_game_stat.update(team_data)
       return unless @boxscore_data['game_clock'] == 'Halftime'
 

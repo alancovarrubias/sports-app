@@ -28,12 +28,13 @@ RSpec.describe DatabaseSeed::Runner do
   let(:url_builder) { DatabaseSeed::UrlBuilder.new(league) }
   let(:schedule_url) { url_builder.schedule(options) }
   let(:boxscore_url) { url_builder.boxscore(espn_id) }
-  let(:playbyplay_url) { url_builder.playbyplay(espn_id) }
+  let(:playbyplay_url) { url_builder.playbyplay(espn_id, 1) }
 
   let(:schedule_data) { fetch_file('schedule_data.json') }
   let(:boxscore_data) { fetch_file('boxscore_data.json') }
   let(:not_started_boxscore_data) { fetch_file('not_started_boxscore_data.json') }
   let(:halftime_boxscore_data) { fetch_file('halftime_boxscore_data.json') }
+  let(:just_started_boxscore_data) { fetch_file('just_started_boxscore_data.json') }
   let(:away_team_data) { boxscore_data['away_team'] }
   let(:home_team_data) { boxscore_data['home_team'] }
   let(:playbyplay_data) { fetch_file('playbyplay_data.json') }
@@ -176,22 +177,43 @@ RSpec.describe DatabaseSeed::Runner do
     end
   end
 
-  describe 'Halftime boxscore' do
+  describe 'Unfinished games' do
+    let(:playbyplay_unfinished_url) { url_builder.playbyplay(espn_id, 0) }
     before do
-      stub_url(boxscore_url, halftime_boxscore_data)
-      subject.run(options)
-      @game = Game.find_by_espn_id(espn_id)
+      stub_url(playbyplay_unfinished_url, playbyplay_data)
     end
+    describe 'Halftime boxscore' do
+      before do
+        stub_url(boxscore_url, halftime_boxscore_data)
+        subject.run(options)
+        @game = Game.find_by_espn_id(espn_id)
+      end
 
-    describe 'away_first_half_stat' do
-      include_examples 'Stat attributes', :away_first_half_stat do
-        let(:team_data) { away_team_data }
+      describe 'away_first_half_stat' do
+        include_examples 'Stat attributes', :away_first_half_stat do
+          let(:team_data) { away_team_data }
+        end
+      end
+
+      describe 'home_first_half_stat' do
+        include_examples 'Stat attributes', :home_first_half_stat do
+          let(:team_data) { home_team_data }
+        end
       end
     end
 
-    describe 'home_first_half_stat' do
-      include_examples 'Stat attributes', :home_first_half_stat do
-        let(:team_data) { home_team_data }
+    describe 'Just started boxscore', :focus do
+      before do
+        stub_url(boxscore_url, just_started_boxscore_data)
+        subject.run(options)
+        @game = Game.find_by_espn_id(espn_id)
+      end
+
+      describe 'away_first_half_stat' do
+        it 'should have data' do
+          stat = @game.away_full_game_stat
+          expect(stat.attempts).to eq(0)
+        end
       end
     end
   end
