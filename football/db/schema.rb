@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_10_091243) do
+ActiveRecord::Schema.define(version: 2023_11_02_034757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,10 +36,9 @@ ActiveRecord::Schema.define(version: 2023_09_10_091243) do
 
   create_table "lines", force: :cascade do |t|
     t.bigint "game_id"
-    t.integer "type"
-    t.integer "period"
-    t.integer "spread"
-    t.integer "total"
+    t.integer "interval"
+    t.float "spread"
+    t.float "total"
     t.index ["game_id"], name: "index_lines_on_game_id"
   end
 

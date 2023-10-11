@@ -2,6 +2,7 @@ from flask import Flask, request
 from v2.scrapers.playbyplay_scraper import PlaybyplayScraper
 from v2.scrapers.boxscore_scraper import BoxscoreScraper
 from v2.scrapers.schedule_scraper import ScheduleScraper
+from v2.scrapers.lines_scraper import LinesScraper
 
 def process_request(Scraper, *args):
     with Scraper() as scraper:
@@ -10,21 +11,19 @@ def process_request(Scraper, *args):
 
 app = Flask(__name__)
 
+@app.route("/api/lines", methods=["GET"])
+def lines_index():
+    year = request.args.get("year", type=int)
+    week = request.args.get("week", type=int)
+    league = request.args.get("league", type=str)
+    return process_request(LinesScraper, week, year, league)
+
 @app.route("/api/games", methods=["GET"])
 def games_index():
     year = request.args.get("year", type=int)
     week = request.args.get("week", type=int)
     league = request.args.get("league", type=str)
     return process_request(ScheduleScraper, week, year, league)
-
-    if league == 'nfl':
-        return process_request(ScheduleScraper, week, year, league)
-    if league == 'cfb':
-        cfb80 = process_request(ScheduleScraper, week, year, 'cfb80')
-        cfb81 = process_request(ScheduleScraper, week, year, 'cfb81')
-        cfb80['espn_ids'] = cfb80['espn_ids'] + cfb81['espn_ids']
-        return cfb80
-
 
 @app.route("/api/games/<int:game_id>", methods=["GET"])
 def games_show(game_id):

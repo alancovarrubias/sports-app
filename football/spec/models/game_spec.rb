@@ -10,6 +10,7 @@ RSpec.describe Game, type: :model do
     it { should belong_to(:away_team).class_name('Team') }
     it { should belong_to(:home_team).class_name('Team') }
     it { should have_many(:stats).dependent(:destroy) }
+    it { should have_many(:lines).dependent(:destroy) }
   end
 
   describe 'enum' do
@@ -29,5 +30,11 @@ RSpec.describe Game, type: :model do
     it { expect(game.home_full_game_stat).to eq(home_full_game_stat) }
     it { expect(game.away_first_half_stat).to eq(away_first_half_stat) }
     it { expect(game.home_first_half_stat).to eq(home_first_half_stat) }
+  end
+
+  describe 'lines filter methods' do
+    let!(:game) { FactoryBot.create(:game) }
+    let!(:full_game_line) { FactoryBot.create(:line, interval: :full_game, game: game) }
+    it { expect(game.full_game_line).to eq(full_game_line) }
   end
 end

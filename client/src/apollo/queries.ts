@@ -26,12 +26,17 @@ export const GAMES_QUERY = gql`
       home_first_half_stat {
         ...StatData
       }
+      full_game_line {
+        ...LineData
+      }
     }
   }
+
   fragment TeamData on Team {
     id
     name
   }
+
   fragment StatData on Stat {
     id
     c_att
@@ -51,4 +56,10 @@ export const GAMES_QUERY = gql`
     typc
     typp
   }
-`;
+
+  fragment LineData on Line {
+    id
+    total
+    spread
+  }
+`

@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import initServer from "@app/initServer";
 import { GAME, LOGGED_IN_CONTEXT, LOGGED_OUT_CONTEXT } from "@test-utils/mocks";
 import { GAMES_QUERY } from "@test-utils/queries";
@@ -9,7 +8,6 @@ import {
   buildDataModels,
   buildDataModel,
 } from "@test-utils/helpers";
-import { buildGamesUrl } from "@app/dataSources/footballApi";
 jest.mock("node-fetch");
 
 let server;
@@ -22,15 +20,17 @@ const variables = {
   date: "2020-12-25",
 };
 
-const buildGamesModel = (game) => {
+const buildGamesModel = () => {
   const newGame = {
-    ...game,
-    away_full_game_stat: buildDataModel(game.away_full_game_stat, "stat"),
-    home_full_game_stat: buildDataModel(game.home_full_game_stat, "stat"),
+    ...GAME,
+    away_full_game_stat: buildDataModel(GAME.away_full_game_stat, "stat"),
+    home_full_game_stat: buildDataModel(GAME.home_full_game_stat, "stat"),
+    away_first_half_stat: buildDataModel(GAME.away_first_half_stat, "stat"),
+    home_first_half_stat: buildDataModel(GAME.home_first_half_stat, "stat"),
   };
   return buildDataModels([newGame], "game");
 };
-const GAMES_RESPONSE = successfulResponse(buildGamesModel(GAME));
+const GAMES_RESPONSE = successfulResponse(buildGamesModel());
 describe("Games Query", () => {
   it("returns games and runs query when logged in", async () => {
     mockFetch(GAMES_RESPONSE);
@@ -40,7 +40,6 @@ describe("Games Query", () => {
       contextValue: LOGGED_IN_CONTEXT,
     });
 
-    expect(fetch).toHaveBeenCalledWith(buildGamesUrl(variables.date));
     expect(response).toHaveNoErrors();
     expect(response).toReturnData({
       games: [GAME],

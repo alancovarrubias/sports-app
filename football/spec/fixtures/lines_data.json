@@ -1,0 +1,229 @@
+{
+  "week": "6",
+  "games": [
+    {
+      "away_team": {
+        "name": "Saints",
+        "num": "251"
+      },
+      "full_game": {
+        "spread": "+1",
+        "total": "u43.5"
+      },
+      "home_team": {
+        "name": "Colts",
+        "num": "252"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Jaguars",
+        "num": "253"
+      },
+      "full_game": {
+        "spread": "+2.5",
+        "total": "u40.5"
+      },
+      "home_team": {
+        "name": "Steelers",
+        "num": "254"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Texans",
+        "num": "255"
+      },
+      "full_game": {
+        "spread": "+3.5",
+        "total": "u43.5"
+      },
+      "home_team": {
+        "name": "Panthers",
+        "num": "256"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Eagles",
+        "num": "257"
+      },
+      "full_game": {
+        "spread": "+7",
+        "total": "u43.5"
+      },
+      "home_team": {
+        "name": "Commanders",
+        "num": "258"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Rams",
+        "num": "259"
+      },
+      "full_game": {
+        "spread": "-6.5",
+        "total": "u45.5"
+      },
+      "home_team": {
+        "name": "Cowboys",
+        "num": "260"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Patriots",
+        "num": "261"
+      },
+      "full_game": {
+        "spread": "-9.5",
+        "total": "u46.5"
+      },
+      "home_team": {
+        "name": "Dolphins",
+        "num": "262"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Jets",
+        "num": "263"
+      },
+      "full_game": {
+        "spread": "+3",
+        "total": "u36.5"
+      },
+      "home_team": {
+        "name": "Giants",
+        "num": "264"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Falcons",
+        "num": "265"
+      },
+      "full_game": {
+        "spread": "+2.5",
+        "total": "u35.5"
+      },
+      "home_team": {
+        "name": "Titans",
+        "num": "266"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Vikings",
+        "num": "267"
+      },
+      "full_game": {
+        "spread": "+1.5",
+        "total": "u41.5"
+      },
+      "home_team": {
+        "name": "Packers",
+        "num": "268"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Browns",
+        "num": "269"
+      },
+      "full_game": {
+        "spread": "-3.5",
+        "total": "u38.5"
+      },
+      "home_team": {
+        "name": "Seahawks",
+        "num": "270"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Chiefs",
+        "num": "271"
+      },
+      "full_game": {
+        "spread": "+7.5",
+        "total": "u47.5"
+      },
+      "home_team": {
+        "name": "Broncos",
+        "num": "272"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Bengals",
+        "num": "273"
+      },
+      "full_game": {
+        "spread": "-4.5",
+        "total": "u43.5"
+      },
+      "home_team": {
+        "name": "49ers",
+        "num": "274"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Ravens",
+        "num": "275"
+      },
+      "full_game": {
+        "spread": "+9.5",
+        "total": "u44.5"
+      },
+      "home_team": {
+        "name": "Cardinals",
+        "num": "276"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Bears",
+        "num": "277"
+      },
+      "full_game": {
+        "spread": "-8.5",
+        "total": "u46.5"
+      },
+      "home_team": {
+        "name": "Chargers",
+        "num": "278"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Raiders",
+        "num": "279"
+      },
+      "full_game": {
+        "spread": "-7.5",
+        "total": "u45.5"
+      },
+      "home_team": {
+        "name": "Lions",
+        "num": "280"
+      }
+    },
+    {
+      "away_team": {
+        "name": "Buccaneers",
+        "num": "109"
+      },
+      "full_game": {
+        "spread": "-10",
+        "total": "u43.5"
+      },
+      "home_team": {
+        "name": "Bills",
+        "num": "110"
+      }
+    }
+  ]
+}

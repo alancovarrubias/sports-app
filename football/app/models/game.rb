@@ -3,6 +3,7 @@ class Game < ApplicationRecord
   belongs_to :away_team, class_name: 'Team'
   belongs_to :home_team, class_name: 'Team'
   has_many :stats, dependent: :destroy
+  has_many :lines, dependent: :destroy
   scope :with_season, -> { includes(:season) }
   scope :with_stats, -> { includes(:away_team, :home_team, :stats) }
   scope :on_date, ->(date) { where(date: date) }
@@ -16,6 +17,12 @@ class Game < ApplicationRecord
       stats.find do |stat|
         stat.interval == interval && stat.team_id == send("#{venue}_team_id")
       end
+    end
+  end
+
+  def full_game_line
+    lines.find do |line|
+      line.interval == 'full_game'
     end
   end
 

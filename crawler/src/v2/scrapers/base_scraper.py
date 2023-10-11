@@ -1,7 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from abc import ABC, abstractmethod
+from selenium.webdriver.support import expected_conditions as EC
 import time
+from selenium.webdriver.support.ui import WebDriverWait
+
 import os
 
 
@@ -24,6 +27,9 @@ class BaseScraper(ABC):
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.page_load_strategy = "eager"
         return webdriver.Chrome(options=chrome_options)
+    
+    def wait_for(self, locator):
+        return self.wait.until(EC.presence_of_element_located(locator))
 
     @abstractmethod
     def build_url(self, *args):
@@ -45,6 +51,7 @@ class BaseScraper(ABC):
 
     def __enter__(self):
         self.driver = self.init_driver()
+        self.wait = WebDriverWait(self.driver, 10)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):

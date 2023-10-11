@@ -13,11 +13,11 @@ const TEAM_ATTRIBUTES = `#graphql
   city
   name
 `;
+
 const STAT_ATTRIBUTES = `#graphql
   id
-  attempts
   carries
-  completions
+  c_att
   passing_yards
   rushing_yards
   score
@@ -32,6 +32,12 @@ const STAT_ATTRIBUTES = `#graphql
   typai
   typc
   typp
+`;
+
+const LINE_ATTRIBUTES = `#graphql
+  id
+  spread
+  total
 `;
 
 export const GAMES_QUERY = `#graphql
@@ -59,6 +65,9 @@ export const GAMES_QUERY = `#graphql
       }
       home_first_half_stat {
         ${STAT_ATTRIBUTES}
+      }
+      full_game_line {
+        ${LINE_ATTRIBUTES}
       }
     }
   }

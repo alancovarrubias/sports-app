@@ -8,4 +8,9 @@ RSpec.describe Line, type: :model do
   describe 'associations' do
     it { should belong_to(:game) }
   end
+
+  describe 'enums' do
+    it { should define_enum_for(:interval).with_values(%i[full_game first_half]) }
+    it { should allow_values(:full_game, :first_half).for(:interval) }
+  end
 end

@@ -45,6 +45,7 @@ const resolvers: Resolvers = {
             home_full_game_stat: resolveData(attributes.home_full_game_stat),
             away_first_half_stat: resolveData(attributes.away_first_half_stat),
             home_first_half_stat: resolveData(attributes.home_first_half_stat),
+            full_game_line: resolveData(attributes.full_game_line),
           };
         });
         return data;

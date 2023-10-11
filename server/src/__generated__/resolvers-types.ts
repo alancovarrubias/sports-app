@@ -28,6 +28,7 @@ export type Game = {
   away_full_game_stat?: Maybe<Stat>;
   away_team?: Maybe<Team>;
   date?: Maybe<Scalars['String']['output']>;
+  full_game_line?: Maybe<Line>;
   game_clock?: Maybe<Scalars['String']['output']>;
   home_first_half_stat?: Maybe<Stat>;
   home_full_game_stat?: Maybe<Stat>;
@@ -35,6 +36,13 @@ export type Game = {
   id?: Maybe<Scalars['ID']['output']>;
   kicked?: Maybe<Scalars['String']['output']>;
   start_time?: Maybe<Scalars['String']['output']>;
+};
+
+export type Line = {
+  __typename?: 'Line';
+  id?: Maybe<Scalars['ID']['output']>;
+  spread?: Maybe<Scalars['Float']['output']>;
+  total?: Maybe<Scalars['Float']['output']>;
 };
 
 export type Mutation = {
@@ -178,6 +186,7 @@ export type ResolversTypes = {
   Game: ResolverTypeWrapper<Game>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  Line: ResolverTypeWrapper<Line>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   Season: ResolverTypeWrapper<Season>;
@@ -195,6 +204,7 @@ export type ResolversParentTypes = {
   Game: Game;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
+  Line: Line;
   Mutation: {};
   Query: {};
   Season: Season;
@@ -215,6 +225,7 @@ export type GameResolvers<ContextType = any, ParentType extends ResolversParentT
   away_full_game_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
   away_team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType>;
   date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  full_game_line?: Resolver<Maybe<ResolversTypes['Line']>, ParentType, ContextType>;
   game_clock?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   home_first_half_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
   home_full_game_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
@@ -222,6 +233,13 @@ export type GameResolvers<ContextType = any, ParentType extends ResolversParentT
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   kicked?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   start_time?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type LineResolvers<ContextType = any, ParentType extends ResolversParentTypes['Line'] = ResolversParentTypes['Line']> = {
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  spread?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  total?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -279,6 +297,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   AuthPayload?: AuthPayloadResolvers<ContextType>;
   Game?: GameResolvers<ContextType>;
+  Line?: LineResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Season?: SeasonResolvers<ContextType>;

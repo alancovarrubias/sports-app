@@ -39,10 +39,15 @@ export const SEASON: Season = {
   year: 2020,
 };
 
+const buildLine = () => ({
+  id: "1",
+  spread: 1.0,
+  total: 100.0
+})
+
 const buildStat = () => ({
   id: "1",
-  attempts: 1,
-  completions: 2,
+  c_att: "2/1",
   carries: 3,
   rushing_yards: 4,
   passing_yards: 5,
@@ -82,4 +87,5 @@ export const GAME: Game = {
   home_full_game_stat: buildStat(),
   away_first_half_stat: buildStat(),
   home_first_half_stat: buildStat(),
+  full_game_line: buildLine(),
 };
