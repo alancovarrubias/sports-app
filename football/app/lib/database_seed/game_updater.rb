@@ -24,7 +24,7 @@ module DatabaseSeed
 
       @boxscore_data = @crawler_client.boxscore(espn_id: @game.espn_id, league: @season.league)
       game_clock = @boxscore_data['game_clock']
-      game_clock == 'Second Half' if @game.game_clock == 'Halftime' && @boxscore_data['game_clock'] != 'Halftime'
+      game_clock = 'Second Half' if @game.game_clock == 'Halftime' && @boxscore_data['game_clock'] != 'Halftime'
       update_game(game_clock)
       return if ['Not Started', 'Second Half'].include?(game_clock)
 
