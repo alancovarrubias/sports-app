@@ -137,7 +137,7 @@ export const getOrder = (gameClock) => {
     }
     const timeMatch = gameClock.match(/\d{1,2}:\d{2}/);
     if (!timeMatch) {
-      return orderNum
+      return orderNum - 1
     }
     const time = timeMatch[0];
     const seconds = getSeconds(time)
