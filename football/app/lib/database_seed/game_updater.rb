@@ -7,13 +7,26 @@ module DatabaseSeed
       @crawler_client = CrawlerClient.new
     end
 
+    def game_finished
+      @game.game_clock&.include?('Final')
+    end
+
+    def game_not_started
+      @game.start_time && DateTime.now < @game.start_time
+    end
+
+    def game_recently_second_half
+      @game.game_clock == 'Second Half' && DateTime.now < @game.start_time + 6.hours
+    end
+
     def run
-      return if @game.game_clock&.include?('Final') || @game.start_time && DateTime.now < @game.start_time
+      return if game_finished || game_not_started || game_recently_second_half
 
       @boxscore_data = @crawler_client.boxscore(espn_id: @game.espn_id, league: @season.league)
-      update_game
       game_clock = @boxscore_data['game_clock']
-      return if game_clock == 'Not Started'
+      game_clock == 'Second Half' if @game.game_clock == 'Halftime' && @boxscore_data['game_clock'] != 'Halftime'
+      update_game(game_clock)
+      return if ['Not Started', 'Second Half'].include?(game_clock)
 
       finished = game_clock == 'Final' ? 1 : 0
       update_kicked(@game.espn_id, finished) unless @game.kicked
@@ -21,12 +34,12 @@ module DatabaseSeed
       build_stat('home_team')
     end
 
-    def update_game
+    def update_game(game_clock)
       start_time = DateTime.parse(@boxscore_data['start_time'])
       game_options = @options.merge(
         date: start_time.pacific_time_date,
         start_time: start_time,
-        game_clock: @boxscore_data['game_clock'],
+        game_clock: game_clock,
         away_team: build_team('away_team'),
         home_team: build_team('home_team')
       )

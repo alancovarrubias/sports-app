@@ -111,8 +111,9 @@ const getColor = (game, index) => {
       return oddEven ? 'red' : 'palevioletred'
     case 0:
     case 1:
-      return oddEven ? 'yellow' : 'lightyellow'
     case 2:
+      return oddEven ? 'yellow' : 'lightyellow'
+    case 3:
       return oddEven ? 'orangered' : 'orange'
     case 4:
       return oddEven ? 'rgb(156,225,104)' : 'rgb(147,213,186)'
@@ -133,10 +134,6 @@ export const getOrder = (gameClock) => {
       case 1:
         orderNum = 2
         break
-      case 3:
-      case 4:
-        orderNum = 3
-        break
     }
     const timeMatch = gameClock.match(/\d{1,2}:\d{2}/);
     if (!timeMatch) {
@@ -148,6 +145,7 @@ export const getOrder = (gameClock) => {
     return orderNum - secondRatio
   } else {
     if (gameClock == 'Halftime') return -1
+    if (gameClock == 'Second Half') return 3
     if (gameClock == 'Not Started') return 4
     if (gameClock.includes('Final')) return 5
   }
