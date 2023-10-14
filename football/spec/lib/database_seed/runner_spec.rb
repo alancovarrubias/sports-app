@@ -45,7 +45,7 @@ RSpec.describe DatabaseSeed::Runner do
   let(:espn_id) { schedule_data['espn_ids'][0].to_i }
   let(:start_time) { DateTime.parse(boxscore_data['start_time']) }
   let(:game_clock) { boxscore_data['game_clock'] }
-  let(:date) { start_time.in_time_zone('Pacific Time (US & Canada)').to_date }
+  let(:date) { start_time.pacific_time_date }
   let(:kicked) { 'away' }
 
   def stub_url(url, response)
