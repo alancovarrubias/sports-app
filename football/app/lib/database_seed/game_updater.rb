@@ -23,13 +23,18 @@ module DatabaseSeed
       return if game_finished || game_not_started || game_recently_second_half
 
       @boxscore_data = @crawler_client.boxscore(espn_id: @game.espn_id, league: @season.league)
+      return unless @boxscore_data
+
       game_clock = @boxscore_data['game_clock']
       game_clock = 'Second Half' if @game.game_clock == 'Halftime' && @boxscore_data['game_clock'] != 'Halftime'
       update_game(game_clock)
       return if ['Not Started', 'Second Half'].include?(game_clock)
 
       finished = game_clock == 'Final' ? 1 : 0
-      update_kicked(@game.espn_id, finished) unless @game.kicked
+      unless @game.kicked
+        @playbyplay_data = @crawler_client.playbyplay(espn_id: espn_id, finished: finished, league: @season.league)
+        @game.update(kicked: kicked) if @playbyplay_data
+      end
       build_stat('away_team')
       build_stat('home_team')
     end
@@ -53,11 +58,6 @@ module DatabaseSeed
       team = @season.teams.find_or_create_by(name: name)
       team.update(abbr: abbr)
       team
-    end
-
-    def update_kicked(espn_id, finished)
-      @playbyplay_data = @crawler_client.playbyplay(espn_id: espn_id, finished: finished, league: @season.league)
-      @game.update(kicked: kicked)
     end
 
     def kicked
