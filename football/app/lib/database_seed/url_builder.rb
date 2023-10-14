@@ -1,20 +1,16 @@
 module DatabaseSeed
   class UrlBuilder
     GAMES_URL = 'http://crawler:5000/api/games'.freeze
-    def initialize(league)
-      @league = league
+    def schedule(league:)
+      "#{GAMES_URL}?league=#{league}"
     end
 
-    def schedule(year: nil, week: nil, league: @league)
-      year && week ? "#{GAMES_URL}?year=#{year}&week=#{week}&league=#{league}" : "#{GAMES_URL}?league=#{league}"
+    def boxscore(espn_id:, league:)
+      "#{GAMES_URL}/#{espn_id}?league=#{league}"
     end
 
-    def boxscore(espn_id)
-      "#{GAMES_URL}/#{espn_id}?league=#{@league}"
-    end
-
-    def playbyplay(espn_id, finished)
-      "#{GAMES_URL}/#{espn_id}/playbyplay?league=#{@league}&finished=#{finished}"
+    def playbyplay(espn_id:, finished:, league:)
+      "#{GAMES_URL}/#{espn_id}/playbyplay?league=#{league}&finished=#{finished}"
     end
   end
 end

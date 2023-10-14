@@ -1,7 +1,7 @@
 module DatabaseSeed
   class Runner
     def initialize(league)
-      @url_builder = UrlBuilder.new(league)
+      @url_builder = UrlBuilder.new
       @http_client = HttpClient.new
       @league = league
     end
@@ -15,7 +15,7 @@ module DatabaseSeed
     def get_schedule_data(options)
       case @league
       when :nfl
-        @http_client.get(@url_builder.schedule(options))
+        @http_client.get(@url_builder.schedule(options.merge(league: @league)))
       when :cfb
         cfb_80_schedule = @http_client.get(@url_builder.schedule(options.merge(league: :cfb80)))
         cfb_81_schedule = @http_client.get(@url_builder.schedule(options.merge(league: :cfb81)))
@@ -28,7 +28,7 @@ module DatabaseSeed
       @game = @season.games.find_or_create_by(espn_id: espn_id)
       return if @game.game_clock&.include?('Final') || @game.start_time && DateTime.now < @game.start_time
 
-      @boxscore_data = @http_client.get(@url_builder.boxscore(espn_id))
+      @boxscore_data = @http_client.get(@url_builder.boxscore(espn_id: espn_id, league: @league))
       update_game
       game_clock = @boxscore_data['game_clock']
       return if game_clock == 'Not Started'
@@ -62,7 +62,8 @@ module DatabaseSeed
     end
 
     def update_kicked(espn_id, finished)
-      @playbyplay_data = @http_client.get(@url_builder.playbyplay(espn_id, finished))
+      @playbyplay_data = @http_client.get(@url_builder.playbyplay(espn_id: espn_id, finished: finished,
+                                                                  league: @league))
       @game.update(kicked: kicked)
     end
 
