@@ -18,20 +18,6 @@ services:
     build:
       context: server
       dockerfile: Dockerfile.prod
-  nba:
-    image: nba:prod
-    build:
-      context: nba
-      dockerfile: Dockerfile.prod
-      args:
-        SECRET_KEY: ${SECRET_KEY}
-  mlb:
-    image: mlb:prod
-    build:
-      context: mlb
-      dockerfile: Dockerfile.prod
-      args:
-        SECRET_KEY: ${SECRET_KEY}
   football:
     image: football:prod
     build:
@@ -51,11 +37,6 @@ services:
     build:
       context: crawler
       dockerfile: Dockerfile.prod
-  analyzer:
-    image: analyzer:prod
-    build:
-      context: analyzer
-      dockerfile: Dockerfile.prod
   db:
     image: postgres
     volumes:
@@ -64,12 +45,7 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - "5432:5432"
-  mongo:
-    image: mongo
-    volumes:
-      - mongo:/data/db
 
 volumes:
   postgres:
-  mongo:
   letsencrypt:
