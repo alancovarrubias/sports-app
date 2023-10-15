@@ -1,50 +1,74 @@
 version: "3.4"
 services:
   client:
-    build: client
+    image: client:dev
+    build:
+      context: client
+      dockerfile: Dockerfile.dev
+      args:
+        HOST: localhost
+    ports:
+      - "1234:1234"
+      - "1235:1235"
     depends_on:
       - server
+    volumes:
+      - ./client:/home/node/code
+      - /home/node/code/node_modules
   server:
-    build: server
+    image: server:dev
+    build:
+      context: server
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
     depends_on:
-      - nba
-      - mlb
       - auth
+      - football
+    volumes:
+      - ./server:/home/node/code
+      - /home/node/code/node_modules
   auth:
-    build: auth
+    image: auth:dev
+    build:
+      context: auth
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./auth:/project
     depends_on:
       - db
       - crawler
-  nba:
-    build: nba
-    depends_on:
-      - db
-      - crawler
-  mlb:
-    build: mlb
-    depends_on:
-      - db
-      - crawler
+    ports:
+      - "3000:3000"
   football:
-    build: football
+    image: football:dev
+    build:
+      context: football
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./football:/project
     depends_on:
       - db
       - crawler
+    ports:
+      - "3003:3003"
   crawler:
-    build: crawler
-    depends_on:
-      - mongo
+    image: crawler:dev
+    build:
+      context: crawler
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./crawler:/project
+    ports:
+      - "5002:5000"
   db:
     image: postgres:15
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
-  mongo:
-    image: mongo
-    volumes:
-      - mongo:/data/db
+    ports:
+      - "5432:5432"
 
 volumes:
   postgres:
-  mongo:
