@@ -32,7 +32,7 @@ module DatabaseSeed
 
       finished = game_clock == 'Final' ? 1 : 0
       unless @game.kicked
-        @playbyplay_data = @crawler_client.playbyplay(espn_id: espn_id, finished: finished, league: @season.league)
+        @playbyplay_data = @crawler_client.playbyplay(espn_id: @game.espn_id, finished: finished, league: @season.league)
         @game.update(kicked: kicked) if @playbyplay_data
       end
       build_stat('away_team')
