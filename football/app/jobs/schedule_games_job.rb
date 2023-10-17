@@ -16,7 +16,7 @@ class ScheduleGamesJob < ApplicationJob
   end
 
   def league_data(league)
-    crawler_client = CrawlerClient.new
+    crawler_client = Crawler::Client.new
     case league
     when 'nfl'
       crawler_client.schedule(league: league)
