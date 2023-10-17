@@ -1,5 +1,5 @@
 # build environment
-FROM node:lts-alpine as build
+FROM --platform=linux/amd64 node:lts-alpine as build
 ARG HOST
 ENV HOST=${HOST}
 WORKDIR /app
@@ -7,6 +7,6 @@ COPY . .
 RUN yarn
 RUN yarn build
 
-FROM staticfloat/nginx-certbot
+FROM --platform=linux/amd64 staticfloat/nginx-certbot
 ENV CERTBOT_EMAIL=alan.cov@icloud.com
 COPY --from=build /app/build /usr/share/nginx/html

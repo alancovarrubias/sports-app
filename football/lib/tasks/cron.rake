@@ -1,5 +1,5 @@
 namespace :cron do
-  task minute: :environment do
+  task min: :environment do
     date = DateTime.now.pacific_time_date
     DatabaseSeed::DateRunner.new.run(date)
   end

@@ -48,13 +48,14 @@ services:
       - ./football:/project
     depends_on:
       - db
-      - crawler
+      - sidekiq
     ports:
       - "3003:3003"
   sidekiq:
     depends_on:
       - db
       - redis
+      - crawler
     build:
       context: football
       dockerfile: Dockerfile.dev

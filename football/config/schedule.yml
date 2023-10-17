@@ -1,0 +1,6 @@
+# config/schedule.yml
+
+minute_job:
+  cron: "* * * * *"
+  class: "DateGamesJob"
+  queue: default

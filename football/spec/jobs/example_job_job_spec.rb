@@ -1,4 +1,5 @@
 require 'rails_helper'
-RSpec.describe HardJob, type: :job do
+
+RSpec.describe ExampleJobJob, type: :job do
   pending "add some examples to (or delete) #{__FILE__}"
 end

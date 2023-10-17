@@ -8,8 +8,9 @@ module DatabaseSeed
       @league = league
       @schedule_data = schedule_data
       @season = Season.find_or_create_by(year: @schedule_data['year'], league: @league)
-      games = @schedule_data['espn_ids'].map { |espn_id| @season.games.find_or_create_by(espn_id: espn_id) }
-      games.each { |game| GameUpdater.new(game, @season, week: @schedule_data['week']).run }
+      @schedule_data['espn_ids'].each do |espn_id|
+        GameUpdaterJob.perform_later(espn_id, @season.id, week: @schedule_data['week'])
+      end
     end
 
     def schedule_data
