@@ -1,6 +1,6 @@
 require 'net/http'
-module DatabaseSeed
-  class HttpClient
+module Crawler
+  class Http
     def get(url)
       url = URI.parse(url)
       res = Net::HTTP.get_response(url)

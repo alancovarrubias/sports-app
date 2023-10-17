@@ -1,4 +1,4 @@
-module DatabaseSeed
+module Crawler
   class UrlBuilder
     GAMES_URL = 'http://crawler:5000/api/games'.freeze
     def schedule(league:)

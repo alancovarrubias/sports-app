@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe DatabaseSeed::UrlBuilder do
-  subject { DatabaseSeed::UrlBuilder.new }
+RSpec.describe Crawler::UrlBuilder do
+  subject { Crawler::UrlBuilder.new }
   let(:league) { :nfl }
   let(:year) { 2023 }
   let(:week) { 1 }

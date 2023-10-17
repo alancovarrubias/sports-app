@@ -18,13 +18,6 @@ services:
     build:
       context: server
       dockerfile: Dockerfile.prod
-  football:
-    image: football:prod
-    build:
-      context: football
-      dockerfile: Dockerfile.prod
-      args:
-        SECRET_KEY: ${SECRET_KEY}
   auth:
     image: auth:prod
     build:
@@ -32,20 +25,50 @@ services:
       dockerfile: Dockerfile.prod
       args:
         SECRET_KEY: ${SECRET_KEY}
+  football:
+    image: football:prod
+    build:
+      context: football
+      dockerfile: Dockerfile.prod
+      args:
+        SECRET_KEY: ${SECRET_KEY}
+  sidekiq:
+    image: sidekiq:prod
+    build:
+      context: football
+      dockerfile: Dockerfile.prod
+    command: bundle exec sidekiq
+    depends_on:
+      - db
+      - redis
+      - crawler
+    volumes:
+      - ./football:/project
+      - /project/tmp
+    environment:
+      - REDIS_URL_SIDEKIQ=redis://redis:6379/1
   crawler:
     image: crawler:prod
     build:
       context: crawler
       dockerfile: Dockerfile.prod
   db:
-    image: postgres
+    image: postgres:15
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - "5432:5432"
+  redis:
+    image: redis:7.2.1-alpine
+    command: redis-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
 
 volumes:
   postgres:
+  redis:
   letsencrypt:

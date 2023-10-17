@@ -52,10 +52,7 @@ services:
     ports:
       - "3003:3003"
   sidekiq:
-    depends_on:
-      - db
-      - redis
-      - crawler
+    image: sidekiq:dev
     build:
       context: football
       dockerfile: Dockerfile.dev
@@ -63,6 +60,10 @@ services:
     volumes:
       - ./football:/project
       - /project/tmp
+    depends_on:
+      - db
+      - redis
+      - crawler
     environment:
       - REDIS_URL_SIDEKIQ=redis://redis:6379/1
   crawler:

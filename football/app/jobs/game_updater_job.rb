@@ -2,7 +2,7 @@ class GameUpdaterJob < ApplicationJob
   queue_as :default
 
   def perform(espn_id, season_id, options = {})
-    @crawler_client = DatabaseSeed::CrawlerClient.new
+    @crawler_client = Crawler::Client.new
     @season = Season.find(season_id)
     @game = @season.games.find_or_create_by(espn_id: espn_id)
     @options = options

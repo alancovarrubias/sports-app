@@ -1,13 +1,13 @@
-module DatabaseSeed
-  class CrawlerClient
+module Crawler
+  class Client
     def initialize
-      @http_client = HttpClient.new
+      @http = Http.new
       @url_builder = UrlBuilder.new
     end
 
     def method_missing(method_name, *args)
       url = @url_builder.send(method_name, *args)
-      @http_client.get(url)
+      @http.get(url)
     end
 
     def respond_to_missing?(method_name)
