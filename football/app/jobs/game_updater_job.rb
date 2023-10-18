@@ -10,28 +10,8 @@ class GameUpdaterJob < ApplicationJob
     game_clock = @boxscore_data['game_clock']
     game_clock = 'Second Half' if @game.game_clock == 'Halftime' && @boxscore_data['game_clock'] != 'Halftime'
     update_game(game_clock)
-    return if ['Not Started', 'Second Half'].include?(game_clock)
-
-    finished = game_clock == 'Final' ? 1 : 0
-    unless @game.kicked
-      @playbyplay_data = @crawler_client.playbyplay(espn_id: @game.espn_id, finished: finished,
-                                                    league: @season.league)
-      @game.update(kicked: kicked)
-    end
-    build_stat('away_team')
-    build_stat('home_team')
-  end
-
-  def game_finished
-    @game.game_clock&.include?('Final')
-  end
-
-  def game_not_started
-    @game.start_time && DateTime.now < @game.start_time
-  end
-
-  def game_recently_second_half
-    @game.game_clock == 'Second Half' && DateTime.now < @game.start_time + 6.hours
+    update_stats unless ['Not Started', 'Second Half'].include?(game_clock)
+    @game.update(stats_calculated_at: DateTime.now)
   end
 
   def update_game(game_clock)
@@ -55,13 +35,10 @@ class GameUpdaterJob < ApplicationJob
     team
   end
 
-  def kicked
-    case @playbyplay_data['received']
-    when @game.home_team.name
-      :away
-    when @game.away_team.name
-      :home
-    end
+  def update_stats
+    KickedUpdaterJob.perform_later(@game.id) unless @game.kicked
+    build_stat('away_team')
+    build_stat('home_team')
   end
 
   def build_stat(team_name)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_14_165138) do
+ActiveRecord::Schema.define(version: 2023_09_10_091243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,8 +25,10 @@ ActiveRecord::Schema.define(version: 2023_10_14_165138) do
     t.date "date"
     t.datetime "start_time"
     t.string "game_clock"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "stats_enqueued_at"
+    t.datetime "stats_calculated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
     t.index ["season_id"], name: "index_games_on_season_id"

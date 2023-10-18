@@ -13,4 +13,23 @@ class Game < ApplicationRecord
       end
     end
   end
+
+  def stats_job_enqueued?
+    return false unless stats_enqueued_at
+    return true unless stats_calculated_at
+
+    stats_enqueued_at > stats_calculated_at
+  end
+
+  def finished?
+    game_clock&.include?('Final')
+  end
+
+  def recently_second_half?
+    game_clock == 'Second Half' && DateTime.now < start_time + 6.hours
+  end
+
+  def started?
+    DateTime.now >= start_time
+  end
 end
