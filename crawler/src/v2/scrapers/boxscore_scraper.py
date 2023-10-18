@@ -59,7 +59,11 @@ class BoxscoreScraper(BaseScraper):
 
     def get_team_name(self, away_home):
         team_logos = self.driver.find_elements(By.CSS_SELECTOR, ".Gamestrip__Logo")
-        return team_logos[away_home].get_attribute("alt")
+        team_name = team_logos[away_home].get_attribute("alt")
+        if team_name:
+            return team_name
+        team_logos = self.driver.find_elements(By.CSS_SELECTOR, ".Gamestrip__Truncate")
+        return team_logos[away_home].text
 
     def get_abbr(self, away_home):
         return self.get_scores(away_home)[0]

@@ -1,28 +1,28 @@
 import React from 'react'
 
 export const GAME_HEADERS = [
-    'Start Time',
-    'Game Clock',
-    'Matchups',
-    'Kicked',
+    'START TIME',
+    'GAME CLOCK',
+    'MATCHUPS',
+    'KICKED',
 ]
 
 export const STAT_HEADERS = [
-    'Score',
-    'Total Yards',
-    'Rushing Yards',
-    'Carries',
-    'Yards Per Car',
+    'SCORE',
+    'TOTAL YARDS',
+    'RUSHING YARDS',
+    'CAR',
+    'AVE CAR',
     'TYPC',
     'C/ATT',
-    'Yards Per Att',
+    'AVE ATT',
     'TYPA',
     'TYPAI',
-    'Total Plays',
-    'Yards Per Play',
+    'PLAYS',
+    'YARDS/ PLAY',
     'TYPP',
-    'Longest Pass',
-    'Longest Rush',
+    'LONGEST PASS',
+    'LONGEST RUSH',
 ]
 
 const STAT_COLUMNS = [
@@ -63,9 +63,9 @@ const Header = () => {
     return (
         <thead>
             <tr>
-                <th colSpan={GAME_HEADERS.length}>Game Stats</th>
-                <th colSpan={STAT_HEADERS.length}>First Half</th>
-                <th colSpan={STAT_HEADERS.length}>Full Game</th>
+                <th colSpan={GAME_HEADERS.length}>GAME STATS</th>
+                <th colSpan={STAT_HEADERS.length}>FIRST HALF</th>
+                <th colSpan={STAT_HEADERS.length}>FULL GAME</th>
             </tr>
             <tr>{headers.map((header, index) => <th key={index}>{header}</th>)}</tr>
         </thead>

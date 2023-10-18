@@ -14,7 +14,7 @@ class GamesController < ApplicationController
 
   def set_games
     @games = if params[:date].present?
-               Game.includes(:away_team, :home_team).where(date: params[:date])
+               Game.includes(:away_team, :home_team).where(date: params[:date]).order(start_time: :asc)
              else
                Game.includes(:away_team, :home_team)
              end

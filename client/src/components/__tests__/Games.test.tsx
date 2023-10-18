@@ -1,5 +1,7 @@
 import React from 'react';
-import Games, { GAMES_QUERY, todayDate, getOrder } from 'app/components/Games'
+import Games from 'app/components/Games'
+import { GAMES_QUERY } from 'app/apollo/queries'
+import { todayDate, getOrder } from 'app/components/Games/helpers'
 import { renderWithContext, waitFor, screen } from '@test-utils/index';
 
 const uniqueNumbers = new Set();
