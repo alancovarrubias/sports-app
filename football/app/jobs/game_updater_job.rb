@@ -58,6 +58,7 @@ class GameUpdaterJob < ApplicationJob
 
   def perform(espn_id, season_id, options = {})
     season = Season.find(season_id)
+    options[:espn_id] = espn_id
     game = season.games.find_or_create_by(options)
     boxscore_data = @crawler_client.boxscore(espn_id: espn_id, league: season.league)
     GameUpdater.new(game, season).update(boxscore_data)
