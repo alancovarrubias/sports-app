@@ -10,7 +10,7 @@ class ScheduleGamesJob < ApplicationJob
   def schedule_games(season_league)
     case season_league
     when 'nfl'
-      LeagueGamesJob.perform_later(season_league)
+      LeagueGamesJob.perform_later(season_league, season_league)
     when 'cfb'
       LeagueGamesJob.perform_later(season_league, 'cfb80')
       LeagueGamesJob.perform_later(season_league, 'cfb81')

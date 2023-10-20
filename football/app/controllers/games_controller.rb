@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   before_action :set_games, only: [:index]
   before_action :set_game, only: [:show]
 
-  # GET /seasons/1/games
+  # GET /games
   def index
     render json: GameSerializer.new(@games).serializable_hash
   end
@@ -13,11 +13,15 @@ class GamesController < ApplicationController
   end
 
   def set_games
-    @games = if params[:date].present?
-               Game.includes(:away_team, :home_team).where(date: params[:date]).order(start_time: :asc)
-             else
-               Game.includes(:away_team, :home_team)
-             end
+    @games = games
+  end
+
+  def games
+    if params[:date].present?
+      Game.with_stats.on_date(params[:date]).earliest_start_time_first
+    else
+      Game.with_stats
+    end
   end
 
   def set_game

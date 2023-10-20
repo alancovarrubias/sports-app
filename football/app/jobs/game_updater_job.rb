@@ -1,28 +1,26 @@
-class GameUpdaterJob < ApplicationJob
-  queue_as :default
+class GameUpdater
+  def initialize(game, season)
+    @game = game
+    @season = season
+  end
 
-  def perform(espn_id, season_id, options = {})
-    @season = Season.find(season_id)
-    @game = @season.games.find_or_create_by(espn_id: espn_id)
-    @options = options
-    @boxscore_data = @crawler_client.boxscore(espn_id: espn_id, league: @season.league)
+  def update(boxscore_data)
+    @boxscore_data = boxscore_data
     game_clock = @boxscore_data['game_clock']
     game_clock = 'Second Half' if @game.game_clock == 'Halftime' && @boxscore_data['game_clock'] != 'Halftime'
     update_game(game_clock)
     update_stats unless ['Not Started', 'Second Half'].include?(game_clock)
-    @game.update(stats_calculated_at: DateTime.now)
   end
 
   def update_game(game_clock)
     start_time = DateTime.parse(@boxscore_data['start_time'])
-    game_options = @options.merge(
+    @game.update(
       date: start_time.pacific_time_date,
       start_time: start_time,
       game_clock: game_clock,
       away_team: build_team('away_team'),
       home_team: build_team('home_team')
     )
-    @game.update(game_options)
   end
 
   def build_team(team_name)
@@ -52,5 +50,17 @@ class GameUpdaterJob < ApplicationJob
 
     first_half_stat = @game.stats.find_or_create_by(team: team, interval: :first_half)
     first_half_stat.update(team_data)
+  end
+end
+
+class GameUpdaterJob < ApplicationJob
+  queue_as :default
+
+  def perform(espn_id, season_id, options = {})
+    season = Season.find(season_id)
+    game = season.games.find_or_create_by(options)
+    boxscore_data = @crawler_client.boxscore(espn_id: espn_id, league: season.league)
+    GameUpdater.new(game, season).update(boxscore_data)
+    game.update(stats_calculated_at: DateTime.now)
   end
 end

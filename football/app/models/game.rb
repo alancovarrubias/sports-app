@@ -3,6 +3,11 @@ class Game < ApplicationRecord
   belongs_to :away_team, class_name: 'Team'
   belongs_to :home_team, class_name: 'Team'
   has_many :stats, dependent: :destroy
+  scope :with_season, -> { includes(:season) }
+  scope :with_stats, -> { includes(:away_team, :home_team, :stats) }
+  scope :on_date, ->(date) { where(date: date) }
+  scope :earliest_start_time_first, -> { order(start_time: :asc) }
+  scope :last_updated_first, -> { order(updated_at: :asc) }
 
   VENUES = %i[away home].freeze
   enum kicked: VENUES
@@ -12,24 +17,5 @@ class Game < ApplicationRecord
         stat.interval == interval && stat.team_id == send("#{venue}_team_id")
       end
     end
-  end
-
-  def stats_job_enqueued?
-    return false unless stats_enqueued_at
-    return true unless stats_calculated_at
-
-    stats_enqueued_at > stats_calculated_at
-  end
-
-  def finished?
-    game_clock&.include?('Final')
-  end
-
-  def recently_second_half?
-    game_clock == 'Second Half' && DateTime.now < start_time + 6.hours
-  end
-
-  def started?
-    DateTime.now >= start_time
   end
 end
