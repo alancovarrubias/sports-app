@@ -4,10 +4,14 @@ class GameScheduler
   end
 
   def schedule_game
-    return if job_already_enqueued? || finished? || not_started? || recently_second_half?
+    return if doesnt_need_parsing?
 
     @game.update(stats_enqueued_at: DateTime.now)
     GameUpdaterJob.perform_later(@game.espn_id, @game.season_id)
+  end
+
+  def doesnt_need_parsing?
+    job_already_enqueued? || @game.finished? || @game.not_started? || @game.recently_second_half?
   end
 
   def job_already_enqueued?
@@ -15,18 +19,6 @@ class GameScheduler
     return true unless @game.stats_calculated_at
 
     @game.stats_enqueued_at > @game.stats_calculated_at
-  end
-
-  def not_started?
-    DateTime.now < @game.start_time
-  end
-
-  def finished?
-    @game.game_clock&.include?('Final')
-  end
-
-  def recently_second_half?
-    @game.game_clock == 'Second Half' && DateTime.now < @game.start_time + 6.hours
   end
 end
 class DateGamesJob < ApplicationJob

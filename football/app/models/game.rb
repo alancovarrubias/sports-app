@@ -18,4 +18,16 @@ class Game < ApplicationRecord
       end
     end
   end
+
+  def finished?
+    game_clock&.include?('Final')
+  end
+
+  def not_started?
+    DateTime.now < start_time
+  end
+
+  def recently_second_half?
+    game_clock == 'Second Half' && DateTime.now < start_time + 6.hours
+  end
 end
