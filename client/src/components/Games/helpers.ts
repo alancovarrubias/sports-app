@@ -5,7 +5,7 @@ const MINUTES_IN_QUARTER = 15
 const TIMEZONE = 'America/Los_Angeles'
 
 export function todayDate() {
-  return moment.tz(TIMEZONE)
+  return moment.tz(TIMEZONE).format('YYYY-MM-DD')
 }
 
 export function changeDate(date, numDays) {
@@ -18,21 +18,18 @@ function getSeconds(time) {
   return parseInt(split[0]) * SECONDS_IN_MINUTE + parseInt(split[1])
 }
 
-export const getColor = (game, index) => {
-  const order = getOrder(game.game_clock)
+export const getColor = (game_clock, index) => {
   const oddEven = index % 2
-  switch (Math.floor(order)) {
-    case -1:
+  switch (true) {
+    case /Halftime/.test(game_clock):
       return oddEven ? 'red' : 'palevioletred'
-    case 0:
-    case 1:
-    case 2:
+    case /(1st|2nd)/.test(game_clock):
       return oddEven ? 'yellow' : 'lightyellow'
-    case 3:
+    case /Second Half/.test(game_clock):
       return oddEven ? 'orangered' : 'orange'
-    case 4:
+    case /Not Started/.test(game_clock):
       return oddEven ? 'rgb(156,225,104)' : 'rgb(147,213,186)'
-    case 5:
+    case /Final/.test(game_clock):
       return oddEven ? 'dodgerblue' : 'royalblue'
   }
 }
@@ -47,7 +44,7 @@ export const getOrder = (gameClock) => {
         orderNum = 1
         break
       case 1:
-        orderNum = 2
+        orderNum = 3
         break
     }
     const timeMatch = gameClock.match(/\d{1,2}:\d{2}/);
@@ -60,9 +57,9 @@ export const getOrder = (gameClock) => {
     return orderNum - secondRatio
   } else {
     if (gameClock == 'Halftime') return -1
-    if (gameClock == 'Second Half') return 3
-    if (gameClock == 'Not Started') return 4
-    if (gameClock.includes('Final')) return 5
+    if (gameClock == 'Second Half') return 4
+    if (gameClock == 'Not Started') return 5
+    if (gameClock.includes('Final')) return 6
   }
 }
 

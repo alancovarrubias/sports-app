@@ -7,7 +7,7 @@ import { convertTime, kickedTeam, getColor, getOrder, changeDate, todayDate } fr
 
 const Games = (): JSX.Element => {
   const urlParams = new URLSearchParams(window.location.search);
-  const date = urlParams.get('date') || todayDate().format('YYYY-MM-DD');
+  const date = urlParams.get('date') || todayDate();
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
   const history = useHistory()
   const onClickCreator = (num) => {
@@ -28,7 +28,7 @@ const Games = (): JSX.Element => {
       ...game,
       start_time: convertTime(game.start_time),
       kicked: kickedTeam(game),
-      style: { backgroundColor: getColor(game, index) }
+      style: { backgroundColor: getColor(game.game_clock, index) }
     }
   ))
   return (

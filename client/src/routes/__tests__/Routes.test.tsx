@@ -7,7 +7,7 @@ import UserProvider, { CURRENT_USER } from 'app/contexts/UserProvider'
 import { GraphQLError } from 'graphql'
 import { clearToken, setToken } from 'app/utils/auth'
 
-jest.mock('app/components/Games')
+jest.mock('app/components/Games/index')
 export const renderRoutes = (path, result) => {
     return renderWithMocks(
         <UserProvider>
