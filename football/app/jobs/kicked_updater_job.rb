@@ -17,8 +17,7 @@ class KickedUpdaterJob < ApplicationJob
   end
 
   def playbyplay(game)
-    crawler_client = Crawler::Client.new
-    crawler_client.playbyplay(
+    @crawler_client.playbyplay(
       espn_id: game.espn_id,
       finished: game.finished? ? 1 : 0,
       league: game.season.league
