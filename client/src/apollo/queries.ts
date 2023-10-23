@@ -34,9 +34,8 @@ export const GAMES_QUERY = gql`
   }
   fragment StatData on Stat {
     id
-    attempts
+    c_att
     carries
-    completions
     passing_yards
     rushing_yards
     score

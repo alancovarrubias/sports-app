@@ -68,12 +68,11 @@ export type Season = {
 
 export type Stat = {
   __typename?: 'Stat';
-  attempts?: Maybe<Scalars['Int']['output']>;
   ave_per_att?: Maybe<Scalars['Float']['output']>;
   ave_per_car?: Maybe<Scalars['Float']['output']>;
   ave_per_play?: Maybe<Scalars['Float']['output']>;
+  c_att?: Maybe<Scalars['String']['output']>;
   carries?: Maybe<Scalars['Int']['output']>;
-  completions?: Maybe<Scalars['Int']['output']>;
   id?: Maybe<Scalars['ID']['output']>;
   longest_pass?: Maybe<Scalars['Int']['output']>;
   longest_rush?: Maybe<Scalars['Int']['output']>;
@@ -243,12 +242,11 @@ export type SeasonResolvers<ContextType = any, ParentType extends ResolversParen
 };
 
 export type StatResolvers<ContextType = any, ParentType extends ResolversParentTypes['Stat'] = ResolversParentTypes['Stat']> = {
-  attempts?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   ave_per_att?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   ave_per_car?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   ave_per_play?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  c_att?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   carries?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  completions?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   longest_pass?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   longest_rush?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;

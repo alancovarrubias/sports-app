@@ -1,5 +1,6 @@
 class GameSerializer
   include JSONAPI::Serializer
+  STATS = %i[away_full_game_stat home_full_game_stat away_first_half_stat home_first_half_stat].freeze
   attributes :id,
              :date,
              :away_team,
@@ -7,16 +8,14 @@ class GameSerializer
              :start_time,
              :game_clock,
              :kicked
-  attribute :away_full_game_stat do |object|
-    StatSerializer.new(object.away_full_game_stat)
-  end
-  attribute :home_full_game_stat do |object|
-    StatSerializer.new(object.home_full_game_stat)
-  end
-  attribute :away_first_half_stat do |object|
-    StatSerializer.new(object.away_first_half_stat)
-  end
-  attribute :home_first_half_stat do |object|
-    StatSerializer.new(object.home_first_half_stat)
+  STATS.each do |attr|
+    attribute attr do |object|
+      data = object.send(attr)
+      if data
+        StatSerializer.new(data)
+      else
+        { data: { attributes: {} } }
+      end
+    end
   end
 end

@@ -12,8 +12,7 @@ type Team {
 
 type Stat {
   id: ID
-  attempts: Int
-  completions: Int
+  c_att: String
   carries: Int
   rushing_yards: Int
   passing_yards: Int

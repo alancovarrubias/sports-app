@@ -3,6 +3,10 @@ class Stat < ApplicationRecord
   belongs_to :team
 
   enum interval: %i[full_game first_half]
+  def c_att
+    "#{completions}/#{attempts}"
+  end
+
   def total_plays
     attempts + carries
   end

@@ -1,8 +1,7 @@
 class StatSerializer
   include JSONAPI::Serializer
   attributes :id,
-             :attempts,
-             :completions,
+             :c_att,
              :passing_yards,
              :carries,
              :rushing_yards,

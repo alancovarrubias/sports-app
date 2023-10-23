@@ -4,11 +4,30 @@ import { useQuery } from '@apollo/client'
 import { GAMES_QUERY } from 'app/apollo/queries'
 import GameTable from './GameTable'
 import { convertTime, kickedTeam, getColor, getOrder, changeDate, todayDate } from './helpers'
+import _ from 'lodash'
+
+function firstStat({ gameFinished, firstHalfStat, fullGameStat }) {
+  if (gameFinished) {
+    return firstHalfStat
+  }
+  if (!firstHalfStat.id) {
+    return fullGameStat
+  }
+  return firstHalfStat
+}
+
+function secondStat({ gameFinished, fullGameStat }) {
+  if (gameFinished) {
+    return fullGameStat
+  }
+  return {}
+}
 
 const Games = (): JSX.Element => {
   const urlParams = new URLSearchParams(window.location.search);
   const date = urlParams.get('date') || todayDate();
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
+  console.log(data)
   const history = useHistory()
   const onClickCreator = (num) => {
     return () => {
@@ -23,14 +42,21 @@ const Games = (): JSX.Element => {
   }
   if (loading) return <p>Loading...</p>
   const sortedGames = [...data.games].sort((game1, game2) => getOrder(game1.game_clock) - getOrder(game2.game_clock))
-  const styledGames = sortedGames.map((game, index) => (
-    {
+  const styledGames = sortedGames.map((game, index) => {
+    const gameFinished = game.game_clock.includes('Final')
+    return {
       ...game,
       start_time: convertTime(game.start_time),
       kicked: kickedTeam(game),
+      awayTeam: game.away_team,
+      homeTeam: game.home_team,
+      awayFirstStat: firstStat({ gameFinished, firstHalfStat: game.away_first_half_stat, fullGameStat: game.away_full_game_stat }),
+      awaySecondStat: secondStat({ gameFinished, fullGameStat: game.away_full_game_stat }),
+      homeFirstStat: firstStat({ gameFinished, firstHalfStat: game.home_first_half_stat, fullGameStat: game.home_full_game_stat }),
+      homeSecondStat: secondStat({ gameFinished, fullGameStat: game.home_full_game_stat }),
       style: { backgroundColor: getColor(game.game_clock, index) }
     }
-  ))
+  })
   return (
     <>
       <div className="dateselect">
