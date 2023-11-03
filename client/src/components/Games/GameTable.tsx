@@ -92,6 +92,17 @@ const DATA_ELEMENTS = [
         key: 'typp',
     },
     {
+        header: 'LONGEST RUSH',
+        type: 'FirstStat',
+        key: 'longest_rush',
+        className: 'bordered'
+    },
+    {
+        header: 'LONGEST PASS',
+        type: 'FirstStat',
+        key: 'longest_pass',
+    },
+    {
         header: '2H SCORE',
         type: 'SecondStat',
         key: 'score',
@@ -159,6 +170,17 @@ const DATA_ELEMENTS = [
         header: 'TYPP',
         type: 'SecondStat',
         key: 'typp',
+    },
+    {
+        header: 'LONGEST RUSH',
+        type: 'SecondStat',
+        key: 'longest_rush',
+        className: 'bordered'
+    },
+    {
+        header: 'LONGEST PASS',
+        type: 'SecondStat',
+        key: 'longest_pass',
     },
 ]
 
