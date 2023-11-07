@@ -33,8 +33,8 @@ export const DATA_ELEMENTS = [
     rowSpan: 2
   },
   {
-    header: 'FULL GAME TOTAL',
-    key: 'fullGameLine.total',
+    header: 'FULL GAME LINE',
+    key: 'full_game_line',
     rowSpan: 2
   },
   {

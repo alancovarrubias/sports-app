@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { diff } from 'jest-diff'
 
 export const hasNoErrors = (body) => {
   if (body.errors) {
@@ -11,13 +12,9 @@ export const hasNoErrors = (body) => {
 };
 
 export const returnsData = (body, expectedData) => {
-  if (!_.isEqual(body.data, expectedData)) {
-    return {
-      pass: false,
-      message: () => body.data,
-    };
-  }
-  return { pass: true, message: () => "Success" };
+  const difference = diff(body.data, expectedData)
+  const pass = difference.includes('have no visual difference')
+  return { pass, message: () => difference };
 };
 
 export const returnsError = (body, expectedMessage) => {

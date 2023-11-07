@@ -34,12 +34,6 @@ const STAT_ATTRIBUTES = `#graphql
   typp
 `;
 
-const LINE_ATTRIBUTES = `#graphql
-  id
-  spread
-  total
-`;
-
 export const GAMES_QUERY = `#graphql
   query Games($date: String!) {
     games(date: $date) {
@@ -66,9 +60,7 @@ export const GAMES_QUERY = `#graphql
       home_first_half_stat {
         ${STAT_ATTRIBUTES}
       }
-      full_game_line {
-        ${LINE_ATTRIBUTES}
-      }
+      full_game_line
     }
   }
 `;

@@ -26,9 +26,7 @@ export const GAMES_QUERY = gql`
       home_first_half_stat {
         ...StatData
       }
-      full_game_line {
-        ...LineData
-      }
+      full_game_line
     }
   }
 
@@ -55,11 +53,5 @@ export const GAMES_QUERY = gql`
     typai
     typc
     typp
-  }
-
-  fragment LineData on Line {
-    id
-    total
-    spread
   }
 `

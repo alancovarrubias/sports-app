@@ -27,7 +27,6 @@ const Games = (): JSX.Element => {
   const urlParams = new URLSearchParams(window.location.search);
   const date = urlParams.get('date') || todayDate();
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
-  console.log(data)
   const history = useHistory()
   const onClickCreator = (num) => {
     return () => {
@@ -54,7 +53,6 @@ const Games = (): JSX.Element => {
       awaySecondStat: secondStat({ gameFinished, fullGameStat: game.away_full_game_stat }),
       homeFirstStat: firstStat({ gameFinished, firstHalfStat: game.home_first_half_stat, fullGameStat: game.home_full_game_stat }),
       homeSecondStat: secondStat({ gameFinished, fullGameStat: game.home_full_game_stat }),
-      fullGameLine: game.full_game_line,
       style: { backgroundColor: getColor(game.game_clock, index) }
     }
   })

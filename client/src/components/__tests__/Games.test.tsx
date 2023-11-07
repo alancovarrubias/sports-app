@@ -31,9 +31,8 @@ let statId = 1
 const createStat = () => ({
   __typename: "Stat",
   id: String(statId++),
-  attempts: generateUniqueNumber(),
   score: generateUniqueNumber(),
-  completions: generateUniqueNumber(),
+  c_att: "7/11",
   carries: generateUniqueNumber(),
   passing_yards: generateUniqueNumber(),
   rushing_yards: generateUniqueNumber(),
@@ -71,6 +70,7 @@ const createGame = (overrides = {}) => ({
   home_full_game_stat: createStat(),
   away_first_half_stat: createStat(),
   home_first_half_stat: createStat(),
+  full_game_line: "Chiefs was 11 and -4.5",
   ...overrides
 })
 

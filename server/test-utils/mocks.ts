@@ -87,5 +87,5 @@ export const GAME: Game = {
   home_full_game_stat: buildStat(),
   away_first_half_stat: buildStat(),
   home_first_half_stat: buildStat(),
-  full_game_line: buildLine(),
+  full_game_line: "Full Game Line",
 };
