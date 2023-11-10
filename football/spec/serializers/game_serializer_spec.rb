@@ -48,20 +48,6 @@ class GameMock
     }
   end
 
-  def build_line_hash(line)
-    {
-      'data' => {
-        'id' => line.id.to_s,
-        'type' => 'line',
-        'attributes' => {
-          'id' => line.id,
-          'spread' => line.spread,
-          'total' => line.total
-        }
-      }
-    }
-  end
-
   def build_game_hash
     {
       'data' => {

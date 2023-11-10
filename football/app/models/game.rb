@@ -5,7 +5,7 @@ class Game < ApplicationRecord
   has_many :stats, dependent: :destroy
   has_many :lines, dependent: :destroy
   scope :with_season, -> { includes(:season) }
-  scope :with_stats, -> { includes(:away_team, :home_team, :stats) }
+  scope :with_stats, -> { includes(:away_team, :home_team, :stats, :lines) }
   scope :on_date, ->(date) { where(date: date) }
   scope :earliest_start_time_first, -> { order(start_time: :asc) }
   scope :last_updated_first, -> { order(updated_at: :asc) }
