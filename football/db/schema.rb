@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2023_11_02_034757) do
   create_table "lines", force: :cascade do |t|
     t.bigint "game_id"
     t.integer "interval"
+    t.integer "book"
     t.float "spread"
     t.float "total"
     t.index ["game_id"], name: "index_lines_on_game_id"
