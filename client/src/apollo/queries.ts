@@ -26,7 +26,8 @@ export const GAMES_QUERY = gql`
       home_first_half_stat {
         ...StatData
       }
-      full_game_line
+      full_game_opener
+      full_game_closer
     }
   }
 
