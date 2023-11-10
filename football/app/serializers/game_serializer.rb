@@ -12,11 +12,9 @@ class GameSerializer
              :game_clock,
              :kicked
 
-  LINES.each do |attr|
-    attribute attr do |object|
-      data = object.send(attr)
-      data ? LineSerializer.new(data) : EMPTY
-    end
+  attribute :full_game_line do |object|
+    line = object.full_game_line
+    "#{object.home_team.name} #{line.spread} and #{line.total}" if line
   end
 
   STATS.each do |attr|

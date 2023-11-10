@@ -79,7 +79,7 @@ class GameMock
           'home_full_game_stat' => build_stat_hash(@home_full_game_stat),
           'away_first_half_stat' => build_stat_hash(@away_first_half_stat),
           'home_first_half_stat' => build_stat_hash(@home_first_half_stat),
-          'full_game_line' => build_line_hash(@full_game_line)
+          'full_game_line' => "#{@game.home_team.name} #{@full_game_line.spread} and #{@full_game_line.total}"
         }
       }
     }
