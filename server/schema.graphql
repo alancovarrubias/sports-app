@@ -42,7 +42,8 @@ type Game {
   home_full_game_stat: Stat
   away_first_half_stat: Stat
   home_first_half_stat: Stat
-  full_game_line: String
+  full_game_opener: String
+  full_game_closer: String
 }
 
 type User {

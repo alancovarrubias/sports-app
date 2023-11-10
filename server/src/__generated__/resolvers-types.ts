@@ -28,7 +28,8 @@ export type Game = {
   away_full_game_stat?: Maybe<Stat>;
   away_team?: Maybe<Team>;
   date?: Maybe<Scalars['String']['output']>;
-  full_game_line?: Maybe<Scalars['String']['output']>;
+  full_game_closer?: Maybe<Scalars['String']['output']>;
+  full_game_opener?: Maybe<Scalars['String']['output']>;
   game_clock?: Maybe<Scalars['String']['output']>;
   home_first_half_stat?: Maybe<Stat>;
   home_full_game_stat?: Maybe<Stat>;
@@ -216,7 +217,8 @@ export type GameResolvers<ContextType = any, ParentType extends ResolversParentT
   away_full_game_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
   away_team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType>;
   date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  full_game_line?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  full_game_closer?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  full_game_opener?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   game_clock?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   home_first_half_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
   home_full_game_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;

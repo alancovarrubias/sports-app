@@ -1,17 +1,20 @@
 require 'rails_helper'
 
 class GameMock
-  attr_reader :game, :attributes
+  attr_reader :game
 
-  def initialize(game)
-    @game = game
+  def initialize
+    @game = FactoryBot.create(:game)
     @away_full_game_stat = FactoryBot.create(:stat, game: game, team: game.away_team, interval: :full_game)
     @home_full_game_stat = FactoryBot.create(:stat, game: game, team: game.home_team, interval: :full_game)
     @away_first_half_stat = FactoryBot.create(:stat, game: game, team: game.away_team, interval: :first_half)
     @home_first_half_stat = FactoryBot.create(:stat, game: game, team: game.home_team, interval: :first_half)
     @full_game_opener = FactoryBot.create(:line, game: game, interval: :full_game, book: :opener)
     @full_game_closer = FactoryBot.create(:line, game: game, interval: :full_game, book: :closer)
-    @attributes = build_game_hash['data']['attributes']
+  end
+
+  def serialize
+    JSON.parse(GameSerializer.new(@game).to_json)
   end
 
   def build_team_hash(team)
@@ -60,14 +63,14 @@ class GameMock
           'start_time' => @game.start_time.strftime('%Y-%m-%dT%H:%M:%S.%LZ'),
           'game_clock' => @game.game_clock,
           'kicked' => @game.kicked,
-          'away_team' => build_team_hash(@game.away_team),
-          'home_team' => build_team_hash(@game.home_team),
+          'away_team' => build_team_hash(@away_team),
+          'home_team' => build_team_hash(@home_team),
           'away_full_game_stat' => build_stat_hash(@away_full_game_stat),
           'home_full_game_stat' => build_stat_hash(@home_full_game_stat),
           'away_first_half_stat' => build_stat_hash(@away_first_half_stat),
           'home_first_half_stat' => build_stat_hash(@home_first_half_stat),
-          'full_game_opener' => "#{@game.home_team.name} #{@full_game_opener.spread} and #{@full_game_opener.total}",
-          'full_game_closer' => "#{@game.home_team.name} #{@full_game_closer.spread} and #{@full_game_closer.total}"
+          'full_game_opener' => "#{@home_team.name} #{@full_game_opener.spread} and #{@full_game_opener.total}",
+          'full_game_closer' => "#{@home_team.name} #{@full_game_closer.spread} and #{@full_game_closer.total}"
         }
       }
     }
@@ -76,20 +79,20 @@ end
 
 RSpec.describe 'GameSerializer' do
   before do
-    game = FactoryBot.create(:game)
-    @game_mock = GameMock.new(game)
-    @serialized = JSON.parse(GameSerializer.new(game).to_json)['data']['attributes']
+    @game_mock = GameMock.new
+    @serialized = @game_mock.serialize['data']['attributes']
+    @attributes = @game_mock.build_game_hash['data']['attributes']
   end
 
   it 'game attributes' do
-    expect(@serialized).to eq(@game_mock.attributes)
+    expect(@serialized).to eq(@attributes)
   end
 
   it 'stat attributes' do
-    expect(@serialized['away_full_game_stat']).to eq(@game_mock.attributes['away_full_game_stat'])
+    expect(@serialized['away_full_game_stat']).to eq(@attributes['away_full_game_stat'])
   end
 
   it 'line attributes', :focus do
-    expect(@serialized['full_game_line']).to eq(@game_mock.attributes['full_game_line'])
+    expect(@serialized['full_game_line']).to eq(@attributes['full_game_line'])
   end
 end

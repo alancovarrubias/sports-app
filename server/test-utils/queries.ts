@@ -60,7 +60,8 @@ export const GAMES_QUERY = `#graphql
       home_first_half_stat {
         ${STAT_ATTRIBUTES}
       }
-      full_game_line
+      full_game_opener
+      full_game_closer
     }
   }
 `;
