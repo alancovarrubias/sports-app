@@ -1,7 +1,6 @@
 class GameSerializer
   include JSONAPI::Serializer
   STATS = %i[away_full_game_stat home_full_game_stat away_first_half_stat home_first_half_stat].freeze
-  LINES = %i[full_game_line].freeze
   EMPTY = { data: { attributes: {} } }.freeze
 
   attributes :id,
@@ -12,9 +11,11 @@ class GameSerializer
              :game_clock,
              :kicked
 
-  attribute :full_game_line do |object|
-    line = object.full_game_opener
-    "#{object.home_team.name} #{line.spread} and #{line.total}" if line
+  Line.books.each_key do |book|
+    attribute "full_game_#{book}" do |object|
+      line = object.send("full_game_#{book}")
+      "#{object.home_team.name} #{line.spread} and #{line.total}" if line
+    end
   end
 
   STATS.each do |attr|
