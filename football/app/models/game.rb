@@ -14,15 +14,13 @@ class Game < ApplicationRecord
   enum kicked: VENUES
   VENUES.product(Stat.intervals.keys).each do |venue, interval|
     define_method("#{venue}_#{interval}_stat") do
-      stats.find do |stat|
-        stat.interval == interval && stat.team_id == send("#{venue}_team_id")
-      end
+      stats.find { |stat| stat.interval == interval && stat.team_id == send("#{venue}_team_id") }
     end
   end
 
-  def full_game_line
-    lines.find do |line|
-      line.interval == 'full_game'
+  Line.books.each_key do |book|
+    define_method("full_game_#{book}") do
+      lines.find { |line| line.interval == 'full_game' && line.book == book }
     end
   end
 

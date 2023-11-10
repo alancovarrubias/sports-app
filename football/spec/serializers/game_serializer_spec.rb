@@ -9,7 +9,7 @@ class GameMock
     @home_full_game_stat = FactoryBot.create(:stat, game: game, team: game.home_team, interval: :full_game)
     @away_first_half_stat = FactoryBot.create(:stat, game: game, team: game.away_team, interval: :first_half)
     @home_first_half_stat = FactoryBot.create(:stat, game: game, team: game.home_team, interval: :first_half)
-    @full_game_line = FactoryBot.create(:line, game: game, interval: :full_game)
+    @full_game_opener = FactoryBot.create(:line, game: game, interval: :full_game, book: :opener)
     @attributes = build_game_hash['data']['attributes']
   end
 
@@ -65,7 +65,7 @@ class GameMock
           'home_full_game_stat' => build_stat_hash(@home_full_game_stat),
           'away_first_half_stat' => build_stat_hash(@away_first_half_stat),
           'home_first_half_stat' => build_stat_hash(@home_first_half_stat),
-          'full_game_line' => "#{@game.home_team.name} #{@full_game_line.spread} and #{@full_game_line.total}"
+          'full_game_line' => "#{@game.home_team.name} #{@full_game_opener.spread} and #{@full_game_opener.total}"
         }
       }
     }

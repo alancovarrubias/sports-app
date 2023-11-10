@@ -8,7 +8,7 @@ class LinesJob < ApplicationJob
       game = find_game(week, game_data)
       next unless game
 
-      line = game.lines.find_or_create_by(interval: :full_game)
+      line = game.lines.find_or_create_by(interval: :full_game, book: :opener)
       line_data = parse_line_data(game_data['full_game'])
       line.update(line_data)
     end

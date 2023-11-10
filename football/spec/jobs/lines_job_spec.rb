@@ -30,8 +30,8 @@ RSpec.describe LinesJob, type: :job do
       home_team = FactoryBot.create(:team, name: 'Indianapolis Colts')
       game = FactoryBot.create(:game, home_team: home_team, away_team: away_team, week: 6)
       perform
-      expect(game.full_game_line.total).to eq(43.5)
-      expect(game.full_game_line.spread).to eq(1)
+      expect(game.full_game_opener.total).to eq(43.5)
+      expect(game.full_game_opener.spread).to eq(1)
     end
   end
 end

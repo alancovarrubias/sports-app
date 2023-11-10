@@ -13,7 +13,7 @@ class GameSerializer
              :kicked
 
   attribute :full_game_line do |object|
-    line = object.full_game_line
+    line = object.full_game_opener
     "#{object.home_team.name} #{line.spread} and #{line.total}" if line
   end
 

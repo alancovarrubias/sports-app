@@ -34,7 +34,9 @@ RSpec.describe Game, type: :model do
 
   describe 'lines filter methods' do
     let!(:game) { FactoryBot.create(:game) }
-    let!(:full_game_line) { FactoryBot.create(:line, interval: :full_game, game: game) }
-    it { expect(game.full_game_line).to eq(full_game_line) }
+    let!(:full_game_opener) { FactoryBot.create(:line, interval: :full_game, book: :opener, game: game) }
+    let!(:full_game_closer) { FactoryBot.create(:line, interval: :full_game, book: :closer, game: game) }
+    it { expect(game.full_game_opener).to eq(full_game_opener) }
+    it { expect(game.full_game_closer).to eq(full_game_closer) }
   end
 end
