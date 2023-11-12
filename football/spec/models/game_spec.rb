@@ -18,6 +18,27 @@ RSpec.describe Game, type: :model do
     it { should allow_values(:away, :home).for(:kicked) }
   end
 
+  describe 'scopes' do
+    let(:start_time) { DateTime.parse('12:00 AM, August 28, 2023') }
+    it '#started' do
+      allow(DateTime).to receive(:now).and_return(start_time)
+      game = FactoryBot.create(:game, start_time: start_time)
+      expect(Game.started).to include(game)
+    end
+
+    it '#not_started' do
+      allow(DateTime).to receive(:now).and_return(start_time)
+      game = FactoryBot.create(:game, start_time: start_time)
+      expect(Game.not_started).not_to include(game)
+    end
+
+    it '#not_started', :focus do
+      allow(DateTime).to receive(:now).and_return(start_time - 1.minute)
+      game = FactoryBot.create(:game, start_time: start_time)
+      expect(Game.not_started).to include(game)
+    end
+  end
+
   describe 'stats filter methods' do
     let!(:away_team) { FactoryBot.create(:team, name: 'Away Team') }
     let!(:home_team) { FactoryBot.create(:team, name: 'Home Team') }

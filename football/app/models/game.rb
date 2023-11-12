@@ -7,6 +7,8 @@ class Game < ApplicationRecord
   scope :with_season, -> { includes(:season) }
   scope :with_stats, -> { includes(:away_team, :home_team, :stats, :lines) }
   scope :on_date, ->(date) { where(date: date) }
+  scope :started, -> { where('start_time <= ?', DateTime.now) }
+  scope :not_started, -> { where('start_time > ?', DateTime.now) }
   scope :earliest_start_time_first, -> { order(start_time: :asc) }
   scope :last_updated_first, -> { order(updated_at: :asc) }
 

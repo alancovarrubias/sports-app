@@ -4,11 +4,13 @@ class GameMock
   attr_reader :game
 
   def initialize
-    @game = FactoryBot.create(:game)
-    @away_full_game_stat = FactoryBot.create(:stat, game: game, team: game.away_team, interval: :full_game)
-    @home_full_game_stat = FactoryBot.create(:stat, game: game, team: game.home_team, interval: :full_game)
-    @away_first_half_stat = FactoryBot.create(:stat, game: game, team: game.away_team, interval: :first_half)
-    @home_first_half_stat = FactoryBot.create(:stat, game: game, team: game.home_team, interval: :first_half)
+    @away_team = FactoryBot.create(:team)
+    @home_team = FactoryBot.create(:team)
+    @game = FactoryBot.create(:game, away_team: @away_team, home_team: @home_team)
+    @away_full_game_stat = FactoryBot.create(:stat, game: game, team: @away_team, interval: :full_game)
+    @home_full_game_stat = FactoryBot.create(:stat, game: game, team: @home_team, interval: :full_game)
+    @away_first_half_stat = FactoryBot.create(:stat, game: game, team: @away_team, interval: :first_half)
+    @home_first_half_stat = FactoryBot.create(:stat, game: game, team: @home_team, interval: :first_half)
     @full_game_opener = FactoryBot.create(:line, game: game, interval: :full_game, book: :opener)
     @full_game_closer = FactoryBot.create(:line, game: game, interval: :full_game, book: :closer)
   end
@@ -92,7 +94,7 @@ RSpec.describe 'GameSerializer' do
     expect(@serialized['away_full_game_stat']).to eq(@attributes['away_full_game_stat'])
   end
 
-  it 'line attributes', :focus do
+  it 'line attributes' do
     expect(@serialized['full_game_line']).to eq(@attributes['full_game_line'])
   end
 end
