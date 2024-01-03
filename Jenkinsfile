@@ -9,9 +9,9 @@ pipeline {
          stage('Build and Push Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t $IMAGE_NAME:latest -f $IMAGE_NAME/Dockerfile.prod client'
+                    sh "docker build -t $IMAGE_NAME:latest -f $IMAGE_NAME/Dockerfile.prod $IMAGE_NAME"
                     sh "aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPO_URL"
-                    sh "docker tag client:latest $ECR_REPO_URL/$IMAGE_NAME:latest"
+                    sh "docker tag $IMAGE_NAME:latest $ECR_REPO_URL/$IMAGE_NAME:latest"
                     sh "docker push $ECR_REPO_URL/$IMAGE_NAME:latest"
                 }
             }
