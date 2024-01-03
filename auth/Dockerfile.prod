@@ -8,7 +8,7 @@ RUN mkdir /project
 WORKDIR /project
 
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler --no-document
+RUN gem install bundler -v 2.4.22 --no-document
 RUN bundle install --no-binstubs --jobs $(nproc) --retry 3
 COPY . .
 
