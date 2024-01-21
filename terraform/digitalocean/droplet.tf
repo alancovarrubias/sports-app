@@ -1,6 +1,6 @@
 resource "digitalocean_ssh_key" "default" {
   name       = "SSH Key"
-  public_key = file(var.public_ssh_key)
+  public_key = var.public_ssh_key
 }
 
 resource "digitalocean_droplet" "sports-app-web" {
