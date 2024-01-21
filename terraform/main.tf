@@ -15,7 +15,7 @@ module "digitalocean" {
   source         = "./digitalocean"
   do_token       = var.do_token
   domain_name    = var.domain_name
-  public_ssh_key = var.public_ssh_key
+  public_ssh_key = file(var.public_ssh_key)
 }
 
 output "server_ip" {

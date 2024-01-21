@@ -1,6 +1,21 @@
 pipeline {
     agent any
     stages {
+        stage('provision server') {
+            environment {
+                TF_VAR_domain_name = "${env.DOMAIN_NAME}"
+                TF_VAR_public_ssh_key  = "${env.PUBLIC_SSH_KEY}"
+                TF_VAR_do_token     = "${env.DO_TOKEN}"
+            }
+            steps {
+                script {
+                    dir('terraform') {
+                        sh "terraform init"
+                        sh "terraform apply --auto-approve"
+                    }
+                }
+            }
+        }
          stage('build and push docker image') {
             environment {
                 ECR_REPO_URL = "${env.ECR_REPO_URL}"
@@ -13,16 +28,6 @@ pipeline {
                     sh "aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPO_URL"
                     sh "docker tag $IMAGE_NAME:latest $ECR_REPO_URL/$IMAGE_NAME:latest"
                     sh "docker push $ECR_REPO_URL/$IMAGE_NAME:latest"
-                }
-            }
-        }
-        stage('provision server') {
-            steps {
-                script {
-                    dir('terraform') {
-                        sh "terraform init"
-                        sh "terraform apply --auto-approve"
-                    }
                 }
             }
         }
