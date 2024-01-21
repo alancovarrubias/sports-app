@@ -1,22 +1,12 @@
 pipeline {
     agent any
-    environment {
-        ECR_REPO_URL = '678549062078.dkr.ecr.us-west-1.amazonaws.com'
-        AWS_DEFAULT_REGION = 'us-west-1'
-        IMAGE_NAME = 'client'
-    }
     stages {
-        stage('provision server') {
-            steps {
-                script {
-                    dir('terraform') {
-                        sh "terraform init"
-                        sh "terraform apply --auto-approve"
-                    }
-                }
-            }
-        }
          stage('build and push docker image') {
+            environment {
+                ECR_REPO_URL = "${env.ECR_REPO_URL}"
+                AWS_DEFAULT_REGION = "${env.AWS_DEFAULT_REGION}"
+                IMAGE_NAME = "${env.IMAGE_NAME}"
+            }
             steps {
                 script {
                     sh "docker build -t $IMAGE_NAME:latest -f $IMAGE_NAME/Dockerfile.prod $IMAGE_NAME"
@@ -26,15 +16,12 @@ pipeline {
                 }
             }
         }
-        stage('Destroy Resources (Manual Approval)') {
-            when {
-                expression { params.DESTROY_RESOURCES }
-            }
+        stage('provision server') {
             steps {
-                input "Do you want to destroy the provisioned resources? (This action is irreversible)"
                 script {
                     dir('terraform') {
-                        sh "terraform destroy --auto-approve"
+                        sh "terraform init"
+                        sh "terraform apply --auto-approve"
                     }
                 }
             }
