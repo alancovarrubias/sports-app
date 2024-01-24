@@ -1,6 +1,16 @@
 pipeline {
     agent any
     stages {
+        stage('copy files to ansible server') {
+            environment {
+                ANSIBLE_IP = "${env.ANSIBLE_IP}"
+            }
+            steps {
+                script {
+                    sh "scp -o StrictHostKeyChecking=no terraform/* root@$ANSIBLE_IP:/root"
+                }
+            }
+        }
         stage('provision server') {
             environment {
                 TF_VAR_domain_name = "${env.DOMAIN_NAME}"
