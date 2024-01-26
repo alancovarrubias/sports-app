@@ -1,0 +1,43 @@
+version: "3.4"
+services:
+  client:
+    image: 678549062078.dkr.ecr.us-west-1.amazonaws.com/client:prod
+    ports:
+      - 80:80/tcp
+      - 443:443/tcp
+    volumes:
+      - ./nginx:/etc/nginx/user.conf.d:ro
+      - letsencrypt:/etc/letsencrypt/
+  server:
+    image: 678549062078.dkr.ecr.us-west-1.amazonaws.com/server:prod
+    ports:
+      - 4000:4000
+  auth:
+    image: 678549062078.dkr.ecr.us-west-1.amazonaws.com/auth:prod
+  football:
+    image: 678549062078.dkr.ecr.us-west-1.amazonaws.com/football:prod
+  sidekiq:
+    image: 678549062078.dkr.ecr.us-west-1.amazonaws.com/football:prod
+    command: bundle exec sidekiq
+  crawler:
+    image: 678549062078.dkr.ecr.us-west-1.amazonaws.com/crawler:prod
+  db:
+    image: postgres:15
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+  redis:
+    image: redis:7.2.1-alpine
+    command: redis-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+
+volumes:
+  redis:
+  postgres:
+  letsencrypt:
