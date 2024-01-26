@@ -7,7 +7,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "scp -o StrictHostKeyChecking=no terraform/* root@$ANSIBLE_IP:/root"
+                    sh "scp -o StrictHostKeyChecking=no ansible/* alan@$ANSIBLE_IP:/home/alan"
                 }
             }
         }
