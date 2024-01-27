@@ -4,10 +4,18 @@ pipeline {
         stage('copy files to ansible server') {
             environment {
                 ANSIBLE_IP = "${env.ANSIBLE_IP}"
+                REMOTE_USER = "${env.REMOTE_USER}"
             }
             steps {
                 script {
-                    sh "scp -o StrictHostKeyChecking=no ansible/* alan@$ANSIBLE_IP:/home/alan"
+                    sh "scp -r -o StrictHostKeyChecking=no ansible/* $REMOTE_USER@$ANSIBLE_IP:/home/alan"
+                    def remote = [:]
+                    remote.name = "ansible_server"
+                    remote.host = "$ANSIBLE_IP"
+                    remote.allowAnyHosts = true
+                    remote.user = "$REMOTE_USER"
+                    remote.identityFile = "/var/jenkins_home/.ssh/id_rsa"
+                    sshCommand remote: remote, command: "ls -l"
                 }
             }
         }
