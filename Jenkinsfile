@@ -1,6 +1,21 @@
 pipeline {
     agent any
     stages {
+        stage('build and push docker image') {
+            environment {
+                ECR_REPO_URL = "${env.ECR_REPO_URL}"
+                AWS_DEFAULT_REGION = "${env.AWS_DEFAULT_REGION}"
+                IMAGE_NAME = "${env.IMAGE_NAME}"
+            }
+            steps {
+                script {
+                    sh "docker build -t $IMAGE_NAME:latest -f $IMAGE_NAME/Dockerfile.prod $IMAGE_NAME"
+                    sh "aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPO_URL"
+                    sh "docker tag $IMAGE_NAME:latest $ECR_REPO_URL/$IMAGE_NAME:latest"
+                    sh "docker push $ECR_REPO_URL/$IMAGE_NAME:latest"
+                }
+            }
+        }
         stage('provision server') {
             environment {
                 TF_VAR_domain_name = "${env.DOMAIN_NAME}"
@@ -25,6 +40,7 @@ pipeline {
             steps {
                 script {
                     sh "scp -r -o StrictHostKeyChecking=no ansible/* $REMOTE_USER@$ANSIBLE_IP:/home/alan"
+                    sh "scp -r -o StrictHostKeyChecking=no /var/jenkins_home/.ssh/id_rsa* $REMOTE_USER@$ANSIBLE_IP:/home/alan/.ssh"
                     def remote = [:]
                     remote.name = "ansible_server"
                     remote.host = "$ANSIBLE_IP"
@@ -32,22 +48,6 @@ pipeline {
                     remote.user = "$REMOTE_USER"
                     remote.identityFile = "/var/jenkins_home/.ssh/id_rsa"
                     sshCommand remote: remote, command: "ansible-playbook --inventory $SERVER_IP, -e target_host_ip=$SERVER_IP --private-key ~/.ssh/id_rsa --user root deploy_app.yml"
-                }
-            }
-        }
-
-         stage('build and push docker image') {
-            environment {
-                ECR_REPO_URL = "${env.ECR_REPO_URL}"
-                AWS_DEFAULT_REGION = "${env.AWS_DEFAULT_REGION}"
-                IMAGE_NAME = "${env.IMAGE_NAME}"
-            }
-            steps {
-                script {
-                    sh "docker build -t $IMAGE_NAME:latest -f $IMAGE_NAME/Dockerfile.prod $IMAGE_NAME"
-                    sh "aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPO_URL"
-                    sh "docker tag $IMAGE_NAME:latest $ECR_REPO_URL/$IMAGE_NAME:latest"
-                    sh "docker push $ECR_REPO_URL/$IMAGE_NAME:latest"
                 }
             }
         }

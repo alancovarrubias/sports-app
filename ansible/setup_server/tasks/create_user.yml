@@ -1,0 +1,20 @@
+---
+- name: Create a new user
+  user:
+    name: "{{user_name}}"
+    groups:
+      - sudo
+    shell: /bin/bash
+    state: present
+
+- name: Copy SSH key for the new user
+  authorized_key:
+    user: "{{ user_name }}"
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    state: present
+
+- name: Allow the new user to run sudo without a password prompt
+  lineinfile:
+    path: /etc/sudoers
+    line: "{{ user_name }} ALL=(ALL) NOPASSWD:ALL"
+    validate: "visudo -cf %s"

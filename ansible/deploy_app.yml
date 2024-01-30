@@ -1,17 +1,15 @@
 ---
-- name: Store ECR password in register
+- name: Perform local tasks
   hosts: localhost
   tasks:
     - name: get ECR password
       shell: aws ecr get-login-password --region us-west-1
       register: ecr_password
-  tags:
-    - deploy
 
-- name: Deploy app
+- name: Deploy sports app
   hosts: all
   gather_facts: false
   roles:
+    - setup_server
+    - setup_docker
     - deploy_app
-  tags:
-    - always
