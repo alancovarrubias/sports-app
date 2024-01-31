@@ -5,14 +5,18 @@ pipeline {
             environment {
                 ECR_REPO_URL = "${env.ECR_REPO_URL}"
                 AWS_DEFAULT_REGION = "${env.AWS_DEFAULT_REGION}"
-                IMAGE_NAME = "${env.IMAGE_NAME}"
+                IMAGE_NAMES = "${env.IMAGE_NAMES}"
+                ENV = "${env.ENV}"
             }
             steps {
                 script {
-                    sh "docker build -t $IMAGE_NAME:latest -f $IMAGE_NAME/Dockerfile.prod $IMAGE_NAME"
                     sh "aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPO_URL"
-                    sh "docker tag $IMAGE_NAME:latest $ECR_REPO_URL/$IMAGE_NAME:latest"
-                    sh "docker push $ECR_REPO_URL/$IMAGE_NAME:latest"
+                    def imageNameArray = IMAGE_NAMES.split(',')
+                    imageNameArray.each { IMAGE_NAME ->
+                        sh "docker build -t $IMAGE_NAME:$ENV -f $image_name/Dockerfile.prod $IMAGE_NAME"
+                        sh "docker tag $IMAGE_NAME:prod $ECR_REPO_URL/$IMAGE_NAME:prod"
+                        sh "docker push $ECR_REPO_URL/$IMAGE_NAME:prod"
+                    }
                 }
             }
         }
