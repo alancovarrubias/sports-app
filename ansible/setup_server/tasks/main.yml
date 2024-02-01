@@ -1,5 +1,0 @@
----
-# tasks file for setup_server
-- include_tasks: wait_for_ssh.yml
-- include_tasks: create_user.yml
-# - include_tasks: disable_root.yml

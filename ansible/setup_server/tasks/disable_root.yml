@@ -1,7 +1,0 @@
----
-- name: Update sshd_config to disable root login
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: "^PermitRootLogin"
-    line: "PermitRootLogin no"
-  notify: restart sshd

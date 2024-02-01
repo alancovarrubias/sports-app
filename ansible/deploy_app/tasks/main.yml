@@ -1,4 +1,0 @@
----
-# tasks file for setup_server
-# - include_tasks: shutdown.yml
-- include_tasks: deploy.yml
