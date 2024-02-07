@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters {
+        choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Select the environment')
+    }
     stages {
         stage('build and push docker image') {
             environment {
@@ -13,9 +16,9 @@ pipeline {
                     sh "aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_REPO_URL"
                     def imageNameArray = IMAGE_NAMES.split(',')
                     imageNameArray.each { IMAGE_NAME ->
-                        sh "docker build -t $IMAGE_NAME:$ENV -f $image_name/Dockerfile.$ENV $IMAGE_NAME"
-                        sh "docker tag $IMAGE_NAME:$ENV $ECR_REPO_URL/$IMAGE_NAME:$ENV"
-                        sh "docker push $ECR_REPO_URL/$IMAGE_NAME:$ENV"
+                        sh "docker build -t $IMAGE_NAME:${params.ENV} -f $IMAGE_NAME/Dockerfile.${params.ENV} $IMAGE_NAME"
+                        sh "docker tag $IMAGE_NAME:${params.ENV} $ECR_REPO_URL/$IMAGE_NAME:${params.ENV}"
+                        sh "docker push $ECR_REPO_URL/$IMAGE_NAME:${params.ENV}"
                     }
                 }
             }
