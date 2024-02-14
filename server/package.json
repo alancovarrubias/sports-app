@@ -13,7 +13,7 @@
     "codegen": "graphql-codegen --config codegen.yml",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "watch": "concurrently  --names \"CodeGen,TS,Nodemon\" -c \"bgYellow,bgBlue,bgMagenta\" \"graphql-codegen --watch 'src/**/*.ts'\" \"tsc -w\" \"tsc-alias -w\" \"nodemon --es-module-specifier-resolution=node ./dist/src/index.js \""
+    "watch": "npm run compile && concurrently  --names \"CodeGen,TS,Nodemon\" -c \"bgYellow,bgBlue,bgMagenta\" \"graphql-codegen --watch 'src/**/*.ts'\" \"tsc -w\" \"tsc-alias -w\" \"nodemon --es-module-specifier-resolution=node ./dist/src/index.js \""
   },
   "dependencies": {
     "@apollo/server": "^4.7.5",
