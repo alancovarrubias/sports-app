@@ -60,4 +60,4 @@ class ScheduleScraper(BaseScraper):
         game_column = game.find_elements(By.CSS_SELECTOR, "td")[2]
         anchor = game_column.find_element(By.CSS_SELECTOR, "a")
         file_path = anchor.get_attribute("href")
-        return re.search(r"gameId=(\d+)", file_path).group(1)
+        return re.search(r"gameId/(\d+)", file_path).group(1)

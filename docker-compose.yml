@@ -48,7 +48,6 @@ services:
       - ./football:/project
     depends_on:
       - db
-      - sidekiq
     ports:
       - "3003:3003"
   sidekiq:
