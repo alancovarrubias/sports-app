@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Select the environment')
+        choice(name: 'ENV', choices: ['dev', 'stage', 'prod'], description: 'Select the environment')
     }
     stages {
         stage('build and push docker image') {
