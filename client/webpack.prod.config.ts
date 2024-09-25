@@ -43,8 +43,8 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.HOST': JSON.stringify('alancovarrubias.com'),
-      'process.env.PROTOCOL': JSON.stringify('https'),
+      'process.env.HOST': JSON.stringify(process.env.HOST),
+      'process.env.PROTOCOL': JSON.stringify(process.env.PROTOCOL),
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',

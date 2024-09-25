@@ -1,7 +1,5 @@
 # build stage
 FROM --platform=linux/amd64 node:lts-alpine
-ARG HOST
-ENV HOST=${HOST}
 WORKDIR /home/node/code
 COPY --chown=node:node package.json yarn.lock ./
 RUN yarn install
