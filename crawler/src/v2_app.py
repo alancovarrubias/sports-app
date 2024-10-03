@@ -36,5 +36,9 @@ def games_show_playbyplay(game_id):
     finished = request.args.get("finished", type=int)
     return process_request(PlaybyplayScraper, game_id, league, finished)
 
+@app.route("/health", methods=["GET"])
+def health_check():
+    return {"status": "OK"}, 200
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
