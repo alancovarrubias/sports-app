@@ -11,6 +11,7 @@ test('getOrder', async () => {
   expect(getOrder('11:15 - 1st')).toEqual(2.75)
   expect(getOrder('15:00 - 1st')).toEqual(3)
   expect(getOrder('Second Half')).toEqual(4)
+  expect(getOrder('15:00 - 3rd')).toEqual(4)
   expect(getOrder('Not Started')).toEqual(5)
   expect(getOrder('Final')).toEqual(6)
   expect(getOrder('Final/OT')).toEqual(6)

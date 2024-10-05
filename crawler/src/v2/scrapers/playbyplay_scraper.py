@@ -15,5 +15,5 @@ class PlaybyplayScraper(BaseScraper):
         }
 
     def get_received(self):
-        team_logos = self.driver.find_elements(By.CSS_SELECTOR, ".AccordionHeader__Left__TeamLogo")
+        team_logos = self.driver.find_elements(By.CSS_SELECTOR, ".Gamestrip__Logo")
         return team_logos[self.logo_index].get_attribute("alt")

@@ -46,6 +46,8 @@ export const getOrder = (gameClock) => {
       case 1:
         orderNum = 3
         break
+      default:
+        return 4
     }
     const timeMatch = gameClock.match(/\d{1,2}:\d{2}/);
     if (!timeMatch) {
