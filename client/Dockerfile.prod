@@ -1,7 +1,7 @@
 # build environment
 FROM --platform=linux/amd64 node:lts-alpine as build
-ENV HOST=alancovarrubias.com
-ENV PROTOCOL=https
+ENV HOST=${HOST}
+ENV PROTOCOL=${PROTOCOL}
 WORKDIR /app
 COPY . .
 RUN yarn

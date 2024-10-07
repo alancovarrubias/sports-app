@@ -28,7 +28,7 @@ pipeline {
 }
 
 def buildAndPushDockerImage(image_name) {
-    sh "docker build -t ${image_name}:${params.ENV} -f ${image_name}/Dockerfile.${params.ENV} ${image_name}"
+    sh "ENV=${params.ENV} docker-compose build ${image_name}"
     sh "docker tag ${image_name}:${params.ENV} $ECR_REPO_URL/${image_name}:${params.ENV}"
     sh "docker push $ECR_REPO_URL/${image_name}:${params.ENV}"
 }
