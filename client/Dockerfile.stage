@@ -1,7 +1,6 @@
 # build environment
 FROM --platform=linux/amd64 node:lts-alpine as build
-ENV HOST=${HOST}
-ENV PROTOCOL=${PROTOCOL}
+ENV PROTOCOL=http
 WORKDIR /app
 COPY . .
 RUN yarn

@@ -43,7 +43,6 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.HOST': JSON.stringify(process.env.HOST),
       'process.env.PROTOCOL': JSON.stringify(process.env.PROTOCOL),
     }),
     new HtmlWebpackPlugin({

@@ -45,8 +45,8 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.HOST': JSON.stringify('localhost:4000'),
-      'process.env.PROTOCOL': JSON.stringify('http')
+      'process.env.PROTOCOL': JSON.stringify('http'),
+      'process.env.HOST': JSON.stringify('localhost:4000')
     }),
     new HtmlWebpackPlugin({
       template: "src/index.html",
