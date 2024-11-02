@@ -5,8 +5,8 @@ import { getToken } from 'app/utils/auth';
 async function createApolloClient() {
   const response = await fetch('/config.json');
   const config = await response.json();
-  const host = config.HOST || process.env.HOST;
-  const protocol = process.env.PROTOCOL;
+  const host = config.HOST;
+  const protocol = config.PROTOCOL;
 
   const httpLink = createHttpLink({
     uri: `${protocol}://${host}/graphql`,

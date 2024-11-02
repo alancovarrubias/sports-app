@@ -42,9 +42,6 @@ const config = {
     },
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.PROTOCOL': JSON.stringify(process.env.PROTOCOL),
-    }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
     }),
