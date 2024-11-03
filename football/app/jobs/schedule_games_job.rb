@@ -2,18 +2,21 @@ class ScheduleGamesJob < ApplicationJob
   queue_as :default
 
   def perform
-    Season.leagues.each_key do |season_league|
-      schedule_games(season_league)
+    games_needing_update.each do |game|
+      ActiveRecord::Base.transaction do
+        game.update!(enqueued_at: DateTime.now)
+        GameUpdaterJob.perform_later(game.id)
+      end
     end
   end
 
-  def schedule_games(season_league)
-    case season_league
-    when 'nfl'
-      LeagueGamesJob.perform_later(season_league, season_league)
-    when 'cfb'
-      LeagueGamesJob.perform_later(season_league, 'cfb80')
-      LeagueGamesJob.perform_later(season_league, 'cfb81')
+  def games_needing_update
+    Game.where(date: DateTime.today).started.order(updated_at: :asc).reject do |game|
+      game.enqueued? || game.finished? || game.recently_second_half?
     end
+  end
+
+  after_perform do
+    self.class.set(wait: 30.seconds).perform_later
   end
 end

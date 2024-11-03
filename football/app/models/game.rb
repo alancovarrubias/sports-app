@@ -4,17 +4,11 @@ class Game < ApplicationRecord
   belongs_to :home_team, class_name: 'Team'
   has_many :stats, dependent: :destroy
   has_many :lines, dependent: :destroy
-  scope :with_season, -> { includes(:season) }
-  scope :with_stats, -> { includes(:away_team, :home_team, :stats, :lines) }
-  scope :on_date, ->(date) { where(date: date) }
+  enum kicked: %i[away home].freeze
   scope :started, -> { where('start_time <= ?', DateTime.now) }
   scope :not_started, -> { where('start_time > ?', DateTime.now) }
-  scope :earliest_start_time_first, -> { order(start_time: :asc) }
-  scope :last_updated_first, -> { order(updated_at: :asc) }
 
-  VENUES = %i[away home].freeze
-  enum kicked: VENUES
-  VENUES.product(Stat.intervals.keys).each do |venue, interval|
+  kicked.keys.product(Stat.intervals.keys).each do |venue, interval|
     define_method("#{venue}_#{interval}_stat") do
       stats.find { |stat| stat.interval == interval && stat.team_id == send("#{venue}_team_id") }
     end
@@ -26,12 +20,15 @@ class Game < ApplicationRecord
     end
   end
 
-  def finished?
-    game_clock&.include?('Final')
+  def enqueued?
+    return false unless enqueued_at
+    return true unless calculated_at
+
+    enqueued_at > calculated_at
   end
 
-  def not_started?
-    DateTime.now < start_time
+  def finished?
+    game_clock&.include?('Final')
   end
 
   def recently_second_half?

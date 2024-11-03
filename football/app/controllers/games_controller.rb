@@ -17,11 +17,10 @@ class GamesController < ApplicationController
   end
 
   def games
-    if params[:date].present?
-      Game.with_stats.on_date(params[:date]).earliest_start_time_first
-    else
-      Game.with_stats
-    end
+    games = Game.includes(:away_team, :home_team, :stats, :lines)
+    return games unless params[:date].present?
+
+    games.where(date: params[:date]).order(start_time: :asc)
   end
 
   def set_game

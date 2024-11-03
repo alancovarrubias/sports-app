@@ -10,8 +10,8 @@ class CreateGames < ActiveRecord::Migration[6.0]
       t.date :date
       t.datetime :start_time
       t.string :game_clock
-      t.datetime :stats_enqueued_at
-      t.datetime :stats_calculated_at
+      t.datetime :enqueued_at
+      t.datetime :calculated_at
       t.timestamps
     end
   end
