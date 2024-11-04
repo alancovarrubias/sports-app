@@ -1,9 +1,10 @@
 class GameUpdaterJob < ApplicationJob
   queue_as :default
 
-  def perform(game_id)
-    @game = Game.find(game_id)
-    @boxscore_data = Crawler.boxscore(espn_id: @game.espn_id, league: @game.season.league)
+  def perform(espn_id, season_id)
+    @season = Season.find(season_id)
+    @game = @season.games.find_by(espn_id: espn_id)
+    @boxscore_data = Crawler.boxscore(espn_id: espn_id, league: @season.league)
     update_game
     update_stats
     update_kicked
@@ -28,7 +29,7 @@ class GameUpdaterJob < ApplicationJob
   end
 
   def build_team(team_data)
-    Team.find_or_create_by(name: team_data['name'], abbr: team_data['abbr'], season: @game.season)
+    Team.find_or_create_by(name: team_data['name'], abbr: team_data['abbr'], season: @season)
   end
 
   def update_stats

@@ -8,7 +8,7 @@ class Game < ApplicationRecord
   scope :started, -> { where('start_time <= ?', DateTime.now) }
   scope :not_started, -> { where('start_time > ?', DateTime.now) }
 
-  kicked.keys.product(Stat.intervals.keys).each do |venue, interval|
+  Game.kicked.keys.product(Stat.intervals.keys).each do |venue, interval|
     define_method("#{venue}_#{interval}_stat") do
       stats.find { |stat| stat.interval == interval && stat.team_id == send("#{venue}_team_id") }
     end
