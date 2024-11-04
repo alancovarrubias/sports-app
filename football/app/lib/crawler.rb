@@ -31,7 +31,7 @@ module Crawler
     end
   end
 
-  UrlBuilder.public_methods(false).each do |method_name|
+  EndpointBuilder.public_methods(false).each do |method_name|
     define_singleton_method(method_name) do |**args|
       url = CRAWLER_BASE + EndpointBuilder.public_send(method_name, **args)
       Client.get(url)

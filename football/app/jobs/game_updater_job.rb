@@ -1,34 +1,37 @@
 class GameUpdaterJob < ApplicationJob
   queue_as :default
 
-  def perform(game_id)
-    @game = Game.find(game_id)
-    @boxscore_data = Crawler.boxscore(espn_id: @game.espn_id, league: @game.season.league)
+  def perform(espn_id, season_id)
+    @season = Season.find(season_id)
+    @boxscore_data = Crawler.boxscore(espn_id: espn_id, league: @season.league)
+    @game = find_or_create_game(espn_id)
     update_game
     update_stats
     update_kicked
     @game.update(calculated_at: DateTime.now)
   end
 
-  def update_game
-    start_time = DateTime.parse(@boxscore_data['start_time'])
-    @game.update(
-      date: start_time.pacific_time_date,
-      start_time: start_time,
-      game_clock: game_clock,
+  def find_or_create_game(espn_id)
+    Game.find_or_create_by(
+      espn_id: espn_id,
+      season: @season,
       away_team: build_team(@boxscore_data['away_team']),
       home_team: build_team(@boxscore_data['home_team'])
     )
   end
 
-  def game_clock
-    return 'Second Half' if @game.game_clock == 'Halftime' && @boxscore_data['game_clock'] != 'Halftime'
-
-    @boxscore_data['game_clock']
+  def update_game
+    start_time = DateTime.parse(@boxscore_data['start_time'])
+    is_second_half = @game.game_clock == 'Halftime' && @boxscore_data['game_clock'] != 'Halftime'
+    @game.update(
+      date: start_time.pacific_time_date,
+      start_time: start_time,
+      game_clock: is_second_half ? 'Second Half' : @boxscore_data['game_clock']
+    )
   end
 
   def build_team(team_data)
-    Team.find_or_create_by(name: team_data['name'], abbr: team_data['abbr'], season: @game.season)
+    Team.find_or_create_by(name: team_data['name'], abbr: team_data['abbr'], season: @season)
   end
 
   def update_stats

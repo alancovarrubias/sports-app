@@ -43,7 +43,7 @@ class BoxscoreScraper(BaseScraper):
             }
 
     def get_start_time(self):
-        date = self.driver.find_element(By.CSS_SELECTOR, ".GameInfo__Meta :first-child")
+        date = self.driver.find_element(By.CSS_SELECTOR, ".GameInfo__Meta > :first-child")
         return date.text
 
     def get_game_clock(self):
