@@ -3,17 +3,17 @@ class GameUpdaterJob < ApplicationJob
 
   def perform(espn_id, season_id)
     @season = Season.find(season_id)
-    @game = @season.games.find_by(espn_id: espn_id)
     @boxscore_data = Crawler.boxscore(espn_id: espn_id, league: @season.league)
-    update_game
+    @game = @season.games.find_by(espn_id: espn_id) || create_game(espn_id)
     update_stats
     update_kicked
     @game.update(calculated_at: DateTime.now)
   end
 
-  def update_game
+  def create_game(espn_id)
     start_time = DateTime.parse(@boxscore_data['start_time'])
-    @game.update(
+    Game.create(
+      espn_id: espn_id,
       date: start_time.pacific_time_date,
       start_time: start_time,
       game_clock: game_clock,
@@ -23,7 +23,7 @@ class GameUpdaterJob < ApplicationJob
   end
 
   def game_clock
-    return 'Second Half' if @game.game_clock == 'Halftime' && @boxscore_data['game_clock'] != 'Halftime'
+    return 'Second Half' if @game&.game_clock == 'Halftime' && @boxscore_data['game_clock'] != 'Halftime'
 
     @boxscore_data['game_clock']
   end
