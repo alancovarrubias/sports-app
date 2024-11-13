@@ -1,1 +1,3 @@
 docker-compose.yml
+client/build/
+secrets.env
