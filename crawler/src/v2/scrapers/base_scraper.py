@@ -17,7 +17,7 @@ class BaseScraper(ABC):
     def get_sport(self, league):
         if league == 'nfl':
             return 'nfl'
-        elif league == 'cfb':
+        elif league == 'cfb80' or league == 'cfb81':
             return 'college-football'
 
     def init_driver(self):

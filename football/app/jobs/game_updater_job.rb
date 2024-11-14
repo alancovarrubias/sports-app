@@ -8,8 +8,8 @@ class GameUpdaterJob < ApplicationJob
     @game = Game.find_or_create_by(
       espn_id: espn_id,
       season: @season,
-      away_team: @season.teams.find_or_create_by(@boxscore_data[:away_team].slice(TEAM_ATTRIBUTES)),
-      home_team: @season.teams.find_or_create_by(@boxscore_data[:home_team].slice(TEAM_ATTRIBUTES))
+      away_team: @season.teams.find_or_create_by(@boxscore_data[:away_team].slice(*TEAM_ATTRIBUTES)),
+      home_team: @season.teams.find_or_create_by(@boxscore_data[:home_team].slice(*TEAM_ATTRIBUTES))
     )
     update_game
     update_stats
@@ -36,7 +36,7 @@ class GameUpdaterJob < ApplicationJob
 
   def build_stat(team, team_data)
     team_data[:completions], team_data[:attempts] = team_data.delete(:comp_att).split('/')
-    stat_data = team_data.except(TEAM_ATTRIBUTES).transform_values(&:to_i)
+    stat_data = team_data.except(*TEAM_ATTRIBUTES).transform_values(&:to_i)
     Stat.find_or_create_by(game: @game, team: team, interval: :full_game).update(stat_data)
     return unless @boxscore_data[:game_clock] == Constants::GAME_CLOCKS[:halftime]
 

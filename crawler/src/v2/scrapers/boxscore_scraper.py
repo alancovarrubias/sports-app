@@ -1,6 +1,4 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from v2.scrapers.base_scraper import BaseScraper
 import re
 
@@ -45,10 +43,7 @@ class BoxscoreScraper(BaseScraper):
             }
 
     def get_start_time(self):
-        element = WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, ".GameInfo__Meta :first-child"))
-        )
-        return element.text
+        return self.wait_for((By.CSS_SELECTOR, ".GameInfo__Meta :first-child")).text
 
     def get_game_clock(self):
         time = self.driver.find_element(By.CSS_SELECTOR, ".Gamestrip__Time")
