@@ -43,11 +43,9 @@ class LinesScraper(BaseScraper):
         event_id = event_card.get_attribute('id').split('.')[1]
         game_details = event_card.find_element(By.CSS_SELECTOR, '[aria-label="Game Details"]')
         game_details.click()
-        element_locator = (By.CSS_SELECTOR, f'#game-props-tab--{event_id}') 
-        element = self.wait_for(element_locator)
+        element = self.wait_for(f'#game-props-tab--{event_id}')
         element.click()
-        element_locator = (By.CSS_SELECTOR, f'#odds-table--first-half-{event_id}')
-        first_half_lines = self.wait_for(element_locator)
+        first_half_lines = self.wait_for(f'#odds-table--first-half-{event_id}')
         rows = first_half_lines.find_elements(By.CSS_SELECTOR, 'tr')
         return {
             "spread": self.find_data_value(rows[1]),

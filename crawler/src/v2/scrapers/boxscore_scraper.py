@@ -12,38 +12,26 @@ class BoxscoreScraper(BaseScraper):
         return f"https://www.espn.com/{sport}/boxscore/_/gameId/{game_id}"
 
     def parse_data(self):
-        if "boxscore" in self.driver.current_url:
-            if len(self.categories()) == 0:
-                return {
-                    "start_time": self.get_start_time(),
-                    "game_clock": "Not Started",
-                    "away_team": {
-                        "name": self.get_team_name(BoxscoreScraper.AWAY_INDEX),
-                    },
-                    "home_team": {
-                        "name": self.get_team_name(BoxscoreScraper.HOME_INDEX),
-                    }
-                }
+        if "boxscore" in self.driver.current_url and len(self.categories()) > 0:
             return {
                 "start_time": self.get_start_time(),
                 "game_clock": self.get_game_clock(),
                 "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),
                 "home_team": self.team_stats(BoxscoreScraper.HOME_INDEX),
             }
-        else:
-            return {
-                "start_time": self.get_start_time(),
-                "game_clock": "Not Started",
-                "away_team": {
-                    "name": self.get_team_name(BoxscoreScraper.AWAY_INDEX),
-                },
-                "home_team": {
-                    "name": self.get_team_name(BoxscoreScraper.HOME_INDEX),
-                }
+        return {
+            "start_time": self.get_start_time(),
+            "game_clock": "Not Started",
+            "away_team": {
+                "name": self.get_team_name(BoxscoreScraper.AWAY_INDEX),
+            },
+            "home_team": {
+                "name": self.get_team_name(BoxscoreScraper.HOME_INDEX),
             }
+        }
 
     def get_start_time(self):
-        return self.wait_for((By.CSS_SELECTOR, ".GameInfo__Meta :first-child")).text
+        return self.wait_for(".GameInfo__Meta :first-child").text
 
     def get_game_clock(self):
         time = self.driver.find_element(By.CSS_SELECTOR, ".Gamestrip__Time")

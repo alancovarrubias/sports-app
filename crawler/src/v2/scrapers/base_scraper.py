@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 
 import os
 
@@ -29,8 +30,8 @@ class BaseScraper(ABC):
         chrome_options.page_load_strategy = "eager"
         return webdriver.Chrome(options=chrome_options)
     
-    def wait_for(self, locator):
-        return self.wait.until(EC.presence_of_element_located(locator))
+    def wait_for(self, selector):
+        return self.wait.until(EC.presence_of_element_located(By.CSS_SELECTOR, selector))
 
     @abstractmethod
     def build_url(self, *args):
