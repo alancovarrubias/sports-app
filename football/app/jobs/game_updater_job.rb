@@ -2,7 +2,6 @@ class GameUpdaterJob < ApplicationJob
   queue_as :default
 
   TEAM_ATTRIBUTES = [:name, :abbr]
-  include Constants
   def perform(espn_id, season_id)
     @season = Season.find(season_id)
     @boxscore_data = Crawler.boxscore(espn_id: espn_id, league: @season.league)

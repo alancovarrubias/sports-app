@@ -18,9 +18,7 @@ class LinesUpdaterJob < ApplicationJob
 
   def build_lines(game_data, options)
     line_data = game_data[options[:interval]]
-    @game.lines.find_or_create_by(options).update(
-      spread: line_data[:spread],
-      total: line_data[:total][1..]
-    )
+    line_data[:total].slice!(0)
+    @game.lines.find_or_create_by(options).update(line_data)
   end
 end

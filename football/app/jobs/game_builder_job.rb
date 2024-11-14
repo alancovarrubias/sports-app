@@ -2,7 +2,7 @@ class GameBuilderJob < ApplicationJob
   queue_as :default
 
   def perform
-    Season.leagues.each_key do |league|
+    LEAGUES.each do |league|
       schedule_data = Crawler.schedule(league: league)
       season = Season.find_or_create_by(year: schedule_data[:year], league: league)
       schedule_data[:espn_ids].each do |espn_id|

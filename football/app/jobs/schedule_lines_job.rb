@@ -2,7 +2,7 @@ class ScheduleLinesJob < ApplicationJob
   queue_as :default
 
   def perform
-    Season.leagues.each_key do |league|
+    LEAGUES.each do |league|
       games = Season.find_by(league: league).games
       opener_games = games.not_started.reject(&:full_game_opener).map(&:id)
       closer_games = games.started.reject(&:full_game_closer).map(&:id)
