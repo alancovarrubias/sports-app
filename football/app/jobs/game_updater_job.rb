@@ -19,11 +19,11 @@ class GameUpdaterJob < ApplicationJob
 
   def update_game
     start_time = DateTime.parse(@boxscore_data[:start_time])
-    is_second_half = @game.halftime? && @boxscore_data[:game_clock] != 'Halftime'
+    is_second_half = @game.halftime? && @boxscore_data[:game_clock] != Constants::GAME_CLOCKS[:halftime]
     @game.update(
       date: start_time.pacific_time_date,
       start_time: start_time,
-      game_clock: is_second_half ? 'Second Half' : @boxscore_data[:game_clock]
+      game_clock: is_second_half ? Constants::GAME_CLOCKS[:second_half] : @boxscore_data[:game_clock]
     )
   end
 
@@ -38,28 +38,20 @@ class GameUpdaterJob < ApplicationJob
     team_data[:completions], team_data[:attempts] = team_data.delete(:comp_att).split('/')
     stat_data = team_data.except(TEAM_ATTRIBUTES).transform_values(&:to_i)
     Stat.find_or_create_by(game: @game, team: team, interval: :full_game).update(stat_data)
-    return unless @boxscore_data[:game_clock] == 'Halftime'
+    return unless @boxscore_data[:game_clock] == Constants::GAME_CLOCKS[:halftime]
 
     Stat.find_or_create_by(game: @game, team: team, interval: :first_half).update(stat_data)
   end
 
   def update_kicked
-    return if @game.kicked || @game.not_started?
+    return if @game.kicking_team || @game.not_started?
 
     playbyplay = Crawler.playbyplay(
       espn_id: @game.espn_id,
       finished: @game.finished? ? 1 : 0,
-      league: @game.season.league
+      league: @season.league
     )
-    @game.update(kicked: kicked(playbyplay[:received]))
-  end
-
-  def kicked(receiving_team)
-    case receiving_team
-    when @game.home_team.name
-      :away
-    when @game.away_team.name
-      :home
-    end
+    kicking_team = playbyplay[:received] == @game.home_team.name ? @game.home_team : @game.away_team
+    @game.update(kicking_team: kicking_team)
   end
 end

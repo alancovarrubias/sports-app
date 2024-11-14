@@ -2,14 +2,19 @@ class Game < ApplicationRecord
   belongs_to :season
   belongs_to :away_team, class_name: 'Team'
   belongs_to :home_team, class_name: 'Team'
+  belongs_to :kicking_team, class_name: 'Team', optional: true
   has_many :stats, dependent: :destroy
   has_many :lines, dependent: :destroy
-  VENUES = %i[away home].freeze
-  enum kicked: VENUES
   scope :started, -> { where('start_time <= ?', DateTime.now) }
   scope :not_started, -> { where('start_time > ?', DateTime.now) }
 
-  VENUES.product(Stat.intervals.keys).each do |venue, interval|
+  Constants::GAME_CLOCKS.each do |name, value|
+    define_method("#{name}?") do
+      game_clock.include?(value)
+    end
+  end
+
+  Constants::VENUES.product(Stat.intervals.keys).each do |venue, interval|
     define_singleton_method("#{venue}_#{interval}_stat") do
       stats.find { |stat| stat.interval == interval && stat.team_id == send("#{venue}_team_id") }
     end
@@ -26,22 +31,6 @@ class Game < ApplicationRecord
     return true unless calculated_at
 
     enqueued_at > calculated_at
-  end
-
-  def not_started?
-    game_clock == 'Not Started' 
-  end
-
-  def halftime?
-    game_clock == 'Halftime' 
-  end
-
-  def second_half?
-    game_clock == 'Second Half' 
-  end
-
-  def finished?
-    game_clock&.include?('Final')
   end
 
   def recently_second_half?

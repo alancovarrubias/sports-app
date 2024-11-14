@@ -4,12 +4,12 @@ class CreateGames < ActiveRecord::Migration[6.0]
       t.references :season
       t.references :away_team
       t.references :home_team
+      t.references :kicking_team
       t.integer :espn_id
       t.integer :week
-      t.integer :kicked
       t.date :date
       t.datetime :start_time
-      t.string :game_clock
+      t.string :game_clock, default: ''
       t.datetime :enqueued_at
       t.datetime :calculated_at
       t.timestamps

@@ -19,18 +19,19 @@ ActiveRecord::Schema.define(version: 2023_11_02_034757) do
     t.bigint "season_id"
     t.bigint "away_team_id"
     t.bigint "home_team_id"
+    t.bigint "kicking_team_id"
     t.integer "espn_id"
     t.integer "week"
-    t.integer "kicked"
     t.date "date"
     t.datetime "start_time"
-    t.string "game_clock"
+    t.string "game_clock", default: ""
     t.datetime "enqueued_at"
     t.datetime "calculated_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
+    t.index ["kicking_team_id"], name: "index_games_on_kicking_team_id"
     t.index ["season_id"], name: "index_games_on_season_id"
   end
 
