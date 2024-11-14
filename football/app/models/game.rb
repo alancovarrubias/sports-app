@@ -28,11 +28,23 @@ class Game < ApplicationRecord
     enqueued_at > calculated_at
   end
 
+  def not_started?
+    game_clock == 'Not Started' 
+  end
+
+  def halftime?
+    game_clock == 'Halftime' 
+  end
+
+  def second_half?
+    game_clock == 'Second Half' 
+  end
+
   def finished?
     game_clock&.include?('Final')
   end
 
   def recently_second_half?
-    game_clock == 'Second Half' && DateTime.now < start_time + 6.hours
+    second_half? && DateTime.now < start_time + 6.hours
   end
 end

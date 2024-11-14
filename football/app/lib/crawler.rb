@@ -7,7 +7,7 @@ module Crawler
     def get(url)
       url = URI.parse(url)
       res = Net::HTTP.get_response(url)
-      JSON.parse(res.body)
+      JSON.parse(res.body).deep_symbolize_keys
     end
   end
 
