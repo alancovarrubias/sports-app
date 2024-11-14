@@ -2,6 +2,7 @@ class GameUpdaterJob < ApplicationJob
   queue_as :default
 
   TEAM_ATTRIBUTES = [:name, :abbr]
+  include Constants
   def perform(espn_id, season_id)
     @season = Season.find(season_id)
     @boxscore_data = Crawler.boxscore(espn_id: espn_id, league: @season.league)
@@ -19,28 +20,31 @@ class GameUpdaterJob < ApplicationJob
 
   def update_game
     start_time = DateTime.parse(@boxscore_data[:start_time])
-    is_second_half = @game.halftime? && @boxscore_data[:game_clock] != Constants::GAME_CLOCKS[:halftime]
+    is_second_half = @game.halftime? && @boxscore_data[:game_clock] != GAME_CLOCKS[:halftime]
     @game.update(
       date: start_time.pacific_time_date,
       start_time: start_time,
-      game_clock: is_second_half ? Constants::GAME_CLOCKS[:second_half] : @boxscore_data[:game_clock]
+      game_clock: is_second_half ? GAME_CLOCKS[:second_half] : @boxscore_data[:game_clock]
     )
   end
 
   def update_stats
     return if @game.not_started? || @game.second_half?
 
-    build_stat(@game.away_team, @boxscore_data[:away_team])
-    build_stat(@game.home_team, @boxscore_data[:home_team])
+    create_stat(:away_team)
+    create_stat(:home_team)
   end
 
-  def build_stat(team, team_data)
+  def create_stat(team_name)
+    team_data = @boxscore_data[team_name]
     team_data[:completions], team_data[:attempts] = team_data.delete(:comp_att).split('/')
     stat_data = team_data.except(*TEAM_ATTRIBUTES).transform_values(&:to_i)
-    Stat.find_or_create_by(game: @game, team: team, interval: :full_game).update(stat_data)
-    return unless @boxscore_data[:game_clock] == Constants::GAME_CLOCKS[:halftime]
+    team = @game.send(team_name)
 
-    Stat.find_or_create_by(game: @game, team: team, interval: :first_half).update(stat_data)
+    @game.stats.find_or_create_by(team: team, interval: :full_game).update(stat_data)
+    return unless @boxscore_data[:game_clock] == GAME_CLOCKS[:halftime]
+
+    @game.stats.find_or_create_by(team: team, interval: :first_half).update(stat_data)
   end
 
   def update_kicked
