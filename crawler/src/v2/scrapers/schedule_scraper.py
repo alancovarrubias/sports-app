@@ -1,6 +1,5 @@
-from selenium.webdriver.common.by import By
-import re
 from v2.scrapers.base_scraper import BaseScraper
+import re
 
 
 def flatten_nested_list(nested_list):
@@ -43,21 +42,21 @@ class ScheduleScraper(BaseScraper):
         return self.get_active_url(r'\/week\/(\d{1,2})\/')
     
     def get_active_url(self, pattern):
-        is_active = self.driver.find_elements(By.CSS_SELECTOR, ".custom--week.is-active")[0]
-        url = is_active.find_element(By.CSS_SELECTOR, "a").get_attribute('href')
+        is_active = self.find_elements(".custom--week.is-active")[0]
+        url = is_active.find_element("a").get_attribute('href')
         return re.search(pattern, url).group(1)
 
     def get_game_ids(self):
-        tables = self.driver.find_elements(By.CSS_SELECTOR, ".ScheduleTables")
+        tables = self.find_elements(".ScheduleTables")
         table_ids = [self.get_table_game_ids(table) for table in tables]
         return flatten_nested_list(table_ids)
 
     def get_table_game_ids(self, table):
-        games = table.find_elements(By.CSS_SELECTOR, "tbody tr")
+        games = table.find_elements("tbody tr")
         return [self.get_game_id(game) for game in games]
 
     def get_game_id(self, game):
-        game_column = game.find_elements(By.CSS_SELECTOR, "td")[2]
-        anchor = game_column.find_element(By.CSS_SELECTOR, "a")
+        game_column = game.find_elements("td")[2]
+        anchor = game_column.find_element("a")
         file_path = anchor.get_attribute("href")
         return re.search(r"gameId/(\d+)", file_path).group(1)

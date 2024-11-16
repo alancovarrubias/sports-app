@@ -1,4 +1,3 @@
-from selenium.webdriver.common.by import By
 from v2.scrapers.base_scraper import BaseScraper
 import re
 
@@ -15,5 +14,5 @@ class PlaybyplayScraper(BaseScraper):
         }
 
     def get_received(self):
-        team_logos = self.driver.find_elements(By.CSS_SELECTOR, ".Gamestrip__Logo")
+        team_logos = self.find_elements(".Gamestrip__Logo")
         return team_logos[self.logo_index].get_attribute("alt")

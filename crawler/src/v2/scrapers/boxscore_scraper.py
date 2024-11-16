@@ -1,4 +1,3 @@
-from selenium.webdriver.common.by import By
 from v2.scrapers.base_scraper import BaseScraper
 import re
 
@@ -34,7 +33,7 @@ class BoxscoreScraper(BaseScraper):
         return self.wait_for(".GameInfo__Meta :first-child").text
 
     def get_game_clock(self):
-        time = self.driver.find_element(By.CSS_SELECTOR, ".Gamestrip__Time")
+        time = self.find_element(".Gamestrip__Time")
         return time.text
 
     def team_stats(self, away_home):
@@ -51,16 +50,16 @@ class BoxscoreScraper(BaseScraper):
         }
 
     def get_score(self, away_home):
-        scores = self.driver.find_elements(By.CSS_SELECTOR, ".Gamestrip__Score")
+        scores = self.find_elements(".Gamestrip__Score")
         match = re.search(r'\d{1,2}', scores[away_home].text)
         return match.group()
 
     def get_team_name(self, away_home):
-        team_logos = self.driver.find_elements(By.CSS_SELECTOR, ".Gamestrip__Logo")
+        team_logos = self.find_elements(".Gamestrip__Logo")
         team_name = team_logos[away_home].get_attribute("alt")
         if team_name:
             return team_name
-        team_logos = self.driver.find_elements(By.CSS_SELECTOR, ".Gamestrip__Truncate")
+        team_logos = self.find_elements(".Gamestrip__Truncate")
         return team_logos[away_home].text
 
     def get_abbr(self, away_home):
@@ -72,25 +71,25 @@ class BoxscoreScraper(BaseScraper):
         return self.get_data_item(category_tables, data_index)
 
     def categories(self):
-        return self.driver.find_elements(By.CSS_SELECTOR, ".Boxscore__Category")
+        return self.find_elements(".Boxscore__Category")
 
     def get_category(self, index):
         return self.categories()[index]
 
     def get_tables(self, category, home_away):
-        return category.find_elements(By.CSS_SELECTOR, ".Boxscore__Team")[home_away]
+        return category.find_elements(".Boxscore__Team")[home_away]
 
     def get_data_item(self, table, data_index):
-        boxscore_totals = table.find_elements(By.CSS_SELECTOR, ".Boxscore__Totals")
+        boxscore_totals = table.find_elements(".Boxscore__Totals")
         if (len(boxscore_totals) == 0):
             return ""
         data_row = boxscore_totals[1]
-        data = data_row.find_elements(By.CSS_SELECTOR, ".Boxscore__Totals_Items")
+        data = data_row.find_elements(".Boxscore__Totals_Items")
         return data[data_index].text
 
     def get_scores(self, away_home):
-        game_table = self.driver.find_element(By.CSS_SELECTOR, ".Gamestrip__Table")
-        body = game_table.find_element(By.CSS_SELECTOR, ".Table__TBODY")
-        rows = body.find_elements(By.CSS_SELECTOR, ".Table__TR")
-        elements = rows[away_home].find_elements(By.CSS_SELECTOR, ".Table__TD")
+        game_table = self.find_element(".Gamestrip__Table")
+        body = game_table.find_element(".Table__TBODY")
+        rows = body.find_elements(".Table__TR")
+        elements = rows[away_home].find_elements(".Table__TD")
         return [elem.text for elem in elements]
