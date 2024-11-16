@@ -1,40 +1,45 @@
 from flask import Flask, request
-from crawler.src.v2.scrapers.playbyplay import PlaybyplayScraper
+from crawler.src.v2.scrapers.play_by_play import PlayByPlayScraper
 from crawler.src.v2.scrapers.boxscore import BoxscoreScraper
 from crawler.src.v2.scrapers.schedule import ScheduleScraper
 from crawler.src.v2.scrapers.lines import LinesScraper
+from v2.url_builders.espn import EspnUrlBuilder
+from v2.url_builders.scores_and_odds import ScoresAndOddsUrlBuilder
 
-def process_request(Scraper, *args):
-    with Scraper() as scraper:
-        scraper.fetch(*args)
-        return scraper.parse_data()
+def scrape_url(Scraper, url, *args):
+    with Scraper(url) as scraper:
+        return scraper.parse_data(*args)
 
 app = Flask(__name__)
 
 @app.route("/api/lines", methods=["GET"])
 def lines_index():
+    league = request.args.get("league", type=str)
     year = request.args.get("year", type=int)
     week = request.args.get("week", type=int)
-    league = request.args.get("league", type=str)
-    return process_request(LinesScraper, week, year, league)
+    url = ScoresAndOddsUrlBuilder(league).lines(week, year)
+    return scrape_url(LinesScraper, url)
 
 @app.route("/api/games", methods=["GET"])
 def games_index():
+    league = request.args.get("league", type=str)
     year = request.args.get("year", type=int)
     week = request.args.get("week", type=int)
-    league = request.args.get("league", type=str)
-    return process_request(ScheduleScraper, week, year, league)
+    url = EspnUrlBuilder(league).schedule(week, year)
+    return scrape_url(ScheduleScraper, url)
 
 @app.route("/api/games/<int:game_id>", methods=["GET"])
 def games_show(game_id):
     league = request.args.get("league", type=str)
-    return process_request(BoxscoreScraper, game_id, league)
+    url = EspnUrlBuilder(league).boxscore(game_id)
+    return scrape_url(BoxscoreScraper, url)
 
 @app.route("/api/games/<int:game_id>/playbyplay", methods=["GET"])
-def games_show_playbyplay(game_id):
+def games_show_play_by_play(game_id):
     league = request.args.get("league", type=str)
     finished = request.args.get("finished", type=int)
-    return process_request(PlaybyplayScraper, game_id, league, finished)
+    url = EspnUrlBuilder(league).play_by_play(game_id)
+    return scrape_url(PlayByPlayScraper, url, finished)
 
 @app.route("/health", methods=["GET"])
 def health_check():

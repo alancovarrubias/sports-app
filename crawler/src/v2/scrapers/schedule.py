@@ -1,16 +1,10 @@
 from crawler.src.v2.scrapers.base import BaseScraper
-from v2.url_builders.espn import EspnUrlBuilder
 import re
-
 
 def flatten_nested_list(nested_list):
     return [element for sublist in nested_list for element in sublist]
 
-
 class ScheduleScraper(BaseScraper):
-    def build_url(self, week, year, league):
-        return EspnUrlBuilder(league).schedule_url(week, year)
-
     def parse_data(self):
         return {
             "year": self.get_year(),

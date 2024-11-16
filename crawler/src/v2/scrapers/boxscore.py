@@ -1,14 +1,9 @@
 from crawler.src.v2.scrapers.base import BaseScraper
-from v2.url_builders.espn import EspnUrlBuilder
 import re
-
 
 class BoxscoreScraper(BaseScraper):
     AWAY_INDEX = 0
     HOME_INDEX = 1
-
-    def build_url(self, game_id, league):
-        return EspnUrlBuilder(league).boxscore_url(game_id)
 
     def parse_data(self):
         if "boxscore" in self.driver.current_url and len(self.categories()) > 0:
@@ -33,8 +28,7 @@ class BoxscoreScraper(BaseScraper):
         return self.wait_for(".GameInfo__Meta :first-child").text
 
     def get_game_clock(self):
-        time = self.find_element(".Gamestrip__Time")
-        return time.text
+        return self.find_element(".Gamestrip__Time").text
 
     def team_stats(self, away_home):
         return {
@@ -51,8 +45,7 @@ class BoxscoreScraper(BaseScraper):
 
     def get_score(self, away_home):
         scores = self.find_elements(".Gamestrip__Score")
-        match = re.search(r'\d{1,2}', scores[away_home].text)
-        return match.group()
+        return re.search(r'\d{1,2}', scores[away_home].text).group()
 
     def get_team_name(self, away_home):
         team_logos = self.find_elements(".Gamestrip__Logo")

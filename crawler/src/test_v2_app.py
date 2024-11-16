@@ -1,7 +1,7 @@
 import pytest
 from v2_app import app
 from flask import json
-from crawler.src.v2.scrapers.playbyplay import PlaybyplayScraper
+from crawler.src.v2.scrapers.play_by_play import PlayByPlayScraper
 from crawler.src.v2.scrapers.boxscore import BoxscoreScraper
 from crawler.src.v2.scrapers.schedule import ScheduleScraper
 from crawler.src.v2.scrapers.lines import LinesScraper
@@ -30,7 +30,7 @@ def test_games_show(mock_process_request, client):
     assert response.status_code == 200
     assert json.loads(response.data) == []
 
-    mock_process_request.assert_called_once_with(PlaybyplayScraper, 12345, 'cfb', '0')
+    mock_process_request.assert_called_once_with(PlayByPlayScraper, 12345, 'cfb', '0')
 
 def test_games_show(mock_process_request, client):
     response = client.get("/api/games/12345?league=nfl")

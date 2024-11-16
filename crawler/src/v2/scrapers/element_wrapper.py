@@ -2,8 +2,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 
-import os
-
 class ElementWrapper:
     def __init__(self, element):
         self.element = element

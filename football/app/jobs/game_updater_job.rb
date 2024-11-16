@@ -1,7 +1,7 @@
 class GameUpdaterJob < ApplicationJob
   queue_as :default
 
-  TEAM_ATTRIBUTES = [:name, :abbr]
+  TEAM_ATTRIBUTES = %i[name abbr].freeze
   def perform(espn_id, season_id)
     @season = Season.find(season_id)
     @boxscore_data = Crawler.boxscore(espn_id: espn_id, league: @season.league)
@@ -11,9 +11,11 @@ class GameUpdaterJob < ApplicationJob
       away_team: @season.teams.find_or_create_by(@boxscore_data[:away_team].slice(*TEAM_ATTRIBUTES)),
       home_team: @season.teams.find_or_create_by(@boxscore_data[:home_team].slice(*TEAM_ATTRIBUTES))
     )
-    update_game
-    update_stats
-    update_kicked
+    update
+  end
+
+  def update
+    update_game && update_stats && update_kicked
     @game.update(calculated_at: DateTime.now)
   end
 
@@ -30,20 +32,22 @@ class GameUpdaterJob < ApplicationJob
   def update_stats
     return if @game.not_started? || @game.second_half?
 
-    create_stat(:away_team)
-    create_stat(:home_team)
+    update_stat(:away_team)
+    update_stat(:home_team)
   end
 
-  def create_stat(team_name)
-    team_data = @boxscore_data[team_name]
-    team_data[:completions], team_data[:attempts] = team_data.delete(:comp_att).split('/')
-    stat_data = team_data.except(*TEAM_ATTRIBUTES).transform_values(&:to_i)
+  def update_stat(team_name)
     team = @game.send(team_name)
-
+    stat_data = build_stat_data(@boxscore_data[team_name])
     @game.stats.find_or_create_by(team: team, interval: :full_game).update(stat_data)
     return unless @boxscore_data[:game_clock] == GAME_CLOCKS[:halftime]
 
     @game.stats.find_or_create_by(team: team, interval: :first_half).update(stat_data)
+  end
+
+  def build_stat_data(team_data)
+    team_data[:completions], team_data[:attempts] = team_data.delete(:comp_att).split('/')
+    team_data.except(*TEAM_ATTRIBUTES).transform_values(&:to_i)
   end
 
   def update_kicked

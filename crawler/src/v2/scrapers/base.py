@@ -2,12 +2,11 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from abc import ABC, abstractmethod
 import time
-import os
 from v2.scrapers.element_wrapper import ElementWrapper
 
 class BaseScraper(ABC):
-    def fetch(self, *args):
-        url = self.build_url(*args)
+    def __init__(self, url):
+        self.driver = self.init_driver()
         self.driver.get(url)
         time.sleep(3)
 
@@ -21,25 +20,10 @@ class BaseScraper(ABC):
         return webdriver.Chrome(options=chrome_options)
 
     @abstractmethod
-    def build_url(self, *args):
-        pass
-
-    @abstractmethod
     def parse_data(self):
         pass
 
-    def get_url_or_file(self, url, file):
-        path = f"/project/tmp/{file}"
-        if os.path.exists(path):
-            self.driver.get(f"file://{path}")
-        else:
-            self.driver.get(url)
-            time.sleep(1)
-            with open(path, "w", encoding="utf-8") as f:
-                f.write(self.driver.page_source)
-
     def __enter__(self):
-        self.driver = self.init_driver()
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -48,3 +32,13 @@ class BaseScraper(ABC):
 
     def __getattr__(self, name):
         return getattr(ElementWrapper(self.driver), name)
+
+#    def get_url_or_file(self, url, file):
+#        path = f"/project/tmp/{file}"
+#        if os.path.exists(path):
+#            self.driver.get(f"file://{path}")
+#        else:
+#            self.driver.get(url)
+#            time.sleep(1)
+#            with open(path, "w", encoding="utf-8") as f:
+#                f.write(self.driver.page_source)
