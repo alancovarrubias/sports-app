@@ -1,4 +1,5 @@
 from v2.scrapers.base_scraper import BaseScraper
+from v2.url_builders.espn import EspnUrlBuilder
 import re
 
 
@@ -7,8 +8,7 @@ class BoxscoreScraper(BaseScraper):
     HOME_INDEX = 1
 
     def build_url(self, game_id, league):
-        sport = self.get_sport(league)
-        return f"https://www.espn.com/{sport}/boxscore/_/gameId/{game_id}"
+        return EspnUrlBuilder(league).boxscore_url(game_id)
 
     def parse_data(self):
         if "boxscore" in self.driver.current_url and len(self.categories()) > 0:

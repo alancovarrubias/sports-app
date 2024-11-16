@@ -11,12 +11,6 @@ class BaseScraper(ABC):
         self.driver.get(url)
         time.sleep(3)
 
-    def get_sport(self, league):
-        if league == 'nfl':
-            return 'nfl'
-        elif league == 'cfb80' or league == 'cfb81':
-            return 'college-football'
-
     def init_driver(self):
         chrome_options = Options()
         chrome_options.add_argument("--headless")

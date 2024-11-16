@@ -1,4 +1,5 @@
 from v2.scrapers.base_scraper import BaseScraper
+from v2.url_builders.espn import EspnUrlBuilder
 import re
 
 
@@ -8,25 +9,7 @@ def flatten_nested_list(nested_list):
 
 class ScheduleScraper(BaseScraper):
     def build_url(self, week, year, league):
-        if league == 'nfl':
-            return self.get_nfl_url(week, year)
-        elif league == 'cfb80':
-            return self.get_cfb_url(week, year, '80')
-        elif league == 'cfb81':
-            return self.get_cfb_url(week, year, '81')
-
-    
-    def get_nfl_url(self, week, year):
-        if week is None and year is None:
-            return "https://www.espn.com/nfl/schedule"
-        else:
-            return f"https://www.espn.com/nfl/schedule/_/week/{week}/year/{year}/seasontype/2"
-
-    def get_cfb_url(self, week, year, num):
-        if week is None and year is None:
-            return f"https://www.espn.com/college-football/schedule/_/group/{num}"
-        else:
-            return f"https://www.espn.com/college-football/schedule/_/week/{week}/year/{year}/seasontype/2/group/{num}"
+        return EspnUrlBuilder(league).schedule_url(week, year)
 
     def parse_data(self):
         return {

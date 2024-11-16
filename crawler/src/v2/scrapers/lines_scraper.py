@@ -1,24 +1,12 @@
 from v2.scrapers.base_scraper import BaseScraper
+from v2.url_builders.scores_and_odds import ScoresAndOddsUrlBuilder
 import re
 
 
 class LinesScraper(BaseScraper):
     def build_url(self, week, year, league):
-        return self.get_url(week, year, self.get_endpoint(league))
+        return ScoresAndOddsUrlBuilder(league).line_url(week, year)
 
-    def get_endpoint(self, league):
-        if league == 'nfl':
-            return 'nfl'
-        elif league == 'cfb':
-            return 'ncaaf'
-
-    
-    def get_url(self, week, year, endpoint):
-        if week is None and year is None:
-            return f"https://www.scoresandodds.com/{endpoint}"
-        else:
-            return f"https://www.scoresandodds.com/{endpoint}?week={year}-reg-{week}"
-    
     def full_game_lines(self, event_card_row):
         return {
             "spread": self.find_line(event_card_row, 'spread'),

@@ -1,12 +1,12 @@
 from v2.scrapers.base_scraper import BaseScraper
+from v2.url_builders.espn import EspnUrlBuilder
 import re
 
 
 class PlaybyplayScraper(BaseScraper):
     def build_url(self, game_id, league, finished):
-        sport = self.get_sport(league)
         self.logo_index = 0 if finished else -1
-        return f"https://www.espn.com/{sport}/playbyplay/_/gameId/{game_id}"
+        return EspnUrlBuilder(league).playbyplay_url(game_id)
 
     def parse_data(self):
         return {
