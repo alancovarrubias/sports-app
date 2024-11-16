@@ -1,4 +1,4 @@
-from v2.scrapers.base_scraper import BaseScraper
+from crawler.src.v2.scrapers.base import BaseScraper
 from v2.url_builders.espn import EspnUrlBuilder
 import re
 

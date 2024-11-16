@@ -1,8 +1,8 @@
 from flask import Flask, request
-from v2.scrapers.playbyplay_scraper import PlaybyplayScraper
-from v2.scrapers.boxscore_scraper import BoxscoreScraper
-from v2.scrapers.schedule_scraper import ScheduleScraper
-from v2.scrapers.lines_scraper import LinesScraper
+from crawler.src.v2.scrapers.playbyplay import PlaybyplayScraper
+from crawler.src.v2.scrapers.boxscore import BoxscoreScraper
+from crawler.src.v2.scrapers.schedule import ScheduleScraper
+from crawler.src.v2.scrapers.lines import LinesScraper
 
 def process_request(Scraper, *args):
     with Scraper() as scraper:

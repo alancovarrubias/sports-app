@@ -1,5 +1,5 @@
 import pytest
-from v2.scrapers.lines_scraper import LinesScraper
+from crawler.src.v2.scrapers.lines import LinesScraper
 
 
 class TestLinesScraper:

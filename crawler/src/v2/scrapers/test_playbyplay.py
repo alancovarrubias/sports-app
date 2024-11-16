@@ -1,5 +1,5 @@
 import pytest
-from v2.scrapers.playbyplay_scraper import PlaybyplayScraper
+from crawler.src.v2.scrapers.playbyplay import PlaybyplayScraper
 
 
 class TestPlaybyplayScraper:
