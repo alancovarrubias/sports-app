@@ -3,6 +3,44 @@ import _ from 'lodash'
 import { DATA_ELEMENTS } from './constants'
 import { convertTime } from 'app/helpers/date'
 
+function firstStat({ gameFinished, firstHalfStat, fullGameStat }) {
+    if (gameFinished) {
+        return firstHalfStat
+    }
+    if (!firstHalfStat.id) {
+        return fullGameStat
+    }
+    return firstHalfStat
+}
+
+const GameTable = ({ games }): JSX.Element => {
+    const styledGames = games.map((game) => {
+        const gameFinished = game.finished
+        return {
+            ...game,
+            start_time: convertTime(game.start_time),
+            away_first_stat: firstStat({ gameFinished, firstHalfStat: game.away_first_half_stat, fullGameStat: game.away_full_game_stat }),
+            away_second_stat: gameFinished ? game.away_full_game_stat : {},
+            home_first_stat: firstStat({ gameFinished, firstHalfStat: game.home_first_half_stat, fullGameStat: game.home_full_game_stat }),
+            home_second_stat: gameFinished ? game.home_full_game_stat : {}
+        }
+    })
+    return (
+        <div className="table-container">
+            <table>
+                <thead>
+                    <tr>{DATA_ELEMENTS.map((elem, index) => <th key={index}>{elem.header}</th>)}</tr>
+                </thead>
+                <tbody>
+                    {styledGames.map((game, index) => (
+                        <GameRow key={game.id} game={game} index={index} />)
+                    )}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
 export const getColor = (game_clock, index) => {
     const oddEven = index % 2
     switch (true) {
@@ -18,56 +56,10 @@ export const getColor = (game_clock, index) => {
             return oddEven ? 'dodgerblue' : 'royalblue'
     }
 }
-function firstStat({ gameFinished, firstHalfStat, fullGameStat }) {
-    if (gameFinished) {
-        return firstHalfStat
-    }
-    if (!firstHalfStat.id) {
-        return fullGameStat
-    }
-    return firstHalfStat
-}
-
-function secondStat({ gameFinished, fullGameStat }) {
-    if (gameFinished) {
-        return fullGameStat
-    }
-    return {}
-}
-
-const GameTable = ({ games }): JSX.Element => {
-    const styledGames = games.map((game, index) => {
-        const gameFinished = game.finished
-        return {
-            ...game,
-            start_time: convertTime(game.start_time),
-            away_first_stat: firstStat({ gameFinished, firstHalfStat: game.away_first_half_stat, fullGameStat: game.away_full_game_stat }),
-            away_second_stat: secondStat({ gameFinished, fullGameStat: game.away_full_game_stat }),
-            home_first_stat: firstStat({ gameFinished, firstHalfStat: game.home_first_half_stat, fullGameStat: game.home_full_game_stat }),
-            home_second_stat: secondStat({ gameFinished, fullGameStat: game.home_full_game_stat }),
-            style: { backgroundColor: getColor(game.game_clock, index) }
-        }
-    })
-    return (
-        <div className="table-container">
-            <table>
-                <thead>
-                    <tr>{DATA_ELEMENTS.map((elem, index) => <th key={index}>{elem.header}</th>)}</tr>
-                </thead>
-                <tbody>
-                    {styledGames.map((game) => (
-                        <GameRow key={game.id} game={game} />)
-                    )}
-                </tbody>
-            </table>
-        </div>
-    )
-}
-
-const GameRow = ({ game }) => {
+const GameRow = ({ game, index }) => {
     return (
         <>
-            <tr key={game.id} style={game.style} className="borderTop">
+            <tr key={game.id} style={{ backgroundColor: getColor(game.game_clock, index) }} className="borderTop">
                 {DATA_ELEMENTS.map((elem, index) => {
                     const key = elem.rowSpan ? elem.key : `away_${elem.key}`
                     return (
