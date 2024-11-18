@@ -1,72 +1,54 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { GAMES_QUERY } from 'app/apollo/queries'
 import GameTable from './GameTable'
-import { convertTime, kickedTeam, getColor, getOrder, changeDate, todayDate } from './helpers'
+import Actions from './Actions'
+import { todayDate } from 'app/helpers/date'
 import _ from 'lodash'
 
-function firstStat({ gameFinished, firstHalfStat, fullGameStat }) {
-  if (gameFinished) {
-    return firstHalfStat
+const SECONDS_IN_MINUTE = 60
+const MINUTES_IN_QUARTER = 15
+const minutesPassedRatio = (game_clock) => {
+  const time = game_clock.match(/\d{1,2}:\d{2}/)?.[0];
+  if (!time) {
+    return 1
   }
-  if (!firstHalfStat.id) {
-    return fullGameStat
-  }
-  return firstHalfStat
+  const [minutes, seconds] = time.split(':')
+  const totalSeconds = minutes * SECONDS_IN_MINUTE + +seconds
+  return 1 - (totalSeconds / (SECONDS_IN_MINUTE * MINUTES_IN_QUARTER))
 }
 
-function secondStat({ gameFinished, fullGameStat }) {
-  if (gameFinished) {
-    return fullGameStat
+const getQuarterOrderNum = (game_clock) => {
+  const quarterString = game_clock.match(/\d+(st|nd|rd|th)/)[0]
+  const quarter = parseInt(quarterString[0]);
+  switch (quarter) {
+    case 2:
+      return 1
+    case 1:
+      return 3
+    default:
+      return 4
   }
-  return {}
 }
 
-const Games = (): JSX.Element => {
+export const getOrder = (game_clock) => {
+  if (game_clock == 'Halftime') return -1
+  if (game_clock == 'Second Half') return 4
+  if (game_clock == 'Not Started') return 5
+  if (game_clock.includes('Final')) return 6
+  return getQuarterOrderNum(game_clock) - minutesPassedRatio(game_clock)
+}
+
+export default () => {
   const urlParams = new URLSearchParams(window.location.search);
   const date = urlParams.get('date') || todayDate();
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
-  const history = useHistory()
-  const onClickCreator = (num) => {
-    return () => {
-      const changedDate = changeDate(date, num)
-      history.push(`/games?date=${changedDate}`)
-    }
-  }
-  const onPreviousClick = onClickCreator(-1)
-  const onNextClick = onClickCreator(1)
-  const onRefresh = () => {
-    window.location.reload();
-  }
   if (loading) return <p>Loading...</p>
-  const sortedGames = [...data.games].sort((game1, game2) => getOrder(game1.game_clock) - getOrder(game2.game_clock))
-  const styledGames = sortedGames.map((game, index) => {
-    const gameFinished = game.finished
-    return {
-      ...game,
-      start_time: convertTime(game.start_time),
-      kickingTeam: game.kicking_team,
-      awayTeam: game.away_team,
-      homeTeam: game.home_team,
-      awayFirstStat: firstStat({ gameFinished, firstHalfStat: game.away_first_half_stat, fullGameStat: game.away_full_game_stat }),
-      awaySecondStat: secondStat({ gameFinished, fullGameStat: game.away_full_game_stat }),
-      homeFirstStat: firstStat({ gameFinished, firstHalfStat: game.home_first_half_stat, fullGameStat: game.home_full_game_stat }),
-      homeSecondStat: secondStat({ gameFinished, fullGameStat: game.home_full_game_stat }),
-      style: { backgroundColor: getColor(game.game_clock, index) }
-    }
-  })
+  const games = [...data.games].sort((game1, game2) => getOrder(game1.game_clock) - getOrder(game2.game_clock))
   return (
     <>
-      <div className="dateselect">
-        <h1>{date} Football Games</h1>
-        <button className="btn btn-danger" onClick={onRefresh}>Refresh</button>
-        <button className="btn btn-primary" onClick={onPreviousClick}>Previous Day</button>
-        <button className="btn btn-primary" onClick={onNextClick}>Next Day</button>
-      </div>
-      <GameTable games={styledGames} />
+      <Actions date={date} />
+      <GameTable games={games} />
     </>
   )
 }
-
-export default Games

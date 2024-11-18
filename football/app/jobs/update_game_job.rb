@@ -58,7 +58,7 @@ class UpdateGameJob < ApplicationJob
   end
 
   def update_kicked
-    return if @game.kicking_team || @game.not_started?
+    return if @game.kicking_team || @game.not_started
 
     playbyplay = Crawler.playbyplay(
       espn_id: @game.espn_id,
