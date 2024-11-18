@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash'
 import { DATA_ELEMENTS } from './constants'
-import { convertTime, } from 'app/helpers/date'
+import { convertTime } from 'app/helpers/date'
 
 export const getColor = (game_clock, index) => {
     const oddEven = index % 2
@@ -51,7 +51,9 @@ const GameTable = ({ games }): JSX.Element => {
     return (
         <div className="table-container">
             <table>
-                <Header />
+                <thead>
+                    <tr>{DATA_ELEMENTS.map((elem, index) => <th key={index}>{elem.header}</th>)}</tr>
+                </thead>
                 <tbody>
                     {styledGames.map((game) => (
                         <GameRow key={game.id} game={game} />)
@@ -62,50 +64,30 @@ const GameTable = ({ games }): JSX.Element => {
     )
 }
 
-const Header = () => {
-    return (
-        <thead>
-            <tr>{DATA_ELEMENTS.map((elem, index) => <th key={index}>{elem.header}</th>)}</tr>
-        </thead>
-    )
-}
-
 const GameRow = ({ game }) => {
     return (
         <>
-            <TopRow game={game} />
-            <BottomRow game={game} />
+            <tr key={game.id} style={game.style} className="borderTop">
+                {DATA_ELEMENTS.map((elem, index) => {
+                    const key = elem.rowSpan ? elem.key : `away_${elem.key}`
+                    return (
+                        <td className={elem.className} key={index} rowSpan={elem.rowSpan}>
+                            {_.get(game, key)}
+                        </td>
+                    )
+                })}
+            </tr>
+            <tr style={game.style}>
+                {DATA_ELEMENTS.filter(elem => !elem.rowSpan).map((elem, index) => {
+                    const key = `home_${elem.key}`
+                    return (
+                        <td className={elem.className} key={index}>
+                            {_.get(game, key)}
+                        </td>
+                    )
+                })}
+            </tr>
         </>
-    )
-}
-
-const TopRow = ({ game }) => {
-    return (
-        <tr key={game.id} style={game.style} className="borderTop">
-            {DATA_ELEMENTS.map((elem, index) => {
-                const key = elem.rowSpan ? elem.key : `away_${elem.key}`
-                return (
-                    <td className={elem.className} key={index} rowSpan={elem.rowSpan}>
-                        {_.get(game, key)}
-                    </td>
-                )
-            })}
-        </tr>
-    )
-}
-
-const BottomRow = ({ game }) => {
-    return (
-        <tr style={game.style}>
-            {DATA_ELEMENTS.filter(elem => !elem.rowSpan).map((elem, index) => {
-                const key = `home_${elem.key}`
-                return (
-                    <td className={elem.className} key={index}>
-                        {_.get(game, key)}
-                    </td>
-                )
-            })}
-        </tr>
     )
 }
 
