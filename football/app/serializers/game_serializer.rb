@@ -9,7 +9,8 @@ class GameSerializer
              :home_team,
              :start_time,
              :game_clock,
-             :kicking_team
+             :kicking_team,
+             :finished
 
   Line.books.each_key do |book|
     attribute "full_game_#{book}" do |object|

@@ -28,7 +28,7 @@ class UpdateGameJob < ApplicationJob
 
   def update_game
     start_time = DateTime.parse(@boxscore_data[:start_time])
-    is_second_half = @game.halftime? && @boxscore_data[:game_clock] != GAME_CLOCKS[:halftime]
+    is_second_half = @game.halftime && @boxscore_data[:game_clock] != GAME_CLOCKS[:halftime]
     @game.update(
       date: start_time.pacific_time_date,
       start_time: start_time,
@@ -37,7 +37,7 @@ class UpdateGameJob < ApplicationJob
   end
 
   def update_stats
-    return if @game.not_started? || @game.second_half?
+    return if @game.not_started || @game.second_half
 
     update_stat(:away_team)
     update_stat(:home_team)
@@ -62,7 +62,7 @@ class UpdateGameJob < ApplicationJob
 
     playbyplay = Crawler.playbyplay(
       espn_id: @game.espn_id,
-      finished: @game.finished? ? 1 : 0,
+      finished: @game.finished ? 1 : 0,
       league: @season.league
     )
     kicking_team = playbyplay[:received] == @game.home_team.name ? @game.away_team : @game.home_team

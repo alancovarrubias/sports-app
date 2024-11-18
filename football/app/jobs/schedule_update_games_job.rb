@@ -12,7 +12,7 @@ class ScheduleUpdateGamesJob < ApplicationJob
 
   def games_needing_update
     Game.where(date: DateTime.today).started.order(updated_at: :asc).reject do |game|
-      game.enqueued? || game.finished? || (game.second_half? && DateTime.now < game.start_time + 6.hours)
+      game.enqueued || game.finished || (game.second_half && DateTime.now < game.start_time + 6.hours)
     end
   end
 

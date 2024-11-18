@@ -42,7 +42,7 @@ const Games = (): JSX.Element => {
   if (loading) return <p>Loading...</p>
   const sortedGames = [...data.games].sort((game1, game2) => getOrder(game1.game_clock) - getOrder(game2.game_clock))
   const styledGames = sortedGames.map((game, index) => {
-    const gameFinished = game.game_clock.includes('Final')
+    const gameFinished = game.finished
     return {
       ...game,
       start_time: convertTime(game.start_time),

@@ -9,7 +9,7 @@ class Game < ApplicationRecord
   scope :not_started, -> { where('start_time > ?', DateTime.now) }
 
   GAME_CLOCKS.each do |name, value|
-    define_method("#{name}?") do
+    define_method("#{name}") do
       game_clock.include?(value)
     end
   end
@@ -26,7 +26,7 @@ class Game < ApplicationRecord
     end
   end
 
-  def enqueued?
+  def enqueued
     return false unless enqueued_at
     return true unless calculated_at
 

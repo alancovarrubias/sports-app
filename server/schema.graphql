@@ -38,6 +38,7 @@ type Game {
   kicking_team: Team
   away_team: Team
   home_team: Team
+  finished: Boolean
   away_full_game_stat: Stat
   home_full_game_stat: Stat
   away_first_half_stat: Stat
