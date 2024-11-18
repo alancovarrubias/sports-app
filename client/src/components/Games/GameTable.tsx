@@ -57,9 +57,10 @@ export const getColor = (game_clock, index) => {
     }
 }
 const GameRow = ({ game, index }) => {
+    const style = { backgroundColor: getColor(game.game_clock, index) }
     return (
         <>
-            <tr key={game.id} style={{ backgroundColor: getColor(game.game_clock, index) }} className="borderTop">
+            <tr key={game.id} style={style} className="borderTop">
                 {DATA_ELEMENTS.map((elem, index) => {
                     const key = elem.rowSpan ? elem.key : `away_${elem.key}`
                     return (
@@ -69,7 +70,7 @@ const GameRow = ({ game, index }) => {
                     )
                 })}
             </tr>
-            <tr style={game.style}>
+            <tr style={style}>
                 {DATA_ELEMENTS.filter(elem => !elem.rowSpan).map((elem, index) => {
                     const key = `home_${elem.key}`
                     return (
