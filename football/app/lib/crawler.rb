@@ -1,3 +1,5 @@
+require 'net/http'
+
 module Crawler
   CRAWLER_BASE = 'http://crawler:5000'.freeze
 
