@@ -8,11 +8,11 @@ export const DATA_ELEMENTS = [
   },
   {
     header: 'MATCHUPS',
-    key: 'Team.name',
+    key: 'team.name',
   },
   {
     header: '1H SCORE',
-    key: 'FirstStat.score',
+    key: 'first_stat.score',
   },
   {
     header: 'GAME CLOCK',
@@ -21,11 +21,11 @@ export const DATA_ELEMENTS = [
   },
   {
     header: '1H TOTAL YARDS',
-    key: 'FirstStat.total_yards',
+    key: 'first_stat.total_yards',
   },
   {
     header: '1H RUSHING YARDS',
-    key: 'FirstStat.rushing_yards',
+    key: 'first_stat.rushing_yards',
   },
   {
     header: 'KICKING TEAM',
@@ -44,119 +44,119 @@ export const DATA_ELEMENTS = [
   },
   {
     header: 'CAR',
-    key: 'FirstStat.carries',
+    key: 'first_stat.carries',
     className: 'bordered'
   },
   {
     header: 'AVE CAR',
-    key: 'FirstStat.ave_per_car',
+    key: 'first_stat.ave_per_car',
   },
   {
     header: 'TYPC',
-    key: 'FirstStat.typc',
+    key: 'first_stat.typc',
   },
   {
     header: 'C/ATT',
-    key: 'FirstStat.c_att',
+    key: 'first_stat.c_att',
     className: 'bordered'
   },
   {
     header: 'AVE ATT',
-    key: 'FirstStat.ave_per_att',
+    key: 'first_stat.ave_per_att',
   },
   {
     header: 'TYPA',
-    key: 'FirstStat.typa',
+    key: 'first_stat.typa',
   },
   {
     header: 'TYPAI',
-    key: 'FirstStat.typai',
+    key: 'first_stat.typai',
   },
   {
     header: 'TOTAL PLAYS',
-    key: 'FirstStat.total_plays',
+    key: 'first_stat.total_plays',
     className: 'bordered'
   },
   {
     header: 'YARDS/ PLAY',
-    key: 'FirstStat.ave_per_play',
+    key: 'first_stat.ave_per_play',
   },
   {
     header: 'TYPP',
-    key: 'FirstStat.typp',
+    key: 'first_stat.typp',
   },
   {
     header: 'LONGEST RUSH',
-    key: 'FirstStat.longest_rush',
+    key: 'first_stat.longest_rush',
     className: 'bordered'
   },
   {
     header: 'LONGEST PASS',
-    key: 'FirstStat.longest_pass',
+    key: 'first_stat.longest_pass',
   },
   {
     header: '2H SCORE',
-    key: 'SecondStat.score',
+    key: 'second_stat.score',
     className: 'bordered'
   },
   {
     header: '2H TOTAL YARDS',
-    key: 'SecondStat.total_yards',
+    key: 'second_stat.total_yards',
   },
   {
     header: '2H RUSHING YARDS',
-    key: 'SecondStat.rushing_yards',
+    key: 'second_stat.rushing_yards',
   },
   {
     header: 'CAR',
-    key: 'SecondStat.carries',
+    key: 'second_stat.carries',
     className: 'bordered'
   },
   {
     header: 'AVE CAR',
-    key: 'SecondStat.ave_per_car',
+    key: 'second_stat.ave_per_car',
   },
   {
     header: 'TYPC',
-    key: 'SecondStat.typc',
+    key: 'second_stat.typc',
   },
   {
     header: 'C/ATT',
-    key: 'SecondStat.c_att',
+    key: 'second_stat.c_att',
     className: 'bordered'
   },
   {
     header: 'AVE ATT',
-    key: 'SecondStat.ave_per_att',
+    key: 'second_stat.ave_per_att',
   },
   {
     header: 'TYPA',
-    key: 'SecondStat.typa',
+    key: 'second_stat.typa',
   },
   {
     header: 'TYPAI',
-    key: 'SecondStat.typai',
+    key: 'second_stat.typai',
   },
   {
     header: 'TOTAL PLAYS',
-    key: 'SecondStat.total_plays',
+    key: 'second_stat.total_plays',
     className: 'bordered'
   },
   {
     header: 'YARDS/ PLAY',
-    key: 'SecondStat.ave_per_play',
+    key: 'second_stat.ave_per_play',
   },
   {
     header: 'TYPP',
-    key: 'SecondStat.typp',
+    key: 'second_stat.typp',
   },
   {
     header: 'LONGEST RUSH',
-    key: 'SecondStat.longest_rush',
+    key: 'second_stat.longest_rush',
     className: 'bordered'
   },
   {
     header: 'LONGEST PASS',
-    key: 'SecondStat.longest_pass',
+    key: 'second_stat.longest_pass',
   },
 ]

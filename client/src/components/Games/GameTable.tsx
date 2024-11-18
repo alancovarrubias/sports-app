@@ -41,13 +41,10 @@ const GameTable = ({ games }): JSX.Element => {
         return {
             ...game,
             start_time: convertTime(game.start_time),
-            kickingTeam: game.kicking_team,
-            awayTeam: game.away_team,
-            homeTeam: game.home_team,
-            awayFirstStat: firstStat({ gameFinished, firstHalfStat: game.away_first_half_stat, fullGameStat: game.away_full_game_stat }),
-            awaySecondStat: secondStat({ gameFinished, fullGameStat: game.away_full_game_stat }),
-            homeFirstStat: firstStat({ gameFinished, firstHalfStat: game.home_first_half_stat, fullGameStat: game.home_full_game_stat }),
-            homeSecondStat: secondStat({ gameFinished, fullGameStat: game.home_full_game_stat }),
+            away_first_stat: firstStat({ gameFinished, firstHalfStat: game.away_first_half_stat, fullGameStat: game.away_full_game_stat }),
+            away_second_stat: secondStat({ gameFinished, fullGameStat: game.away_full_game_stat }),
+            home_first_stat: firstStat({ gameFinished, firstHalfStat: game.home_first_half_stat, fullGameStat: game.home_full_game_stat }),
+            home_second_stat: secondStat({ gameFinished, fullGameStat: game.home_full_game_stat }),
             style: { backgroundColor: getColor(game.game_clock, index) }
         }
     })
@@ -86,7 +83,7 @@ const TopRow = ({ game }) => {
     return (
         <tr key={game.id} style={game.style} className="borderTop">
             {DATA_ELEMENTS.map((elem, index) => {
-                const key = elem.rowSpan ? elem.key : `away${elem.key}`
+                const key = elem.rowSpan ? elem.key : `away_${elem.key}`
                 return (
                     <td className={elem.className} key={index} rowSpan={elem.rowSpan}>
                         {_.get(game, key)}
@@ -101,7 +98,7 @@ const BottomRow = ({ game }) => {
     return (
         <tr style={game.style}>
             {DATA_ELEMENTS.filter(elem => !elem.rowSpan).map((elem, index) => {
-                const key = `home${elem.key}`
+                const key = `home_${elem.key}`
                 return (
                     <td className={elem.className} key={index}>
                         {_.get(game, key)}
