@@ -8,10 +8,15 @@ class UpdateGameJob < ApplicationJob
     @game = Game.find_or_create_by(
       espn_id: espn_id,
       season: @season,
-      away_team: @season.teams.find_or_create_by(@boxscore_data[:away_team].slice(*TEAM_ATTRIBUTES)),
-      home_team: @season.teams.find_or_create_by(@boxscore_data[:home_team].slice(*TEAM_ATTRIBUTES))
+      away_team: find_or_create_team(@boxscore_data[:away_team]),
+      home_team: find_or_create_team(@boxscore_data[:home_team])
     )
     update
+  end
+
+  def find_or_create_team(team_data)
+    team = @season.teams.find_or_create_by(name: team_data[:name])
+    team.update(abbr: team_data[:abbr]) && team
   end
 
   def update
