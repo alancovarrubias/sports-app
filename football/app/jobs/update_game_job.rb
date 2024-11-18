@@ -20,7 +20,9 @@ class UpdateGameJob < ApplicationJob
   end
 
   def update
-    update_game && update_stats && update_kicked
+    update_game
+    update_stats
+    update_kicked
     @game.update(calculated_at: DateTime.now)
   end
 
@@ -63,7 +65,7 @@ class UpdateGameJob < ApplicationJob
       finished: @game.finished? ? 1 : 0,
       league: @season.league
     )
-    kicking_team = playbyplay[:received] == @game.home_team.name ? @game.home_team : @game.away_team
+    kicking_team = playbyplay[:received] == @game.home_team.name ? @game.away_team : @game.home_team
     @game.update(kicking_team: kicking_team)
   end
 end

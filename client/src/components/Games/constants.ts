@@ -28,8 +28,8 @@ export const DATA_ELEMENTS = [
     key: 'FirstStat.rushing_yards',
   },
   {
-    header: 'KICKED',
-    key: 'kicked',
+    header: 'KICKING TEAM',
+    key: 'kicking_team.name',
     rowSpan: 2
   },
   {

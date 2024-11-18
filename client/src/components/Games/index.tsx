@@ -46,7 +46,7 @@ const Games = (): JSX.Element => {
     return {
       ...game,
       start_time: convertTime(game.start_time),
-      kicked: kickedTeam(game),
+      kickingTeam: game.kicking_team,
       awayTeam: game.away_team,
       homeTeam: game.home_team,
       awayFirstStat: firstStat({ gameFinished, firstHalfStat: game.away_first_half_stat, fullGameStat: game.away_full_game_stat }),
