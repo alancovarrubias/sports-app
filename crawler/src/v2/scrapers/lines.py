@@ -1,4 +1,4 @@
-from crawler.src.v2.scrapers.base import BaseScraper
+from v2.scrapers.base import BaseScraper
 import re
 
 class LinesScraper(BaseScraper):

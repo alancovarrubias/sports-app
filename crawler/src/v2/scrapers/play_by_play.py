@@ -1,4 +1,4 @@
-from crawler.src.v2.scrapers.base import BaseScraper
+from v2.scrapers.base import BaseScraper
 
 class PlayByPlayScraper(BaseScraper):
     def parse_data(self, finished):

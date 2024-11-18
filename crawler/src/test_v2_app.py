@@ -1,10 +1,10 @@
 import pytest
 from v2_app import app
 from flask import json
-from crawler.src.v2.scrapers.play_by_play import PlayByPlayScraper
-from crawler.src.v2.scrapers.boxscore import BoxscoreScraper
-from crawler.src.v2.scrapers.schedule import ScheduleScraper
-from crawler.src.v2.scrapers.lines import LinesScraper
+from v2.scrapers.play_by_play import PlayByPlayScraper
+from v2.scrapers.boxscore import BoxscoreScraper
+from v2.scrapers.schedule import ScheduleScraper
+from v2.scrapers.lines import LinesScraper
 
 
 @pytest.fixture

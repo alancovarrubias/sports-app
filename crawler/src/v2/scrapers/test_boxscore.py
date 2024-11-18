@@ -1,5 +1,5 @@
 import pytest
-from crawler.src.v2.scrapers.boxscore import BoxscoreScraper
+from v2.scrapers.boxscore import BoxscoreScraper
 
 
 class TestBoxscoreScraper:

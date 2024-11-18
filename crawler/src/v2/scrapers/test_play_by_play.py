@@ -1,5 +1,5 @@
 import pytest
-from crawler.src.v2.scrapers.play_by_play import PlayByPlayScraper
+from v2.scrapers.play_by_play import PlayByPlayScraper
 
 class TestPlayByPlayScraper:
     NFL_URL = "https://www.espn.com/nfl/playbyplay/_/gameId/401547658"

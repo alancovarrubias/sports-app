@@ -1,5 +1,5 @@
 import pytest
-from crawler.src.v2.scrapers.schedule import ScheduleScraper
+from v2.scrapers.schedule import ScheduleScraper
 
 
 class TestScheduleScraper:
