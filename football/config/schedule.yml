@@ -1,6 +1,6 @@
 # config/schedule.yml
 
-schedule games_job:
+schedule create_games_job:
   cron: "0 8 * * *"
-  class: "ScheduleGamesJob"
+  class: "CreateGamesJob"
   queue: default

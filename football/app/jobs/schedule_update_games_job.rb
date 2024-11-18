@@ -1,11 +1,11 @@
-class ScheduleGamesJob < ApplicationJob
+class ScheduleUpdateGamesJob < ApplicationJob
   queue_as :default
 
   def perform
     games_needing_update.each do |game|
       ActiveRecord::Base.transaction do
         game.update!(enqueued_at: DateTime.now)
-        GameUpdaterJob.perform_later(game.espn_id, game.season_id)
+        UpdateGameJob.perform_later(game.espn_id, game.season_id)
       end
     end
   end

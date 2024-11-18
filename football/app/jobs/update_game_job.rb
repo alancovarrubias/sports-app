@@ -1,4 +1,4 @@
-class GameUpdaterJob < ApplicationJob
+class UpdateGameJob < ApplicationJob
   queue_as :default
 
   TEAM_ATTRIBUTES = %i[name abbr].freeze
