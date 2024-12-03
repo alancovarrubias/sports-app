@@ -1,4 +1,5 @@
 from flask import Flask, request
+from v2.scrapers.init_driver import init_driver
 from v2.scrapers.play_by_play import PlayByPlayScraper
 from v2.scrapers.boxscore import BoxscoreScraper
 from v2.scrapers.schedule import ScheduleScraper
@@ -43,6 +44,7 @@ def games_show_play_by_play(game_id):
 
 @app.route("/health", methods=["GET"])
 def health_check():
+    init_driver()
     return {"status": "OK"}, 200
 
 if __name__ == "__main__":

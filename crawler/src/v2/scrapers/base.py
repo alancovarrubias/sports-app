@@ -3,21 +3,13 @@ from selenium.webdriver.chrome.options import Options
 from abc import ABC, abstractmethod
 import time
 from v2.scrapers.element_wrapper import ElementWrapper
+from v2.scrapers.init_driver import init_driver
 
 class BaseScraper(ABC):
     def __init__(self, url):
-        self.driver = self.init_driver()
+        self.driver = init_driver()
         self.driver.get(url)
         time.sleep(3)
-
-    def init_driver(self):
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--disable-gpu")
-        chrome_options.page_load_strategy = "eager"
-        return webdriver.Chrome(options=chrome_options)
 
     @abstractmethod
     def parse_data(self):
