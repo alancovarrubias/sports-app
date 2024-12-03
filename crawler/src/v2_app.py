@@ -1,3 +1,5 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from flask import Flask, request
 from v2.scrapers.play_by_play import PlayByPlayScraper
 from v2.scrapers.boxscore import BoxscoreScraper
@@ -43,6 +45,13 @@ def games_show_play_by_play(game_id):
 
 @app.route("/health", methods=["GET"])
 def health_check():
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.page_load_strategy = "eager"
+    webdriver.Chrome(options=chrome_options)
     return {"status": "OK"}, 200
 
 if __name__ == "__main__":
