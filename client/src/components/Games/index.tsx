@@ -1,10 +1,11 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { useQuery } from '@apollo/client'
+import { useQuery, useSubscription } from '@apollo/client'
 import { GAMES_QUERY } from 'app/apollo/queries'
 import GameTable from './GameTable'
 import { convertTime, kickedTeam, getColor, getOrder, changeDate, todayDate } from './helpers'
 import _ from 'lodash'
+import { GAME_UPDATED_SUBSCRIPTION } from 'app/apollo/queries'
 
 function firstStat({ gameFinished, firstHalfStat, fullGameStat }) {
   if (gameFinished) {
@@ -27,6 +28,7 @@ const Games = (): JSX.Element => {
   const urlParams = new URLSearchParams(window.location.search);
   const date = urlParams.get('date') || todayDate();
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
+  useSubscription(GAME_UPDATED_SUBSCRIPTION);
   const history = useHistory()
   const onClickCreator = (num) => {
     return () => {

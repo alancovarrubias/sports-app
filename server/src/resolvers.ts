@@ -1,5 +1,19 @@
 import { GraphQLError } from "graphql";
+import { RedisPubSub } from 'graphql-redis-subscriptions';
+import Redis from 'ioredis';
 import { Resolvers } from "@app/__generated__/resolvers-types";
+
+const pubsub = new RedisPubSub({
+  publisher: new Redis({
+    host: 'redis',
+    port: 6379,
+  }),
+  subscriber: new Redis({
+    host: 'redis',
+    port: 6379,
+  })
+});
+
 
 const withAuthentication = (resolverFunction) => {
   return async (root, args, context) => {
@@ -22,6 +36,7 @@ const resolveData = ({ data }) => {
   return data.attributes;
 };
 
+const GAME_UPDATED = 'GAME_UPDATED';
 const resolvers: Resolvers = {
   Query: {
     currentUser: withAuthentication((_root, _args, { user }) => {
@@ -58,6 +73,44 @@ const resolvers: Resolvers = {
       return body;
     },
   },
+  Subscription: {
+    gameUpdated: {
+      subscribe: () => pubsub.asyncIterator(GAME_UPDATED) as unknown as AsyncIterable<any>,
+    },
+  },
 };
+
+const redisSubscriber = new Redis({
+  host: 'redis',
+  port: 6379,
+});
+const redisPublisher = new Redis({
+  host: 'redis',
+  port: 6379,
+});
+console.log('outside')
+redisSubscriber.subscribe('game_updates', (err, message: string) => {
+  console.log('inside')
+  if (err) {
+    console.error('Redis subscription error:', err);
+  } else {
+    console.log('Subscribed to game_updates');
+  }
+  const gameUpdate = JSON.parse(message);
+  pubsub.publish(GAME_UPDATED, { gameUpdated: gameUpdate });
+});
+redisSubscriber.on('message', (channel, message) => {
+  console.log(`Received message on ${channel}: ${message}`);
+});
+setTimeout(() => {
+  const testMessage = JSON.stringify({ message: 'Hello from Publisher!' });
+  redisPublisher.publish('game_updates', testMessage, (err, count) => {
+    if (err) {
+      console.error('Publish error:', err);
+    } else {
+      console.log(`Message published to ${count} subscriber(s)`);
+    }
+  });
+}, 1000);
 
 export default resolvers;

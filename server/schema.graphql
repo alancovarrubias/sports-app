@@ -65,3 +65,7 @@ type Query {
 type Mutation {
   login(email: String!, password: String!): AuthPayload!
 }
+
+type Subscription {
+  gameUpdated: Game
+}

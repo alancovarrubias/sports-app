@@ -1,5 +1,16 @@
 import { gql } from '@apollo/client';
 
+export const GAME_UPDATED_SUBSCRIPTION = gql`
+  subscription OnGameUpdated {
+    gameUpdated {
+      id
+      name
+      score
+      status
+    }
+  }
+`;
+
 export const GAMES_QUERY = gql`
   query Games($date: String!) {
     games(date: $date) {
