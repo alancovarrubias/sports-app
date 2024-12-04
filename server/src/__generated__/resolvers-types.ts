@@ -89,6 +89,11 @@ export type Stat = {
   typp?: Maybe<Scalars['Float']['output']>;
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  gameUpdated?: Maybe<Game>;
+};
+
 export type Team = {
   __typename?: 'Team';
   abbr?: Maybe<Scalars['String']['output']>;
@@ -185,6 +190,7 @@ export type ResolversTypes = {
   Season: ResolverTypeWrapper<Season>;
   Stat: ResolverTypeWrapper<Stat>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
+  Subscription: ResolverTypeWrapper<{}>;
   Team: ResolverTypeWrapper<Team>;
   User: ResolverTypeWrapper<User>;
 };
@@ -202,6 +208,7 @@ export type ResolversParentTypes = {
   Season: Season;
   Stat: Stat;
   String: Scalars['String']['output'];
+  Subscription: {};
   Team: Team;
   User: User;
 };
@@ -266,6 +273,10 @@ export type StatResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
+  gameUpdated?: SubscriptionResolver<Maybe<ResolversTypes['Game']>, "gameUpdated", ParentType, ContextType>;
+};
+
 export type TeamResolvers<ContextType = any, ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team']> = {
   abbr?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   city?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -287,6 +298,7 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Season?: SeasonResolvers<ContextType>;
   Stat?: StatResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
   Team?: TeamResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };

@@ -1,5 +1,13 @@
 import { GraphQLError } from "graphql";
+import { RedisPubSub } from 'graphql-redis-subscriptions';
+import Redis from 'ioredis';
 import { Resolvers } from "@app/__generated__/resolvers-types";
+
+const pubsub = new RedisPubSub({
+  publisher: new Redis(),
+  subscriber: new Redis(),
+});
+
 
 const withAuthentication = (resolverFunction) => {
   return async (root, args, context) => {
@@ -22,6 +30,7 @@ const resolveData = ({ data }) => {
   return data.attributes;
 };
 
+const GAME_UPDATED = 'GAME_UPDATED';
 const resolvers: Resolvers = {
   Query: {
     currentUser: withAuthentication((_root, _args, { user }) => {
@@ -58,6 +67,17 @@ const resolvers: Resolvers = {
       return body;
     },
   },
+  Subscription: {
+    gameUpdated: {
+      subscribe: () => pubsub.asyncIterator(GAME_UPDATED),
+    },
+  },
 };
+
+const redisSubscriber = new Redis();
+redisSubscriber.subscribe('game_updates', (message) => {
+  const gameUpdate = JSON.parse(message);
+  pubsub.publish(GAME_UPDATED, { gameUpdated: gameUpdate });
+});
 
 export default resolvers;
