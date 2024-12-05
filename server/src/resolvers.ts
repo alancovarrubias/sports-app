@@ -4,8 +4,14 @@ import Redis from 'ioredis';
 import { Resolvers } from "@app/__generated__/resolvers-types";
 
 const pubsub = new RedisPubSub({
-  publisher: new Redis(),
-  subscriber: new Redis(),
+  publisher: new Redis({
+    host: 'redis',
+    port: 6379,
+  }),
+  subscriber: new Redis({
+    host: 'redis',
+    port: 6379,
+  })
 });
 
 
@@ -69,13 +75,19 @@ const resolvers: Resolvers = {
   },
   Subscription: {
     gameUpdated: {
-      subscribe: () => pubsub.asyncIterator(GAME_UPDATED),
+      subscribe: () => pubsub.asyncIterator(GAME_UPDATED) as unknown as AsyncIterable<any>,
     },
   },
 };
 
-const redisSubscriber = new Redis();
-redisSubscriber.subscribe('game_updates', (message) => {
+const redisSubscriber = new Redis({
+  host: 'redis',
+  port: 6379,
+});
+redisSubscriber.subscribe('game_updates', (err, message: string) => {
+  if (err) {
+    return;
+  }
   const gameUpdate = JSON.parse(message);
   pubsub.publish(GAME_UPDATED, { gameUpdated: gameUpdate });
 });
