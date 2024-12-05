@@ -84,12 +84,33 @@ const redisSubscriber = new Redis({
   host: 'redis',
   port: 6379,
 });
+const redisPublisher = new Redis({
+  host: 'redis',
+  port: 6379,
+});
+console.log('outside')
 redisSubscriber.subscribe('game_updates', (err, message: string) => {
+  console.log('inside')
   if (err) {
-    return;
+    console.error('Redis subscription error:', err);
+  } else {
+    console.log('Subscribed to game_updates');
   }
   const gameUpdate = JSON.parse(message);
   pubsub.publish(GAME_UPDATED, { gameUpdated: gameUpdate });
 });
+redisSubscriber.on('message', (channel, message) => {
+  console.log(`Received message on ${channel}: ${message}`);
+});
+setTimeout(() => {
+  const testMessage = JSON.stringify({ message: 'Hello from Publisher!' });
+  redisPublisher.publish('game_updates', testMessage, (err, count) => {
+    if (err) {
+      console.error('Publish error:', err);
+    } else {
+      console.log(`Message published to ${count} subscriber(s)`);
+    }
+  });
+}, 1000);
 
 export default resolvers;
