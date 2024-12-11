@@ -28,7 +28,16 @@ const Games = (): JSX.Element => {
   const urlParams = new URLSearchParams(window.location.search);
   const date = urlParams.get('date') || todayDate();
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
-  useSubscription(GAME_UPDATED_SUBSCRIPTION);
+  const { data: subData, loading: subLoading } = useSubscription(GAME_UPDATED_SUBSCRIPTION);
+  if (subLoading) {
+    console.log("Subscription is loading...");
+  }
+
+  if (!subLoading && subData) {
+    console.log("Received subscription data:", subData);
+  } else {
+    console.log("No data received yet.");
+  }
   const history = useHistory()
   const onClickCreator = (num) => {
     return () => {

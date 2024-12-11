@@ -76,6 +76,7 @@ const resolvers: Resolvers = {
   Subscription: {
     gameUpdated: {
       subscribe: () => pubsub.asyncIterator(GAME_UPDATED) as unknown as AsyncIterable<any>,
+      resolve: (payload) => payload
     },
   },
 };

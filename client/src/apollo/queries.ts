@@ -4,9 +4,6 @@ export const GAME_UPDATED_SUBSCRIPTION = gql`
   subscription OnGameUpdated {
     gameUpdated {
       id
-      name
-      score
-      status
     }
   }
 `;
