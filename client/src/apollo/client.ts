@@ -2,8 +2,9 @@ import { ApolloClient, ApolloLink, createHttpLink, InMemoryCache } from '@apollo
 import { split } from "@apollo/client";
 import fetch from 'cross-fetch'
 import { getToken } from 'app/utils/auth';
-import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
 
 async function createApolloClient() {
   const response = await fetch('/config.json');
@@ -15,12 +16,11 @@ async function createApolloClient() {
     uri: `${protocol}://${host}/graphql`,
     fetch,
   })
-  const wsLink = new WebSocketLink({
-    uri: "ws://localhost:4000/graphql",
-    options: {
-      reconnect: true,
-    },
-  });
+  const wsLink = new GraphQLWsLink(
+    createClient({
+      url: `ws://${host}/subscriptions`,
+    }),
+  );
   const authLink = new ApolloLink((operation, forward) => {
     const token = getToken()
     if (token) {
