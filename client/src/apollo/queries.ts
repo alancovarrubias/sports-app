@@ -4,6 +4,7 @@ export const GAME_UPDATED_SUBSCRIPTION = gql`
   subscription OnGameUpdated {
     gameUpdated {
       id
+      game_clock
     }
   }
 `;

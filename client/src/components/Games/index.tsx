@@ -28,7 +28,25 @@ const Games = (): JSX.Element => {
   const urlParams = new URLSearchParams(window.location.search);
   const date = urlParams.get('date') || todayDate();
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
-  const { data: subData, loading: subLoading } = useSubscription(GAME_UPDATED_SUBSCRIPTION);
+  const { data: subData, loading: subLoading } = useSubscription(GAME_UPDATED_SUBSCRIPTION, {
+    onSubscriptionData: ({ client, subscriptionData }) => {
+      if (!subscriptionData.data) return;
+
+      const updatedGame = subscriptionData.data.gameUpdated;
+      console.log('inside')
+      console.log(updatedGame)
+
+      client.cache.modify({
+        fields: {
+          games(existingGames = []) {
+            return existingGames.map((game) =>
+              game.id === updatedGame.id ? { ...game, ...updatedGame } : game
+            );
+          },
+        },
+      });
+    },
+  });
   if (subLoading) {
     console.log("Subscription is loading...");
   }

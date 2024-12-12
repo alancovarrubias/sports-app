@@ -45,7 +45,8 @@ async function createApolloClient() {
   );
   const client = new ApolloClient({
     link: splitLink,
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
+    connectToDevTools: true
   })
   return client
 }
