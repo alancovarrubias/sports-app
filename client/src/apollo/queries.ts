@@ -14,7 +14,9 @@ export const GAMES_QUERY = gql`
       id
       date
       start_time
-      kicked
+      kicking_team {
+        ...TeamData
+      }
       game_clock
       away_team {
         ...TeamData

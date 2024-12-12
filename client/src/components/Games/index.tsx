@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useQuery, useSubscription } from '@apollo/client'
 import { GAMES_QUERY } from 'app/apollo/queries'
 import GameTable from './GameTable'
-import { convertTime, kickedTeam, getColor, getOrder, changeDate, todayDate } from './helpers'
+import { convertTime, getColor, getOrder, changeDate, todayDate } from './helpers'
 import _ from 'lodash'
 import { GAME_UPDATED_SUBSCRIPTION } from 'app/apollo/queries'
 
@@ -51,13 +51,14 @@ const Games = (): JSX.Element => {
     window.location.reload();
   }
   if (loading) return <p>Loading...</p>
+  console.log(data)
   const sortedGames = [...data.games].sort((game1, game2) => getOrder(game1.game_clock) - getOrder(game2.game_clock))
   const styledGames = sortedGames.map((game, index) => {
     const gameFinished = game.game_clock.includes('Final')
     return {
       ...game,
       start_time: convertTime(game.start_time),
-      kicked: kickedTeam(game),
+      kicked: game.kicking_team?.name,
       awayTeam: game.away_team,
       homeTeam: game.home_team,
       awayFirstStat: firstStat({ gameFinished, firstHalfStat: game.away_first_half_stat, fullGameStat: game.away_full_game_stat }),

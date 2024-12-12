@@ -74,11 +74,3 @@ export function convertTime(utcDateStr) {
     hour12: true,
   }).format(utcDate);
 }
-
-export function kickedTeam(game) {
-  if (game.kicked == 'away') {
-    return game.away_team.name
-  } else if (game.kicked == 'home') {
-    return game.home_team.name
-  }
-}

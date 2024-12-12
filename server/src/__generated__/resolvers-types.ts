@@ -35,7 +35,7 @@ export type Game = {
   home_full_game_stat?: Maybe<Stat>;
   home_team?: Maybe<Team>;
   id?: Maybe<Scalars['ID']['output']>;
-  kicked?: Maybe<Scalars['String']['output']>;
+  kicking_team?: Maybe<Team>;
   start_time?: Maybe<Scalars['String']['output']>;
 };
 
@@ -231,7 +231,7 @@ export type GameResolvers<ContextType = any, ParentType extends ResolversParentT
   home_full_game_stat?: Resolver<Maybe<ResolversTypes['Stat']>, ParentType, ContextType>;
   home_team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  kicked?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  kicking_team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType>;
   start_time?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
