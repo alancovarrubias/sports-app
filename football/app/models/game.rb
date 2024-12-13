@@ -16,13 +16,13 @@ class Game < ApplicationRecord
 
   VENUES.product(INTERVALS).each do |venue, interval|
     define_method("#{venue}_#{interval}_stat") do
-      stats.find { |stat| stat.interval == interval && stat.team_id == send("#{venue}_team_id") }
+      stats.find { |stat| stat.interval == interval.to_s && stat.team_id == send("#{venue}_team_id") }
     end
   end
 
   INTERVALS.product(BOOKS).each do |interval, book|
     define_method("#{interval}_#{book}") do
-      lines.find { |line| line.interval == interval && line.book == book }
+      lines.find { |line| line.interval == interval.to_s && line.book == book }
     end
   end
 

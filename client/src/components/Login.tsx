@@ -1,19 +1,8 @@
 import React, { useContext, useState } from 'react'
-import { gql } from '@apollo/client';
 import { useMutation } from '@apollo/client'
 import { loginAction } from 'app/actions/userActions';
 import { UserDispatchContext } from 'app/contexts/UserContext';
-
-export const LOGIN_MUTATION = gql`
-  mutation LoginUser($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      user {
-        email
-      }
-      token
-    }
-  }
-`;
+import { LOGIN_MUTATION } from 'app/apollo/queries';
 
 const Login = (): JSX.Element => {
     const [email, setEmail] = useState('')

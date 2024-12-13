@@ -5,9 +5,7 @@ const redisOptions = {
     host: 'redis',
     port: 6379,
 };
-
 const redisClient = new Redis(redisOptions);
-
 const pubsub = new RedisPubSub({
     publisher: redisClient,
     subscriber: redisClient,

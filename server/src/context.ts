@@ -9,8 +9,7 @@ export interface Context {
 async function getUser(token) {
   const res = await dataSources.authApi.verifyToken(token);
   if (res.status === 200) {
-    const body = await res.json();
-    return body;
+    return await res.json();
   }
 }
 

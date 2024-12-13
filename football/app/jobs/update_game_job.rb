@@ -11,12 +11,14 @@ class UpdateGameJob < ApplicationJob
       away_team: @season.teams.find_or_create_by(@boxscore_data[:away_team].slice(*TEAM_ATTRIBUTES)),
       home_team: @season.teams.find_or_create_by(@boxscore_data[:home_team].slice(*TEAM_ATTRIBUTES))
     )
-    update
+    update_all
+    @game.update(calculated_at: DateTime.now)
   end
 
-  def update
-    update_game && update_stats && update_kicked
-    @game.update(calculated_at: DateTime.now)
+  def update_all
+    update_game
+    update_stats
+    update_kicked
   end
 
   def update_game

@@ -1,9 +1,10 @@
 import React from 'react';
 import { GraphQLError } from 'graphql';
-import Login, { LOGIN_MUTATION } from 'app/components/Login'
+import Login from 'app/components/Login'
 import { Paths } from 'app/const'
 import { screen, fireEvent, waitFor, renderWithContext } from '@test-utils/index';
 import { getToken, clearToken } from 'app/utils/auth';
+import { LOGIN_MUTATION } from 'app/apollo/queries';
 
 const mockPush = jest.fn()
 jest.mock('react-router-dom', () => ({

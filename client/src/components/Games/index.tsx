@@ -69,7 +69,6 @@ const Games = (): JSX.Element => {
     window.location.reload();
   }
   if (loading) return <p>Loading...</p>
-  console.log(data)
   const sortedGames = [...data.games].sort((game1, game2) => getOrder(game1.game_clock) - getOrder(game2.game_clock))
   const styledGames = sortedGames.map((game, index) => {
     const gameFinished = game.game_clock.includes('Final')

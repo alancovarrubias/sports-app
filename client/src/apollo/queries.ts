@@ -1,5 +1,16 @@
 import { gql } from '@apollo/client';
 
+export const LOGIN_MUTATION = gql`
+  mutation LoginUs($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      user {
+        email
+      }
+      token
+    }
+  }
+`;
+
 export const GAME_UPDATED_SUBSCRIPTION = gql`
   subscription OnGameUpdated {
     gameUpdated {
