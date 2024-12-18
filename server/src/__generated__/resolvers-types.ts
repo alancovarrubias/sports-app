@@ -91,7 +91,7 @@ export type Stat = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  gameUpdated?: Maybe<Game>;
+  updatedGame?: Maybe<Game>;
 };
 
 export type Team = {
@@ -274,7 +274,7 @@ export type StatResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
-  gameUpdated?: SubscriptionResolver<Maybe<ResolversTypes['Game']>, "gameUpdated", ParentType, ContextType>;
+  updatedGame?: SubscriptionResolver<Maybe<ResolversTypes['Game']>, "updatedGame", ParentType, ContextType>;
 };
 
 export type TeamResolvers<ContextType = any, ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team']> = {

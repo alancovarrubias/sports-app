@@ -13,9 +13,17 @@ export const LOGIN_MUTATION = gql`
 
 export const GAME_UPDATED_SUBSCRIPTION = gql`
   subscription OnGameUpdated {
-    gameUpdated {
+    updatedGame {
       id
       game_clock
+      away_full_game_stat {
+        id
+        score
+      }
+      home_full_game_stat {
+        id
+        score
+      }
     }
   }
 `;

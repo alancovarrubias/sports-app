@@ -28,14 +28,10 @@ const Games = (): JSX.Element => {
   const urlParams = new URLSearchParams(window.location.search);
   const date = urlParams.get('date') || todayDate();
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
-  const { data: subData, loading: subLoading } = useSubscription(GAME_UPDATED_SUBSCRIPTION, {
-    onSubscriptionData: ({ client, subscriptionData }) => {
-      if (!subscriptionData.data) return;
-
-      const updatedGame = subscriptionData.data.gameUpdated;
-      console.log('inside')
-      console.log(updatedGame)
-
+  useSubscription(GAME_UPDATED_SUBSCRIPTION, {
+    onSubscriptionData: ({ client, subscriptionData: { data } }) => {
+      if (!data) return;
+      const { updatedGame } = data;
       client.cache.modify({
         fields: {
           games(existingGames = []) {
@@ -47,15 +43,6 @@ const Games = (): JSX.Element => {
       });
     },
   });
-  if (subLoading) {
-    console.log("Subscription is loading...");
-  }
-
-  if (!subLoading && subData) {
-    console.log("Received subscription data:", subData);
-  } else {
-    console.log("No data received yet.");
-  }
   const history = useHistory()
   const onClickCreator = (num) => {
     return () => {

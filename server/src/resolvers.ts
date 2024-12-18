@@ -50,8 +50,8 @@ const resolvers: Resolvers = {
     },
   },
   Subscription: {
-    gameUpdated: {
-      subscribe: () => pubsub.asyncIterator('GAME_UPDATED') as unknown as AsyncIterable<any>,
+    updatedGame: {
+      subscribe: () => pubsub.asyncIterator('UPDATED_GAME') as unknown as AsyncIterable<any>,
       resolve: payload => payload
     },
   },
