@@ -11,14 +11,15 @@ class UpdateGameJob < ApplicationJob
       away_team: @season.teams.find_or_create_by!(@boxscore_data[:away_team].slice(*TEAM_ATTRIBUTES)),
       home_team: @season.teams.find_or_create_by!(@boxscore_data[:home_team].slice(*TEAM_ATTRIBUTES))
     )
-    update_all
-    @game.update(calculated_at: DateTime.now)
+    update
   end
 
-  def update_all
+  def update
     update_game
     update_stats
     update_kicked
+    @game.update(calculated_at: DateTime.now)
+    RedisPublisher.publish('GAME_UPDATED', GameSerializer.new(@game).serializable_hash[:data][:attributes])
   end
 
   def update_game
