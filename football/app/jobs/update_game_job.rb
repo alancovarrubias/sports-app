@@ -5,11 +5,11 @@ class UpdateGameJob < ApplicationJob
   def perform(espn_id, season_id)
     @season = Season.find(season_id)
     @boxscore_data = Crawler.boxscore(espn_id: espn_id, league: @season.league)
-    @game = Game.find_or_create_by(
+    @game = Game.find_or_create_by!(
       espn_id: espn_id,
       season: @season,
-      away_team: @season.teams.find_or_create_by(@boxscore_data[:away_team].slice(*TEAM_ATTRIBUTES)),
-      home_team: @season.teams.find_or_create_by(@boxscore_data[:home_team].slice(*TEAM_ATTRIBUTES))
+      away_team: @season.teams.find_or_create_by!(@boxscore_data[:away_team].slice(*TEAM_ATTRIBUTES)),
+      home_team: @season.teams.find_or_create_by!(@boxscore_data[:home_team].slice(*TEAM_ATTRIBUTES))
     )
     update_all
     @game.update(calculated_at: DateTime.now)
@@ -24,7 +24,7 @@ class UpdateGameJob < ApplicationJob
   def update_game
     start_time = DateTime.parse(@boxscore_data[:start_time])
     is_second_half = @game.halftime? && @boxscore_data[:game_clock] != GAME_CLOCKS[:halftime]
-    @game.update(
+    @game.update!(
       date: start_time.pacific_time_date,
       start_time: start_time,
       game_clock: is_second_half ? GAME_CLOCKS[:second_half] : @boxscore_data[:game_clock]
@@ -41,10 +41,10 @@ class UpdateGameJob < ApplicationJob
   def update_stat(team_name)
     team = @game.send(team_name)
     stat_data = build_stat_data(@boxscore_data[team_name])
-    @game.stats.find_or_create_by(team: team, interval: :full_game).update(stat_data)
+    @game.stats.find_or_create_by!(team: team, interval: :full_game).update(stat_data)
     return unless @boxscore_data[:game_clock] == GAME_CLOCKS[:halftime]
 
-    @game.stats.find_or_create_by(team: team, interval: :first_half).update(stat_data)
+    @game.stats.find_or_create_by!(team: team, interval: :first_half).update(stat_data)
   end
 
   def build_stat_data(team_data)
@@ -61,6 +61,6 @@ class UpdateGameJob < ApplicationJob
       league: @season.league
     )
     kicking_team = playbyplay[:received] == @game.home_team.name ? @game.home_team : @game.away_team
-    @game.update(kicking_team: kicking_team)
+    @game.update!(kicking_team: kicking_team)
   end
 end
