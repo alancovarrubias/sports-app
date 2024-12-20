@@ -15,14 +15,6 @@ const withAuthentication = (resolverFunction) => {
     return await resolverFunction(root, args, context);
   };
 };
-const mapAttributes = (attributes) => attributes?.data?.attributes || {}
-const mapGameAttributes = (attributes) => ({
-  ...attributes,
-  away_full_game_stat: mapAttributes(attributes.away_full_game_stat),
-  home_full_game_stat: mapAttributes(attributes.home_full_game_stat),
-  away_first_half_stat: mapAttributes(attributes.away_first_half_stat),
-  home_first_half_stat: mapAttributes(attributes.home_first_half_stat)
-});
 const resolvers: Resolvers = {
   Query: {
     currentUser: withAuthentication((_root, _args, { user }) => {
@@ -32,14 +24,15 @@ const resolvers: Resolvers = {
       async (_root, _args, { dataSources: { footballApi } }) => {
         const res = await footballApi.fetchSeasons();
         const { data } = await res.json();
-        return data.map((season) => season.attributes);
+        return data
       }
     ),
     games: withAuthentication(
       async (_root, { date }, { dataSources: { footballApi } }) => {
         const res = await footballApi.fetchGames(date);
-        const { data } = await res.json();
-        return data.map(({ attributes }) => mapGameAttributes(attributes));
+        const data = await res.json();
+        console.log(data)
+        return data
       }
     ),
   },

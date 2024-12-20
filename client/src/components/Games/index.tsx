@@ -1,11 +1,10 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useQuery, useSubscription } from '@apollo/client'
-import { GAMES_QUERY } from 'app/apollo/queries'
+import { GAMES_QUERY, GAME_UPDATED_SUBSCRIPTION } from 'app/apollo/queries'
 import GameTable from './GameTable'
 import { convertTime, getColor, getOrder, changeDate, todayDate } from './helpers'
 import _ from 'lodash'
-import { GAME_UPDATED_SUBSCRIPTION } from 'app/apollo/queries'
 
 function firstStat({ gameFinished, firstHalfStat, fullGameStat }) {
   if (gameFinished) {

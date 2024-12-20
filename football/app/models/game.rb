@@ -1,4 +1,5 @@
 class Game < ApplicationRecord
+  TEAM_ASSOCIATIONS = %i[away_team home_team kicking_team].freeze
   belongs_to :season
   belongs_to :away_team, class_name: 'Team'
   belongs_to :home_team, class_name: 'Team'
@@ -31,5 +32,14 @@ class Game < ApplicationRecord
     return true unless calculated_at
 
     enqueued_at > calculated_at
+  end
+
+  def as_json(options = {})
+    super(options.merge(include: TEAM_ASSOCIATIONS)).merge(
+      'away_full_game_stat' => away_full_game_stat || {},
+      'home_full_game_stat' => home_full_game_stat || {},
+      'away_first_half_stat' => away_first_half_stat || {},
+      'home_first_half_stat' => home_first_half_stat || {}
+    )
   end
 end

@@ -1,12 +1,10 @@
 import fetch from "node-fetch";
 
 const buildAuthUrl = (path) => "http://auth:3000" + path;
-export const VERIFY_URL = buildAuthUrl("/auth/verify");
-export const LOGIN_URL = buildAuthUrl("/auth/login");
-
 export default class AuthApi {
   verifyToken = (token) => {
-    return fetch(VERIFY_URL, {
+    const verifyTokenUrl = buildAuthUrl("/auth/verify")
+    return fetch(verifyTokenUrl, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -14,7 +12,8 @@ export default class AuthApi {
   };
 
   attemptLogin = (args) => {
-    return fetch(LOGIN_URL, {
+    const loginUrl = buildAuthUrl("/auth/login")
+    return fetch(loginUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

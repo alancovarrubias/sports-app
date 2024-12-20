@@ -4,12 +4,12 @@ class GamesController < ApplicationController
 
   # GET /games
   def index
-    render json: GameSerializer.new(@games).serializable_hash
+    render json: @games
   end
 
   # GET /games/1
   def show
-    render json: GameSerializer.new(@game).serializable_hash
+    render @game
   end
 
   def set_games

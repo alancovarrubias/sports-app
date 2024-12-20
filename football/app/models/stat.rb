@@ -43,6 +43,21 @@ class Stat < ApplicationRecord
     float_div(total_yards - longest_rush - longest_pass, total_plays - 2)
   end
 
+  def as_json(options = {})
+    super(options).merge(
+      'c_att' => c_att,
+      'total_plays' => total_plays,
+      'total_yards' => total_yards,
+      'ave_per_car' => ave_per_att,
+      'ave_per_att' => ave_per_att,
+      'ave_per_play' => ave_per_play,
+      'typa' => typa,
+      'typai' => typai,
+      'typc' => typc,
+      'typp' => typp
+    )
+  end
+
   private
 
   def float_div(num, denom, round = 2)

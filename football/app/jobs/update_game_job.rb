@@ -19,9 +19,7 @@ class UpdateGameJob < ApplicationJob
     update_stats
     update_kicked
     @game.update(calculated_at: DateTime.now)
-    game_attributes = GameSerializer.new(@game).serializable_hash[:data][:attributes]
-    game_attributes[:away_full_game_stat] = game_attributes[:away_full_game_stat].serializable_hash[:data][:attributes]
-    RedisPublisher.publish('UPDATED_GAME', game_attributes)
+    RedisPublisher.publish('UPDATED_GAME', @game)
   end
 
   def update_game
