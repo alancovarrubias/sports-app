@@ -71,7 +71,7 @@ services:
     volumes:
       - ./crawler:/project
     ports:
-      - "5002:5000"
+      - "5000:5000"
   db:
     image: postgres:15
     volumes:
