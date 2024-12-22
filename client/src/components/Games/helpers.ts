@@ -25,7 +25,7 @@ export const getColor = (game_clock, index) => {
       return oddEven ? 'red' : 'palevioletred'
     case /(1st|2nd)/.test(game_clock):
       return oddEven ? 'yellow' : 'lightyellow'
-    case /Second Half/.test(game_clock):
+    case /(Second Half|3rd|4th)/.test(game_clock):
       return oddEven ? 'orangered' : 'orange'
     case /Not Started/.test(game_clock):
       return oddEven ? 'rgb(156,225,104)' : 'rgb(147,213,186)'

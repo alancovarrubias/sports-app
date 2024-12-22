@@ -1,5 +1,11 @@
 class Game < ApplicationRecord
-  TEAM_ASSOCIATIONS = %i[away_team home_team kicking_team].freeze
+  TEAM_ASSOCIATIONS = %w[away_team home_team kicking_team].freeze
+  DERIVED_ATTRIBUTES = %w[
+    away_full_game_stat
+    home_full_game_stat
+    away_first_half_stat
+    home_first_half_stat
+  ].freeze
   belongs_to :season
   belongs_to :away_team, class_name: 'Team'
   belongs_to :home_team, class_name: 'Team'
@@ -36,10 +42,7 @@ class Game < ApplicationRecord
 
   def as_json(options = {})
     super(options.merge(include: TEAM_ASSOCIATIONS)).merge(
-      'away_full_game_stat' => away_full_game_stat || {},
-      'home_full_game_stat' => home_full_game_stat || {},
-      'away_first_half_stat' => away_first_half_stat || {},
-      'home_first_half_stat' => home_first_half_stat || {}
+      DERIVED_ATTRIBUTES.index_with { |attr| send(attr) || {} }
     )
   end
 end

@@ -1,4 +1,16 @@
 class Stat < ApplicationRecord
+  DERIVED_ATTRIBUTES = %w[
+    c_att
+    total_plays
+    total_yards
+    ave_per_car
+    ave_per_att
+    ave_per_play
+    typa
+    typai
+    typc
+    typp
+  ].freeze
   belongs_to :game
   belongs_to :team
 
@@ -45,16 +57,7 @@ class Stat < ApplicationRecord
 
   def as_json(options = {})
     super(options).merge(
-      'c_att' => c_att,
-      'total_plays' => total_plays,
-      'total_yards' => total_yards,
-      'ave_per_car' => ave_per_att,
-      'ave_per_att' => ave_per_att,
-      'ave_per_play' => ave_per_play,
-      'typa' => typa,
-      'typai' => typai,
-      'typc' => typc,
-      'typp' => typp
+      DERIVED_ATTRIBUTES.index_with { |attr| send(attr) }
     )
   end
 
