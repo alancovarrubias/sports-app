@@ -10,7 +10,10 @@ class LinesScraper(BaseScraper):
 
     def get_week(self):
         week_text = self.find_element('[data-content="#week-picker-week"]').text
-        return re.search(r'\d{1,2}$', week_text).group()
+        search = re.search(r'\d{1,2}$', week_text)
+        if search is None:
+            return  week_text
+        return search.group()
 
     def get_games(self):
         event_cards = self.find_elements('.event-card')

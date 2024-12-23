@@ -3,7 +3,8 @@ class ScheduleLinesJob < ApplicationJob
 
   def perform
     LEAGUES.each do |league|
-      games = Season.find_by(league: league).games
+      season = Season.find_by(league: league)
+      games = Game.where(season_id: season.id)
       opener_games = games.not_started.reject(&:full_game_opener).map(&:id)
       closer_games = games.started.reject(&:full_game_closer).map(&:id)
       all_games = opener_games + closer_games

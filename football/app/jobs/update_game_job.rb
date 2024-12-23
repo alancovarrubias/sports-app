@@ -2,14 +2,15 @@ class UpdateGameJob < ApplicationJob
   queue_as :default
 
   TEAM_ATTRIBUTES = %i[name abbr].freeze
-  def perform(espn_id, season_id)
+  def perform(espn_id, season_id, week)
     @season = Season.find(season_id)
     @boxscore_data = Crawler.boxscore(espn_id: espn_id, league: @season.league)
     @game = Game.find_or_create_by!(
       espn_id: espn_id,
       season: @season,
       away_team: @season.teams.find_or_create_by!(@boxscore_data[:away_team].slice(*TEAM_ATTRIBUTES)),
-      home_team: @season.teams.find_or_create_by!(@boxscore_data[:home_team].slice(*TEAM_ATTRIBUTES))
+      home_team: @season.teams.find_or_create_by!(@boxscore_data[:home_team].slice(*TEAM_ATTRIBUTES)),
+      week: week
     )
     update
   end

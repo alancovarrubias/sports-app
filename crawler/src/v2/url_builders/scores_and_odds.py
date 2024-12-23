@@ -14,5 +14,3 @@ class ScoresAndOddsUrlBuilder:
             return 'nfl'
         elif 'cfb' in self.league:
             return 'ncaaf'
-
-    

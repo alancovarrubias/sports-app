@@ -3,10 +3,10 @@ module Constants
     not_started: 'Not Started',
     halftime: 'Halftime',
     second_half: 'Second Half',
-    finished: 'Final',
+    finished: 'Final'
   }.freeze
   VENUES = %i[away home].freeze
   INTERVALS = %i[full_game first_half].freeze
   BOOKS = %i[opener closer].freeze
-  LEAGUES = %i[nfl cfb80 cfb81].freeze
+  LEAGUES = %w[nfl cfb80 cfb81].freeze
 end
