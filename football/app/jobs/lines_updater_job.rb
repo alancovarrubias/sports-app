@@ -11,8 +11,8 @@ class LinesUpdaterJob < ApplicationJob
       )
       next unless @game
 
-      build_lines(game_data, book: :opener, interval: :full_game) if opener_ids.include?(@game.id)
-      build_lines(game_data, book: :closer, interval: :full_game) if closer_ids.include?(@game.id)
+      build_lines(game_data, book: 'opener', interval: 'full_game') if opener_ids.include?(@game.id)
+      build_lines(game_data, book: 'closer', interval: 'full_game') if closer_ids.include?(@game.id)
     end
   end
 
