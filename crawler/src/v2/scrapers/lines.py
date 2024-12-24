@@ -12,16 +12,17 @@ class LinesScraper(BaseScraper):
         week_text = self.find_element('[data-content="#week-picker-week"]').text
         search = re.search(r'\d{1,2}$', week_text)
         if search is None:
-            return  week_text
+            return  week_text.upper()
         return search.group()
 
     def get_games(self):
         event_cards = self.find_elements(".event-card")
-        return [self.parse_game(card) for card in event_cards]
+        games_data = [self.parse_game(card) for card in event_cards]
+        return [game for game in games_data if game is not None]
 
     def parse_game(self, event_card):
         if event_card.contains_element(".delayed"):
-            return {}
+            return None
         event_card_rows = event_card.find_elements(".event-card-row")
         return {
             "away_team": self.find_team_data(event_card_rows[0]),

@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2023_11_02_034757) do
     t.bigint "home_team_id"
     t.bigint "kicking_team_id"
     t.integer "espn_id"
-    t.integer "week"
+    t.string "week"
     t.date "date"
     t.datetime "start_time"
     t.string "game_clock", default: ""

@@ -6,7 +6,7 @@ class CreateGames < ActiveRecord::Migration[6.0]
       t.references :home_team
       t.references :kicking_team
       t.integer :espn_id
-      t.integer :week
+      t.string :week
       t.date :date
       t.datetime :start_time
       t.string :game_clock, default: ''
