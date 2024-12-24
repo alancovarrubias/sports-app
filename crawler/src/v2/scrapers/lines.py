@@ -16,10 +16,12 @@ class LinesScraper(BaseScraper):
         return search.group()
 
     def get_games(self):
-        event_cards = self.find_elements('.event-card')
-        return list(map(lambda card: self.parse_game(card), event_cards))
+        event_cards = self.find_elements(".event-card")
+        return [self.parse_game(card) for card in event_cards]
 
     def parse_game(self, event_card):
+        if event_card.contains_element(".delayed"):
+            return {}
         event_card_rows = event_card.find_elements(".event-card-row")
         return {
             "away_team": self.find_team_data(event_card_rows[0]),

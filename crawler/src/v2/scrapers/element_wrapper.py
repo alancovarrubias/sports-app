@@ -6,6 +6,10 @@ class ElementWrapper:
     def __init__(self, element):
         self.element = element
 
+    def contains_element(self, selector):
+        elements = self.element.find_elements(By.CSS_SELECTOR, selector)
+        return True if elements else False
+
     def find_elements(self, selector):
         return [ElementWrapper(el) for el in self.element.find_elements(By.CSS_SELECTOR, selector)]
 
