@@ -34,12 +34,12 @@ export const DATA_ELEMENTS = [
   },
   {
     header: 'FULL GAME OPENER',
-    key: 'full_game_opener',
+    key: 'fullGameOpener',
     rowSpan: 2
   },
   {
     header: 'FULL GAME CLOSER',
-    key: 'full_game_closer',
+    key: 'fullGameCloser',
     rowSpan: 2
   },
   {

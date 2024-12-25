@@ -23,10 +23,18 @@ function secondStat({ gameFinished, fullGameStat }) {
   return {}
 }
 
+function lineText(team, line) {
+  if (line.spread && line.total) {
+    return `${team.name} ${line.spread} and ${line.total}`
+  }
+}
+
+
 const Games = (): JSX.Element => {
   const urlParams = new URLSearchParams(window.location.search);
   const date = urlParams.get('date') || todayDate();
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
+  console.log(data)
   useSubscription(GAME_UPDATED_SUBSCRIPTION, {
     onSubscriptionData: ({ client, subscriptionData: { data } }) => {
       if (!data) return;
@@ -68,6 +76,8 @@ const Games = (): JSX.Element => {
       awaySecondStat: secondStat({ gameFinished, fullGameStat: game.away_full_game_stat }),
       homeFirstStat: firstStat({ gameFinished, firstHalfStat: game.home_first_half_stat, fullGameStat: game.home_full_game_stat }),
       homeSecondStat: secondStat({ gameFinished, fullGameStat: game.home_full_game_stat }),
+      fullGameOpener: lineText(game.home_team, game.full_game_opener),
+      fullGameCloser: lineText(game.home_team, game.full_game_closer),
       style: { backgroundColor: getColor(game.game_clock, index) }
     }
   })

@@ -56,11 +56,14 @@ export const GAMES_QUERY = gql`
       home_first_half_stat {
         ...StatData
       }
-      full_game_opener
-      full_game_closer
+      full_game_opener {
+        ...LineData
+      }
+      full_game_closer {
+        ...LineData
+      }
     }
   }
-
   fragment TeamData on Team {
     id
     name
@@ -84,5 +87,11 @@ export const GAMES_QUERY = gql`
     typai
     typc
     typp
+  }
+
+  fragment LineData on Line {
+    id
+    total
+    spread
   }
 `

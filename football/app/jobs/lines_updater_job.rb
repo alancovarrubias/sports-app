@@ -11,14 +11,14 @@ class LinesUpdaterJob < ApplicationJob
       )
       next unless @game
 
-      build_lines(game_data, book: :opener, interval: :full_game) if opener_ids.include?(@game.id)
-      build_lines(game_data, book: :closer, interval: :full_game) if closer_ids.include?(@game.id)
+      build_lines(game_data, :opener, :full_game) if opener_ids.include?(@game.id)
+      build_lines(game_data, :closer, :full_game) if closer_ids.include?(@game.id)
     end
   end
 
-  def build_lines(game_data, options)
-    line_data = game_data[options[:interval]]
+  def build_lines(game_data, book, interval)
+    line_data = game_data[interval]
     line_data[:total].slice!(0)
-    @game.lines.find_or_create_by(options).update(line_data)
+    @game.lines.find_or_create_by(book: book, interval: interval).update(line_data)
   end
 end

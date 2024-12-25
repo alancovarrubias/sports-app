@@ -42,8 +42,14 @@ type Game {
   home_full_game_stat: Stat
   away_first_half_stat: Stat
   home_first_half_stat: Stat
-  full_game_opener: String
-  full_game_closer: String
+  full_game_opener: Line
+  full_game_closer: Line
+}
+
+type Line {
+  id: ID
+  spread: Float
+  total: Float
 }
 
 type User {

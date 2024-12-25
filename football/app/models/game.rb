@@ -5,6 +5,8 @@ class Game < ApplicationRecord
     home_full_game_stat
     away_first_half_stat
     home_first_half_stat
+    full_game_opener
+    full_game_closer
   ].freeze
   belongs_to :season
   belongs_to :away_team, class_name: 'Team'

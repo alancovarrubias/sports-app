@@ -31,7 +31,6 @@ const resolvers: Resolvers = {
       async (_root, { date }, { dataSources: { footballApi } }) => {
         const res = await footballApi.fetchGames(date);
         const data = await res.json();
-        console.log(data)
         return data
       }
     ),
