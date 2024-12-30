@@ -11,8 +11,4 @@ class ScheduleLinesJob < ApplicationJob
       LinesUpdaterJob.perform_later(league, opener_games, closer_games) unless all_games.empty?
     end
   end
-
-  after_perform do
-    self.class.set(wait: 5.minutes).perform_later
-  end
 end
