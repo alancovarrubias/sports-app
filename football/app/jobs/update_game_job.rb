@@ -1,18 +1,28 @@
 class UpdateGameJob < ApplicationJob
   queue_as :default
 
-  TEAM_ATTRIBUTES = %i[name abbr].freeze
   def perform(espn_id, season_id, week)
     @season = Season.find(season_id)
     @boxscore_data = Crawler.boxscore(espn_id: espn_id, league: @season.league)
     @game = Game.find_or_create_by!(
       espn_id: espn_id,
       season: @season,
-      away_team: @season.teams.find_or_create_by!(@boxscore_data[:away_team].slice(*TEAM_ATTRIBUTES)),
-      home_team: @season.teams.find_or_create_by!(@boxscore_data[:home_team].slice(*TEAM_ATTRIBUTES)),
+      away_team: build_team(:away_team),
+      home_team: build_team(:home_team),
       week: week
     )
     update
+  end
+
+  def build_team(team)
+    team_data = @boxscore_data[team]
+    name = team_data.delete(:name)
+    abbr = team_data.delete(:abbr)
+    team = @season.teams.find_or_create_by!(name: name)
+    return team if team.abbr || abbr.blank?
+
+    team.update!(abbr: abbr)
+    team
   end
 
   def update
@@ -51,7 +61,7 @@ class UpdateGameJob < ApplicationJob
 
   def build_stat_data(team_data)
     team_data[:completions], team_data[:attempts] = team_data.delete(:comp_att).split('/')
-    team_data.except(*TEAM_ATTRIBUTES).transform_values(&:to_i)
+    team_data.transform_values(&:to_i)
   end
 
   def update_kicked
