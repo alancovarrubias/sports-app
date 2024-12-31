@@ -92,6 +92,12 @@ export const GAME: Game = {
   home_full_game_stat: buildStat(),
   away_first_half_stat: buildStat(),
   home_first_half_stat: buildStat(),
-  full_game_opener: "Full Game Opener",
-  full_game_closer: "Full Game Closer",
+  full_game_opener: {
+    spread: 1.5,
+    total: 100
+  },
+  full_game_closer: {
+    spread: 2.5,
+    total: 80
+  }
 };
