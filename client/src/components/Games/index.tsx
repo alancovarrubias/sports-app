@@ -34,11 +34,11 @@ const Games = (): JSX.Element => {
   const urlParams = new URLSearchParams(window.location.search);
   const date = urlParams.get('date') || todayDate();
   const { data, loading } = useQuery(GAMES_QUERY, { variables: { date } })
-  console.log(data)
   useSubscription(GAME_UPDATED_SUBSCRIPTION, {
     onSubscriptionData: ({ client, subscriptionData: { data } }) => {
       if (!data) return;
       const { updatedGame } = data;
+      console.log(updatedGame)
       client.cache.modify({
         fields: {
           games(existingGames = []) {
