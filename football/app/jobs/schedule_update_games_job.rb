@@ -1,5 +1,6 @@
 class ScheduleUpdateGamesJob < ApplicationJob
   queue_as :default
+  sidekiq_options lock: :until_executed
 
   def perform
     games_needing_update.each do |game|

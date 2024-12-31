@@ -1,5 +1,6 @@
 class ScheduleLinesJob < ApplicationJob
   queue_as :default
+  sidekiq_options lock: :until_executed
 
   def perform
     LEAGUES.each do |league|
