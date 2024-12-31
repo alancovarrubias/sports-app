@@ -6,7 +6,7 @@ class ScheduleUpdateGamesJob < ApplicationJob
     games_needing_update.each do |game|
       ActiveRecord::Base.transaction do
         game.update!(enqueued_at: DateTime.now)
-        UpdateGameJob.perform_later(game.espn_id, game.season_id)
+        UpdateGameJob.perform_later(game.espn_id, game.season_id, game.week)
       end
     end
   end
