@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+CreateGamesJob.perform_later
+ScheduleUpdateGamesJob.perform_later
+ScheduleLinesJob.perform_later
