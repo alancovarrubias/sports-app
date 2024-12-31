@@ -24,6 +24,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'oj'
 gem 'sidekiq'
 gem 'sidekiq-cron'
+gem 'sidekiq-unique-jobs'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
