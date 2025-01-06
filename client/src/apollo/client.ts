@@ -11,6 +11,7 @@ async function createApolloClient() {
   const config = await response.json();
   const host = config.HOST;
   const protocol = config.PROTOCOL;
+  const ws_protocol = config.WS_PROTOCOL;
 
   const httpLink = createHttpLink({
     uri: `${protocol}://${host}/graphql`,
@@ -18,7 +19,7 @@ async function createApolloClient() {
   })
   const wsLink = new GraphQLWsLink(
     createClient({
-      url: `ws://${host}/subscriptions`,
+      url: `${ws_protocol}://${host}/subscriptions`,
     }),
   );
   const authLink = new ApolloLink((operation, forward) => {
