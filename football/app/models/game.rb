@@ -47,4 +47,8 @@ class Game < ApplicationRecord
       DERIVED_ATTRIBUTES.index_with { |attr| send(attr) || {} }
     )
   end
+
+  def notify_update
+    RedisPublisher.publish('UPDATED_GAME', self)
+  end
 end

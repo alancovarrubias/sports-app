@@ -29,8 +29,8 @@ class UpdateGameJob < ApplicationJob
     update_game
     update_stats
     update_kicked
-    @game.update(calculated_at: DateTime.now)
-    RedisPublisher.publish('UPDATED_GAME', @game)
+    @game.update!(calculated_at: DateTime.now)
+    @game.notify_update
   end
 
   def update_game
