@@ -5,5 +5,5 @@ COPY . .
 RUN yarn
 RUN yarn build
 
-FROM --platform=linux/amd64 nginx:latest
+FROM --platform=linux/amd64 jonasal/nginx-certbot:latest
 COPY --from=build /app/build /usr/share/nginx/html
