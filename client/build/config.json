@@ -1,0 +1,5 @@
+{
+    "HOST": "localhost:4000",
+    "PROTOCOL": "http",
+    "WS_PROTOCOL": "ws"
+}
