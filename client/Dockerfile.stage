@@ -1,9 +1,0 @@
-# build environment
-FROM --platform=linux/amd64 node:lts-alpine as build
-WORKDIR /app
-COPY . .
-RUN yarn
-RUN yarn build
-
-FROM --platform=linux/amd64 jonasal/nginx-certbot:latest
-COPY --from=build /app/build /usr/share/nginx/html
