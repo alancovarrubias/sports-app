@@ -1,2 +1,7 @@
 docker-compose.yml
+docker-compose.cert.yml
 secrets.env
+certs.env
+client/build
+nginx
+secrets
