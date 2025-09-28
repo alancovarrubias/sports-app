@@ -6,29 +6,16 @@ class BoxscoreScraper(BaseScraper):
     HOME_INDEX = 1
 
     def parse_data(self):
-        if "boxscore" in self.driver.current_url and len(self.categories()) > 0:
-            return {
-                "start_time": self.get_start_time(),
-                "game_clock": self.get_game_clock(),
-                "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),
-                "home_team": self.team_stats(BoxscoreScraper.HOME_INDEX),
-            }
+        if "boxscore" not in self.driver.current_url:
+            return {}
         return {
-            "start_time": self.get_start_time(),
-            "game_clock": "Not Started",
-            "away_team": {
-                "name": self.get_team_name(BoxscoreScraper.AWAY_INDEX),
-            },
-            "home_team": {
-                "name": self.get_team_name(BoxscoreScraper.HOME_INDEX),
-            }
+            "game_clock": self.get_game_clock(),
+            "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),
+            "home_team": self.team_stats(BoxscoreScraper.HOME_INDEX)
         }
 
-    def get_start_time(self):
-        return self.wait_for(".GameInfo__Meta :first-child").text
-
     def get_game_clock(self):
-        return self.find_element(".Gamestrip__Time").text
+        return self.wait_for(".Gamestrip__Container").text.split("\n")[4]
 
     def team_stats(self, away_home):
         return {
@@ -48,12 +35,8 @@ class BoxscoreScraper(BaseScraper):
         return re.search(r'\d{1,2}', scores[away_home].text).group()
 
     def get_team_name(self, away_home):
-        team_logos = self.find_elements(".Gamestrip__Logo")
-        team_name = team_logos[away_home].get_attribute("alt")
-        if team_name:
-            return team_name
-        team_logos = self.find_elements(".Gamestrip__Truncate")
-        return team_logos[away_home].text
+        index = 0 if away_home == BoxscoreScraper.AWAY_INDEX else 6
+        return self.wait_for(".Gamestrip__Container").text.split("\n")[index]
 
     def get_abbr(self, away_home):
         return self.get_scores(away_home)[0]

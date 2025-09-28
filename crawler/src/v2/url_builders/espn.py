@@ -6,6 +6,9 @@ class EspnUrlBuilder:
     def boxscore(self, game_id):
         return self.build_url(f"/boxscore/_/gameId/{game_id}")
 
+    def gamecast(self, game_id):
+        return self.build_url(f"/game/_/gameId/{game_id}")
+
     def play_by_play(self, game_id):
         return self.build_url(f"/playbyplay/_/gameId/{game_id}")
 
