@@ -9,13 +9,16 @@ class BoxscoreScraper(BaseScraper):
         if "boxscore" not in self.driver.current_url:
             return {}
         return {
-            "game_clock": self.get_game_clock(),
-            "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),
-            "home_team": self.team_stats(BoxscoreScraper.HOME_INDEX)
+            "game_clock": self.get_game_clock()
         }
 
     def get_game_clock(self):
-        return self.wait_for(".Gamestrip__Container").text.split("\n")[4]
+        container = self.wait_for(".Gamestrip__Container").text.split("\n")
+        game_clock = container[4]
+        if ':' in game_clock:
+            quarter = container[6]
+            return f"{game_clock} {quarter}"
+        return game_clock
 
     def team_stats(self, away_home):
         return {
