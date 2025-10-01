@@ -6,6 +6,7 @@ class GamecastScraper(BaseScraper):
     HOME_INDEX = 1
 
     def parse_data(self):
+        print(self.driver.current_url)
         return {
             "start_time": self.get_start_time(),
             "away_team": {
@@ -17,7 +18,7 @@ class GamecastScraper(BaseScraper):
         }
 
     def get_start_time(self):
-        return self.wait_for("h4").text.split(",")[0]
+        return self.wait_for("h4").text
 
     def get_team_name(self, away_home):
         texts = [x.text for x in self.find_element(".Gamestrip__Container").find_elements("a")]

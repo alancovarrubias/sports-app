@@ -9,7 +9,9 @@ class BoxscoreScraper(BaseScraper):
         if "boxscore" not in self.driver.current_url:
             return {}
         return {
-            "game_clock": self.get_game_clock()
+            "game_clock": self.get_game_clock(),
+            "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),
+            "home_team": self.team_stats(BoxscoreScraper.HOME_INDEX)
         }
 
     def get_game_clock(self):
@@ -22,8 +24,6 @@ class BoxscoreScraper(BaseScraper):
 
     def team_stats(self, away_home):
         return {
-            "name": self.get_team_name(away_home),
-            "abbr": self.get_abbr(away_home),
             "score": self.get_score(away_home),
             "comp_att": self.get_data(away_home, 0, 0),
             "passing_yards": self.get_data(away_home, 2, 1),
@@ -34,15 +34,18 @@ class BoxscoreScraper(BaseScraper):
         }
 
     def get_score(self, away_home):
-        scores = self.find_elements(".Gamestrip__Score")
-        return re.search(r'\d{1,2}', scores[away_home].text).group()
+        container = self.wait_for(".Gamestrip__Container").text.split("\n")
+        index = 3 if away_home == BoxscoreScraper.AWAY_INDEX else 8
+        return container[index]
+
 
     def get_team_name(self, away_home):
         index = 0 if away_home == BoxscoreScraper.AWAY_INDEX else 6
         return self.wait_for(".Gamestrip__Container").text.split("\n")[index]
 
     def get_abbr(self, away_home):
-        return self.get_scores(away_home)[0]
+        container = self.wait_for(".Gamestrip__Container")
+        return len(container.find_elements("a"))
 
     def get_data(self, home_away, pass_rush, data_index):
         category = self.get_category(pass_rush)

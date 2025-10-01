@@ -17,7 +17,7 @@ class ElementWrapper:
         return ElementWrapper(self.element.find_element(By.CSS_SELECTOR, selector))
 
     def wait_for(self, selector):
-        return WebDriverWait(self.element, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
+        return ElementWrapper(WebDriverWait(self.element, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector))))
 
     def __getattr__(self, name):
         return getattr(self.element, name)
