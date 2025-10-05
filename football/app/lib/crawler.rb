@@ -20,8 +20,12 @@ module Crawler
       "/api/games?league=#{league}"
     end
 
+    def gamecast(espn_id:, league:)
+      "/api/games/#{espn_id}/gamecast?league=#{league}"
+    end
+
     def boxscore(espn_id:, league:)
-      "/api/games/#{espn_id}?league=#{league}"
+      "/api/games/#{espn_id}/boxscore?league=#{league}"
     end
 
     def playbyplay(espn_id:, finished:, league:)

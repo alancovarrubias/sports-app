@@ -7,7 +7,9 @@ class BoxscoreScraper(BaseScraper):
 
     def parse_data(self):
         if "boxscore" not in self.driver.current_url:
-            return {}
+            return {
+                "game_clock": "Not Started"
+            }
         return {
             "game_clock": self.get_game_clock(),
             "away_team": self.team_stats(BoxscoreScraper.AWAY_INDEX),

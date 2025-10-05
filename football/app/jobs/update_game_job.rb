@@ -3,6 +3,7 @@ class UpdateGameJob < ApplicationJob
 
   def perform(espn_id, season_id, week)
     @season = Season.find(season_id)
+    @gamecast_data = Crawler.gamecast(espn_id: espn_id, league: @season.league)
     @boxscore_data = Crawler.boxscore(espn_id: espn_id, league: @season.league)
     @game = Game.find_or_create_by!(
       espn_id: espn_id,
@@ -14,8 +15,8 @@ class UpdateGameJob < ApplicationJob
     update
   end
 
-  def build_team(team)
-    team_data = @boxscore_data[team]
+  def build_team(team_type)
+    team_data = @gamecast_data[team_type]
     name = team_data.delete(:name)
     abbr = team_data.delete(:abbr)
     team = @season.teams.find_or_create_by!(name: name)
@@ -26,20 +27,25 @@ class UpdateGameJob < ApplicationJob
   end
 
   def update
-    update_game
+    update_gamecast
+    update_boxscore
     update_stats
     update_kicked
     @game.update!(calculated_at: DateTime.now)
     @game.notify_update
   end
 
-  def update_game
-    start_time = DateTime.parse(@boxscore_data[:start_time])
-    is_second_half = @game.halftime? && @boxscore_data[:game_clock] != GAME_CLOCKS[:halftime]
+  def update_gamecast
+    start_time = DateTime.parse(@gamecast_data[:start_time])
     @game.update!(
       date: start_time.pacific_time_date,
-      start_time: start_time,
-      game_clock: is_second_half ? GAME_CLOCKS[:second_half] : @boxscore_data[:game_clock]
+      start_time: start_time
+    )
+  end
+
+  def update_boxscore
+    @game.update!(
+      game_clock: is_second_half? ? GAME_CLOCKS[:second_half] : @boxscore_data[:game_clock]
     )
   end
 
@@ -50,9 +56,9 @@ class UpdateGameJob < ApplicationJob
     update_stat(:home_team)
   end
 
-  def update_stat(team_name)
-    team = @game.send(team_name)
-    stat_data = build_stat_data(@boxscore_data[team_name])
+  def update_stat(team_type)
+    team = @game.send(team_type)
+    stat_data = build_stat_data(@boxscore_data[team_type])
     @game.stats.find_or_create_by!(team: team, interval: :full_game).update(stat_data)
     return unless @boxscore_data[:game_clock] == GAME_CLOCKS[:halftime]
 
@@ -74,5 +80,9 @@ class UpdateGameJob < ApplicationJob
     )
     kicking_team = playbyplay[:received] == @game.home_team.name ? @game.home_team : @game.away_team
     @game.update!(kicking_team: kicking_team)
+  end
+
+  def is_second_half?
+    @game.halftime? && @boxscore_data[:game_clock] != GAME_CLOCKS[:halftime]
   end
 end
