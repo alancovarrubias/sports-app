@@ -16,8 +16,7 @@ class ScheduleScraper(BaseScraper):
         return self.get_active_url(r'\/year\/(\d{4})\/')
     
     def get_week(self):
-        is_active = self.find_element(".custom--week.is-active")
-        week = is_active.find_element(".week-range").text
+        week = self.find_element(".currentWeek .is-active .week-range").text
         search = re.search(r'\d{1,2}', week)
         if search is None:
             return  week
