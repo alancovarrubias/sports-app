@@ -9,6 +9,7 @@ from v2.url_builders.espn import EspnUrlBuilder
 from v2.url_builders.scores_and_odds import ScoresAndOddsUrlBuilder
 
 def scrape_url(Scraper, url, *args):
+    print(url)
     with Scraper(url) as scraper:
         return scraper.parse_data(*args)
 
