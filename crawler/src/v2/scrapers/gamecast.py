@@ -21,5 +21,7 @@ class GamecastScraper(BaseScraper):
         return self.wait_for("h4").text
 
     def get_team_name(self, away_home):
-        return self.find_element("h1").text.split('@')[away_home].strip()
+        text = self.find_element("h1").text
+        delimiter = '@' if '@' in text else 'vs'
+        return text.split(delimiter)[away_home].strip()
 
