@@ -1,0 +1,18 @@
+# client-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: client
+spec:
+  type: NodePort
+  selector:
+    app: client
+  ports:
+    - name: http
+      port: 1234
+      targetPort: 1234
+      nodePort: 31234
+    - name: ws
+      port: 1235
+      targetPort: 1235
+      nodePort: 31235
