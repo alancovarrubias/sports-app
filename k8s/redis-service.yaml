@@ -1,20 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.build.yml
-      --volumes emptyDir -o k8s/
-    kompose.version: 1.21.0 (992df58d8)
-  creationTimestamp: null
   labels:
-    io.kompose.service: redis
+    app: redis
   name: redis
 spec:
+  type: NodePort
   ports:
   - name: "6379"
     port: 6379
     targetPort: 6379
+    nodePort: 31239
   selector:
-    io.kompose.service: redis
-status:
-  loadBalancer: {}
+    app: redis
