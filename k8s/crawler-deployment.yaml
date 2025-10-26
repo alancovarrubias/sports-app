@@ -1,44 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.build.yml
-      --volumes emptyDir -o k8s/
-    kompose.version: 1.21.0 (992df58d8)
-  creationTimestamp: null
   labels:
-    io.kompose.service: crawler
+    app: crawler
   name: crawler
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: crawler
-  strategy:
-    type: Recreate
+      app: crawler
   template:
     metadata:
-      annotations:
-        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.build.yml
-          --volumes emptyDir -o k8s/
-        kompose.version: 1.21.0 (992df58d8)
-      creationTimestamp: null
       labels:
-        io.kompose.service: crawler
+        app: crawler
     spec:
       containers:
-      - image: crawler:dev
-        imagePullPolicy: ""
-        name: crawler
-        ports:
-        - containerPort: 5000
-        resources: {}
-        volumeMounts:
-        - mountPath: /project
-          name: crawler-empty0
-      restartPolicy: Always
-      serviceAccountName: ""
-      volumes:
-      - emptyDir: {}
-        name: crawler-empty0
-status: {}
+        - name: crawler
+          image: crawler:dev
+          ports:
+          - containerPort: 5000
