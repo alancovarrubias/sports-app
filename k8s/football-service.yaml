@@ -1,17 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: football
   labels:
     app: football
-  name: football
 spec:
-  type: NodePort
-  ports:
-  - name: "3003"
-    port: 3003
-    targetPort: 3003
-    nodePort: 31240
   selector:
     app: football
-status:
-  loadBalancer: {}
+  ports:
+  - name: http
+    port: 3003
+    targetPort: 3003

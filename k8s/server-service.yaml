@@ -3,13 +3,9 @@ kind: Service
 metadata:
   name: server
 spec:
-  type: NodePort
-  ports:
-    - name: "4000"
-      port: 4000
-      targetPort: 4000
-      nodePort: 31236
   selector:
     app: server
-status:
-  loadBalancer: {}
+  ports:
+    - name: http
+      port: 4000
+      targetPort: 4000
