@@ -15,8 +15,18 @@ spec:
         app: client
     spec:
       containers:
-      - name: client
-        image: client:dev
-        ports:
-        - containerPort: 1234
-        - containerPort: 1235
+        - name: client
+          image: client:dev
+          ports:
+            - containerPort: 1234
+        - name: nginx
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: nginx-config
