@@ -15,10 +15,17 @@ spec:
         app: db
     spec:
       containers:
-        - env:
-            - name: POSTGRES_HOST_AUTH_METHOD
-              value: trust
+        - name: db
           image: postgres:15
-          name: db
           ports:
             - containerPort: 5432
+          env:
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
+          volumeMounts:
+            - name: db-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: db-pvc
