@@ -8,6 +8,6 @@ spec:
   selector:
     app: football
   ports:
-  - name: http
-    port: 3003
-    targetPort: 3003
+    - name: http
+      port: 3003
+      targetPort: 3003

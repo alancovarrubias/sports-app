@@ -15,7 +15,7 @@ spec:
         app: football
     spec:
       containers:
-      - image: football:dev
-        name: football
-        ports:
-        - containerPort: 3003
+        - image: football:dev
+          name: football
+          ports:
+            - containerPort: 3003

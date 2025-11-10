@@ -2,7 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.build.yml
+    kompose.cmd:
+      /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.build.yml
       --volumes emptyDir -o k8s/
     kompose.version: 1.21.0 (992df58d8)
   creationTimestamp: null
@@ -19,7 +20,8 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.build.yml
+        kompose.cmd:
+          /snap/kompose/19/kompose-linux-amd64 convert -f docker-compose.build.yml
           --volumes emptyDir -o k8s/
         kompose.version: 1.21.0 (992df58d8)
       creationTimestamp: null
@@ -27,27 +29,27 @@ spec:
         io.kompose.service: sidekiq
     spec:
       containers:
-      - args:
-        - bundle
-        - exec
-        - sidekiq
-        env:
-        - name: REDIS_URL_SIDEKIQ
-          value: redis://redis:6379/1
-        image: sidekiq:dev
-        imagePullPolicy: ""
-        name: sidekiq
-        resources: {}
-        volumeMounts:
-        - mountPath: /project
-          name: sidekiq-empty0
-        - mountPath: /project/tmp
-          name: sidekiq-empty1
+        - args:
+            - bundle
+            - exec
+            - sidekiq
+          env:
+            - name: REDIS_URL_SIDEKIQ
+              value: redis://redis:6379/1
+          image: sidekiq:dev
+          imagePullPolicy: ""
+          name: sidekiq
+          resources: {}
+          volumeMounts:
+            - mountPath: /project
+              name: sidekiq-empty0
+            - mountPath: /project/tmp
+              name: sidekiq-empty1
       restartPolicy: Always
       serviceAccountName: ""
       volumes:
-      - emptyDir: {}
-        name: sidekiq-empty0
-      - emptyDir: {}
-        name: sidekiq-empty1
+        - emptyDir: {}
+          name: sidekiq-empty0
+        - emptyDir: {}
+          name: sidekiq-empty1
 status: {}
