@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: client:dev
+          image: registry.digitalocean.com/sports/client:dev
           ports:
             - containerPort: 1234
         - name: nginx
