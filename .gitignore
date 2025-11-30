@@ -5,3 +5,4 @@ certs.env
 client/build
 nginx
 secrets
+.env
