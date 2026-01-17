@@ -1,10 +1,10 @@
 from flask import Flask, request
 from v2.scrapers.init_driver import init_driver
-from v2.scrapers.play_by_play import PlayByPlayScraper
-from v2.scrapers.boxscore import BoxscoreScraper
-from v2.scrapers.gamecast import GamecastScraper
-from v2.scrapers.schedule import ScheduleScraper
-from v2.scrapers.lines import LinesScraper
+from v2.scrapers.nfl.play_by_play import PlayByPlayScraper
+from v2.scrapers.nfl.boxscore import BoxscoreScraper
+from v2.scrapers.nfl.gamecast import GamecastScraper
+from v2.scrapers.nfl.schedule import ScheduleScraper
+from v2.scrapers.nfl.lines import LinesScraper
 from v2.url_builders.espn import EspnUrlBuilder
 from v2.url_builders.scores_and_odds import ScoresAndOddsUrlBuilder
 

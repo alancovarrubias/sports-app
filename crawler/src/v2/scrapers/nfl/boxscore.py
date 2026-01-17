@@ -1,5 +1,4 @@
 from v2.scrapers.base import BaseScraper
-import re
 
 class BoxscoreScraper(BaseScraper):
     AWAY_INDEX = 0

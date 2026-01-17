@@ -1,5 +1,5 @@
 import pytest
-from v2.scrapers.boxscore import BoxscoreScraper
+from v2.scrapers.nfl.boxscore import BoxscoreScraper
 
 
 class TestBoxscoreScraper:
