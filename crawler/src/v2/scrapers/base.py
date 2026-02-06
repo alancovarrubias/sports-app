@@ -6,7 +6,6 @@ from v2.scrapers.init_driver import init_driver
 
 FIXTURE_DIR = "/project/tmp"
 
-
 class BaseScraper(ABC):
     def __init__(self, url=None):
         self.driver = init_driver()
