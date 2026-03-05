@@ -33,7 +33,8 @@ class ScheduleScraper(BaseScraper):
         return flatten_nested_list(table_ids)
 
     def get_table_game_ids(self, table):
-        games = table.find_elements("tbody tr")
+        # ESPN interleaves colspan'd note rows ("Super Bowl LX", "Pro Bowl").
+        games = table.find_elements("tbody tr:not(.Table__TR--note)")
         return [self.get_game_id(game) for game in games]
 
     def get_game_id(self, game):

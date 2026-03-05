@@ -13,11 +13,16 @@ class EspnUrlBuilder:
         return self.build_url(f"/playbyplay/_/gameId/{game_id}")
 
     def schedule(self, week, year):
-        if self.league == 'nfl':
-            return self.build_url("/schedule" if not (week and year) else f"/schedule/_/week/{week}/year/{year}/seasontype/2")
-        elif self.league == 'cfb80' or self.league == 'cfb81':
-            num = self.league[-2:]
-            return self.build_url(f"/schedule/_/group/{num}" if not (week and year) else f"/schedule/_/week/{week}/year/{year}/seasontype/2/group/{num}")
+        segments = []
+        if year:
+            week = week or 1
+            segments += [f"week/{week}", f"year/{year}", "seasontype/2"]
+        if self.league.startswith("cfb"):
+            segments += [f"group/{self.league[-2:]}"]
+        path = "/schedule"
+        if segments:
+            path += "/_/" + "/".join(segments)
+        return self.build_url(path)
 
     def build_url(self, relative_url):
         return f"{self.base_url}{relative_url}"

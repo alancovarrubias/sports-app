@@ -1,84 +1,57 @@
-import pytest
 from v2.scrapers.nfl.schedule import ScheduleScraper
+from v2.url_builders.espn import EspnUrlBuilder
+
+SCRAPER = ScheduleScraper
+URL = "https://www.espn.com/nfl/schedule/_/week/1/year/2023/seasontype/2"
+FIXTURE = "nfl_schedule.html"
+
+EXPECTED_IDS = [
+    "401547353", "401547403", "401547397", "401547404", "401547398",
+    "401547399", "401547405", "401547406", "401547396", "401547407",
+    "401547400", "401547402", "401547401", "401547408", "401547409",
+    "401547352",
+]
 
 
-class TestScheduleScraper:
-    NFL_URL = "https://www.espn.com/nfl/schedule"
-    SPECIFIC_NFL_URL = "https://www.espn.com/nfl/schedule/_/week/1/year/2023/seasontype/2"
-    CFB_80_URL = "https://www.espn.com/college-football/schedule/_/group/80"
-    SPECIFIC_CFB_80_URL = "https://www.espn.com/college-football/schedule/_/week/1/year/2023/seasontype/2/group/80"
-    CFB_81_URL = "https://www.espn.com/college-football/schedule/_/group/81"
-    SPECIFIC_CFB_81_URL = "https://www.espn.com/college-football/schedule/_/week/1/year/2023/seasontype/2/group/81"
-    MOCK_FILE = "schedule.html"
-    MOCK_GAME_IDS = [
-        "401547353",
-        "401547403",
-        "401547397",
-        "401547404",
-        "401547398",
-        "401547399",
-        "401547405",
-        "401547406",
-        "401547396",
-        "401547407",
-        "401547400",
-        "401547402",
-        "401547401",
-        "401547408",
-        "401547409",
-        "401547352",
-    ]
+def test_nfl_url_default(scraper, mock_get):
+    scraper.fetch(EspnUrlBuilder("nfl").schedule(None, None))
+    mock_get.assert_called_once_with("https://www.espn.com/nfl/schedule")
 
-    @pytest.fixture(scope="class")
-    def mocked_scraper(self):
-        with ScheduleScraper() as scraper:
-            scraper.get_url_or_file(TestScheduleScraper.NFL_URL, TestScheduleScraper.MOCK_FILE)
-            yield scraper
 
-    @pytest.fixture(scope="class")
-    def scraper(self):
-        with ScheduleScraper() as scraper:
-            yield scraper
+def test_nfl_url_specific(scraper, mock_get):
+    scraper.fetch(EspnUrlBuilder("nfl").schedule(1, 2023))
+    mock_get.assert_called_once_with(URL)
 
-    def test_cfb80_url(self, scraper, mocker):
-        mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
-        scraper.fetch(None, None, "cfb80")
 
-        mock_get.assert_called_once_with(TestScheduleScraper.CFB_80_URL)
+def test_nfl_url_year_only_defaults_to_week_1(scraper, mock_get):
+    scraper.fetch(EspnUrlBuilder("nfl").schedule(None, 2023))
+    mock_get.assert_called_once_with(URL)
 
-    def test_specific_cfb80_url(self, scraper, mocker):
-        mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
-        scraper.fetch("1", "2023", "cfb80")
 
-        mock_get.assert_called_once_with(TestScheduleScraper.SPECIFIC_CFB_80_URL)
+def test_cfb80_url_default(scraper, mock_get):
+    scraper.fetch(EspnUrlBuilder("cfb80").schedule(None, None))
+    mock_get.assert_called_once_with(
+        "https://www.espn.com/college-football/schedule/_/group/80"
+    )
 
-    def test_cfb81_url(self, scraper, mocker):
-        mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
-        scraper.fetch(None, None, "cfb81")
 
-        mock_get.assert_called_once_with(TestScheduleScraper.CFB_81_URL)
+def test_cfb80_url_specific(scraper, mock_get):
+    scraper.fetch(EspnUrlBuilder("cfb80").schedule(1, 2023))
+    mock_get.assert_called_once_with(
+        "https://www.espn.com/college-football/schedule/_/week/1/year/2023/seasontype/2/group/80"
+    )
 
-    def test_specific_cfb81_url(self, scraper, mocker):
-        mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
-        scraper.fetch("1", "2023", "cfb81")
 
-        mock_get.assert_called_once_with(TestScheduleScraper.SPECIFIC_CFB_81_URL)
+def test_cfb81_url_default(scraper, mock_get):
+    scraper.fetch(EspnUrlBuilder("cfb81").schedule(None, None))
+    mock_get.assert_called_once_with(
+        "https://www.espn.com/college-football/schedule/_/group/81"
+    )
 
-    def test_nfl_url(self, scraper, mocker):
-        mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
-        scraper.fetch(None, None, "nfl")
 
-        mock_get.assert_called_once_with(TestScheduleScraper.NFL_URL)
-
-    def test_specific_nfl_url(self, scraper, mocker):
-        mock_get = mocker.patch.object(scraper.driver, "get", autospec=True)
-        scraper.fetch("1", "2023", "nfl")
-
-        mock_get.assert_called_once_with(TestScheduleScraper.SPECIFIC_NFL_URL)
-
-    def test_scrape_data(self, mocked_scraper):
-        assert mocked_scraper.parse_data() == {
-            "year": "2023",
-            "week": "1",
-            "espn_ids": TestScheduleScraper.MOCK_GAME_IDS
-        }
+def test_parse_data(loaded):
+    assert loaded.parse_data() == {
+        "year": "2023",
+        "week": "1",
+        "espn_ids": EXPECTED_IDS,
+    }
