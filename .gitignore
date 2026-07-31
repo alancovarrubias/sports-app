@@ -6,3 +6,4 @@ client/build
 nginx
 secrets
 .env
+.claude

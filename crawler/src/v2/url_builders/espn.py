@@ -12,13 +12,19 @@ class EspnUrlBuilder:
     def play_by_play(self, game_id):
         return self.build_url(f"/playbyplay/_/gameId/{game_id}")
 
-    def schedule(self, week, year):
+    def schedule(self, week=None, year=None, date=None):
         segments = []
-        if year:
-            week = week or 1
-            segments += [f"week/{week}", f"year/{year}", "seasontype/2"]
-        if self.league.startswith("cfb"):
-            segments += [f"group/{self.league[-2:]}"]
+        if self.league == 'mlb':
+            # MLB uses date-based schedule
+            if date:
+                segments.append(f"date/{date}")
+        else:
+            # Football uses week/year
+            if year:
+                week = week or 1
+                segments += [f"week/{week}", f"year/{year}", "seasontype/2"]
+            if self.league.startswith("cfb"):
+                segments += [f"group/{self.league[-2:]}"]
         path = "/schedule"
         if segments:
             path += "/_/" + "/".join(segments)
@@ -32,3 +38,7 @@ class EspnUrlBuilder:
             return 'nfl'
         elif 'cfb' in self.league:
             return 'college-football'
+        elif self.league == 'mlb':
+            return 'mlb'
+        elif self.league == 'nba':
+            return 'nba'

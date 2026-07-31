@@ -7,6 +7,8 @@ from v2.scrapers.mlb.games import GamesScraper
 from v2.scrapers.mlb.stats import StatsScraper
 from v2.scrapers.mlb.lineups import LineupsScraper
 from v2.scrapers.mlb.forecast import ForecastScraper
+from v2.scrapers.mlb.matchups import MatchupsScraper
+from v2.scrapers.mlb.lines import LinesScraper
 from v2.scrapers.mlb.advanced_stats import (
     fetch_advanced_stats,
     BAT_FULL, BAT_HANDED, PIT_FULL, PIT_HANDED, PIT_LAST_30,
@@ -17,6 +19,8 @@ from v2.url_builders.baseball_press import BaseballPressUrlBuilder
 from v2.url_builders.wunderground import WundergroundUrlBuilder
 from v2.url_builders.fangraphs import FangraphsUrlBuilder
 from v2.url_builders.weather_api import WeatherApiUrlBuilder
+from v2.url_builders.espn import EspnUrlBuilder
+from v2.url_builders.scores_and_odds import ScoresAndOddsUrlBuilder
 
 bp = Blueprint("mlb", __name__, url_prefix="/api/mlb")
 mbr = BaseballReferenceUrlBuilder()
@@ -87,3 +91,17 @@ def advanced_stats(team, split):
     builder = FangraphsUrlBuilder(team, season)
     url = getattr(builder, split)()
     return fetch_advanced_stats(url, FANGRAPHS_SPECS[split])
+
+
+@bp.route("/matchups", methods=["GET"])
+def matchups():
+    date = request.args.get("date", type=str)
+    url = EspnUrlBuilder("mlb").schedule(date=date)
+    return routes.scrape_url(MatchupsScraper, url)
+
+
+@bp.route("/lines", methods=["GET"])
+def lines():
+    date = request.args.get("date", type=str)
+    url = ScoresAndOddsUrlBuilder("mlb").lines(date=date)
+    return routes.scrape_url(LinesScraper, url)
