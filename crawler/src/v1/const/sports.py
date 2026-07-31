@@ -1,4 +1,0 @@
-NBA = "NBA"
-MLB = "MLB"
-NFL = "NFL"
-SPORTS = [NBA, MLB, NFL]

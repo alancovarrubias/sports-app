@@ -1,2 +1,0 @@
-BATTING = 'Batting'
-PITCHING = 'Pitching'
