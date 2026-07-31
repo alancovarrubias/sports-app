@@ -40,38 +40,56 @@ FANGRAPHS_SPECS = {
 @bp.route("/teams", methods=["GET"])
 def teams():
     season = request.args.get("season", type=int)
-    return routes.scrape_url(TeamsScraper, mbr.teams(season))
+    return routes.scrape_url(
+        TeamsScraper, mbr.teams(season),
+        sport="mlb", resource_type="teams", cache_key=str(season)
+    )
 
 
 @bp.route("/teams/<team>/players", methods=["GET"])
 def players(team):
     season = request.args.get("season", type=int)
-    return routes.scrape_url(PlayersScraper, mbr.players(team, season))
+    return routes.scrape_url(
+        PlayersScraper, mbr.players(team, season),
+        sport="mlb", resource_type="players", cache_key=f"{team}{season}"
+    )
 
 
 @bp.route("/teams/<team>/games", methods=["GET"])
 def games(team):
     season = request.args.get("season", type=int)
-    return routes.scrape_url(GamesScraper, mbr.games(team, season))
+    return routes.scrape_url(
+        GamesScraper, mbr.games(team, season),
+        sport="mlb", resource_type="games", cache_key=f"{team}{season}"
+    )
 
 
 @bp.route("/games/<game_url>/stats", methods=["GET"])
 def stats(game_url):
-    return routes.scrape_url(StatsScraper, mbr.boxscore(game_url))
+    return routes.scrape_url(
+        StatsScraper, mbr.boxscore(game_url),
+        sport="mlb", resource_type="stats", cache_key=game_url
+    )
 
 
 @bp.route("/lineups", methods=["GET"])
 def lineups():
     date = request.args.get("date", type=str)
     url = BaseballPressUrlBuilder().lineups(date)
-    return routes.scrape_url(LineupsScraper, url)
+    return routes.scrape_url(
+        LineupsScraper, url,
+        sport="mlb", resource_type="lineups", cache_key=date
+    )
 
 
 @bp.route("/teams/<team>/forecast", methods=["GET"])
 def forecast(team):
     date = request.args.get("date", type=str)
     url = WundergroundUrlBuilder().hourly(team, date)
-    return routes.scrape_url(ForecastScraper, url)
+    return routes.scrape_url(
+        ForecastScraper, url,
+        sport="mlb", resource_type="forecast", cache_key=f"{team}{date}"
+    )
 
 
 @bp.route("/weather", methods=["GET"])
@@ -97,11 +115,17 @@ def advanced_stats(team, split):
 def matchups():
     date = request.args.get("date", type=str)
     url = EspnUrlBuilder("mlb").schedule(date=date)
-    return routes.scrape_url(MatchupsScraper, url)
+    return routes.scrape_url(
+        MatchupsScraper, url,
+        sport="mlb", resource_type="matchups", cache_key=date
+    )
 
 
 @bp.route("/lines", methods=["GET"])
 def lines():
     date = request.args.get("date", type=str)
     url = ScoresAndOddsUrlBuilder("mlb").lines(date=date)
-    return routes.scrape_url(LinesScraper, url)
+    return routes.scrape_url(
+        LinesScraper, url,
+        sport="mlb", resource_type="lines", cache_key=date
+    )

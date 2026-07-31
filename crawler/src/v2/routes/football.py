@@ -18,7 +18,10 @@ def lines():
     year = request.args.get("year", type=int)
     week = request.args.get("week", type=int)
     url = ScoresAndOddsUrlBuilder(league).lines(week, year)
-    return routes.scrape_url(LinesScraper, url)
+    return routes.scrape_url(
+        LinesScraper, url,
+        sport=league, resource_type="lines", cache_key=f"{year}{week}"
+    )
 
 
 @bp.route("/games", methods=["GET"])
@@ -27,21 +30,30 @@ def games():
     year = request.args.get("year", type=int)
     week = request.args.get("week", type=int)
     url = EspnUrlBuilder(league).schedule(week, year)
-    return routes.scrape_url(ScheduleScraper, url)
+    return routes.scrape_url(
+        ScheduleScraper, url,
+        sport=league, resource_type="games", cache_key=f"{year}{week}"
+    )
 
 
 @bp.route("/games/<int:game_id>/boxscore", methods=["GET"])
 def boxscore(game_id):
     league = request.args.get("league", default="nfl", type=str)
     url = EspnUrlBuilder(league).boxscore(game_id)
-    return routes.scrape_url(BoxscoreScraper, url)
+    return routes.scrape_url(
+        BoxscoreScraper, url,
+        sport=league, resource_type="boxscore", cache_key=str(game_id)
+    )
 
 
 @bp.route("/games/<int:game_id>/gamecast", methods=["GET"])
 def gamecast(game_id):
     league = request.args.get("league", default="nfl", type=str)
     url = EspnUrlBuilder(league).gamecast(game_id)
-    return routes.scrape_url(GamecastScraper, url)
+    return routes.scrape_url(
+        GamecastScraper, url,
+        sport=league, resource_type="gamecast", cache_key=str(game_id)
+    )
 
 
 @bp.route("/games/<int:game_id>/playbyplay", methods=["GET"])
@@ -49,4 +61,7 @@ def playbyplay(game_id):
     league = request.args.get("league", default="nfl", type=str)
     finished = request.args.get("finished", type=int)
     url = EspnUrlBuilder(league).play_by_play(game_id)
-    return routes.scrape_url(PlayByPlayScraper, url, finished)
+    return routes.scrape_url(
+        PlayByPlayScraper, url, finished,
+        sport=league, resource_type="playbyplay", cache_key=str(game_id)
+    )
