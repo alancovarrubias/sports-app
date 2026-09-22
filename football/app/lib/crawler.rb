@@ -17,23 +17,23 @@ module Crawler
     module_function
 
     def schedule(league:)
-      "/api/games?league=#{league}"
+      "/api/football/games?league=#{league}"
     end
 
     def gamecast(espn_id:, league:)
-      "/api/games/#{espn_id}/gamecast?league=#{league}"
+      "/api/football/games/#{espn_id}/gamecast?league=#{league}"
     end
 
     def boxscore(espn_id:, league:)
-      "/api/games/#{espn_id}/boxscore?league=#{league}"
+      "/api/football/games/#{espn_id}/boxscore?league=#{league}"
     end
 
     def playbyplay(espn_id:, finished:, league:)
-      "/api/games/#{espn_id}/playbyplay?league=#{league}&finished=#{finished}"
+      "/api/football/games/#{espn_id}/playbyplay?league=#{league}&finished=#{finished}"
     end
 
     def lines(league:)
-      "/api/lines?league=#{league}"
+      "/api/football/lines?league=#{league}"
     end
   end
 
