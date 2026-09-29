@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, jsonify
 from v2.db_manager import DbManager
 
 
@@ -15,6 +15,9 @@ def scrape_url(Scraper, url, *args, sport=None, resource_type=None, cache_key=No
 
     If sport, resource_type, and cache_key are provided, caching is enabled.
     Use ?refetch=1 query param to force re-scraping.
+
+    A scraper failure (e.g. a Selenium error) is returned as a JSON error
+    response rather than raised, so callers always get JSON back.
     """
     print(url)
 
@@ -29,12 +32,21 @@ def scrape_url(Scraper, url, *args, sport=None, resource_type=None, cache_key=No
         if db.resource_exists(cache_key):
             return db.fetch_resource(cache_key)
 
-        # Scrape and cache
-        with Scraper(url) as scraper:
-            data = scraper.parse_data(*args)
+        data, error = _scrape(Scraper, url, *args)
+        if error:
+            return error
         db.save_resource(cache_key, data.copy())
         return data
 
     # No caching - just scrape
-    with Scraper(url) as scraper:
-        return scraper.parse_data(*args)
+    data, error = _scrape(Scraper, url, *args)
+    return error if error else data
+
+
+def _scrape(Scraper, url, *args):
+    """Run a scraper, returning (data, None) or (None, error_response)."""
+    try:
+        with Scraper(url) as scraper:
+            return scraper.parse_data(*args), None
+    except Exception as e:
+        return None, (jsonify(error=str(e)), 502)
