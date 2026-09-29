@@ -18,7 +18,9 @@ class GamecastScraper(BaseScraper):
         }
 
     def get_start_time(self):
-        return self.wait_for("h4").text
+        # Bare "h4" also matches the OneTrust cookie-consent widget's category
+        # header, which can mount before ESPN's own content hydrates.
+        return self.wait_for("h4:not(.ot-cat-header)").text
 
     def get_team_name(self, away_home):
         text = self.find_element("h1").text

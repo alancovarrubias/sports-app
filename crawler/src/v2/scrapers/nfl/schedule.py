@@ -5,6 +5,8 @@ def flatten_nested_list(nested_list):
     return [element for sublist in nested_list for element in sublist]
 
 class ScheduleScraper(BaseScraper):
+    wait_for_selector = ".custom--week.is-active"
+
     def parse_data(self):
         return {
             "year": self.get_year(),
