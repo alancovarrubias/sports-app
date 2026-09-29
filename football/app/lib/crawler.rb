@@ -9,6 +9,10 @@ module Crawler
     def get(url)
       url = URI.parse(url)
       res = Net::HTTP.get_response(url)
+      unless res.is_a?(Net::HTTPSuccess)
+        raise "Crawler request to #{url} failed (#{res.code}): #{res.body.to_s.truncate(1000)}"
+      end
+
       JSON.parse(res.body).deep_symbolize_keys
     end
   end

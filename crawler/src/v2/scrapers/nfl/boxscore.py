@@ -1,5 +1,11 @@
 from v2.scrapers.base import BaseScraper
 
+
+def _at(items, index, default=""):
+    """Index safely into DOM-derived lists that ESPN doesn't always fully render."""
+    return items[index] if index < len(items) else default
+
+
 class BoxscoreScraper(BaseScraper):
     AWAY_INDEX = 0
     HOME_INDEX = 1
@@ -17,9 +23,9 @@ class BoxscoreScraper(BaseScraper):
 
     def get_game_clock(self):
         container = self.wait_for(".Gamestrip__Container").text.split("\n")
-        game_clock = container[4]
+        game_clock = _at(container, 4)
         if ':' in game_clock:
-            quarter = container[6]
+            quarter = _at(container, 6)
             return f"{game_clock} {quarter}"
         return game_clock
 
@@ -37,37 +43,47 @@ class BoxscoreScraper(BaseScraper):
     def get_score(self, away_home):
         container = self.wait_for(".Gamestrip__Container").text.split("\n")
         index = 3 if away_home == BoxscoreScraper.AWAY_INDEX else 8
-        return container[index]
+        return _at(container, index)
 
 
     def get_team_name(self, away_home):
         index = 0 if away_home == BoxscoreScraper.AWAY_INDEX else 6
-        return self.wait_for(".Gamestrip__Container").text.split("\n")[index]
+        container = self.wait_for(".Gamestrip__Container").text.split("\n")
+        return _at(container, index)
 
     def get_abbr(self, away_home):
         container = self.wait_for(".Gamestrip__Container")
         return len(container.find_elements("a"))
 
     def get_data(self, home_away, pass_rush, data_index):
-        category = self.get_category(pass_rush)
-        category_tables = self.get_tables(category, home_away)
-        return self.get_data_item(category_tables, data_index)
+        def lookup():
+            category = self.get_category(pass_rush)
+            category_tables = self.get_tables(category, home_away)
+            return self.get_data_item(category_tables, data_index)
+
+        return self.retry_on_stale(lookup)
 
     def categories(self):
         return self.find_elements(".Boxscore__Category")
 
     def get_category(self, index):
-        return self.categories()[index]
+        return _at(self.categories(), index, default=None)
 
     def get_tables(self, category, home_away):
-        return category.find_elements(".Boxscore__Team")[home_away]
+        if category is None:
+            return None
+        return _at(category.find_elements(".Boxscore__Team"), home_away, default=None)
 
     def get_data_item(self, table, data_index):
+        if table is None:
+            return ""
         boxscore_totals = table.find_elements(".Boxscore__Totals")
-        if (len(boxscore_totals) == 0):
+        if len(boxscore_totals) < 2:
             return ""
         data_row = boxscore_totals[1]
         data = data_row.find_elements(".Boxscore__Totals_Items")
+        if data_index >= len(data):
+            return ""
         return data[data_index].text
 
     def get_scores(self, away_home):

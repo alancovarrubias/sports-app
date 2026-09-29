@@ -19,7 +19,7 @@ class Game < ApplicationRecord
 
   GAME_CLOCKS.each do |name, value|
     define_method("#{name}?") do
-      game_clock.include?(value)
+      game_clock.to_s.include?(value)
     end
   end
 

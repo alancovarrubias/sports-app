@@ -38,12 +38,12 @@ def games():
 
 @bp.route("/games/<int:game_id>/boxscore", methods=["GET"])
 def boxscore(game_id):
+    # Not cached: unlike gamecast/playbyplay, boxscore data (score, game
+    # clock, stats) keeps changing for the lifetime of the game, so a
+    # game_id-keyed cache would freeze it at its first successful scrape.
     league = request.args.get("league", default="nfl", type=str)
     url = EspnUrlBuilder(league).boxscore(game_id)
-    return routes.scrape_url(
-        BoxscoreScraper, url,
-        sport=league, resource_type="boxscore", cache_key=str(game_id)
-    )
+    return routes.scrape_url(BoxscoreScraper, url)
 
 
 @bp.route("/games/<int:game_id>/gamecast", methods=["GET"])
