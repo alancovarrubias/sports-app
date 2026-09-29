@@ -34,5 +34,6 @@ def loaded(request):
 
 @pytest.fixture
 def mock_get(scraper, mocker):
-    """Patch driver.get so URL tests don't hit the network."""
+    """Patch driver.get (and the post-fetch element wait) so URL tests don't hit the network."""
+    mocker.patch.object(scraper, "wait_for")
     return mocker.patch.object(scraper.driver, "get", autospec=True)

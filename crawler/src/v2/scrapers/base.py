@@ -7,6 +7,8 @@ from v2.scrapers.init_driver import init_driver
 FIXTURE_DIR = "/project/tmp"
 
 class BaseScraper(ABC):
+    wait_for_selector = None
+
     def __init__(self, url=None):
         self.driver = init_driver()
         if url:
@@ -14,7 +16,13 @@ class BaseScraper(ABC):
 
     def fetch(self, url):
         self.driver.get(url)
-        time.sleep(3)
+        self._wait_until_ready()
+
+    def _wait_until_ready(self):
+        if self.wait_for_selector:
+            self.wait_for(self.wait_for_selector)
+        else:
+            time.sleep(3)
 
     @abstractmethod
     def parse_data(self):
@@ -38,7 +46,7 @@ class BaseScraper(ABC):
             self.driver.get(f"file://{path}")
         else:
             self.driver.get(url)
-            time.sleep(3)
+            self._wait_until_ready()
             with open(path, "w", encoding="utf-8") as f:
                 f.write(self.driver.page_source)
 
