@@ -4,7 +4,7 @@ module Database
       attr_reader :pitchers, :batters
 
       def initialize(stats_res, game)
-        plays = stats_res['plays'].map { |play| Play.new(play, game) }
+        plays = stats_res[:plays].map { |play| Play.new(play, game) }
         @away_team = game.away_team.abbr
         @home_team = game.home_team.abbr
         @batters = initialize_map(plays, :batter)
