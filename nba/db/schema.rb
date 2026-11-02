@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_041556) do
     t.date "date"
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
+    t.index ["season_id", "date", "home_team_id"], name: "index_games_on_season_date_home_team", unique: true
     t.index ["season_id"], name: "index_games_on_season_id"
   end
 

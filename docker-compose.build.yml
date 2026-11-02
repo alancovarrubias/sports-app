@@ -68,6 +68,35 @@ services:
     environment:
       - REDIS_URL_SIDEKIQ=${REDIS_URL}
       - DATABASE_URL=${DATABASE_URL}
+  nba:
+    image: nba:${ENV}
+    build:
+      context: nba
+      dockerfile: Dockerfile.${ENV}
+    volumes:
+      - ./nba:/project
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+  nba-sidekiq:
+    image: nba-sidekiq:${ENV}
+    build:
+      context: nba
+      dockerfile: Dockerfile.${ENV}
+    command: bundle exec sidekiq
+    volumes:
+      - ./nba:/project
+      - /project/tmp
+    depends_on:
+      - db
+      - redis
+      - crawler
+    environment:
+      - REDIS_URL_SIDEKIQ=${REDIS_URL}
+      - DATABASE_URL=${DATABASE_URL}
   crawler:
     image: crawler:${ENV}
     build:
