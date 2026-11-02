@@ -1,11 +1,11 @@
 # sports-app
 
-A multi-sport stats platform: three Rails backends (football, nba, and mlb — the latter's directory is literally named `1`) scrape and persist game data via a shared Python crawler, exposed to clients through a GraphQL server.
+A multi-sport stats platform: three Rails backends (football, nba, mlb) scrape and persist game data via a shared Python crawler, exposed to clients through a GraphQL server.
 
 ## Language
 
 **Backend**:
-One of the three Rails applications — `football`, `nba`, or the one named `1` (MLB) — each with its own database, models, and jobs. The unit of granularity for "per-sport" work: football's three Leagues are internal to one Backend, not three separate units.
+One of the three Rails applications — `football`, `nba`, `mlb` — each with its own database, models, and jobs. The unit of granularity for "per-sport" work: football's three Leagues are internal to one Backend, not three separate units.
 _Avoid_: sport (ambiguous with League), app, service.
 
 **League**:
