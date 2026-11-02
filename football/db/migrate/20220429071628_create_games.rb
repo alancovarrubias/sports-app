@@ -5,7 +5,7 @@ class CreateGames < ActiveRecord::Migration[6.0]
       t.references :away_team
       t.references :home_team
       t.references :kicking_team
-      t.integer :espn_id
+      t.integer :espn_id, index: { unique: true }
       t.string :week
       t.date :date
       t.datetime :start_time

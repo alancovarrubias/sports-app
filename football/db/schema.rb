@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2023_11_02_034757) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
+    t.index ["espn_id"], name: "index_games_on_espn_id", unique: true
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
     t.index ["kicking_team_id"], name: "index_games_on_kicking_team_id"
     t.index ["season_id"], name: "index_games_on_season_id"
