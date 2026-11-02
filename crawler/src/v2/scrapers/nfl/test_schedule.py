@@ -50,8 +50,12 @@ def test_cfb81_url_default(scraper, mock_get):
 
 
 def test_parse_data(loaded):
+    # week_count=18 matches the known 2023 NFL regular-season length; unverified
+    # against this fixture's actual week-selector markup (no network access to
+    # confirm `.custom--week` carries a `/week/(\d+)/` href for every week).
     assert loaded.parse_data() == {
         "year": "2023",
         "week": "1",
+        "week_count": 18,
         "espn_ids": EXPECTED_IDS,
     }

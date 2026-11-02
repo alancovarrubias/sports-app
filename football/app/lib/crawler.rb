@@ -20,8 +20,11 @@ module Crawler
   module EndpointBuilder
     module_function
 
-    def schedule(league:)
-      "/api/football/games?league=#{league}"
+    def schedule(league:, year: nil, week: nil)
+      url = "/api/football/games?league=#{league}"
+      url += "&year=#{year}" if year
+      url += "&week=#{week}" if week
+      url
     end
 
     def gamecast(espn_id:, league:)
