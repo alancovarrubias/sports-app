@@ -11,19 +11,29 @@ class ScheduleScraper(BaseScraper):
         return {
             "year": self.get_year(),
             "week": self.get_week(),
+            "week_count": self.get_week_count(),
             "espn_ids": self.get_game_ids()
         }
 
     def get_year(self):
         return self.get_active_url(r'\/year\/(\d{4})\/')
-    
+
     def get_week(self):
         week = self.find_element(".currentWeek .is-active .week-range").text
         search = re.search(r'\d{1,2}', week)
         if search is None:
             return  week
         return search.group()
-    
+
+    def get_week_count(self):
+        # Every week's page already renders the full week selector, not just
+        # the active week -- so whichever week we scrape also tells us how
+        # many weeks the season has, with no extra request.
+        weeks = self.find_elements(".custom--week")
+        urls = [week.find_element("a").get_attribute("href") for week in weeks]
+        numbers = [int(m.group(1)) for u in urls if (m := re.search(r"\/week\/(\d+)\/", u))]
+        return max(numbers) if numbers else None
+
     def get_active_url(self, pattern):
         is_active = self.find_elements(".custom--week.is-active")[0]
         url = is_active.find_element("a").get_attribute('href')
