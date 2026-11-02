@@ -34,5 +34,6 @@ module NbaApi
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.secret_key_base = ENV['SECRET_KEY']
+    config.active_job.queue_adapter = :sidekiq
   end
 end
