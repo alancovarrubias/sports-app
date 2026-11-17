@@ -5,6 +5,8 @@ RSpec.describe MlbSyncGameStatsJob, type: :job do
   let!(:home_team) { FactoryBot.create(:team, season: season, abbr: 'NYY') }
   let!(:away_team) { FactoryBot.create(:team, season: season, abbr: 'BOS') }
   let!(:game) { FactoryBot.create(:game, season: season, home_team: home_team, away_team: away_team, num: 0) }
+  let!(:home_player) { FactoryBot.create(:player, season: season, team: home_team, abbr: 'judgeaa01', name: 'Aaron Judge') }
+  let!(:away_player) { FactoryBot.create(:player, season: season, team: away_team, abbr: 'deversra01', name: 'Rafael Devers') }
   let(:plays) do
     [
       { rob: '', pitch_count: '3', run_out: '', at_bat: 'NYY', batter: 'Aaron Judge', pitcher: 'Chris Sale', text: 'Fly Ball' },
@@ -35,8 +37,10 @@ RSpec.describe MlbSyncGameStatsJob, type: :job do
       .and change(PitchingStat, :count).by(2)
   end
 
-  it "creates a placeholder player when the roster hasn't synced yet" do
-    expect { described_class.perform_now(game.id) }.to change(Player, :count).by(2)
+  it "raises if the roster hasn't synced yet instead of silently creating a player" do
+    away_player.destroy!
+
+    expect { described_class.perform_now(game.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   it 'derives each player\'s batted-ball-type counts from the play-by-play text' do

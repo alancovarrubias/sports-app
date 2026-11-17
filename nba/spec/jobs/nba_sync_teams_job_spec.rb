@@ -32,13 +32,11 @@ RSpec.describe NbaSyncTeamsJob, type: :job do
     expect(Team.find_by!(abbr: 'BOS').name).to eq('Celtics')
   end
 
-  it 'enqueues a roster sync per team and a schedule sync, on the same queue as itself' do
+  it 'enqueues a single roster sync carrying every team, on the same queue as itself' do
     job = described_class.new(2023)
     job.queue_name = 'backfill'
     job.perform_now
 
-    expect(NbaSyncRosterJob).to have_been_enqueued.on_queue('backfill').with(2023, 'BOS')
-    expect(NbaSyncRosterJob).to have_been_enqueued.on_queue('backfill').with(2023, 'LAL')
-    expect(NbaSyncScheduleJob).to have_been_enqueued.on_queue('backfill').with(2023)
+    expect(NbaSyncRosterJob).to have_been_enqueued.on_queue('backfill').with(2023, %w[BOS LAL])
   end
 end

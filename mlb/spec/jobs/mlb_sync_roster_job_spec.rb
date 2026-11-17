@@ -8,7 +8,7 @@ RSpec.describe MlbSyncRosterJob, type: :job do
   before { allow(Crawler).to receive(:players).and_return(players_data) }
 
   it 'creates a player under the team, with name set on a brand new record' do
-    expect { described_class.perform_now(2023, 'NYY') }.to change(Player, :count).by(1)
+    expect { described_class.perform_now(2023, ['NYY']) }.to change(Player, :count).by(1)
     player = team.players.find_by!(abbr: 'judgeaa01')
     expect(player).to have_attributes(name: 'Aaron Judge', position: 'RF')
   end
@@ -16,7 +16,28 @@ RSpec.describe MlbSyncRosterJob, type: :job do
   it 'updates an already-existing player instead of duplicating it' do
     FactoryBot.create(:player, season: season, team: team, abbr: 'judgeaa01', name: 'stale')
 
-    expect { described_class.perform_now(2023, 'NYY') }.not_to change(Player, :count)
+    expect { described_class.perform_now(2023, ['NYY']) }.not_to change(Player, :count)
     expect(team.players.find_by!(abbr: 'judgeaa01').name).to eq('Aaron Judge')
+  end
+
+  it 'chains to the next team instead of the schedule fan-out when teams remain' do
+    FactoryBot.create(:team, season: season, abbr: 'BOS')
+    job = described_class.new(2023, %w[NYY BOS])
+    job.queue_name = 'backfill'
+    job.perform_now
+
+    expect(MlbSyncRosterJob).to have_been_enqueued.on_queue('backfill').with(2023, ['BOS'])
+    expect(MlbSyncScheduleJob).not_to have_been_enqueued
+  end
+
+  it 'fans out a schedule sync per team once the last roster has synced' do
+    FactoryBot.create(:team, season: season, abbr: 'BOS')
+    job = described_class.new(2023, ['NYY'])
+    job.queue_name = 'backfill'
+    job.perform_now
+
+    expect(MlbSyncScheduleJob).to have_been_enqueued.on_queue('backfill').with(2023, 'NYY')
+    expect(MlbSyncScheduleJob).to have_been_enqueued.on_queue('backfill').with(2023, 'BOS')
+    expect(MlbSyncRosterJob).not_to have_been_enqueued
   end
 end

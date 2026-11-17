@@ -6,8 +6,7 @@ class NbaSyncTeamsJob < ApplicationJob
     teams_data = Crawler.teams(season: year)
     teams_data[:teams].each { |team_data| build_team(season, team_data) }
 
-    season.teams.each { |team| NbaSyncRosterJob.set(queue: queue_name).perform_later(year, team.abbr) }
-    NbaSyncScheduleJob.set(queue: queue_name).perform_later(year)
+    NbaSyncRosterJob.set(queue: queue_name).perform_later(year, season.teams.pluck(:abbr))
   end
 
   private

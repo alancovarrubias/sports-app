@@ -27,14 +27,11 @@ RSpec.describe MlbSyncTeamsJob, type: :job do
     expect(Team.find_by!(abbr: 'NYY').name).to eq('Yankees')
   end
 
-  it 'enqueues a roster sync and a schedule sync per team, on the same queue as itself' do
+  it 'enqueues a single roster sync carrying every team, on the same queue as itself' do
     job = described_class.new(2023)
     job.queue_name = 'backfill'
     job.perform_now
 
-    expect(MlbSyncRosterJob).to have_been_enqueued.on_queue('backfill').with(2023, 'NYY')
-    expect(MlbSyncScheduleJob).to have_been_enqueued.on_queue('backfill').with(2023, 'NYY')
-    expect(MlbSyncRosterJob).to have_been_enqueued.on_queue('backfill').with(2023, 'BOS')
-    expect(MlbSyncScheduleJob).to have_been_enqueued.on_queue('backfill').with(2023, 'BOS')
+    expect(MlbSyncRosterJob).to have_been_enqueued.on_queue('backfill').with(2023, %w[NYY BOS])
   end
 end
