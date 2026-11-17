@@ -5,7 +5,7 @@ RSpec.describe MlbSyncGameStatsJob, type: :job do
   let!(:home_team) { FactoryBot.create(:team, season: season, abbr: 'NYY') }
   let!(:away_team) { FactoryBot.create(:team, season: season, abbr: 'BOS') }
   let!(:game) { FactoryBot.create(:game, season: season, home_team: home_team, away_team: away_team, num: 0) }
-  let!(:home_player) { FactoryBot.create(:player, season: season, team: home_team, abbr: 'judgeaa01', name: 'Aaron Judge') }
+  let!(:home_player) { FactoryBot.create(:player, season: season, team: home_team, abbr: 'judgeaa01', name: 'Aaron Judge', position: 'RF') }
   let!(:away_player) { FactoryBot.create(:player, season: season, team: away_team, abbr: 'deversra01', name: 'Rafael Devers') }
   let(:plays) do
     [
@@ -17,7 +17,7 @@ RSpec.describe MlbSyncGameStatsJob, type: :job do
     {
       plays: plays,
       away_player_stats: [{ stat_type: 'Batting', name: 'Rafael Devers', abbr: 'deversra01', h: 2 }],
-      home_player_stats: [{ stat_type: 'Batting', name: 'Aaron Judge', abbr: 'judgeaa01', h: 3 }],
+      home_player_stats: [{ stat_type: 'Batting', name: 'Aaron Judge', abbr: 'judgeaa01', position: 'DH', h: 3 }],
       away_team_stats: [
         { stat_type: 'Batting', h: 8 },
         { stat_type: 'Pitching', ip: 9.0 }
@@ -41,6 +41,10 @@ RSpec.describe MlbSyncGameStatsJob, type: :job do
     away_player.destroy!
 
     expect { described_class.perform_now(game.id) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
+  it "updates the player's position for this game, even though the roster already set one" do
+    expect { described_class.perform_now(game.id) }.to change { home_player.reload.position }.from('RF').to('DH')
   end
 
   it 'derives each player\'s batted-ball-type counts from the play-by-play text' do

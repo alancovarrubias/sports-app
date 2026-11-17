@@ -19,10 +19,6 @@ class MlbSyncGameStatsJob < ApplicationJob
     stats.each { |stat_data| persist_stat(team, team.abbr, stat_data) }
   end
 
-  # MlbSyncTeamsJob chains every team's roster before any schedule/stats
-  # work (see MlbSyncRosterJob), so the player is guaranteed to exist by
-  # now -- position is still refreshed here since it can vary per game
-  # (e.g. a defensive substitution) in a way the roster sync doesn't capture.
   def build_player_stats(side, stats)
     team = @game.send(side)
     stats.each do |stat_data|

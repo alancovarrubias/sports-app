@@ -25,8 +25,6 @@ class NbaSyncScheduleJob < ApplicationJob
     game
   end
 
-  # The crawler already strips basketball-reference's sortable `csk`
-  # timestamp down to an 8-digit YYYYMMDD string before returning it.
   def parse_date(date)
     Date.new(date[0...4].to_i, date[4...6].to_i, date[6...8].to_i)
   end

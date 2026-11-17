@@ -22,8 +22,6 @@ class NbaSyncGameStatsJob < ApplicationJob
     stats.each { |stat_data| persist_stat(game, team, stat_data) }
   end
 
-  # NbaSyncTeamsJob chains rosters before schedule/stats (see
-  # NbaSyncRosterJob), so every player is guaranteed to exist by now.
   def build_player_stats(game, side, stats)
     team = game.send(side)
     stats.each do |stat_data|

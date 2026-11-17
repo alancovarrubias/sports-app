@@ -12,9 +12,6 @@ class MlbSyncRosterJob < ApplicationJob
     if remaining_abbrs.any?
       MlbSyncRosterJob.set(queue: queue_name).perform_later(year, remaining_abbrs)
     else
-      # A game's box score can carry either team's players, so every
-      # team's roster must be synced -- not just its own -- before any
-      # team's schedule/stats processing starts.
       season.teams.each { |t| MlbSyncScheduleJob.set(queue: queue_name).perform_later(year, t.abbr) }
     end
   end

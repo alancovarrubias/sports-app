@@ -30,7 +30,7 @@ RSpec.describe MlbSyncRosterJob, type: :job do
     expect(MlbSyncScheduleJob).not_to have_been_enqueued
   end
 
-  it 'fans out a schedule sync per team once the last roster has synced' do
+  it 'fans out a schedule sync for every team in the season, not just the ones in its own chain' do
     FactoryBot.create(:team, season: season, abbr: 'BOS')
     job = described_class.new(2023, ['NYY'])
     job.queue_name = 'backfill'
