@@ -25,7 +25,11 @@ class MlbSyncGameStatsJob < ApplicationJob
   def build_player_stats(side, stats)
     team = @game.send(side)
     stats.each do |stat_data|
-      player = team.players.find_or_create_by!(season: @game.season, abbr: stat_data[:abbr])
+      # Player requires name present on create, so it's set inside the
+      # block (only runs for a new record, before the first save).
+      player = team.players.find_or_create_by!(season: @game.season, abbr: stat_data[:abbr]) do |p|
+        p.name = stat_data[:name]
+      end
       player.update!(name: stat_data[:name], position: stat_data[:position])
       persist_stat(player, player.name, stat_data)
     end

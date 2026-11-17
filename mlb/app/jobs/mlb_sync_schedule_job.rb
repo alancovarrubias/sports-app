@@ -20,12 +20,14 @@ class MlbSyncScheduleJob < ApplicationJob
 
   def build_game(season, home_team, game_data)
     away_team = season.teams.find_by!(abbr: game_data[:away_team])
+    # Game requires away_team present on create, so it must be set inside
+    # the block (only runs for a new record, before the first save).
     game = Game.find_or_create_by!(
       season: season,
       date: Date.parse(game_data[:date]),
       home_team: home_team,
       num: game_data[:num].to_i
-    )
+    ) { |g| g.away_team = away_team }
     game.update!(away_team: away_team)
     game
   end
