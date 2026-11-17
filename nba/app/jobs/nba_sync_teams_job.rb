@@ -13,9 +13,6 @@ class NbaSyncTeamsJob < ApplicationJob
   private
 
   def build_team(season, team_data)
-    # Team requires name/city present on create, so they must be set inside
-    # the block (only runs for a new record, before the first save) rather
-    # than via a separate update! afterward.
     team = Team.find_or_create_by!(season: season, abbr: team_data[:abbr]) do |t|
       t.name = team_data[:name]
       t.city = team_data[:city]

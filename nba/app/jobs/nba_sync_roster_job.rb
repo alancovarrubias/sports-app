@@ -12,8 +12,6 @@ class NbaSyncRosterJob < ApplicationJob
   private
 
   def build_player(season, team, player_data)
-    # Player requires name present on create, so it must be set inside the
-    # block (only runs for a new record, before the first save).
     player = Player.find_or_create_by!(season: season, team: team, abbr: player_data[:abbr]) do |p|
       p.name = player_data[:name]
     end

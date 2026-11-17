@@ -22,14 +22,8 @@ class NbaSyncGameStatsJob < ApplicationJob
     stats.each { |stat_data| persist_stat(game, team, stat_data) }
   end
 
-  # NbaSyncRosterJob is enqueued independently with no ordering guarantee
-  # relative to this job's own chain, so a roster may not have synced yet --
-  # look players up defensively rather than assuming they already exist.
-  # The stats endpoint's player rows don't carry a name (only abbr), and
-  # Player requires name present on create, so a fallback-created record
-  # gets the abbr as a placeholder name -- self-healed to the real name
-  # whenever NbaSyncRosterJob actually runs, since it updates on every run
-  # regardless of order.
+  # NbaSyncRosterJob runs independently with no ordering guarantee relative
+  # to this job, so a player may not exist yet when its stats arrive.
   def build_player_stats(game, side, stats)
     team = game.send(side)
     stats.each do |stat_data|

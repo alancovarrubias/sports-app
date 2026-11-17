@@ -19,14 +19,11 @@ class MlbSyncGameStatsJob < ApplicationJob
     stats.each { |stat_data| persist_stat(team, team.abbr, stat_data) }
   end
 
-  # Player rosters are synced independently (MlbSyncRosterJob) and may not
-  # have run yet by the time stats come in, so look players up defensively
-  # rather than assuming they already exist.
+  # MlbSyncRosterJob runs independently with no ordering guarantee relative
+  # to this job, so a player may not exist yet when its stats arrive.
   def build_player_stats(side, stats)
     team = @game.send(side)
     stats.each do |stat_data|
-      # Player requires name present on create, so it's set inside the
-      # block (only runs for a new record, before the first save).
       player = team.players.find_or_create_by!(season: @game.season, abbr: stat_data[:abbr]) do |p|
         p.name = stat_data[:name]
       end
