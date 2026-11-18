@@ -13,12 +13,12 @@ RSpec.describe NbaSyncRosterJob, type: :job do
     expect(player).to have_attributes(name: 'Jayson Tatum', position: 'F')
   end
 
-  it "finds an already-existing player instead of duplicating it, without touching its name, but refreshes position" do
+  it "finds an already-existing player instead of duplicating it, without touching its name or position" do
     FactoryBot.create(:player, season: season, team: team, abbr: 'tatumja01', name: 'stale', position: 'C')
 
     expect { described_class.perform_now(2023, ['BOS']) }.not_to change(Player, :count)
     player = team.players.find_by!(abbr: 'tatumja01')
-    expect(player).to have_attributes(name: 'stale', position: 'F')
+    expect(player).to have_attributes(name: 'stale', position: 'C')
   end
 
   it 'chains to the next team instead of the schedule sync when teams remain' do

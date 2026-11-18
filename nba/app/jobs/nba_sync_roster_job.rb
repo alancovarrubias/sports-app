@@ -19,9 +19,9 @@ class NbaSyncRosterJob < ApplicationJob
   private
 
   def build_player(season, team, player_data)
-    player = Player.find_or_create_by!(season: season, team: team, abbr: player_data[:abbr]) do |p|
+    Player.find_or_create_by!(season: season, team: team, abbr: player_data[:abbr]) do |p|
       p.name = player_data[:name]
+      p.position = player_data[:position]
     end
-    player.update!(position: player_data[:position])
   end
 end

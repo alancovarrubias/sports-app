@@ -17,7 +17,7 @@ RSpec.describe MlbSyncGameStatsJob, type: :job do
     {
       plays: plays,
       away_player_stats: [{ stat_type: 'Batting', name: 'Rafael Devers', abbr: 'deversra01', h: 2 }],
-      home_player_stats: [{ stat_type: 'Batting', name: 'Aaron Judge', abbr: 'judgeaa01', position: 'DH', h: 3 }],
+      home_player_stats: [{ stat_type: 'Batting', name: 'Aaron Judge', abbr: 'judgeaa01', h: 3 }],
       away_team_stats: [
         { stat_type: 'Batting', h: 8 },
         { stat_type: 'Pitching', ip: 9.0 }
@@ -43,8 +43,8 @@ RSpec.describe MlbSyncGameStatsJob, type: :job do
     expect { described_class.perform_now(game.id) }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
-  it "updates the player's position for this game, even though the roster already set one" do
-    expect { described_class.perform_now(game.id) }.to change { home_player.reload.position }.from('RF').to('DH')
+  it "doesn't touch the player's position -- that's only ever set at roster creation" do
+    expect { described_class.perform_now(game.id) }.not_to change { home_player.reload.position }
   end
 
   it 'derives each player\'s batted-ball-type counts from the play-by-play text' do

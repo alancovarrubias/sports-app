@@ -23,7 +23,6 @@ class MlbSyncGameStatsJob < ApplicationJob
     team = @game.send(side)
     stats.each do |stat_data|
       player = team.players.find_by!(abbr: stat_data[:abbr])
-      player.update!(position: stat_data[:position])
       persist_stat(player, player.name, stat_data)
     end
   end
