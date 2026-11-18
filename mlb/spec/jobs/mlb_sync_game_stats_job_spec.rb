@@ -57,13 +57,7 @@ RSpec.describe MlbSyncGameStatsJob, type: :job do
     expect(devers_stat).to have_attributes(fb: 0, gb: 1, ld: 0)
   end
 
-  # Database::Builder::Play#on_mound (pre-existing legacy logic, unchanged
-  # by this job) resolves to whichever team is *batting*, not the team
-  # whose pitcher is actually on the mound -- so PlayStore's team-keyed
-  # "pitchers" bucket is really keyed by the batting team. This job inherits
-  # that bug for team-level hit-type aggregation; asserting the batting
-  # team's values here documents the current behavior, not correct behavior.
-  it 'aggregates batted-ball-type counts at the team level, keyed by whichever team is batting (pre-existing bug, see comment)' do
+  it 'aggregates batted-ball-type counts at the team level, keyed by the batting team for BattingStat' do
     described_class.perform_now(game.id)
 
     home_batting = BattingStat.find_by!(model: home_team)
@@ -71,5 +65,16 @@ RSpec.describe MlbSyncGameStatsJob, type: :job do
 
     away_batting = BattingStat.find_by!(model: away_team)
     expect(away_batting).to have_attributes(fb: 0, gb: 1)
+  end
+
+  it 'aggregates batted-ball-type counts at the team level, keyed by the pitching team for PitchingStat' do
+    described_class.perform_now(game.id)
+
+    # Play 1: NYY batting (fb), BOS pitching -- Play 2: BOS batting (gb), NYY pitching.
+    home_pitching = PitchingStat.find_by!(model: home_team)
+    expect(home_pitching).to have_attributes(fb: 0, gb: 1)
+
+    away_pitching = PitchingStat.find_by!(model: away_team)
+    expect(away_pitching).to have_attributes(fb: 1, gb: 0)
   end
 end

@@ -9,7 +9,7 @@ module Database
         @pitcher = play[:pitcher]
         @batter = play[:batter]
         @at_bat = play[:at_bat]
-        @on_mound = game.away_team.abbr == @at_bat ? game.away_team.abbr : game.home_team.abbr
+        @on_mound = game.away_team.abbr == @at_bat ? game.home_team.abbr : game.away_team.abbr
       end
 
       def type
