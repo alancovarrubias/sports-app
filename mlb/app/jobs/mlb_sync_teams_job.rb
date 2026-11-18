@@ -6,20 +6,16 @@ class MlbSyncTeamsJob < ApplicationJob
     teams_data = Crawler.teams(season: year)
     teams_data[:teams].each { |team_data| build_team(season, team_data) }
 
-    season.teams.each do |team|
-      MlbSyncRosterJob.set(queue: queue_name).perform_later(year, team.abbr)
-      MlbSyncScheduleJob.set(queue: queue_name).perform_later(year, team.abbr)
-    end
+    MlbSyncRosterJob.set(queue: queue_name).perform_later(year, season.teams.pluck(:abbr))
   end
 
   private
 
   def build_team(season, team_data)
-    team = Team.find_or_create_by!(season: season, abbr: team_data[:abbr])
-    team.update!(
-      name: team_data[:name],
-      city: team_data[:city],
-      timezone: Database::Builder::Const::Timezones::TEAMS[team_data[:abbr].to_sym]
-    )
+    Team.find_or_create_by!(season: season, abbr: team_data[:abbr]) do |t|
+      t.name = team_data[:name]
+      t.city = team_data[:city]
+      t.timezone = Database::Builder::Const::Timezones::TEAMS[team_data[:abbr].to_sym]
+    end
   end
 end

@@ -19,14 +19,10 @@ class MlbSyncGameStatsJob < ApplicationJob
     stats.each { |stat_data| persist_stat(team, team.abbr, stat_data) }
   end
 
-  # Player rosters are synced independently (MlbSyncRosterJob) and may not
-  # have run yet by the time stats come in, so look players up defensively
-  # rather than assuming they already exist.
   def build_player_stats(side, stats)
     team = @game.send(side)
     stats.each do |stat_data|
-      player = team.players.find_or_create_by!(season: @game.season, abbr: stat_data[:abbr])
-      player.update!(name: stat_data[:name], position: stat_data[:position])
+      player = team.players.find_by!(abbr: stat_data[:abbr])
       persist_stat(player, player.name, stat_data)
     end
   end

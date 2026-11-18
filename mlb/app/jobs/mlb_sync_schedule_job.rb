@@ -5,8 +5,6 @@ class MlbSyncScheduleJob < ApplicationJob
     season = Season.find_by!(year: year)
     team = season.teams.find_by!(abbr: team_abbr)
 
-    # GamesScraper scrapes one team's full-season schedule but returns only
-    # that team's home games, so `team` here is always the home team.
     games_data = Crawler.games(season: year, team: team_abbr)
     team.update!(link: games_data[:team_link])
 
@@ -20,13 +18,12 @@ class MlbSyncScheduleJob < ApplicationJob
 
   def build_game(season, home_team, game_data)
     away_team = season.teams.find_by!(abbr: game_data[:away_team])
-    game = Game.find_or_create_by!(
+    Game.find_or_create_by!(
       season: season,
       date: Date.parse(game_data[:date]),
       home_team: home_team,
-      num: game_data[:num].to_i
+      num: game_data[:num].to_i,
+      away_team: away_team
     )
-    game.update!(away_team: away_team)
-    game
   end
 end
