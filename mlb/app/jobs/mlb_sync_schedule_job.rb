@@ -18,13 +18,12 @@ class MlbSyncScheduleJob < ApplicationJob
 
   def build_game(season, home_team, game_data)
     away_team = season.teams.find_by!(abbr: game_data[:away_team])
-    game = Game.find_or_create_by!(
+    Game.find_or_create_by!(
       season: season,
       date: Date.parse(game_data[:date]),
       home_team: home_team,
-      num: game_data[:num].to_i
-    ) { |g| g.away_team = away_team }
-    game.update!(away_team: away_team)
-    game
+      num: game_data[:num].to_i,
+      away_team: away_team
+    )
   end
 end

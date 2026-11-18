@@ -18,11 +18,7 @@ class NbaSyncScheduleJob < ApplicationJob
     away_team = season.teams.find_by!(abbr: game_data[:away_team])
     home_team = season.teams.find_by!(abbr: game_data[:home_team])
 
-    game = Game.find_or_create_by!(season: season, date: date, home_team: home_team) do |g|
-      g.away_team = away_team
-    end
-    game.update!(away_team: away_team)
-    game
+    Game.find_or_create_by!(season: season, date: date, home_team: home_team, away_team: away_team)
   end
 
   def parse_date(date)
