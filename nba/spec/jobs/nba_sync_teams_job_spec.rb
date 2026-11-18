@@ -23,13 +23,13 @@ RSpec.describe NbaSyncTeamsJob, type: :job do
     expect { described_class.perform_now(2023) }.not_to change(Season, :count)
   end
 
-  it 'updates an already-existing team instead of duplicating it' do
+  it "finds an already-existing team instead of duplicating it, without touching its name/city" do
     allow(Crawler).to receive(:teams).and_return(teams: [{ abbr: 'BOS', name: 'Celtics', city: 'Boston' }])
     season = FactoryBot.create(:season, year: 2023)
     FactoryBot.create(:team, season: season, abbr: 'BOS', name: 'stale', city: 'stale')
 
     expect { described_class.perform_now(2023) }.not_to change(Team, :count)
-    expect(Team.find_by!(abbr: 'BOS').name).to eq('Celtics')
+    expect(Team.find_by!(abbr: 'BOS')).to have_attributes(name: 'stale', city: 'stale')
   end
 
   it 'enqueues a single roster sync carrying every team, on the same queue as itself' do

@@ -22,6 +22,6 @@ class MlbSyncRosterJob < ApplicationJob
     player = Player.find_or_create_by!(season: season, team: team, abbr: player_data[:abbr]) do |p|
       p.name = player_data[:name]
     end
-    player.update!(name: player_data[:name], position: player_data[:position])
+    player.update!(position: player_data[:position])
   end
 end

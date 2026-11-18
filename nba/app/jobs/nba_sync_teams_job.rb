@@ -12,10 +12,9 @@ class NbaSyncTeamsJob < ApplicationJob
   private
 
   def build_team(season, team_data)
-    team = Team.find_or_create_by!(season: season, abbr: team_data[:abbr]) do |t|
+    Team.find_or_create_by!(season: season, abbr: team_data[:abbr]) do |t|
       t.name = team_data[:name]
       t.city = team_data[:city]
     end
-    team.update!(name: team_data[:name], city: team_data[:city])
   end
 end

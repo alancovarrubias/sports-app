@@ -12,11 +12,10 @@ class MlbSyncTeamsJob < ApplicationJob
   private
 
   def build_team(season, team_data)
-    team = Team.find_or_create_by!(season: season, abbr: team_data[:abbr])
-    team.update!(
-      name: team_data[:name],
-      city: team_data[:city],
-      timezone: Database::Builder::Const::Timezones::TEAMS[team_data[:abbr].to_sym]
-    )
+    Team.find_or_create_by!(season: season, abbr: team_data[:abbr]) do |t|
+      t.name = team_data[:name]
+      t.city = team_data[:city]
+      t.timezone = Database::Builder::Const::Timezones::TEAMS[team_data[:abbr].to_sym]
+    end
   end
 end
