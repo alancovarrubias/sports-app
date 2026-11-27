@@ -3,12 +3,13 @@ FROM --platform=linux/amd64 ruby:2.7-slim-bullseye
 ARG SECRET_KEY
 ENV SECRET_KEY=${SECRET_KEY}
 ENV RAILS_ENV=production
+RUN sed -i -e 's|deb.debian.org|archive.debian.org|g' -e 's|security.debian.org|archive.debian.org/debian-security|g' /etc/apt/sources.list
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev
 RUN mkdir /project
 WORKDIR /project
 
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler --no-document
+RUN gem install bundler -v 2.4.22 --no-document
 RUN bundle install --no-binstubs --jobs $(nproc) --retry 3
 COPY . .
 
