@@ -1,5 +1,6 @@
 Rails.application.configure do
   config.hosts << "mlb"
+  config.hosts << "sports-app.test"
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.

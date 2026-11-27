@@ -1,4 +1,8 @@
+require 'sidekiq/web'
+Sidekiq::Web.use ActionDispatch::Cookies
+Sidekiq::Web.use ActionDispatch::Session::CookieStore, key: '_mlb_sidekiq_session'
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/mlb/sidekiq'
   resources :games, only: %i[index]
   resources :seasons, only: %i[index show] do
     resources :teams, only: %i[index]
